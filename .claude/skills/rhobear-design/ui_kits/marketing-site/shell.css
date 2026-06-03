@@ -1494,19 +1494,19 @@ section.tight { padding: clamp(36px, 5vw, 64px) 0; }
    code artifacts, animated hero terminal, build-it-yourself band
    ============================================================ */
 
-/* Sprite pulled OUT of the text column into its own flex gutter so it
-   can never clip the hook (fixes the truncated-hook bug). */
-.paired.has-sprite { display: flex; gap: 26px; align-items: flex-start; }
-.paired.has-sprite .sub-main { flex: 1 1 auto; min-width: 0; }
+/* Sprite pulled OUT of the text column into its own grid track so it can
+   never clip the hook, and the text fills the row (no stranded gap). */
+.paired.has-sprite { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; }
+.paired.has-sprite .sub-main { min-width: 0; }
 .paired.has-sprite .sub-sprite {
-  flex: 0 0 auto; align-self: center;
+  align-self: center; justify-self: end;
   image-rendering: pixelated;
   filter: drop-shadow(0 6px 4px rgba(0,0,0,0.30));
   pointer-events: none;
 }
 @media (max-width: 760px) {
-  .paired.has-sprite { flex-direction: column; }
-  .paired.has-sprite .sub-sprite { align-self: flex-end; max-height: 120px; }
+  .paired.has-sprite { grid-template-columns: 1fr; justify-items: start; }
+  .paired.has-sprite .sub-sprite { justify-self: center; max-height: 120px; }
 }
 
 /* "dig in" disclosure — default card shows HOOK + TECH; this reveals
