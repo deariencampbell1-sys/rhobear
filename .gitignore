@@ -1,0 +1,5 @@
+# Render tooling (Playwright) — not part of the site
+node_modules/
+package.json
+package-lock.json
+render.mjs
