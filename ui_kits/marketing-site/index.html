@@ -406,6 +406,7 @@
     s: root.querySelector('[data-unit="s"]')
   };
   function pad(n){ return n < 10 ? '0'+n : ''+n; }
+  var intervalId;
   function tick(){
     var ms = target - Date.now();
     if (ms <= 0) {
@@ -416,6 +417,7 @@
       root.classList.add('zero');
       if (live) { live.hidden = false; live.style.marginTop = '18px'; }
       if (ctaRow) ctaRow.hidden = true;
+      if (intervalId) clearInterval(intervalId);
       return;
     }
     var s = Math.floor(ms/1000);
@@ -428,7 +430,7 @@
     cells.s.textContent = pad(s);
   }
   tick();
-  setInterval(tick, 1000);
+  intervalId = setInterval(tick, 1000);
 })();
 </script>
 </section>
@@ -792,15 +794,16 @@
     b.classList.add('tk-bob-' + state.bob);
 
     /* swap hero sprites + bg based on world */
+    var worldSuffix = state.world === 'space' ? 'ship' : (state.world === 'west' ? 'western' : state.world);
     var bg = document.querySelector('.scene-frame .scene-bg img');
     if (bg) {
-      bg.src = '../../assets/bg-' + (state.world==='space'?'ship':state.world) + '.png';
+      bg.src = '../../assets/bg-' + worldSuffix + '.png';
     }
     var sceneSprites = document.querySelectorAll('.scene-frame .perched');
     sceneSprites.forEach(function(img){
       var orig = img.dataset.origSrc || img.getAttribute('src');
       if (!img.dataset.origSrc) img.dataset.origSrc = orig;
-      var base = orig.replace(/_(ship|western|neon)\.png/, '_'+(state.world==='space'?'ship':state.world)+'.png');
+      var base = orig.replace(/[_-](ship|western|neon)\.png/, function(m){ return m.charAt(0) + worldSuffix + '.png'; });
       img.src = base;
     });
 

@@ -535,6 +535,7 @@
     s: root.querySelector('[data-unit="s"]')
   };
   function pad(n){ return n < 10 ? '0'+n : ''+n; }
+  var intervalId;
   function tick(){
     var ms = target - Date.now();
     if (ms <= 0) {
@@ -542,6 +543,7 @@
       cells.m.textContent = '00'; cells.s.textContent = '00';
       root.classList.add('zero');
       if (live) live.hidden = false;
+      if (intervalId) clearInterval(intervalId);
       return;
     }
     var s = Math.floor(ms/1000);
@@ -551,7 +553,7 @@
     cells.d.textContent = pad(d); cells.h.textContent = pad(h);
     cells.m.textContent = pad(m); cells.s.textContent = pad(s);
   }
-  tick(); setInterval(tick, 1000);
+  tick(); intervalId = setInterval(tick, 1000);
 })();
 </script>
 

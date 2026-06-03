@@ -1,5 +1,5 @@
-# Render tooling (Playwright) — not part of the site
+# Local render/verification tooling (Playwright) — not part of the design system
 node_modules/
 package.json
 package-lock.json
-render.mjs
+*.mjs
