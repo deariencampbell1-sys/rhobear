@@ -1619,3 +1619,39 @@ section.tight { padding: clamp(36px, 5vw, 64px) 0; }
 @media (max-width: 560px) { .track-grid { grid-template-columns: 1fr; } }
 .track-release { border: 1.5px dashed var(--c-line-strong); border-radius: var(--r-3); padding: 16px 18px; background: var(--c-bg-2); }
 .track-release .mono-label { color: var(--c-ink-3); }
+
+/* ============================================================
+   HOMEPAGE rebuild — moat-first hero, how-it-works, leash
+   ============================================================ */
+
+/* Promoted "a regular person built this" trust line */
+.trust-line {
+  margin-top: 28px; max-width: 560px;
+  font-size: 1rem; line-height: 1.6; color: var(--c-ink-2);
+  border-left: 3px solid var(--c-amber-deep);
+  padding: 4px 0 4px 16px; font-style: italic;
+}
+
+/* HOW IT WORKS — three concrete steps */
+.how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 30px; }
+@media (max-width: 820px) { .how-grid { grid-template-columns: 1fr; } }
+.how-step {
+  background: var(--c-surface);
+  border: 1.5px solid var(--c-line-strong);
+  border-radius: var(--r-3);
+  padding: 26px 24px;
+}
+.how-step .how-num { font-family: var(--font-display); font-size: 12px; letter-spacing: 0.14em; color: var(--c-amber-deep); margin-bottom: 12px; }
+.how-step h3 { font-family: var(--font-display); font-size: 1.16rem; line-height: 1.25; margin: 0 0 10px; color: var(--c-ink); }
+.how-step p { margin: 0; color: var(--c-ink-2); line-height: 1.6; font-size: 0.98rem; }
+.leash-line {
+  margin-top: 24px;
+  font-family: var(--font-display); font-size: 1.04rem; line-height: 1.45; color: var(--c-ink);
+  background: var(--c-amber-tint); border: 1.5px dashed var(--c-amber-deep);
+  border-radius: var(--r-3); padding: 16px 20px;
+}
+.leash-line strong { color: var(--c-amber-deep); }
+
+/* Feature cards: sprite header so it never clips the heading (reuse .lc-head) */
+.feature-card .lc-head { margin-bottom: 4px; }
+.feature-card .lc-sprite { max-height: 92px; }
