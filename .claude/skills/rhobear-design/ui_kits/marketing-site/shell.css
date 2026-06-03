@@ -1655,3 +1655,40 @@ section.tight { padding: clamp(36px, 5vw, 64px) 0; }
 /* Feature cards: sprite header so it never clips the heading (reuse .lc-head) */
 .feature-card .lc-head { margin-bottom: 4px; }
 .feature-card .lc-sprite { max-height: 92px; }
+
+/* ============================================================
+   CREW page — promoted handoff, role gating, count reframe
+   ============================================================ */
+
+/* Promoted handoff: transcript + plain-language beat fill the dark panel */
+.crew-handoff-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 24px; align-items: start; margin-top: 10px; }
+@media (max-width: 900px) { .crew-handoff-grid { grid-template-columns: 1fr; } }
+.handoff-beat { background: rgba(255,255,255,0.03); border: 1px solid rgba(125,255,213,0.18); border-radius: var(--r-3); padding: 22px 24px; }
+.handoff-beat .beat-kicker { font-family: var(--font-display); font-size: 11px; letter-spacing: 0.14em; color: var(--c-cyan); margin-bottom: 16px; }
+.handoff-beat ol { margin: 0; padding: 0; list-style: none; counter-reset: beat; }
+.handoff-beat li { counter-increment: beat; position: relative; padding: 0 0 14px 34px; color: var(--c-dark-ink-2); line-height: 1.5; font-size: 0.97rem; }
+.handoff-beat li:last-child { padding-bottom: 0; }
+.handoff-beat li::before { content: counter(beat); position: absolute; left: 0; top: -1px; width: 22px; height: 22px; border-radius: 50%; background: var(--c-cyan-soft); color: var(--c-cyan); font-family: var(--font-display); font-size: 11px; display: flex; align-items: center; justify-content: center; }
+.handoff-beat li strong { color: var(--c-dark-ink); }
+
+/* extend the streaming-terminal stagger for the longer crew transcript */
+.terminal-hero.stream .tline:nth-child(7){animation-delay:2.30s}
+.terminal-hero.stream .tline:nth-child(8){animation-delay:2.60s}
+.terminal-hero.stream .tline:nth-child(9){animation-delay:2.90s}
+.terminal-hero.stream .tline:nth-child(10){animation-delay:3.20s}
+.terminal-hero.stream .tline:nth-child(11){animation-delay:3.50s}
+.terminal-hero.stream .tline:nth-child(12){animation-delay:3.80s}
+
+/* count reframe strip */
+.crew-count { font-family: var(--font-mono); font-size: 0.86rem; color: var(--c-ink-3); letter-spacing: 0.01em; margin: 6px 0 26px; line-height: 1.6; }
+.crew-count b { color: var(--c-amber-deep); }
+
+/* role gating fences */
+.fence-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 22px; }
+@media (max-width: 780px) { .fence-grid { grid-template-columns: 1fr; } }
+.fence { background: var(--c-surface); border: 1.5px solid var(--c-line-strong); border-radius: var(--r-3); padding: 18px 18px; }
+.fence .fence-role { font-family: var(--font-display); font-size: 11px; letter-spacing: 0.14em; color: var(--c-ink-3); margin-bottom: 12px; }
+.fence .fence-line { font-size: 0.94rem; line-height: 1.5; margin: 0 0 7px; padding-left: 22px; position: relative; color: var(--c-ink-2); }
+.fence .can::before { content: "\2713"; position: absolute; left: 0; color: #1f7a52; font-weight: 700; }
+.fence .cant::before { content: "\2715"; position: absolute; left: 0; color: #c4304f; font-weight: 700; }
+.tech-line { font-family: var(--font-mono); font-size: 0.86rem; color: var(--c-ink-3); margin: 16px 0 0; }
