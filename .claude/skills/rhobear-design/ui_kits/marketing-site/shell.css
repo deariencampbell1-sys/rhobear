@@ -1488,3 +1488,88 @@ section.tight { padding: clamp(36px, 5vw, 64px) 0; }
   border-radius: 0 0 12px 12px;
   margin: 0;
 }
+
+/* ============================================================
+   SUBSTRATE REWRITE — sprite gutters, "dig in" disclosure,
+   code artifacts, animated hero terminal, build-it-yourself band
+   ============================================================ */
+
+/* Sprite pulled OUT of the text column into its own flex gutter so it
+   can never clip the hook (fixes the truncated-hook bug). */
+.paired.has-sprite { display: flex; gap: 26px; align-items: flex-start; }
+.paired.has-sprite .sub-main { flex: 1 1 auto; min-width: 0; }
+.paired.has-sprite .sub-sprite {
+  flex: 0 0 auto; align-self: center;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 6px 4px rgba(0,0,0,0.30));
+  pointer-events: none;
+}
+@media (max-width: 760px) {
+  .paired.has-sprite { flex-direction: column; }
+  .paired.has-sprite .sub-sprite { align-self: flex-end; max-height: 120px; }
+}
+
+/* "dig in" disclosure — default card shows HOOK + TECH; this reveals
+   the assigned extra moves (engineering / honest limit / why-not-DIY). */
+.dig { margin-top: 18px; border-top: 1px dashed var(--c-line-strong); }
+.dig > summary {
+  list-style: none; cursor: pointer; width: max-content;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-display); font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--c-amber-deep);
+  padding: 13px 0 3px;
+}
+.dig > summary::-webkit-details-marker { display: none; }
+.dig > summary::after {
+  content: "\25BE"; font-family: var(--font-mono); font-size: 0.9rem;
+  transition: transform var(--dur-fast) var(--ease-soft);
+}
+.dig[open] > summary::after { transform: rotate(180deg); }
+.dig-body { padding-top: 4px; }
+.dig-block { margin-top: 16px; }
+.dig-block:first-child { margin-top: 6px; }
+.dig-tag {
+  font-family: var(--font-display); font-size: 10px; letter-spacing: 0.16em;
+  text-transform: uppercase; margin-bottom: 6px; color: var(--c-ink-3);
+}
+.dig-tag.tag-limit { color: var(--c-amber-deep); }
+.dig-tag.tag-diy   { color: var(--c-status-ok); }
+.dig-block p { margin: 0; color: var(--c-ink-2); line-height: 1.62; font-size: 0.98rem; }
+
+/* exact code artifact, terminal-styled */
+.code-artifact {
+  margin: 9px 0 0; padding: 12px 14px;
+  background: #0a0f1c; color: #d8e1f0;
+  border: 1px solid #1c2540; border-radius: var(--r-3);
+  font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.55;
+  overflow-x: auto; white-space: pre-wrap; word-break: break-word;
+}
+.code-artifact .tok { color: var(--c-cyan); }
+
+/* Hero terminal — promoted, larger, lines stream in */
+.terminal-hero { max-width: 880px; margin: 0 auto; font-size: 0.98rem; padding: 28px 30px; white-space: normal; }
+.terminal-hero .tline { display: block; white-space: pre-wrap; }
+.terminal-hero .tline + .tline { margin-top: 2px; }
+@media (prefers-reduced-motion: no-preference) {
+  .terminal-hero.stream .tline { opacity: 0; transform: translateY(7px); animation: tline-in 0.5s var(--ease-soft) forwards; }
+  .terminal-hero.stream .tline:nth-child(1) { animation-delay: 0.20s; }
+  .terminal-hero.stream .tline:nth-child(2) { animation-delay: 0.55s; }
+  .terminal-hero.stream .tline:nth-child(3) { animation-delay: 0.90s; }
+  .terminal-hero.stream .tline:nth-child(4) { animation-delay: 1.25s; }
+  .terminal-hero.stream .tline:nth-child(5) { animation-delay: 1.60s; }
+  .terminal-hero.stream .tline:nth-child(6) { animation-delay: 1.95s; }
+  @keyframes tline-in { to { opacity: 1; transform: none; } }
+}
+
+/* "You could build this yourself" close band + per-component pain rows */
+.diy-band { margin-top: 14px; }
+.diy-band .diy-pain { color: var(--c-ink-2); line-height: 1.65; }
+.diy-band .diy-pain strong { color: var(--c-ink); }
+.comp-row { display: grid; grid-template-columns: 200px 1fr; gap: 22px; padding: 20px 0; border-top: 1px dashed var(--c-line-strong); align-items: baseline; }
+.comp-row:last-child { border-bottom: 1px dashed var(--c-line-strong); }
+@media (max-width: 700px) { .comp-row { grid-template-columns: 1fr; gap: 6px; } }
+.comp-row .comp-name { font-family: var(--font-display); font-size: 1.05rem; color: var(--c-ink); text-decoration: none; }
+.comp-row .comp-name:hover { color: var(--c-amber-deep); }
+.comp-row .comp-value { color: var(--c-ink); font-weight: 500; margin: 0 0 6px; line-height: 1.45; }
+.comp-row .comp-break { color: var(--c-ink-3); margin: 0; line-height: 1.55; font-size: 0.95rem; }
+.comp-row .comp-break b { color: var(--c-amber-deep); font-weight: 600; }

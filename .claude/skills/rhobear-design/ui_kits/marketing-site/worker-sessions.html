@@ -27,54 +27,30 @@
   <div style="text-align:center; max-width:780px; margin:0 auto;">
   <div class="eyebrow-row" style="display:inline-flex;">SECTION · SUBSTRATE · 11 / 20</div>
   <h1 class="h1-page">Every worker. <em>Every transcript.</em> Replayable.</h1>
-  <p class="lead">Worker sessions are the receipts. Each AI worker gets its own durable session — what it was told, what it did, what it produced — and the hub can read all of them at once.</p>
+  <p class="lead">Worker sessions are the receipts. Each AI worker gets its own durable session — what it was told, what it did, what it produced — and you can read all of them from one hub.</p>
+  </div>
 
-  <div style="display:flex; flex-direction:column; gap:26px; margin-top:36px;">
-    
-  <div class="card-paper stitched paired" style="overflow:visible;">
-    <img class="sprite-tr pixelated bob" src="../../assets/foreman_western.png" alt="" style="height:170px;">
-    <div class="pair-eyebrow">WORKERSESSION STORE</div>
-    <div class="pair-row" style="grid-template-columns: 1fr;">
-      
-        <div>
-          <div class="pair-label">HOOK</div>
-          <p class="pair-hook">Every AI worker gets its own tracked session, so its work does not disappear into chat history.</p>
-          <div class="pair-label" style="margin-top:14px;">TECH</div>
-          <p class="pair-tech">Durable per-worker session records with identity, runtime, tool profile, status, worktree reference, evidence, and transcript links.</p>
-        </div>
-      
+  <div style="max-width:880px; margin:36px auto 0;">
+    <div class="card-paper stitched paired has-sprite" style="overflow:visible;">
+      <div class="sub-main">
+        <div class="pair-eyebrow">WORKERSESSION STORE</div>
+        <div class="pair-label">HOOK</div>
+        <p class="pair-hook">Every agent gets its own tracked session, so its work doesn't vanish into chat history — you always know which worker touched which files.</p>
+        <div class="pair-label" style="margin-top:14px;">TECH</div>
+        <p class="pair-tech">Each worker gets a durable JSON session plus an append-only JSONL event log under OPENCLAW_WORKSPACE, tracking harness, tool profile, branch/worktree, transcript ref, evidence, and touched files.</p>
+        <details class="dig">
+          <summary>dig in</summary>
+          <div class="dig-body">
+            <div class="dig-block">
+              <div class="dig-tag tag-diy">WHY NOT BUILD IT YOURSELF</div>
+              <p>The moment you run agents in parallel, you need provenance — who edited what, on which branch, which output got promoted. Skip it and parallel agents become loose chats you can't audit or replay. We store <code>card_ref</code> to join workers to plan cards without mutating the Compass schema — the kind of boring decision that keeps the system from breaking when it grows.</p>
+              <pre class="code-artifact"><span class="tok">card_ref</span> = {"plan_id": "...", "step_id": "..."}</pre>
+            </div>
+          </div>
+        </details>
+      </div>
+      <img class="sub-sprite bob" src="../../assets/foreman_western.png" alt="" style="height:190px;">
     </div>
-  </div>
-    
-  <div class="card-paper stitched paired" style="overflow:visible;">
-    
-    <div class="pair-eyebrow">WORKEREVENT STREAM</div>
-    <div class="pair-row" style="grid-template-columns: 1fr;">
-      
-        <div>
-          <div class="pair-label">HOOK</div>
-          <p class="pair-hook">RHOBEAR can show what each worker is doing as it happens.</p>
-          <div class="pair-label" style="margin-top:14px;">TECH</div>
-          <p class="pair-tech">Append-only per-worker event logs powering replayable state, live SSE streams, debugging, and hub visibility.</p>
-        </div>
-      
-    </div>
-  </div>
-    
-  <div class="card-paper stitched paired" style="overflow:visible;">
-    
-    <div class="pair-eyebrow">RUNTIME ADAPTER CONTRACT</div>
-    <div class="pair-row" style="grid-template-columns: 1fr;">
-      
-        <div>
-          <div class="pair-label">HOOK</div>
-          <p class="pair-hook">Claude, Codex, Pi, local models, and future tools can all plug into RHOBEAR as workers.</p>
-          <div class="pair-label" style="margin-top:14px;">TECH</div>
-          <p class="pair-tech">A common runtime interface for spawn, send, steer, cancel, summarize, and transcript collection across heterogeneous agent backends.</p>
-        </div>
-      
-    </div>
-  </div>
   </div>
 </section>
 

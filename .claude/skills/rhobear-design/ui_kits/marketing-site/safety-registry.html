@@ -7,43 +7,34 @@
   <div style="text-align:center; max-width:780px; margin:0 auto;">
   <div class="eyebrow-row" style="display:inline-flex;">SECTION · SUBSTRATE · 13 / 20</div>
   <h1 class="h1-page">In writing — <em>what each agent can and can't do.</em></h1>
-  <p class="lead">The safety registry is the written rulebook the crew runs against. Owner gates, agent registries, skill-drift sync, and the spread-out neo mode that catches drift before it merges.</p>
+  <p class="lead">"Read-only" shouldn't be a hope. The safety registry maps each agent to a permission profile the runtime enforces at the tool boundary — and it tells you exactly where that wall is concrete and where it's still being poured.</p>
   </div>
 
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:36px;">
-    
-      <div class="card-paper stitched paired" style="overflow:visible;">
-        <img class="sprite-tr pixelated bob" src="../../assets/guardian_ship.png" alt="" style="height:170px;">
-        <div class="pair-eyebrow">OWNER GATES</div>
-        <p class="pair-hook">You decide what the autoloop is allowed to do without you in the room.</p>
+  <div style="max-width:880px; margin:36px auto 0;">
+    <div class="card-paper stitched paired has-sprite" style="overflow:visible;">
+      <div class="sub-main">
+        <div class="pair-eyebrow">SAFETY REGISTRY · PERMISSION CONTRACT</div>
+        <div class="pair-label">HOOK</div>
+        <p class="pair-hook">"Read-only worker" isn't a hope here — it's a permission contract the runtime enforces, not a sentence in a prompt.</p>
         <div class="pair-label" style="margin-top:14px;">TECH</div>
-        <p class="pair-tech">Owner-configurable allow/deny matrices over tool calls, networks, package installs, secrets access, deploy targets, and irreversible actions.</p>
+        <p class="pair-tech"><code>worker_permissions.py</code> maps profiles (read-only, code-edit, github-readonly, github-merge, shell-limited) to explicit tool allowlists, and separates capability from permission — an agent can be capable of review but still needs an enforced tool profile before it touches merge/comment tools.</p>
+        <pre class="code-artifact"><span class="tok">GITHUB_MERGE</span>: ("gh:pr:merge", "git:push_branch")</pre>
+        <details class="dig">
+          <summary>dig in</summary>
+          <div class="dig-body">
+            <div class="dig-block">
+              <div class="dig-tag tag-limit">THE HONEST PART — WHERE THE WALL IS CONCRETE, AND WHERE IT ISN'T</div>
+              <p>Enforcement is hard where we own the runtime — native, OpenClaw, local, and Pi paths get real allowlists enforced at the tool boundary. For Claude and Codex tmux sessions, the contract is currently injected and logged rather than syscall-sandboxed, with high-risk routes blocked elsewhere. We're telling you exactly where the wall is concrete and where it's still a painted line, because you'd find out anyway — and a tool that lies about its own security is the one you should never trust with merge rights.</p>
+            </div>
+            <div class="dig-block">
+              <div class="dig-tag tag-diy">WHY NOT BUILD IT YOURSELF</div>
+              <p>The hard part isn't writing "read-only" in a system prompt — it's enforcing it when the model drifts. Build it yourself and you'll discover prompt-level permissions don't hold; you need enforcement at the adapter boundary, per profile, per role. That's months of unglamorous plumbing nobody gives you credit for.</p>
+            </div>
+          </div>
+        </details>
       </div>
-    
-      <div class="card-paper stitched paired" style="overflow:visible;">
-        
-        <div class="pair-eyebrow">AGENT REGISTRY</div>
-        <p class="pair-hook">Every agent shows up with a name, a role, a scope, and a signature.</p>
-        <div class="pair-label" style="margin-top:14px;">TECH</div>
-        <p class="pair-tech">A signed registry of agent profiles binding role → tool scope → model runtime → operator-approved boundaries.</p>
-      </div>
-    
-      <div class="card-paper stitched paired" style="overflow:visible;">
-        
-        <div class="pair-eyebrow">SKILL DRIFT SYNC</div>
-        <p class="pair-hook">When the registered shape of a skill changes mid-build, RHOBEAR notices.</p>
-        <div class="pair-label" style="margin-top:14px;">TECH</div>
-        <p class="pair-tech">Versioned skill snapshots with diff detection and re-approval flows when capabilities change underneath an active goal.</p>
-      </div>
-    
-      <div class="card-paper stitched paired" style="overflow:visible;">
-        
-        <div class="pair-eyebrow">SPREAD-OUT NEO MODE</div>
-        <p class="pair-hook">Multi-agent runs cross-check each other before anything irreversible happens.</p>
-        <div class="pair-label" style="margin-top:14px;">TECH</div>
-        <p class="pair-tech">Distributed verification mode where independent reviewer instances re-evaluate critical actions before promotion.</p>
-      </div>
-    
+      <img class="sub-sprite bob" src="../../assets/guardian_ship.png" alt="" style="height:190px;">
+    </div>
   </div>
 
   <div class="screenshot-frame stitched" style="margin-top:50px;">

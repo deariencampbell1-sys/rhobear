@@ -7,10 +7,33 @@
   <div style="text-align:center; max-width:780px; margin:0 auto;">
   <div class="eyebrow-row" style="display:inline-flex;">SECTION · SUBSTRATE · 14 / 20</div>
   <h1 class="h1-page">Visible workers. <em>The bouncer at the door.</em></h1>
-  <p class="lead">The hub contract is the UI/data agreement between every worker and the room they show up in. Roles, scopes, event streams, action rows — codified so the workbench can show what's real without lying.</p>
+  <p class="lead">The hub contract is the agreement between every worker and the room it shows up in — so the workbench can show what's real, and nothing mutates your goals or plans without your say-so.</p>
   </div>
 
-  <div class="card-paper stitched paired" style="overflow:visible;"><div class="pair-eyebrow">VISIBLE WORKERS / HUB CONTRACT</div><div class="pair-row" style="grid-template-columns: 1fr;"><div><div class="pair-label">HOOK</div><p class="pair-hook">You can see every worker, task, message, blocker, and result from one control hub.</p><div class="pair-label" style="margin-top:14px;">TECH</div><p class="pair-tech">A UI/data contract for worker tabs, event streams, board states, runtime health, action rows, and evidence views.</p></div></div></div>
+  <div style="max-width:880px; margin:36px auto 0;">
+    <div class="card-paper stitched paired" style="overflow:visible;">
+      <div class="pair-eyebrow">VISIBLE WORKERS · HUB CONTRACT</div>
+      <div class="pair-label">HOOK</div>
+      <p class="pair-hook">You see and control every worker, task, and result from one hub — and nothing mutates your goals or plans without owner authorization.</p>
+      <div class="pair-label" style="margin-top:14px;">TECH</div>
+      <p class="pair-tech">Mutating routes use <code>require_owner</code> — same-origin localhost is allowed for the local hub, otherwise a bearer token (<code>COMPASS_OWNER_TOKEN</code>) is required. Worker events stream over SSE; promote/reject UI actions become structured HandoffResultEnvelopes.</p>
+      <pre class="code-artifact"><span class="tok">if</span> is_same_origin <span class="tok">and</span> allowed_host: <span class="tok">return</span>      <span style="color:#6c7795">## local hub, trusted</span>
+<span class="tok">raise</span> HTTPException(403, "owner token required")  <span style="color:#6c7795">## else: fails closed</span></pre>
+      <details class="dig">
+        <summary>dig in</summary>
+        <div class="dig-body">
+          <div class="dig-block">
+            <div class="dig-tag">THE ENGINEERING</div>
+            <p>Same-origin localhost is accepted without a bearer so the local desktop hub doesn't brick itself during setup — but anything cross-origin fails closed unless the token matches. Convenience locally, locked everywhere else.</p>
+          </div>
+          <div class="dig-block">
+            <div class="dig-tag tag-limit">HONEST LIMIT</div>
+            <p>It verifies origin, bearer, and schemas (Pydantic) — it does not yet do signed envelopes or per-worker cryptographic attestation. Roadmap, not shipped.</p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
 
   <div class="screenshot-frame stitched has-perch" style="position:relative; margin-top:40px;">
     <img src="../../assets/02-agents.png" alt="Workbench" class="pixelated">

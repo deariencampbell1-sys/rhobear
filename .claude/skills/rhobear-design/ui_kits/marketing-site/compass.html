@@ -27,43 +27,33 @@
   <div style="text-align:center; max-width:780px; margin:0 auto;">
   <div class="eyebrow-row" style="display:inline-flex;">SECTION · SUBSTRATE · 10 / 20</div>
   <h1 class="h1-page">Compass — <em>where the goal lives.</em></h1>
-  <p class="lead">Goals, plans, gates, judges, autoloops, orchestrators. Compass is the goal-bearing organ of the substrate — it holds the objective in memory while the crew works toward it.</p>
+  <p class="lead">You set the objective once. Compass is the part of the substrate that holds it in memory — tracking what's done, what changed, and what still needs you — while the crew works toward it.</p>
   </div>
 
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:36px;">
-    
-      <div class="card-paper stitched paired" style="overflow:visible;">
-        <img class="sprite-tr pixelated bob" src="../../assets/architect_ship.png" alt="" style="height:160px;">
-        <div class="pair-eyebrow">GOAL SYSTEM</div>
-        <p class="pair-hook">Set a goal once, and RHOBEAR remembers what matters, what changed, and what still needs to happen.</p>
+  <div style="max-width:880px; margin:36px auto 0;">
+    <div class="card-paper stitched paired has-sprite" style="overflow:visible;">
+      <div class="sub-main">
+        <div class="pair-eyebrow">COMPASS · GOAL SYSTEM</div>
+        <div class="pair-label">HOOK</div>
+        <p class="pair-hook">Set a goal once and it stays alive — RHOBEAR tracks what's done, what changed, and what still needs you, instead of burying it all in a transcript.</p>
         <div class="pair-label" style="margin-top:14px;">TECH</div>
-        <p class="pair-tech">Persistent goal state with status, budgets, continuation counters, owner-action flags, outcomes, and resumable execution context.</p>
+        <p class="pair-tech">A durable GoalState drives a LanePlan of LaneSteps through guarded states (pending → approved → running → done/blocked), with a continuation judge checking red/yellow/escalation policy before it proceeds.</p>
+        <details class="dig">
+          <summary>dig in</summary>
+          <div class="dig-body">
+            <div class="dig-block">
+              <div class="dig-tag">THE ENGINEERING</div>
+              <p>Plan approval and dispatch are deliberately separate. Approving a plan does not start work — <code>/dispatch</code> is its own owner-authed route, so a stray UI click can't silently launch agents. That separation is the whole point.</p>
+            </div>
+            <div class="dig-block">
+              <div class="dig-tag tag-limit">HONEST LIMIT</div>
+              <p>Today the planner is still mostly heuristic — keyword routing and string-splitting. The richer model-backed composer is designed but not mature everywhere yet. It plans reliably; it doesn't plan brilliantly yet.</p>
+            </div>
+          </div>
+        </details>
       </div>
-    
-      <div class="card-paper stitched paired" style="overflow:visible;">
-        
-        <div class="pair-eyebrow">JUDGE</div>
-        <p class="pair-hook">RHOBEAR does not just keep working blindly. It decides when to continue, stop, ask you, or escalate.</p>
-        <div class="pair-label" style="margin-top:14px;">TECH</div>
-        <p class="pair-tech">A structured decision engine that evaluates goal state into continue / done / blocked / needs_owner / escalate verdicts.</p>
-      </div>
-    
-      <div class="card-paper stitched paired" style="overflow:visible;">
-        
-        <div class="pair-eyebrow">AUTOLOOP</div>
-        <p class="pair-hook">RHOBEAR can keep making progress in bounded loops without running wild.</p>
-        <div class="pair-label" style="margin-top:14px;">TECH</div>
-        <p class="pair-tech">Owner-gated autonomous continuation with iteration caps, state reloads, pause/clear checks, and judge-controlled stopping conditions.</p>
-      </div>
-    
-      <div class="card-paper stitched paired" style="overflow:visible;">
-        
-        <div class="pair-eyebrow">ORCHESTRATOR</div>
-        <p class="pair-hook">RHOBEAR picks the right worker for the right step and re-sequences when conflicts surface.</p>
-        <div class="pair-label" style="margin-top:14px;">TECH</div>
-        <p class="pair-tech">Cross-lane scheduler that resolves file conflicts, balances role load, and applies head-to-head model races inside a single goal envelope.</p>
-      </div>
-    
+      <img class="sub-sprite bob" src="../../assets/architect_ship.png" alt="" style="height:188px;">
+    </div>
   </div>
 </section>
 

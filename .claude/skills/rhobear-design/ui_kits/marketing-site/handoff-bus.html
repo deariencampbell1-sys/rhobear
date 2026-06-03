@@ -27,43 +27,45 @@
   <div style="text-align:center; max-width:780px; margin:0 auto;">
   <div class="eyebrow-row" style="display:inline-flex;">SECTION · SUBSTRATE · 12 / 20</div>
   <h1 class="h1-page">Crew hands work off. <em>You don't shuttle messages.</em></h1>
-  <p class="lead">The handoff bus is the message floor where agents pass work to each other — envelopes, results, leave-behinds, and aggregated lane outcomes — without going through you.</p>
+  <p class="lead">The handoff bus is the message floor where agents pass work to each other — envelopes, results, leave-behinds, and aggregated lane outcomes — without routing through you.</p>
   </div>
 
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:36px;">
-    
-      <div class="card-paper stitched paired" style="overflow:visible;">
-        
-        <div class="pair-eyebrow">HANDOFF ROUTER</div>
-        <p class="pair-hook">Agents can pass work to each other through RHOBEAR instead of waiting for you to copy messages around.</p>
+  <div style="max-width:880px; margin:36px auto 0;">
+    <div class="card-paper stitched paired has-sprite" style="overflow:visible;">
+      <div class="sub-main">
+        <div class="pair-eyebrow">HANDOFF BUS</div>
+        <div class="pair-label">HOOK</div>
+        <p class="pair-hook">Your agents pass work to each other directly — no babysitting copy-paste between tabs.</p>
         <div class="pair-label" style="margin-top:14px;">TECH</div>
-        <p class="pair-tech">A typed handoff layer with envelope routing, ack/nack semantics, retry budgets, and observability for inter-agent calls.</p>
+        <p class="pair-tech">Typed envelopes in local SQLite (WAL). Recipients claim atomically with <code>BEGIN IMMEDIATE</code> so two workers can't grab the same job; TTL expires inline during claim — no background daemon to die and leave zombie work.</p>
+        <details class="dig">
+          <summary>dig in</summary>
+          <div class="dig-body">
+            <pre class="code-artifact"><span class="tok">BEGIN IMMEDIATE</span>;   -- one recipient wins the claim; the other backs off</pre>
+            <div class="dig-block">
+              <div class="dig-tag tag-limit">THE HONEST PART</div>
+              <p>The bus is local to one box — agents share a single SQLite workspace, not a network. You can run that box anywhere: your laptop, or a VPS you reach over SSH or Tailscale (we smoke-tested VPS-from-day-one). What it's NOT yet is a mesh of agents coordinating across separate machines — that's roadmap, not shipped. We'd rather nail one box bulletproof than ship a distributed bus that silently drops messages.</p>
+            </div>
+            <div class="dig-block">
+              <div class="dig-tag tag-diy">WHY NOT BUILD IT YOURSELF</div>
+              <p>You can. You'll have the happy path running in a weekend. Then two agents claim the same ticket because you skipped the atomic lock, your retry daemon dies overnight and leaves work in limbo, and month two is you rebuilding a message bus instead of your product. We already paid that tax — this is the part where DIY buys you nothing but lost time.</p>
+            </div>
+          </div>
+        </details>
       </div>
-    
-      <div class="card-paper stitched paired" style="overflow:visible;">
-        <img class="sprite-tr pixelated bob" src="../../assets/spark_ship.png" alt="" style="height:150px;">
-        <div class="pair-eyebrow">RESULT ENVELOPE</div>
-        <p class="pair-hook">Every worker reports back in a format RHOBEAR can understand, track, and act on.</p>
-        <div class="pair-label" style="margin-top:14px;">TECH</div>
-        <p class="pair-tech">Structured result schema for status, evidence, diffs, side-effects, risks, and follow-up actions surfaced uniformly to the judge.</p>
-      </div>
-    
-      <div class="card-paper stitched paired" style="overflow:visible;">
-        
-        <div class="pair-eyebrow">DURABLE MESSAGE BUS</div>
-        <p class="pair-hook">Agents can leave messages, tasks, and results for each other without losing context.</p>
-        <div class="pair-label" style="margin-top:14px;">TECH</div>
-        <p class="pair-tech">Persistent, ordered, replayable agent-to-agent message bus that survives crashes, restarts, and runtime swaps.</p>
-      </div>
-    
-      <div class="card-paper stitched paired" style="overflow:visible;">
-        
-        <div class="pair-eyebrow">LANE-SET AGGREGATOR</div>
-        <p class="pair-hook">When several agents work in parallel, RHOBEAR rolls their progress into one clear outcome.</p>
-        <div class="pair-label" style="margin-top:14px;">TECH</div>
-        <p class="pair-tech">Lane-set rollup that merges concurrent worker reports into one aggregate envelope the judge and owner can read in a single glance.</p>
-      </div>
-    
+      <img class="sub-sprite bob" src="../../assets/spark_ship.png" alt="" style="height:178px;">
+    </div>
+  </div>
+</section>
+
+<section class="band-dark install-band">
+  <div class="wrap">
+    <div class="eyebrow-row">ONE HANDOFF, ON THE WIRE</div>
+    <h2 style="font-size:clamp(1.6rem,2.6vw,2.2rem); margin:0 0 22px;">Claimed once. Acked. No zombie work.</h2>
+    <div class="terminal" style="max-width:760px;"><span class="role">bus &gt;</span> envelope #42 · architect → foreman · scope: ticket
+<span class="role">foreman-2 &gt;</span> claim #42 · BEGIN IMMEDIATE · <span class="ok">won</span>
+<span class="role">foreman-3 &gt;</span> claim #42 · already claimed · <span class="dim">backing off</span>
+<span class="role">foreman-2 &gt;</span> result envelope · +108 -15 · 2 files · <span class="ok">acked</span></div>
   </div>
 </section>
 
