@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="shell.css">
 <link rel="icon" type="image/png" href="../../assets/rhobear-mark.png">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<!-- PayPal hosted-button SDK (client-id is public by design). Loads the Founders' Edition button below. -->
+<script src="https://www.paypal.com/sdk/js?client-id=BAA4VFw0oUGYGSyK1ORfsLYlh-Aj9hashfsbK6pdS8dJiN0Uki7TLS7F9jm9dbXEvVpF8xgpBf214LiaLs&components=hosted-buttons&enable-funding=venmo&currency=USD"></script>
 <style>
   /* Page-specific play styles */
   .sav-hero { text-align: center; padding: 56px 0 24px; position: relative; overflow: visible; }
@@ -227,6 +229,20 @@
   .price-card.featured .price-amt { color: var(--c-amber-deep); }
   .price-line { font-size: 0.92rem; color: var(--c-ink-2); line-height: 1.55; margin: 0 0 18px; flex: 1; }
   .price-foot { font-family: var(--font-mono); font-size: 0.74rem; color: var(--c-ink-3); letter-spacing: 0.03em; padding-top: 12px; border-top: 1px dashed var(--c-line-strong); margin-top: auto; }
+
+  /* FOUNDERS' EDITION — early-backer PayPal button */
+  .founders-band {
+    position: relative;
+    background: var(--c-dark-bg); color: var(--c-dark-ink);
+    border-radius: 20px; padding: 34px 38px; margin: 18px 0 0;
+    display: grid; grid-template-columns: 1.4fr minmax(240px, auto); gap: 32px; align-items: center;
+  }
+  @media (max-width: 760px) { .founders-band { grid-template-columns: 1fr; gap: 22px; text-align: center; } }
+  .founders-band h2 { font-family: var(--font-display); font-size: clamp(1.5rem, 2.6vw, 2.1rem); margin: 0 0 12px; line-height: 1.1; color: var(--c-dark-ink); }
+  .founders-band h2 em { color: var(--c-cyan); font-style: normal; }
+  .founders-band p { color: var(--c-dark-ink-2); font-size: 1rem; line-height: 1.6; margin: 0; max-width: 54ch; }
+  .founders-buy { min-width: 240px; }
+  .founders-fineprint { font-family: var(--font-mono); font-size: 0.74rem; color: var(--c-dark-ink-3); letter-spacing: 0.03em; margin-top: 12px; text-align: center; }
 </style>
 </head>
 <body>
@@ -527,6 +543,28 @@
       <div class="price-amt">$89<span class="per">/mo</span></div>
       <p class="price-line">Your crew works alongside another machine's crew — two teams on one coordinated job. It's on the roadmap, <strong>not live yet</strong>; the single-machine workbench is what ships today.</p>
       <div class="price-foot">Roadmap · not available day one</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDERS' EDITION — PayPal hosted button -->
+<section class="wrap" id="founders">
+  <div class="founders-band">
+    <div class="founders-copy">
+      <div class="eyebrow-row" style="color:var(--c-cyan);">★ FOUNDERS' EDITION</div>
+      <h2>Back it early. <em>Put your name on it from day one.</em></h2>
+      <p>The beta's free — this is for the folks who want to back RHOBEAR before the doors open. Checkout is handled end to end by PayPal; we never touch your card.</p>
+    </div>
+    <div class="founders-buy">
+      <div id="paypal-container-84AFSRNM4G24S"></div>
+      <script>
+        if (window.paypal && paypal.HostedButtons) {
+          paypal.HostedButtons({
+            hostedButtonId: "84AFSRNM4G24S",
+          }).render("#paypal-container-84AFSRNM4G24S");
+        }
+      </script>
+      <div class="founders-fineprint">Secure checkout by PayPal · Venmo accepted</div>
     </div>
   </div>
 </section>
