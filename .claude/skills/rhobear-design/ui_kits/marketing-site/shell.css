@@ -893,7 +893,8 @@ section.tight { padding: clamp(36px, 5vw, 64px) 0; }
 .beta-stamp { text-align: left; font-family: var(--font-mono); font-size: 0.84rem; line-height: 1.85; color: var(--c-dark-ink-2); }
 .beta-stamp-line { display: flex; gap: 8px; }
 .beta-stamp-lbl {
-  width: 56px;
+  display: inline-block;
+  width: 74px;
   color: var(--c-cyan);
   letter-spacing: 0.06em;
 }

@@ -243,6 +243,9 @@
   .founders-band p { color: var(--c-dark-ink-2); font-size: 1rem; line-height: 1.6; margin: 0; max-width: 54ch; }
   .founders-buy { min-width: 240px; }
   .founders-fineprint { font-family: var(--font-mono); font-size: 0.74rem; color: var(--c-dark-ink-3); letter-spacing: 0.03em; margin-top: 12px; text-align: center; }
+  .founders-perks { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 8px; }
+  .founders-perks li { position: relative; padding-left: 24px; color: var(--c-dark-ink-2); font-size: 0.95rem; line-height: 1.5; }
+  .founders-perks li::before { content: "\2713"; position: absolute; left: 0; top: 0; color: var(--c-cyan); font-weight: bold; }
 </style>
 </head>
 <body>
@@ -298,11 +301,11 @@
     <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:30px; align-items:center;">
       <div>
         <div class="eyebrow-row" style="color:var(--c-cyan);">★ BETA DROPS</div>
-        <h2 style="font-family:var(--font-display); font-size:clamp(1.6rem,2.8vw,2.2rem); color:var(--c-dark-ink); margin:0 0 10px; line-height:1.1;">Midnight on <em>06 / 05 / 2026.</em></h2>
-        <p style="color:var(--c-dark-ink-2); margin:0 0 6px; font-size:1rem; line-height:1.5;">Drop your details below before the clock hits zero. We open the boot queue in the order you signed up.</p>
+        <h2 style="font-family:var(--font-display); font-size:clamp(1.6rem,2.8vw,2.2rem); color:var(--c-dark-ink); margin:0 0 10px; line-height:1.1;">Noon Central · <em>Monday, June 8.</em></h2>
+        <p style="color:var(--c-dark-ink-2); margin:0 0 6px; font-size:1rem; line-height:1.5;">Drop your details below before the clock hits zero. We open the boot queue in the order you signed up. It's a small, limited beta on purpose — every run helps train the crew smarter so we can open it to more people.</p>
       </div>
       <div>
-        <div class="countdown" id="su-countdown" data-target="2026-06-05T00:00:00">
+        <div class="countdown" id="su-countdown" data-target="2026-06-08T12:00:00-05:00">
           <div class="cd-cell"><span class="cd-num" data-unit="d">--</span><span class="cd-lbl">days</span></div>
           <div class="cd-sep">:</div>
           <div class="cd-cell"><span class="cd-num" data-unit="h">--</span><span class="cd-lbl">hours</span></div>
@@ -315,7 +318,7 @@
           <div class="beta-live-card">
             <div class="beta-live-eyebrow">★ BETA IS LIVE</div>
             <div class="beta-live-head">Others are already shipping <em>in their sleep.</em></div>
-            <div class="beta-live-sub">The autoloop is firing. PRs are merging. The crew clocked in at midnight. You can be in the boot queue in two clicks.</div>
+            <div class="beta-live-sub">The autoloop is firing. PRs are merging. The crew clocked in at noon. You can be in the boot queue in two clicks.</div>
             <a href="#beta" class="btn-amber" style="font-size:13px; padding:14px 26px; margin-top:16px;">Spin yours up ↓</a>
           </div>
         </div>
@@ -494,7 +497,7 @@
 <section class="wrap" style="text-align:center;">
   <div class="eyebrow-row" style="display:inline-flex;">THE WHOLE CREW WANTS YOU IN</div>
   <h2 style="font-family:var(--font-display); font-size:clamp(1.7rem,2.8vw,2.4rem); margin:0 0 8px;">Boot the hub. <em>The beta's on the house.</em></h2>
-  <p style="font-size:1.02rem; color:var(--c-ink-2); max-width:60ch; margin:0 auto 8px;">Drop your details below and you'll be on the boot queue. The beta opens at midnight on <strong>06 / 05 / 2026</strong> — free to join.</p>
+  <p style="font-size:1.02rem; color:var(--c-ink-2); max-width:60ch; margin:0 auto 8px;">Drop your details below and you'll be on the boot queue. The beta opens at noon Central on <strong>Monday, June 8</strong> — free to join, and kept to a small limited cohort on purpose.</p>
 
   <div class="final-sprite-strip">
     <img src="../../assets/pops.png"             alt="" class="bob" style="height:120px;">
@@ -523,7 +526,7 @@
       <span class="price-flag now">Available now</span>
       <div class="price-when">Beta</div>
       <div class="price-amt">Free</div>
-      <p class="price-line">Get in the boot queue and pay nothing now. Run the whole hub, the whole crew, the whole time the beta's open. No card, no catch.</p>
+      <p class="price-line">Get in the boot queue and pay nothing now. Run the whole hub, the whole crew, the whole time the beta's open. It's a small, limited cohort — every run helps train the system smarter. No card, no catch.</p>
       <a href="#beta" class="btn-amber" style="text-align:center;">Join the beta →</a>
     </div>
 
@@ -536,13 +539,13 @@
       <div class="price-foot">Launch price · never billed during the beta</div>
     </div>
 
-    <!-- LAUNCH — two-machine, COMING SOON -->
+    <!-- LAUNCH — two hubs linked, COMING IN V1 (after beta) -->
     <div class="price-card coming">
-      <span class="price-flag soon">Coming soon</span>
-      <div class="price-when">Two machines</div>
+      <span class="price-flag soon">Coming in v1</span>
+      <div class="price-when">Two hubs, linked</div>
       <div class="price-amt">$89<span class="per">/mo</span></div>
-      <p class="price-line">Your crew works alongside another machine's crew — two teams on one coordinated job. It's on the roadmap, <strong>not live yet</strong>; the single-machine workbench is what ships today.</p>
-      <div class="price-foot">Roadmap · not available day one</div>
+      <p class="price-line">Link your hub to someone else's over a secure tunnel and send agents across to troubleshoot, debug, or lend a hand — as long as they're running a secure hub too. Lands in <strong>v1, the first version after beta</strong>; single-machine is what ships today.</p>
+      <div class="price-foot">v1 roadmap · after beta</div>
     </div>
   </div>
 </section>
@@ -551,9 +554,15 @@
 <section class="wrap" id="founders">
   <div class="founders-band">
     <div class="founders-copy">
-      <div class="eyebrow-row" style="color:var(--c-cyan);">★ FOUNDERS' EDITION</div>
-      <h2>Back it early. <em>Put your name on it from day one.</em></h2>
-      <p>The beta's free — this is for the folks who want to back RHOBEAR before the doors open. Checkout is handled end to end by PayPal; we never touch your card.</p>
+      <div class="eyebrow-row" style="color:var(--c-cyan);">★ FOUNDERS' EDITION · FIRST 1,000</div>
+      <h2>Back it early. <em>Lock it in for life.</em></h2>
+      <p>The beta's free — the Founders' Edition is for the first <strong style="color:var(--c-dark-ink);">1,000 people</strong> who want in for good. Grab it and you never pay a monthly subscription again, even when the models change underneath you.</p>
+      <ul class="founders-perks">
+        <li>Lifetime updates and model upgrades — no monthly fee, ever.</li>
+        <li>Run everything your way, and keep every upgrade as it ships.</li>
+        <li>First 1,000 founders only · limited to two per household.</li>
+      </ul>
+      <p style="font-size:0.84rem; color:var(--c-dark-ink-3); margin:14px 0 0;">Checkout is handled end to end by PayPal; we never touch your card.</p>
     </div>
     <div class="founders-buy">
       <div id="paypal-container-84AFSRNM4G24S"></div>
@@ -749,7 +758,7 @@
 <footer class="site-footer">
   <div class="site-footer-inner">
     <div class="footer-row">
-      <div class="footer-copy">© 2026 Sun Sponge LLC · <a href="https://github.com/rhobear">GitHub</a> · <a href="#">privacy</a> · <a href="faq.html">FAQ</a></div>
+      <div class="footer-copy">© 2026 Sun Sponge LLC · <a href="https://github.com/rhobear">GitHub</a> · <a href="https://github.com/deariencampbell1-sys/rhobear/blob/main/PRIVACY.md" target="_blank" rel="noopener">privacy</a> · <a href="faq.html">FAQ</a></div>
       <div class="footer-tag">Lean. Local. Private. Yours.</div>
     </div>
     <div class="footer-disclaimer">All third-party trademarks and logos are property of their respective owners and shown here for integration identification purposes only. No partnership, sponsorship, or endorsement is implied.</div>
