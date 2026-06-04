@@ -7,7 +7,32 @@
   <link rel="stylesheet" href="../../colors_and_type.css">
   <link rel="stylesheet" href="shell.css">
   <link rel="icon" type="image/png" href="../../assets/rhobear-mark.png">
-  
+
+  <!--
+    ============================ PRE-PUBLISH GATES ============================
+    Three correctness/IP gates must clear before this page ships. None are style.
+
+    (1) TWO-MACHINE = "COMING", NEVER CURRENT.
+        The live page is a single-machine workbench. The cross-machine story
+        appears ONLY in the #coming-team teaser and the COMING half of #security,
+        both clearly tagged on the roadmap. Do not move it into the hero.
+
+    (2) SECURITY WORDING — Valkyrie-verify + Happy-lock REQUIRED.
+        Every sentence in #security touching encryption, data handling, signing,
+        or cross-machine transport must be verified by Valkyrie (not a false
+        promise) and the exact wording locked by Happy before publish. Copy below
+        is written to the verified facts in the brief; it is NOT yet sign-off'd.
+
+    (3) CODENAME SCRUB — pending re-render of four screenshots.
+        agents-workbench.png, agents-compare.png, agents-mobile.png, 08-cli.png
+        still show internal Marvel codenames (Neo / Captain / Hulk / Thor /
+        black-widow / captain-america/pr3-strip-hub / worker=cap / worker=neo).
+        02-agents.png is the already-scrubbed reference (Guardian / Architect /
+        on-brand). The dirty <img> tags below are marked SCRUB-PENDING. Swap in
+        re-rendered, clean captures before publish.
+        Needs Dearien's call: editable or re-render?
+        ==========================================================================
+  -->
 </head>
 <body>
 
@@ -24,69 +49,151 @@
   </nav>
 <main>
 
+<!-- ===================== HERO — LIVE, SINGLE-MACHINE ===================== -->
 <section class="wrap">
   <div class="eyebrow-row">SECTION · STORY · 04 / 20</div>
   <h1 class="h1-page">One goal. Many agents. <em>One reviewer.</em></h1>
-  <p class="lead">Cursor-2.0 three-pane layout. Lane sets. Head-to-head model races. Merge gate. The hardest part of the build is also the most visible part of the product.</p>
+  <p class="lead" style="max-width:760px;">A chat is one model, alone in a box. The workbench is a team of named workers running side by side — each in its own lane, with its own session, its own diff, its own gate. You watch all of them at once, promote the one that's right, and reject the rest. In real time, on your machine.</p>
 </section>
 
-<section class="wrap" style="padding-top:0;">
+<!-- ===================== ANTI-WRAPPER — promoted to the top ===================== -->
+<section class="band-dark install-band" style="margin-top:8px; padding:64px 0;">
+  <div class="wrap" style="position:relative;">
+    <img src="../../assets/hero-armored-walk.png" alt="" class="perched" style="position:absolute; right:0; bottom:-20px; height:220px;">
+    <div class="eyebrow-row">THE WHOLE POINT</div>
+    <h2 style="font-size:clamp(1.9rem,3.2vw,2.7rem); margin:0 0 18px; max-width:760px;">Most agent products give you a chat. <em>We gave you a workbench.</em></h2>
+    <p style="color:var(--c-dark-ink-2); font-size:1.08rem; line-height:1.6; max-width:680px;">A chat is one model, one channel, no memory of the last run. The workbench is a team of named workers in parallel lanes — each with its own session, its own diff, its own gate. You see all of them at once. You promote what's right. You reject what isn't. You stay in charge of every change before it lands.</p>
+  </div>
+</section>
+
+<!-- ===================== SEE THE WORK HAPPEN (three-pane) ===================== -->
+<section class="wrap">
+  <span class="live-tag">Live today</span>
   <div class="screen-caption-grid">
+    <!-- CLEAN reference capture — Guardian / Architect / on-brand crew names. -->
     <div class="screenshot-frame stitched has-perch" style="position:relative;">
-      <img src="../../assets/02-agents.png" alt="Workbench — 3-pane layout" class="pixelated">
+      <img src="../../assets/02-agents.png" alt="Workbench — three-pane layout with the merge gate open" class="pixelated">
     </div>
     <div>
-      <div class="num" style="font-family:var(--font-display); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--c-amber-deep); margin-bottom:14px;">THE WORKBENCH IS REAL</div>
+      <h2 style="margin-top:0;">See the work happen — instead of trusting a black box.</h2>
+      <p style="color:var(--c-ink-2); font-size:1.04rem; line-height:1.6; margin:0 0 18px;">Todos, the live diff, and the terminal are all on screen while the worker runs. You don't approve a summary of what an agent claims it did — you watch it do it, then decide.</p>
       <ul class="bullets-mono">
-        <li><strong>LEFT PANE</strong> — live agent list grouped Recent / Head-to-Head / In Compose / Older</li>
-        <li><strong>MIDDLE PANE</strong> — active worker view: todos, transcript, diff, owner-goal input</li>
-        <li><strong>RIGHT PANE</strong> — live code viewer + Terminal / Output / Problems tabs</li>
-        <li><strong>ACTIONS ROW</strong> — Promote · Reject · Ask Reviewer · Compare side-by-side</li>
-        <li><strong>MODE TOGGLE</strong> — Orchestrator vs Head-to-Head</li>
-        <li><strong>MODEL PICKER</strong> — per-lane (Claude · Plan / Codex · Build / Pi · Build)</li>
+        <li><strong>LEFT</strong> — live agent list, grouped Recent / Head-to-Head / In Compose / Older</li>
+        <li><strong>MIDDLE</strong> — the active worker: todos, transcript, diff, owner-goal input</li>
+        <li><strong>RIGHT</strong> — live code viewer with Terminal / Output / Problems tabs</li>
+        <li><strong>ACTIONS</strong> — Promote · Reject · Ask Reviewer · Compare side-by-side</li>
       </ul>
-      <div class="num" style="font-family:var(--font-display); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--c-amber-deep); margin:32px 0 8px;">DROP-IN TRACKING</div>
+      <div class="num" style="font-family:var(--font-display); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--c-amber-deep); margin:28px 0 8px;">DROP-IN TRACKING</div>
       <ul class="bullets-mono">
-        <li>Grab a model card from the tray. Drop it on an open lane.</li>
-        <li>The dotted handoff line draws itself to the Board. No wiring step.</li>
+        <li>Grab a model card from the tray, drop it on an open lane — no wiring step.</li>
+        <li>The dotted handoff line draws itself to the Board.</li>
         <li>Tooltip lights up: PR in flight, last commit, owner-pending count.</li>
       </ul>
     </div>
   </div>
 </section>
 
-<section class="wrap">
-  <div class="card-grid cols-2" style="margin-top:40px; row-gap:24px;">
-    <div class="card-paper stitched" style="padding:0; overflow:hidden; display:flex; flex-direction:column;">
-      <div style="aspect-ratio: 16 / 10; overflow:hidden; background:#0a0d18;">
-        <img src="../../assets/agents-workbench.png" alt="Workbench with live diff" class="pixelated" style="width:100%; height:100%; object-fit:cover; object-position:top center;">
+<!-- ===================== HEAD-TO-HEAD MODEL RACES ===================== -->
+<section class="wrap" style="padding-top:0;">
+  <span class="live-tag">Live today</span>
+  <h2 style="font-size:clamp(1.8rem,3vw,2.5rem); margin:0 0 14px; max-width:820px;">Run three models at the same task. <em>Keep the winner. Throw away the rest.</em></h2>
+  <p class="lead" style="max-width:760px;">Point Claude, Codex, and Pi at one goal in parallel lanes. They each take a swing. You compare the diffs side by side and promote the one that's actually right — no single model gets the last word.</p>
+
+  <div class="screen-caption-grid" style="margin-top:24px;">
+    <div>
+      <div class="spec-block" style="margin-bottom:22px;">
+        <p class="spec-out">One goal, three independent attempts.</p>
+        <p class="spec-proof">MODE TOGGLE — Orchestrator vs Head-to-Head · per-lane MODEL PICKER (Claude · Plan / Codex · Build / Pi · Build)</p>
       </div>
-      <div style="padding:18px 22px;"><div class="mono-label">HEAD-TO-HEAD · DIFF ON THE SIDE</div><h3 style="margin:4px 0 0;">Vibe-code with the diff in view.</h3></div>
+      <div class="spec-block" style="margin-bottom:22px;">
+        <p class="spec-out">Compare the results, not the promises.</p>
+        <p class="spec-proof">Compare side-by-side · diff vs diff · file counts and +/− lines per lane</p>
+      </div>
+      <div class="spec-block">
+        <p class="spec-out">Promote one. The losers are discarded.</p>
+        <p class="spec-proof">Promote · Reject · Ask Reviewer — nothing merges without your call</p>
+      </div>
     </div>
+    <!-- SCRUB-PENDING: agents-compare.png shows "Neo merge gate" toast + "Captain…" sidebar. Re-render before publish. -->
+    <div class="screenshot-frame stitched">
+      <img src="../../assets/agents-compare.png" alt="Head-to-head — comparing two worker attempts side by side" class="pixelated">
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MERGE GATE ===================== -->
+<section class="wrap" style="padding-top:0;">
+  <div class="card-grid cols-2" style="row-gap:24px; align-items:center;">
+    <div>
+      <span class="live-tag">Live today</span>
+      <h2 style="margin:0 0 14px;">Catch the bad change <em>before</em> it lands — not after.</h2>
+      <p style="color:var(--c-ink-2); font-size:1.04rem; line-height:1.6; margin:0 0 16px;">Every worker's output stops at a merge gate. The Reviewer reads the evidence pack, checks the changed files, and tells you whether it's safe to promote. Nothing reaches your branch until you say so.</p>
+      <p class="spec-proof">Reviewer pass · evidence pack + changed-file check · owner-confirm to merge · Conditional / strict modes</p>
+    </div>
+    <!-- SCRUB-PENDING: agents-mobile.png shows "Neo merge gate", "Hulk API surface", "Thor runtime adapters", "black-widow/workbench", "Captain permissions pass". Re-render before publish. -->
     <div class="card-paper stitched" style="padding:0; overflow:hidden; display:flex; flex-direction:column;">
       <div style="aspect-ratio: 16 / 10; overflow:hidden; background:#0a0d18; display:flex; align-items:center; justify-content:center; padding:18px;">
-        <img src="../../assets/agents-mobile.png" alt="Mobile workbench" class="pixelated" style="height:100%; width:auto; max-width:60%; object-fit:contain; border-radius:20px; box-shadow:0 12px 28px -10px rgba(0,0,0,0.55);">
+        <img src="../../assets/agents-mobile.png" alt="Mobile workbench — approve a merge from your phone" class="pixelated" style="height:100%; width:auto; max-width:60%; object-fit:contain; border-radius:20px; box-shadow:0 12px 28px -10px rgba(0,0,0,0.55);">
       </div>
       <div style="padding:18px 22px;"><div class="mono-label">MOBILE</div><h3 style="margin:4px 0 0;">Approve a merge from the couch.</h3></div>
     </div>
   </div>
 </section>
 
-<section class="band-dark install-band" style="margin-top:30px;">
-  <div class="wrap" style="position:relative;">
-    <img src="../../assets/hero-armored-walk.png" alt="" class="perched" style="position:absolute; right:0; bottom:-20px; height:240px;">
-    <div class="eyebrow-row">WHY THIS PAGE MATTERS MOST</div>
-    <h2 style="font-size:clamp(1.8rem,3vw,2.6rem); margin:0 0 18px; max-width:760px;">Most agent products give you a chat. <em>We gave you a workbench.</em></h2>
-    <p style="color:var(--c-dark-ink-2); font-size:1.05rem; line-height:1.6; max-width:720px;">A chat is one model, one channel, no memory. The workbench is a team of named workers running in parallel lanes, each one with its own session, its own diff, its own gate. You see all of them at once. You promote what's right. You reject what isn't. You stay in charge.</p>
+<!-- ===================== COMING: YOUR TEAM, PLUS THEIRS ===================== -->
+<section id="coming-team" class="coming-band">
+  <div class="wrap">
+    <span class="coming-tag">Coming · on the roadmap</span>
+    <h2 style="color:var(--c-dark-ink); font-size:clamp(1.9rem,3.2vw,2.7rem); margin:0 0 18px; max-width:780px;">Coming: your team, <em>plus theirs.</em></h2>
+    <p style="color:var(--c-dark-ink-2); font-size:1.08rem; line-height:1.62; max-width:720px; margin:0 0 14px;">Today the workbench runs <strong style="color:var(--c-dark-ink);">one crew, on one machine</strong> — and that's the whole page above. Next, your crew will work alongside another machine's crew: two teams, one coordinated job, passing work across the handoff bus.</p>
+    <p style="color:var(--c-dark-ink-2); font-size:1.08rem; line-height:1.62; max-width:720px; margin:0;">It's the shift the whole industry is racing toward — AI that works as a <em>team</em>, not a single chat in a window. And it's headed to two desktops for about the price of a dinner out.</p>
   </div>
 </section>
 
-<!-- ===== CLI WALL SHOWCASE ===== -->
+<!-- ===================== SECURITY — split: LIVE vs COMING, gated ===================== -->
+<!-- GATE (2): no sentence below publishes until Valkyrie-verified + Happy-locked. -->
+<section id="security" class="wrap">
+  <div class="eyebrow-row">SECURITY</div>
+  <h2 style="font-size:clamp(1.8rem,3vw,2.5rem); margin:0 0 8px;">It runs on your box. <em>We take no data.</em></h2>
+  <p class="lead" style="max-width:740px;">There's no telemetry pipe home, because there's nowhere for it to go. Your agents and your conversations run where you run them — and the parts that aren't built yet are labelled as such, on purpose.</p>
+
+  <span class="live-tag" style="margin-top:26px;">Live today</span>
+  <div class="card-grid cols-2" style="row-gap:18px;">
+    <div class="card-paper stitched feature-card">
+      <div class="num">LOCAL-FIRST</div>
+      <p>Agents and conversations run on your machine or your server. Nothing is routed through us. Nothing is stored by us.</p>
+    </div>
+    <div class="card-paper stitched feature-card">
+      <div class="num">SIGNED MESSAGING</div>
+      <p>Internal commands between workers are cryptographically signed (Ed25519). A forged instruction is rejected, not executed.</p>
+    </div>
+    <div class="card-paper stitched feature-card">
+      <div class="num">DEFAULT-DENY</div>
+      <p>Plugins are denied by default. Each agent gets only the tools its job needs — Rule-of-Two — behind owner-token auth.</p>
+    </div>
+    <div class="card-paper stitched feature-card">
+      <div class="num">LOCALHOST-BOUND</div>
+      <p>The workbench binds to localhost. It isn't open to the network unless you choose to open it.</p>
+    </div>
+  </div>
+
+  <div class="coming-band" style="margin-top:30px;">
+    <div class="wrap">
+      <span class="coming-tag">Coming · on the roadmap</span>
+      <h3 style="color:var(--c-dark-ink); font-size:clamp(1.4rem,2.4vw,1.9rem); margin:0 0 14px;">The cross-machine secure link.</h3>
+      <p style="color:var(--c-dark-ink-2); font-size:1.04rem; line-height:1.62; max-width:720px; margin:0;">When two machines team up, they'll pair the way you pair a phone: a pairing code, a short verify phrase you both read aloud, and per-device keys. The link is end-to-end encrypted, and either side can revoke it instantly. This is roadmap — not in v1.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CLI WALL ===================== -->
 <section class="wrap">
+  <span class="live-tag">Live today</span>
   <div class="eyebrow-row" style="display:inline-flex;">SAME ROOM · ANOTHER WALL</div>
   <h2 style="font-size:clamp(1.8rem,3vw,2.5rem); margin:0 0 14px;">Prefer the CLI? <em>It's the same crew, all in plain text.</em></h2>
-  <p class="lead" style="max-width:760px;">A four-pane CLI wall: Claude Code, Pi, shell, log tail. Add panels. Watch the bus fire. Pipe events to anywhere. Same workers, same handoff bus, no mouse required.</p>
+  <p class="lead" style="max-width:760px;">A four-pane CLI wall: Claude Code, Pi, a shell, a log tail. Add panels. Watch the bus fire. Pipe events anywhere. Same workers, same handoff bus, no mouse required.</p>
 
+  <!-- SCRUB-PENDING: 08-cli.png shows "captain-america/pr3-strip-hub", worker=cap, worker=neo. Re-render before publish. -->
   <div class="screenshot-frame stitched" style="margin-top:24px;">
     <img src="../../assets/08-cli.png" alt="CLI wall — Claude Code, Pi, shell, log tail" class="pixelated">
   </div>

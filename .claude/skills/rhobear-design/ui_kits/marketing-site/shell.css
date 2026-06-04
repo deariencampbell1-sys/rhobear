@@ -1692,3 +1692,42 @@ section.tight { padding: clamp(36px, 5vw, 64px) 0; }
 .fence .can::before { content: "\2713"; position: absolute; left: 0; color: #1f7a52; font-weight: 700; }
 .fence .cant::before { content: "\2715"; position: absolute; left: 0; color: #c4304f; font-weight: 700; }
 .tech-line { font-family: var(--font-mono); font-size: 0.86rem; color: var(--c-ink-3); margin: 16px 0 0; }
+
+/* ---------------- WORKBENCH: live vs. roadmap status ---------------- */
+/* LIVE-TODAY tag — solid, status-ok green. Shipped, verified true. */
+.live-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-display); font-size: 11px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--c-status-ok, #4fd6a9);
+  border: 1.5px solid var(--c-status-ok, #4fd6a9); border-radius: 999px;
+  padding: 5px 13px; margin-bottom: 16px;
+}
+.live-tag::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c-status-ok, #4fd6a9); }
+
+/* ON-THE-ROADMAP tag — dashed cyan, deliberately NOT solid. Not shipped. */
+.coming-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-display); font-size: 11px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--c-cyan);
+  border: 1.5px dashed var(--c-cyan); border-radius: 999px;
+  padding: 5px 13px; margin-bottom: 16px;
+}
+.coming-tag::before { content: "\25F7"; font-size: 13px; line-height: 1; }
+
+/* Coming-soon band — dashed border + blueprint hatch so it never reads as shipped. */
+.coming-band {
+  position: relative; overflow: hidden;
+  border: 2px dashed rgba(125,255,213,0.45);
+  border-radius: var(--r-4, 18px);
+  background:
+    repeating-linear-gradient(45deg, rgba(125,255,213,0.05) 0 14px, transparent 14px 28px),
+    var(--c-dark-bg);
+  margin: 30px 0;
+}
+.coming-band .wrap { padding-top: 54px; padding-bottom: 54px; }
+.coming-band em { color: var(--c-cyan); }
+
+/* outcome-led spec block: big outcome line, mono proof underneath */
+.spec-block { margin: 0 0 4px; }
+.spec-block .spec-out { font-family: var(--font-display); font-size: clamp(1.15rem, 2vw, 1.5rem); line-height: 1.25; margin: 0 0 8px; }
+.spec-block .spec-proof { font-family: var(--font-mono); font-size: 0.86rem; color: var(--c-ink-3); line-height: 1.6; margin: 0; }
