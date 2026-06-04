@@ -17,7 +17,7 @@
         <div class="pair-label">HOOK</div>
         <p class="pair-hook">OpenClaw is the local bridge that lets RHOBEAR reach your tools, agents, and machine safely — and you can swap it out without the substrate breaking.</p>
         <div class="pair-label" style="margin-top:14px;">TECH</div>
-        <p class="pair-tech">A local routing layer for agent/tool communication, runtime adapters, workspace state, and self-hosted coordination APIs. Runs inside WSL as a systemd user service; the Jarvis bridge hooks Telegram <code>before_dispatch</code>, verifies owner ID, and routes through <code>python -m jarvis.router</code>.</p>
+        <p class="pair-tech">A local routing layer for agent/tool communication, runtime adapters, workspace state, and self-hosted coordination APIs. Runs inside WSL as a systemd user service; the Telegram bridge hooks <code>before_dispatch</code>, verifies the owner ID, and routes the command through the local dispatcher.</p>
         <details class="dig">
           <summary>dig in</summary>
           <div class="dig-body">
