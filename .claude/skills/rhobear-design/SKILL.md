@@ -12,6 +12,7 @@ If the user invokes this skill without any other guidance, ask them what they wa
 
 ## Fast index
 
+- `CONSTELLATION.md` — **the marketing-site North Star.** Read this FIRST before touching `ui_kits/marketing-site`. The deep-space "sister to the hub" identity + the token-driven re-skin pipeline. It supersedes the pixel-display headline rule (#3 below) FOR THE MARKETING SITE — headlines there are self-hosted Inter, on a live starfield, dark glass. The desktop-app worlds + sprite canon are unchanged.
 - `README.md` — the contract: voice, casing, content rules, visual foundations, iconography.
 - `colors_and_type.css` — all design tokens (color, type, spacing, motion, shadows, borders). Link it from any HTML you write.
 - `assets/` — flat asset library, ~103 files:

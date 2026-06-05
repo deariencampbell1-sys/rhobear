@@ -42,6 +42,11 @@ Copy is FINAL — never rewrite words; only skin/layout/assets.
 - ✅ **Sprites enlarged to Pops-size minimum** — `.lc-sprite` → 210px, `.sub-sprite` → 200px, final-strip sprites → 190px (was 130) + the strip wraps/centers. Feature-card perches kept at 120 (3-col cards too narrow for 210). Max-height only, no distortion.
 - ✅ **"Soon, hubs talk to hubs" image** — owner generated it from the prompt (`Downloads/HUBS WORLDS.png`, already transparent). Resized → `assets/hubs-link.png`, wired into the band's right side (centered, glow, responsive-stacks on mobile), band given min-height so it sits inside the dashed border.
 
+## ✅ SHIP — captured, committed, pushed, CodeAnt triggered
+- ✅ **22 full-page stills** of every page top-to-bottom (live starfield filling each page; 2400px wide, 1.5×) for the owner's later AI video animation. Saved to `C:\Users\DeLL\Downloads\RHOBEAR-site-stills\` AND committed into the repo at `marketing-site-stills\`.
+- ✅ **Pushed** the finished Constellation re-skin to `claude/charming-mayer-CTOmQ` (commit `7bebd79`, 81 files; `.orig` pipeline backups excluded).
+- ✅ **PR #1 open** (https://github.com/deariencampbell1-sys/rhobear/pull/1), head = `7bebd79`. **CodeAnt triggered** — `codeant-ai` check-suite present on the commit (status: queued → it reviews automatically; no manual trigger needed/allowed). Neo waits for CodeAnt before any merge.
+
 ## ✅ ROUND 3 — owner feedback (done this pass)
 - ✅ **Dark ingredient logos lost in the starfield** — owner: CodeGraph + Aguara read great, but **MCP, Ollama, Whisper, Pi** are solid black and got camouflaged by the star dots. Wanted them to "pop a lot more" WITHOUT changing the black color and WITHOUT losing the stars. Fix: luminous rim-glow on `.bw-summary-inner img.logo` — two tight white halos hug the silhouette (carves a clean glowing edge out of the star noise) + two wider cool auras for premium constellation glow; brightens further when a card is open/hovered. Color never touched (no invert/recolor), stars untouched, the already-bright logos just gain a faint consistent aura. Landed `shell.css:2059`, cache-busted v=1780636292 on 22 pages.
 
