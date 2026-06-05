@@ -42,6 +42,9 @@ jobs:
           cp "$SRC"/colors_and_type.css _site/
           cp -r "$SRC"/assets _site/assets
 
+          # Custom apex domain — keeps rhobear.ai bound across every redeploy.
+          echo "rhobear.ai" > _site/CNAME
+
           # The pages live two levels deep and reference ../../assets and
           # ../../colors_and_type.css. After flattening to the publish root,
           # rewrite those up-two-levels refs to local. This makes images and
