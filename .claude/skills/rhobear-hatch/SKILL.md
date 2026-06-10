@@ -55,6 +55,10 @@ sequence to one stable anchor so the figure stays locked while the legs animate.
   specific sequence looks better on `feet`.
 
 ## WORKFLOW
+0. **Fleet pass (all sets at once).** `python scripts/build_master_report.py` →
+   inventories + drift-checks every crew/world set and writes `reports/MASTER.md`
+   (verdict table + regen list + drift watch). Run this first to see the whole board;
+   dispatch one worker per crew for the visual eyeball (no-clobber by crew folder).
 1. **Measure first.** `python scripts/measure_registration.py <crew> <world>` →
    flags sequences whose head/height drift > 4px (the ones that will detach).
 2. **Contact-sheet QA.** `python scripts/make_contact_sheet.py <crew> <world>

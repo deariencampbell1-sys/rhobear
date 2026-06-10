@@ -59,8 +59,9 @@ def main():
         print(__doc__)
         return
     crew, world = sys.argv[1], sys.argv[2]
-    base = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(
-        os.path.dirname(os.path.abspath(__file__))))), 'hub', 'assets', 'crew')
+    # Default assumes this script sits in .../crew/_preview (the worktree layout):
+    # crew root = the parent of _preview. Override with --base from the packaged skill.
+    base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     if '--base' in sys.argv:
         base = sys.argv[sys.argv.index('--base') + 1]
     THRESH = 4  # px spread above which a head-anchor fix is recommended
