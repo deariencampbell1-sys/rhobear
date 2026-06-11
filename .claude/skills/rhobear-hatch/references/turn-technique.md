@@ -155,10 +155,44 @@ ring disabled (snap fallback) and note it for the owner.
 | gate | threshold | what failure means |
 |---|---|---|
 | baseline spread | ≤ 2px | broken source feet (fix source, not baker) |
-| feetCx spread | ≤ 4px | same |
-| headTop spread | ≤ 4px | source views at different scales — re-check 236 resize |
-| height spread | ≤ 6px | same |
-| **synthMidDev** | ≤ 4px | a synth's head-band centroid is off the midpoint of its two canon neighbours → ghost/broken synth. THE synth-health gate. |
+| feetCx spread | ≤ 4px | same — or a sparse/disintegrated still (the diagnosis block prints per-still density; measured: a disintegrated still at 0.24 vs healthy 0.37+) |
+| headTop spread | ≤ 4px | mixed source sizes (head-pop hazard), a contaminated still, or genuine canon pose-height variance — the verdict ladder separates these (§7.1) |
+| height spread | ≤ 6px | with baseline pinned at 0 by construction, height ≡ headTop — same causes |
+| **synthMidDev** | ≤ 4px | a synth's head-band centroid is off the midpoint of its two canon neighbours → ghost/broken synth. THE synth-health gate. Vertical mirror: every synth headTop must sit inside the canon envelope ±1px. |
+
+### 7.1 The verdict ladder (earned by the guardian/neon repro test + a 27-set fleet adjudication, 2026-06-10)
+
+Gates measure; the LADDER decides. qa_turn16.py prints one token after `=>`
+plus an `action:` line — obey it (exit codes: 0 PASS*, 2 FAIL-*, 3 CHECK):
+
+1. **`FAIL-SOURCE` (contaminated)** — a source still's opaque coverage is
+   >2.5× the set minimum: a scene/backdrop is baked into the PNG. Fleet
+   measured: contaminated stills run 3–5× their siblings (architect/western
+   `west` 0.228 vs ~0.05; guardian/ship `west`; wizard/western ×3) and drive
+   headTop spreads 14–31px + synthMidDev 7.5–16.9. Fix the SOURCE (G2) or
+   ring-off — a `--mix` flip cannot fix geometry.
+2. **`FAIL-SOURCE` (feet/sparse)** — baseline/feetCx failure: broken or
+   disintegrating still (spark/neon `north-west` is a particle cloud, density
+   0.24 — no solid feet). Per-still density is printed for DIAGNOSIS but not
+   gated: measured overlap (broken 0.236 vs legit thin profiles 0.28–0.30)
+   means no honest threshold exists; the feet gates catch the consequence.
+3. **`FAIL-SOURCE` (mixed sizes)** — rotations differ in cell size within the
+   set: the true head-pop hazard. (Uniform-but-not-236 is NOT a failure:
+   17/27 fleet sets sit uniformly at 224–256 and bake healthy rings — the
+   ladder prints a §1 contract-drift note for the owner instead.)
+4. **`FAIL-SYNTH`** — synthMidDev > 4 or a synth outside the canon vertical
+   envelope, with sources clean. Flip `--mix` once; still failing → ring-off.
+   (Fleet measured: ZERO genuine FAIL-SYNTH in 27 sets — every synth failure
+   traced to source art. The warp held 27/27.)
+5. **`PASS-WITH-VARIANCE`** — only headTop(/height) over gate, spread ≤ 10,
+   sources uniform, every synth inside the canon envelope ±1px: genuine canon
+   pose-height variance (the figure stands taller/shorter per heading).
+   Measured benign at 5–9px on 10 fleet sets (guardian/neon 6, designer/neon
+   and foreman/neon 9 — sheets clean); contamination starts at 14 — the gap
+   is why the lane caps at 10. Requires the step-7 eyeball, then proceeds.
+6. **`CHECK`** — anything off-map → STOP and report. Never proceed past a
+   failed gate without a matching branch; log a SKILL-GAP (that is how this
+   ladder was earned).
 
 `headCx` SPREAD and neighbour STEP are printed but informational: the head
 ORBITS the feet axis as the figure rotates — around the ring headCx traces a
@@ -175,6 +209,8 @@ v1 used max-step ≤ 8 and false-failed builder/western; this is the lesson.)
 | `--rim` | 0.28 | stronger mint rim | flatter figure |
 | mix `close` threshold | 96 (in code) | more snap-averaging, less union/checker | more disagreement texture |
 | luma gate | 1.18 (in code) | washes pass as OK | emissive sets false-flagged |
+| variance-lane cap | 10px (in qa code) | contaminated sets sneak into the lane (they start at 14) | benign 9px sets (designer/neon, foreman/neon) false-fail |
+| coverage-outlier line | 2.5× set min (in qa code) | contaminated stills pass as clean (they run 3–5×) | wide capes/props false-flagged |
 | warp smoothing σ | 3.0 / 2.0 (in code) | softer silhouette, less row detail | row jitter (wiggly edges) |
 | anticipate/mid/settle ms | 95/52/110 (engine TUNE2) | heavier, slower turn | snappier, lighter |
 | fast-turn ms | 45 (engine) | calmer reactions | twitchier |

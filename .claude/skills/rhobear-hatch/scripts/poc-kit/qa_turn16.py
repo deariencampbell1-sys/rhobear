@@ -10,9 +10,19 @@ the axis slightly as shoulders swing) — we report it, gate on the others.
 Contact sheet: 16 cells with bbox (green) + head-anchor crosshair (red) +
 feet-axis tick (mint), hatch-pet style, written to poc/proof/.
 
+The script ADJUDICATES: it prints one verdict token after `=>` and an action
+line. Obey the token — never reinterpret a failure yourself:
+  PASS                all gates green (closes the set)
+  PASS-WITH-VARIANCE  canon pose-height variance, machine-verified benign —
+                      closes the set only after the step-7 eyeball
+  FAIL-SOURCE         broken source art (action line names the still + fix)
+  FAIL-SYNTH          synth geometry broken (flip --mix once, else ring-off)
+  CHECK               off-map -> STOP and report the owner
+Exit codes: 0 = PASS*, 2 = FAIL-*, 3 = CHECK (for batch drivers).
+
 Usage: python qa_turn16.py [--crew architect] [--world ship]
 """
-import argparse, json, os
+import argparse, json, os, sys
 import numpy as np
 from PIL import Image, ImageDraw
 
@@ -83,16 +93,106 @@ def main():
              'height': report['height'] <= GATE + 2,
              'feetCx': report['feetCx'] <= GATE,
              'synthMidDev': max_dev <= 4}
+
+    # --- source-rotation analysis: 236 check, contamination, sparse diagnosis ---
+    src_dir = os.path.normpath(os.path.join(HERE, '..', '..', args.crew, args.world, 'rotations'))
+    src = {}
+    if os.path.isdir(src_dir):
+        for f in sorted(os.listdir(src_dir)):
+            if not f.endswith('.png'):
+                continue
+            im = Image.open(os.path.join(src_dir, f))
+            a = np.array(im.convert('RGBA'), dtype=np.uint8)[..., 3] > ALPHA_ON
+            ys, xs = np.nonzero(a)
+            bbox = ((int(ys.max()) - int(ys.min()) + 1) * (int(xs.max()) - int(xs.min()) + 1)) if len(ys) else 1
+            src[f[:-4]] = dict(size=im.size, cover=float(a.mean()), dens=float(a.sum()) / bbox)
+    # Uniform-per-set cell size is what the ring needs (feet-registration pads
+    # the rest); MIXED sizes within a set = the head-pop hazard. Uniform but
+    # not 236 = contract drift — note it, don't fail it (fleet-measured: 17/27
+    # sets sit uniformly at 224-256 and bake healthy rings).
+    sizes = {v['size'] for v in src.values()}
+    src_uniform = len(sizes) == 1
+    src_236 = sizes == {(236, 236)}
+    drift = ('' if (src_236 or not src_uniform or not src) else
+             f" (sources uniformly {next(iter(sizes))[0]}px, not 236 — §1 contract drift; ring unaffected; flag for owner)")
+    cov_min = min((v['cover'] for v in src.values()), default=0.0)
+    contaminated = sorted(d for d, v in src.items() if cov_min and v['cover'] > 2.5 * cov_min)
+
+    # vertical synth health: every synth headTop must sit inside the canon
+    # envelope +-1px (the vertical mirror of horizontal midpointness)
+    canon_ht = [m['headTop'] for d, m in rows if not meta['headings'][d]['synth']]
+    cmin, cmax = min(canon_ht), max(canon_ht)
+    env_out = {d: m['headTop'] for d, m in rows
+               if meta['headings'][d]['synth'] and not (cmin - 1 <= m['headTop'] <= cmax + 1)}
+
+    # --- verdict ladder: gates measure, the ladder decides. Obey the token. ---
+    # Thresholds earned 2026-06-10 (guardian/neon repro + 27-set fleet adjudication):
+    # benign canon variance measured 5-9px, contaminated stills 14-31px -> lane cap 10;
+    # contaminated stills run 3-5x sibling coverage -> 2.5x outlier line.
+    failed = {k for k, v in gates.items() if not v}
+    if not failed:
+        token = 'PASS'
+        action = ((f"note: coverage-outlier source still(s) {', '.join(contaminated)} — "
+                   'gates green but eyeball recommended') if contaminated else '') + drift
+    elif contaminated:
+        token = 'FAIL-SOURCE'
+        action = (f"contaminated source still(s): {', '.join(contaminated)} (opaque coverage >2.5x the "
+                  'set minimum = scene/backdrop baked into the PNG; this is what a huge synthMidDev '
+                  'usually means). Fix the SOURCE: imagegen G2 that still + acceptance pipeline '
+                  '(no imagegen capability -> STOP, report), or ship ring-off (roster '
+                  'turn16.enabled:false). A --mix flip will NOT fix geometry.')
+    elif not gates['baseline'] or not gates['feetCx']:
+        token = 'FAIL-SOURCE'
+        sparse = ', '.join(f"{d}(density {v['dens']:.2f})"
+                           for d, v in sorted(src.items(), key=lambda kv: kv[1]['dens'])[:3])
+        action = ('feet/axis broken in source art (sparse/disintegrated or floating still). Eyeball '
+                  f'the sheet; sparsest source stills: {sparse or "n/a (sources not found)"}. '
+                  'imagegen G2 the broken still (no imagegen -> STOP, report) or ship ring-off.')
+    elif not gates['synthMidDev'] or env_out:
+        token = 'FAIL-SYNTH'
+        action = ('synth geometry off its canon neighbours'
+                  + (f' (vertical: outside canon envelope [{cmin},{cmax}]: {env_out})' if env_out else '')
+                  + '. Rebake ONCE with the other --mix and re-run qa; still FAIL-SYNTH -> ship '
+                    'ring-off (turn16.enabled:false) and report.')
+    elif failed <= {'headTop', 'height'} and src and not src_uniform:
+        token = 'FAIL-SOURCE'
+        action = (f'MIXED source cell sizes {sorted(sizes)} — the head-pop hazard: resize ALL '
+                  'rotations to 236x236 NEAREST (imagegen acceptance step 3), rebake.')
+    elif failed <= {'headTop', 'height'} and report['headTop'] <= 10 and src_uniform and not env_out:
+        token = 'PASS-WITH-VARIANCE'
+        action = (f"canon pose-height variance (headTop spread {report['headTop']}px is canon-driven; "
+                  f'synths inside canon envelope [{cmin},{cmax}]; fleet-measured benign at 5-9px). '
+                  'REQUIRED: the step-7 eyeball, with specific attention to head height '
+                  'around the ring.' + drift)
+    else:
+        token = 'CHECK'
+        action = ('off-map for this script. STOP and report the owner with these numbers. Never proceed '
+                  'past a failed gate without a matching branch — log a SKILL-GAP instead.')
+
     print('ring spreads:', report,
           f' headCx max neighbour step: {round(max(steps), 1)} (informational)')
     print(f'synth midpointness (|headCx - canon-neighbour midpoint|, gate <=4px): '
           f'max {max_dev}  worst: '
           + ', '.join(f'{d}={v}' for d, v in sorted(devs.items(), key=lambda kv: -kv[1])[:3]))
-    verdict = 'PASS' if all(gates.values()) else 'CHECK'
+    if src:
+        size_word = ('uniform 236x236' if src_236 else
+                     f'uniform {next(iter(sizes))[0]}x{next(iter(sizes))[1]} (not 236 — contract drift)'
+                     if src_uniform else f'MIXED {sorted(sizes)} (head-pop hazard)')
+        print(f"source rotations: {size_word}; "
+              f"coverage outliers (>2.5x min): {', '.join(contaminated) if contaminated else 'none'}; "
+              f"synth headTop vs canon envelope [{cmin},{cmax}]: "
+              + (f'OUT {env_out}' if env_out else 'all inside'))
+    else:
+        print(f'source rotations: NOT FOUND ({src_dir}) — contamination check + variance lane unavailable')
     print(f"gates (headTop<={GATE}, baseline<=2, height<={GATE + 2}, feetCx<={GATE}, "
           f"synthMidDev<=4): "
           + ', '.join(f"{k}={'ok' if v else 'FAIL'}" for k, v in gates.items())
-          + f'  => {verdict}')
+          + f'  => {token}')
+    if action:
+        print('action:', action)
+    print('verdict tokens: PASS | PASS-WITH-VARIANCE | FAIL-SOURCE | FAIL-SYNTH | CHECK — automation '
+          'keys on the full token after "=>"; only PASS closes a set unconditionally, '
+          'PASS-WITH-VARIANCE closes it after the step-7 eyeball, everything else is an open item.')
     print('note: headCx SPREAD/STEP are informational (head orbits the axis by '
           'design); synth midpointness is what gates.')
 
@@ -125,9 +225,11 @@ def main():
             fx = x0 + m['feetCx'] * s
             fy = yc + m['baseline'] * s
             draw.line([fx, fy - 4, fx, fy + 4], fill=(125, 255, 213, 255))
+    os.makedirs(os.path.join(HERE, 'proof'), exist_ok=True)
     out = os.path.join(HERE, 'proof', f'{args.crew}_{args.world}_turn16_sheet.png')
     sheet.convert('RGB').save(out)
     print('sheet:', out)
+    sys.exit(0 if token.startswith('PASS') else (3 if token == 'CHECK' else 2))
 
 
 if __name__ == '__main__':

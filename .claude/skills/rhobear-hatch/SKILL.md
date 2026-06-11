@@ -56,7 +56,9 @@ knew how. **If you are a smaller model: read §1 (contract), then execute §8
   world-fixed mint rim light, writes `turns/` + `meta.json`, and prints the
   mix gate. This is the crown jewel — §2.
 - **E — ring gates.** `qa_turn16.py` enforces 5 numeric gates + a contact
-  sheet. PASS is binary.
+  sheet, and ADJUDICATES: it prints one verdict token (PASS /
+  PASS-WITH-VARIANCE / FAIL-SOURCE / FAIL-SYNTH / CHECK) plus the action to
+  take. Obey the token — §8.6.
 - **F — states/choreography.** BORED/WORKING/CURIOUS are engine behavior over
   existing frames + the ring. Zero new art per set — §3.
 - **G — feel-check.** The parameterized harness `hub-poc.html?crew=&world=`
@@ -123,7 +125,7 @@ mechanism — there is no hidden art step):
 ```bash
 cd <worktree>/hub/assets/crew/_preview/poc
 python bake_turn16.py --crew architect --world ship --selftest
-python qa_turn16.py   --crew architect --world ship          # must print PASS
+python qa_turn16.py   --crew architect --world ship          # obey the verdict token (§8.6)
 python make_choreo_gifs.py --crew architect --world ship
 ```
 The only decision the baker leaves you is `--mix`, and it makes it for you:
@@ -263,10 +265,10 @@ existing sprite paths.
 
 | tool | when | gate |
 |---|---|---|
-| `scripts/measure_registration.py <crew> <world> [--base …]` | before bake; after any (re)generation | flags (>4px) tolerated — runtime head-anchor pins them; **>15px = broken frame, regen it**; missing dirs = stop |
+| `scripts/measure_registration.py <crew> <world> [--base …]` | before bake; after any (re)generation | flags (>4px) tolerated — runtime head-anchor pins them. **Hard rule scoped to `rotations/` rows** (the ring's only input): rotations >15px or `(missing)` = broken still, fix before baking. `walking/`/`animating/` >15px = note for the owner, NOT a bake blocker (measured: guardian/neon walking/north-west 19px — ring + harness unaffected) |
 | `scripts/make_contact_sheet.py <crew> <world> --kind walking\|animating [--base …]` | judging source art | eyeball vs `references/example-good-walking-sheet.png` |
 | `poc-kit/bake_turn16.py --selftest` | every bake | mix ratio ≤ 1.18 (printed verdict); selftest IoU ≥ 0.40/pair (alarm line, not hard fail) |
-| `poc-kit/qa_turn16.py` | every bake | **PASS required**: baseline ≤2 · feetCx ≤4 · headTop ≤4 · height ≤6 · **synthMidDev ≤4** |
+| `poc-kit/qa_turn16.py` | every bake | gates: baseline ≤2 · feetCx ≤4 · headTop ≤4 · height ≤6 · **synthMidDev ≤4** — then the script adjudicates; **obey the printed verdict token** (§8.6): `PASS` · `PASS-WITH-VARIANCE` (canon headTop variance ≤10, machine-verified) · `FAIL-SOURCE` (names the broken still) · `FAIL-SYNTH` (flip mix once, else ring-off) · `CHECK` (STOP+report). Exit codes 0/2/3 for batch drivers |
 
 **How to judge a sheet (the crosshair rule).** Every cell draws the figure's
 bbox (green), head-anchor crosshair (red), feet tick (mint). GOOD
@@ -277,7 +279,11 @@ rotation, not error). BAD (`references/example-bad-turn-sheet.png`, top row):
 crosses sitting BETWEEN two heads, double limbs, translucent mush edges,
 baseline stair-steps. The second-set rehearsal sheet
 (`references/example-second-set-builder-western.png`) shows acceptable bayer
-checker texture on a non-emissive set.
+checker texture on a non-emissive set. The third-set sheet
+(`references/example-third-set-guardian-neon.png`, baked cold by a Sonnet
+worker from this skill) is the canonical PASS-WITH-VARIANCE exemplar: headTop
+spread 6px, canon-driven, every synth inside the canon envelope — clean strip,
+clean harness.
 
 **Why synthMidDev is the synth-health gate:** canon headings may legitimately
 step headCx by 8px+ (builder/western's hat swings 14.4px between W and NW);
@@ -311,6 +317,9 @@ while the head stays pinned.
 | Stabilization silently off in preview | `file://` canvas taint blocks getImageData | always serve over http (`python -m http.server`) |
 | Hub world prop doesn't match asset dirs | HubView uses `space/west/neon` | map `{space:ship, west:western, neon:neon}` |
 | Harness shows dark room, no bg | `bg-<world>.png` not copied beside hub-poc.html | `cp <rhobear-design>/assets/bg-<world>.png poc/` (harness degrades gracefully) |
+| headTop gate fails on uniform-size sources | genuine canon pose-height variance — the figure stands taller/shorter per heading | qa adjudicates it: `PASS-WITH-VARIANCE` lane (≤10px + synths inside canon envelope). Measured benign at 5–9px on 10 fleet sets; do the step-7 eyeball, then proceed |
+| synthMidDev huge (>8) and one canon cell shows an opaque rectangle/scene on the sheet | contaminated source still — backdrop baked into the PNG (fleet QA missed 3 of these) | qa names it (coverage outlier >2.5× set minimum) → `FAIL-SOURCE`: G2 that still or ring-off. A `--mix` flip will NOT fix geometry |
+| Batch run reports "all OK" while sets sit over gates | automation treated `CHECK` as OK | key on the exact verdict token: only `PASS` (or `PASS-WITH-VARIANCE` + completed eyeball) closes a set. Measured: a 24-set batch claimed "24/24 pipeline OK" with one set at synthMidDev 16.87 inside |
 
 ## §7 RESOURCES (everything this process leans on)
 
@@ -358,7 +367,7 @@ command → PASS check → on-fail action. Do not skip, reorder, or improvise.
    `feat/hub-wave5-wiring` instead (the kit copy below fills the gap).
    PASS: `$WT/hub/assets/crew/_preview/poc/bake_turn16.py` exists.
    Missing → `mkdir -p $WT/hub/assets/crew/_preview/poc && cp $SKILL/scripts/poc-kit/* $WT/hub/assets/crew/_preview/poc/`.
-   **Sync check:** `grep -l synthMidDev $WT/hub/assets/crew/_preview/poc/qa_turn16.py`
+   **Sync check:** `grep -l "PASS-WITH-VARIANCE" $WT/hub/assets/crew/_preview/poc/qa_turn16.py`
    — no hit = in-tree kit older than the skill → overwrite it from
    `$SKILL/scripts/poc-kit/` (the skill copy is canonical).
 3. **Set is SHIP + inventory.** Open
@@ -366,11 +375,16 @@ command → PASS check → on-fail action. Do not skip, reorder, or improvise.
    say **SHIP** (not SHIP/missing → `references/imagegen-prompts.md` G1/G2 +
    acceptance pipeline first, then return here). Then from `$WT`:
    `for k in rotations walking animating; do find hub/assets/crew/$CREW/$WORLD/$k -name "*.png" | wc -l; done`
-   PASS: exactly `8 / 48 / 32`. Else → imagegen G1 path.
+   PASS: exactly `8 / 48 / 32`. Else → imagegen G1 path — and if you have no
+   image-generation capability, STOP and report; never improvise source frames.
 4. **Source registration.** `python hub/assets/crew/_preview/measure_registration.py $CREW $WORLD`
    PASS: runs to the summary line. Flagged sequences are OK (note them).
-   Any spread > 15 or `(missing)` rows → broken source: imagegen G2 for that
-   row, acceptance pipeline, re-run.
+   The hard rule is SCOPED to `rotations/` rows — the ring's only input:
+   a rotations spread > 15 or `(missing)` → broken still: imagegen G2 +
+   acceptance pipeline (no imagegen capability → STOP, report). A
+   `walking/` or `animating/` row > 15 does NOT block the bake — write it in
+   your report for the owner and continue (runtime head-anchor pins those;
+   measured: guardian/neon walking/north-west 19px, ring + harness unaffected).
 5. **Bake.** `cd $WT/hub/assets/crew/_preview/poc && python bake_turn16.py --crew $CREW --world $WORLD --selftest`
    (stay in this directory for steps 6–8 — their paths are relative to it)
    PASS: prints `baked 16 headings`, `mix check … -> OK`, all selftest pairs
@@ -379,11 +393,19 @@ command → PASS check → on-fail action. Do not skip, reorder, or improvise.
    (expected for most western sets — measured: builder/western 1.19→0.94).
    Any IoU < 0.40 → continue but write "ring-risk" in your report; step 7 decides.
 6. **Ring gates.** `python qa_turn16.py --crew $CREW --world $WORLD`
-   PASS: final line `=> PASS`. Fail map: `baseline|feetCx` → source feet
-   broken (stop; G2 the rotations) · `headTop|height` → a rotation still
-   isn't 236-normalized (step 4 of imagegen acceptance) · `synthMidDev` →
-   rebake with the other `--mix`; if still failing, ship the set WITHOUT the
-   ring (roster `turn16.enabled:false`) and say so in the report.
+   The script adjudicates and prints ONE verdict token after `=>`, plus an
+   `action:` line. Obey the token — never reinterpret a failure yourself:
+   | token | meaning | your move |
+   |---|---|---|
+   | `PASS` | all 5 gates green | continue to step 7 |
+   | `PASS-WITH-VARIANCE` | headTop over gate but machine-verified benign: canon-driven (synths inside the canon envelope), uniform sources, ≤10px — measured 5–9px on 10 fleet sets | continue to step 7; eyeball head height specifically |
+   | `FAIL-SOURCE` | broken source art — the action line NAMES the still (contaminated / sparse / mixed sizes) and the fix | do exactly the printed fix; no imagegen capability → STOP and report; or ship ring-off (`turn16.enabled:false`) + report |
+   | `FAIL-SYNTH` | synth geometry off its canon neighbours | rebake ONCE with the other `--mix`, re-run qa; still FAIL-SYNTH → ring-off + report |
+   | `CHECK` | off-map for the script | STOP. Report the owner with the printed numbers. |
+   Exit codes for batch drivers: 0 = PASS/PASS-WITH-VARIANCE, 2 = FAIL-*,
+   3 = CHECK. **The off-map rule:** a failed gate with no matching branch is
+   never yours to wave through — STOP, report, log a SKILL-GAP (that is
+   exactly how the variance lane was earned).
 7. **Eyeball** `proof/${CREW}_${WORLD}_turn_strip.png` + `_turn16_sheet.png`
    against `references/example-good-turn16-sheet.png` and
    `example-bad-turn-sheet.png`. Reject a cell on any of: (a) two heads /
@@ -392,8 +414,14 @@ command → PASS check → on-fail action. Do not skip, reorder, or improvise.
    (e) feet ticks not level. Bayer checker texture = acceptable. Any reject →
    flip `--mix`, redo 5–7 once; still rejected → ring off for this set, report.
 8. **Proof GIFs.** `python make_choreo_gifs.py --crew $CREW --world $WORLD`
-   PASS: 4 GIFs in `proof/`; open `turn90_ab.gif` — the right side must show
-   ≥3 distinct intermediate poses while the left side snaps.
+   PASS (deterministic — no animation-watching required):
+   `python -c "from PIL import Image; import glob; [print(p.split('${CREW}_${WORLD}_')[-1], Image.open(p).n_frames) for p in sorted(glob.glob('proof/${CREW}_${WORLD}_*.gif'))]"`
+   must list exactly 5 GIFs with these frame counts (the kit's fixed
+   choreography — measured identical on architect/ship and guardian/neon):
+   `bored 18 · curious 17 · turn360 16 · turn90_ab 9 · working 12`.
+   Any count off → the GIF maker didn't see the full ring; re-run step 5.
+   Do NOT try to judge smoothness from a static read — motion feel is
+   step 9 (live) and the owner's call at step 11.
 9. **Live feel-check.**
    `cp $DESIGN/assets/bg-$WORLD.png $WT/hub/assets/crew/_preview/poc/` (skip if
    present) → `python -m http.server 8139 --directory $WT` → open
@@ -408,6 +436,10 @@ command → PASS check → on-fail action. Do not skip, reorder, or improvise.
    | ⟳ 360° | one full smooth sweep through 16 phases |
    | A/B toggle | snap mode visibly coarser than ring mode on the same 90° turn |
    | wait 15s in Bored | at least one beat plays (look-around / fidget / back-turn / sigh) |
+   For the ⟳ and A/B rows your job is MECHANICS (the event fires, the state
+   chip changes, zero errors — verifiable via eval/DOM if you cannot watch
+   live motion); smoothness/coarseness FEEL is the owner's judgment at step
+   11 — report what you observed, never self-certify feel.
 10. **Commit** (worktree branch; evidence included):
     ```
     git add hub/assets/crew/_preview/poc/turn16/$CREW/$WORLD \
@@ -419,10 +451,17 @@ command → PASS check → on-fail action. Do not skip, reorder, or improvise.
     turn90_ab GIF, the harness URL, and any ring-risk/ring-off notes. Do NOT
     scale to more sets and do NOT touch HubView until the owner says go.
     (House rule: root → confirm → iterate → then run.)
+    **There is no step 12.** An ended checklist is a stop sign, not an
+    invitation — momentum is not authorization.
 
-**After owner go — fleet scale:** repeat steps 3–8 per SHIP row of MASTER.md
-(~1 min/set; one worker per CREW in its own worktree if parallel), then §4
-wiring, then add a `turn16` column to MASTER.md.
+**After owner go — fleet scale:** repeat steps 3–9 PER SET (including the
+step-7 eyeball — it is the only check that names WHY a gate fired; a 24-set
+batch that skipped it shipped past an opaque scene block sitting in plain
+sight on its own contact sheet). A batch driver keys on the exact verdict
+token: a set is DONE only on `PASS`, or `PASS-WITH-VARIANCE` after its
+eyeball; `FAIL-*`/`CHECK` sets are open items, never "OK with notes" — and
+never report "N/N OK" over them. ~1 min/set; one worker per CREW in its own
+worktree if parallel. Then §4 wiring, then add a `turn16` column to MASTER.md.
 
 ## THE WALL
 Sprite/QA output is local + reversible — generate freely, but: never mutate
@@ -438,3 +477,7 @@ hub behavior + this teach-down: Lane H POC (Fable), branch
 `feat/h-fable-sprites`, worked example architect/ship, rehearsed cold on
 builder/western (which is how the mix gate and synthMidDev gate earned their
 thresholds). Worked-example design doc: `references/H-SPRITE-DESIGN.md`.
+Verdict ladder, variance lane, and step-4 scoping earned 2026-06-10 by a cold
+Sonnet-4.6 repro test on guardian/neon (branch `feat/h-repro-test`) plus a
+27-set fleet adjudication — every threshold in §8.6 is anchored to those
+measurements (`references/turn-technique.md` §7).
