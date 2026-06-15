@@ -257,6 +257,12 @@
     nudgeClose.addEventListener('click', function () { setDismissed(); clearProactive(); hideNudge(); });
     closeBtn.addEventListener('click', closePanel);
     form.addEventListener('submit', sendMessage);
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage(e);
+      }
+    });
     document.addEventListener('keydown', onKeydown);
     document.addEventListener('visibilitychange', function () { lastTick = Date.now(); });
     if (!dismissed) {
@@ -392,7 +398,12 @@
       }
       return pump();
     }).catch(function (err) {
-      if (!acc) botMsg.textContent = err && err.message ? err.message : 'I could not reach the RHOBEAR brain just now. Try again in a moment.';
+      var msg = err && err.message ? err.message : 'Connection lost';
+      if (!acc) {
+        botMsg.textContent = msg;
+      } else {
+        botMsg.textContent += '\n\n[Error: ' + msg + ']';
+      }
     }).then(function () {
       streaming = false;
       setTyping(false);
