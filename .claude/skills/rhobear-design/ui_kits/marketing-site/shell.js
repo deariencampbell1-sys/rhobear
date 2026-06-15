@@ -152,7 +152,7 @@
    ===================================================================== */
 (function () {
   if (document.getElementById('rho-greeter')) return;
-  if (/\/faq\.html(?:$|[?#])/i.test(window.location.pathname)) return;
+  if (/\/faq(?:\.html)?(?:$|[?#])/i.test(window.location.pathname)) return;
 
   var CHAT_URL = 'https://chat.rhobear.ai/chat';
   var LEAD_URL = 'https://chat.rhobear.ai/lead';
@@ -258,7 +258,7 @@
     closeBtn.addEventListener('click', closePanel);
     form.addEventListener('submit', sendMessage);
     input.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' && !e.shiftKey) {
+      if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) {
         e.preventDefault();
         sendMessage(e);
       }
