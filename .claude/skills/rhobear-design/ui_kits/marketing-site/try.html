@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RHOBEAR — Try the Demo</title>
 <link rel="stylesheet" href="../../colors_and_type.css">
-<link rel="stylesheet" href="shell.css?v=1781508804">
+<link rel="stylesheet" href="shell.css?v=1781510100">
 <link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1780636292">
 <style>
 body.try-demo-page {
@@ -708,7 +708,7 @@ body.try-demo-page {
     </div>
   </div>
 </main>
-<script src="shell.js?v=1781508804" defer></script>
+<script src="shell.js?v=1781510100" defer></script>
 <script>
 (function () {
   function ready(fn) {
@@ -732,7 +732,7 @@ body.try-demo-page {
     var streaming = false;
     var operators = [];
     var operatorsByKey = {};
-    var activeKey = 'architect';
+    var activeKey = 'pops';
 
     var ASSETS = {
       pops: '../../assets/pops.png?v=1780636292',
@@ -747,40 +747,30 @@ body.try-demo-page {
     };
 
     var FALLBACK_OPERATORS = [
-      { key: 'pops', display_name: 'Pops', role: 'host', tagline: 'Warm workshop host who walks you in.' },
-      { key: 'architect', display_name: 'Architect', role: 'plans', tagline: 'Boundary first. Clean structure. No bleed.' },
-      { key: 'builder', display_name: 'Builder', role: 'ship', tagline: 'Give him the lane; he closes it.' },
-      { key: 'designer', display_name: 'Designer', role: 'feel', tagline: 'Less, but better. Cut the clutter.' },
-      { key: 'foreman', display_name: 'Foreman', role: 'execution', tagline: 'Three lanes open. Watch him move.' },
-      { key: 'guardian', display_name: 'Guardian', role: 'safety', tagline: 'Pinned. Scanned. Reviewed.' },
-      { key: 'lattice', display_name: 'Lattice', role: 'coordination', tagline: 'She sees the seams two beats early.' },
-      { key: 'reviewer', display_name: 'Reviewer', role: 'judgment', tagline: 'Reads every diff before it lands.' },
-      { key: 'spark', display_name: 'Spark', role: 'creative', tagline: 'Fast, eager, and already on the next one.' }
+      { key: 'pops', display_name: 'Pops', role: 'Always-on. Holding the spot.', tagline: 'Always-on. Holding the spot.' },
+      { key: 'architect', display_name: 'Architect', role: 'I design the boundary first.', tagline: 'I design the boundary first.' },
+      { key: 'builder', display_name: 'Builder', role: "Give me the lane, I'll close it.", tagline: "Give me the lane, I'll close it." },
+      { key: 'designer', display_name: 'Designer', role: 'Less, but better.', tagline: 'Less, but better.' },
+      { key: 'foreman', display_name: 'Foreman', role: 'Three lanes open. Watch me move.', tagline: 'Three lanes open. Watch me move.' },
+      { key: 'guardian', display_name: 'Guardian', role: 'Pinned. Scanned. Reviewed.', tagline: 'Pinned. Scanned. Reviewed.' },
+      { key: 'lattice', display_name: 'Lattice', role: 'I caught the drift two beats before.', tagline: 'I caught the drift two beats before.' },
+      { key: 'reviewer', display_name: 'Reviewer', role: 'I read every diff before it lands.', tagline: 'I read every diff before it lands.' },
+      { key: 'spark', display_name: 'Spark', role: "Ooh — got one. Let's go.", tagline: "Ooh — got one. Let's go." }
     ];
 
     var CHIP_SETS = {
-      pops: ['Show me around the Hub', 'What is RHOBEAR?', 'How do I start?'],
-      architect: ['Walk me through the structure', "What's the architecture", 'How do Worlds work?'],
-      builder: ['What can I ship with this?', 'Show me a connector', 'How does local AI run?'],
-      designer: ['Make this feel cleaner', 'What can I make beautiful?', 'Show me the simple version'],
-      foreman: ['Turn this into lanes', 'What happens on the Board?', 'How does work move?'],
-      guardian: ['How safe is it?', 'Talk to me about privacy', 'What gets vetted?'],
-      lattice: ['Who should handle this?', 'How does the crew hand off?', 'Show me the seams'],
-      reviewer: ['What gets reviewed?', 'Explain the Wall', 'When do I sign off?'],
-      spark: ['Show me something cool', 'What can I MAKE with this', 'Give me a fast idea']
+      pops: ['Where do you live?', 'What is RHOBEAR?', 'Walk me in.'],
+      architect: ["What's a World?", 'How is RHOBEAR structured?', 'Draw me the boundary.'],
+      builder: ['Show me what you build.', "What's a lane?", 'Cost?'],
+      designer: ['Why so few options?', 'What does RHOBEAR look like inside?', 'One scroll?'],
+      foreman: ['How do goals work?', "What's the Board?", 'Three lanes?'],
+      guardian: ['How safe is it?', 'What gets vetted?', 'Privacy?'],
+      lattice: ['What does the crew look like?', 'Who picks?', "What's a seam?"],
+      reviewer: ['What does the Wall do?', 'What needs my eyes?', 'Refund policy?'],
+      spark: ['What can I make for money?', 'Show me a gig.', 'How fast can I start?']
     };
 
-    var GREETINGS = {
-      pops: "Hi — I'm Pops, part of RHOBEAR's crew. You're in the Hub now. Ask me anything — I'll wait.",
-      architect: "Hi — I'm Architect, part of RHOBEAR's crew. Ask me anything; I'll draw the clean line first.",
-      builder: "Hi — I'm Builder, part of RHOBEAR's crew. Give me the lane. Ask me what ships.",
-      designer: "Hi — I'm Designer, part of RHOBEAR's crew. Ask me anything. We'll cut the clutter.",
-      foreman: "Hi — I'm Foreman, part of RHOBEAR's crew. Outcome first. Ask me anything.",
-      guardian: "Hi — I'm Guardian, part of RHOBEAR's crew. Ask me anything. I scan the door first.",
-      lattice: "Hi — I'm Lattice, part of RHOBEAR's crew. Ask me anything; I'll show you where the seams fit.",
-      reviewer: "Hi — I'm Reviewer, part of RHOBEAR's crew. Ask me anything. I read before it lands.",
-      spark: "Hi — I'm Spark, part of RHOBEAR's crew. Ask me anything — ooh, let's make something."
-    };
+    var GREETING = "There you are. Been holding this spot for you. Ask me anything about RHOBEAR — or if you'd rather talk to one of the crew, tap any of them on the left. I'll wait.";
 
     function chatBase() {
       var url = (window.RHOBEARChat && window.RHOBEARChat.chatUrl) || 'https://chat.rhobear.ai/chat';
@@ -791,11 +781,11 @@ body.try-demo-page {
     function operatorsEndpoint() { return chatBase() + '/chat/demo/operators'; }
 
     function display(opKey) {
-      return (operatorsByKey[opKey] && operatorsByKey[opKey].display_name) || opKey;
+      return (operatorsByKey[opKey] && (operatorsByKey[opKey].display || operatorsByKey[opKey].display_name)) || opKey;
     }
 
     function role(opKey) {
-      return (operatorsByKey[opKey] && operatorsByKey[opKey].role) || 'crew';
+      return (operatorsByKey[opKey] && (operatorsByKey[opKey].tagline || operatorsByKey[opKey].role)) || 'crew';
     }
 
     function avatar(opKey) {
@@ -840,7 +830,7 @@ body.try-demo-page {
     function addHandoff(opKey) {
       var line = document.createElement('div');
       line.className = 'try-handoff';
-      line.textContent = '→ ' + display(opKey) + ' is here';
+      line.textContent = '→ ' + display(opKey) + ' stepped in.';
       log.appendChild(line);
       scrollLog();
     }
@@ -900,12 +890,12 @@ body.try-demo-page {
       var name = display(opKey);
       label.textContent = 'Message ' + name;
       input.placeholder = 'Talk to ' + name + ' — stay in the Hub...';
-      activeLine.textContent = 'Active: ' + name + ' — click another crew member to switch voice.';
+      activeLine.textContent = 'Active: ' + name + '. Tap any of the crew to switch the voice.';
       if (changed && !opts.silent) addHandoff(opKey);
     }
 
     function renderOperators(list) {
-      operators = list.filter(function (op) { return op && op.key && ASSETS[op.key]; });
+      operators = list.map(function (op) { if (op && !op.key && op.id) op.key = op.id; if (op && !op.display_name && op.display) op.display_name = op.display; if (op && !op.role && op.tagline) op.role = op.tagline; return op; }).filter(function (op) { return op && op.key && ASSETS[op.key]; });
       operatorsByKey = {};
       operatorList.innerHTML = '';
       operators.forEach(function (op) {
@@ -927,7 +917,7 @@ body.try-demo-page {
       operatorCount.textContent = String(operators.length);
       var defaultKey = operatorsByKey.pops ? 'pops' : (operatorsByKey.architect ? 'architect' : operators[0].key);
       setActive(defaultKey, { silent: true });
-      makeMessage('bot', GREETINGS[activeKey] || ('Hi — I\'m ' + display(activeKey) + ", part of RHOBEAR's crew. Ask me anything."), activeKey);
+      makeMessage('bot', GREETING, activeKey);
     }
 
     function renderChips() {
@@ -939,7 +929,7 @@ body.try-demo-page {
         chip.type = 'button';
         chip.setAttribute('data-prompt', prompt);
         chip.textContent = prompt;
-        chip.addEventListener('click', function () { sendMessage(prompt); });
+        chip.addEventListener('click', function () { input.value = prompt; input.focus(); });
         chipsWrap.appendChild(chip);
         return chip;
       });
@@ -1006,6 +996,11 @@ body.try-demo-page {
     });
     rail.addEventListener('keydown', function (event) {
       if (!operators.length) return;
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        setActive(activeKey);
+        return;
+      }
       var keys = ['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp'];
       if (keys.indexOf(event.key) === -1) return;
       event.preventDefault();
