@@ -169,7 +169,7 @@
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var root, launcher, nudge, nudgeText, nudgeClose, panel, closeBtn, form, input, transcript, typing, leadBox;
   var open = false, nudged = false, dismissed = false, streaming = false, visibleMs = 0, lastTick = Date.now();
-  var nudgeLine = 0, nudgeRotate = null;
+  var nudgeLine = 0, nudgeRotate = null, checkTimeInterval = null;
   var focusBefore = null;
 
   function ready(fn) {
@@ -254,19 +254,27 @@
 
     launcher.addEventListener('click', openPanel);
     nudgeText.addEventListener('click', openPanel);
-    nudgeClose.addEventListener('click', function () { setDismissed(); hideNudge(); });
+    nudgeClose.addEventListener('click', function () { setDismissed(); clearProactive(); hideNudge(); });
     closeBtn.addEventListener('click', closePanel);
     form.addEventListener('submit', sendMessage);
     document.addEventListener('keydown', onKeydown);
     document.addEventListener('visibilitychange', function () { lastTick = Date.now(); });
-    window.addEventListener('scroll', checkScroll, { passive: true });
-    setInterval(checkTime, 500);
-    checkScroll();
+    if (!dismissed) {
+      window.addEventListener('scroll', checkScroll, { passive: true });
+      checkTimeInterval = setInterval(checkTime, 500);
+      checkScroll();
+    }
+  }
+
+  function clearProactive() {
+    if (checkTimeInterval) { clearInterval(checkTimeInterval); checkTimeInterval = null; }
+    window.removeEventListener('scroll', checkScroll);
   }
 
   function showNudge() {
     if (nudged || dismissed || open) return;
     nudged = true;
+    clearProactive();
     nudgeLine = Math.floor(Math.random() * lines.length);
     nudgeText.textContent = lines[nudgeLine];
     root.classList.add('nudge-on');
@@ -322,8 +330,17 @@
     items = Array.prototype.slice.call(items).filter(function (el) { return el.offsetParent !== null; });
     if (!items.length) return;
     var first = items[0], last = items[items.length - 1];
-    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    var active = document.activeElement;
+    if (!panel.contains(active)) {
+      e.preventDefault();
+      (e.shiftKey ? last : first).focus();
+    } else if (e.shiftKey && active === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && active === last) {
+      e.preventDefault();
+      first.focus();
+    }
   }
 
   function addMessage(who, text) {
@@ -339,7 +356,7 @@
   function sendMessage(e) {
     e.preventDefault();
     if (streaming) return;
-    var message = input.value.replace(/^\s+|\s+$/g, '');
+    var message = input.value.trim();
     if (!message) return;
     input.value = '';
     addMessage('user', message);
@@ -373,8 +390,8 @@
         });
       }
       return pump();
-    }).catch(function () {
-      if (!acc) botMsg.textContent = 'I could not reach the RHOBEAR brain just now. Try again in a moment.';
+    }).catch(function (err) {
+      if (!acc) botMsg.textContent = err && err.message ? err.message : 'I could not reach the RHOBEAR brain just now. Try again in a moment.';
     }).then(function () {
       streaming = false;
       setTyping(false);
@@ -384,39 +401,51 @@
 
   function handleRaw(raw, botMsg, originalMessage, append) {
     raw.split('\n').forEach(function (line) {
-      line = line.replace(/^\s+|\s+$/g, '');
+      line = line.trim();
       if (!line || line.indexOf('data:') !== 0) return;
-      var payload = line.slice(5).replace(/^\s+/, '');
+      var payload = line.slice(5).trim();
       if (payload === '[DONE]') return;
+      var data;
       try {
-        var data = JSON.parse(payload);
-        if (data.chunk) {
-          append(data.chunk);
-          botMsg.textContent += data.chunk;
-          transcript.scrollTop = transcript.scrollHeight;
-        }
-        if (data.done && data.suggest_lead) showLead(originalMessage);
-      } catch (e) {}
+        data = JSON.parse(payload);
+      } catch (e) { return; }
+      if (data.error) throw new Error(data.error);
+      if (data.chunk) {
+        append(data.chunk);
+        botMsg.textContent += data.chunk;
+        transcript.scrollTop = transcript.scrollHeight;
+      }
+      if (data.done && data.suggest_lead) showLead(originalMessage);
     });
   }
 
   function showLead(message) {
     if (leadBox) return;
     leadBox = make('form', 'rho-greeter-lead', '');
-    leadBox.innerHTML = '<label>Want the quick-start when it\'s ready? Drop an email <span>(optional)</span></label><div><input type="email" placeholder="you@example.com" aria-label="Email for quick-start update"><button type="submit">Send</button></div><p hidden>Thanks — saved.</p>';
+    leadBox.innerHTML = '<label>Want the quick-start when it\'s ready? Drop an email <span>(optional)</span></label><div><input type="email" placeholder="you@example.com" aria-label="Email for quick-start update"><button type="submit">Send</button></div><p class="rho-greeter-lead-ok" hidden>Thanks — saved.</p><p class="rho-greeter-lead-err" hidden>Couldn\'t reach us. Try again in a moment.</p>';
     transcript.appendChild(leadBox);
     transcript.scrollTop = transcript.scrollHeight;
+    var emailInput = leadBox.querySelector('input');
+    var submitBtn = leadBox.querySelector('button');
+    var okMsg = leadBox.querySelector('.rho-greeter-lead-ok');
+    var errMsg = leadBox.querySelector('.rho-greeter-lead-err');
     leadBox.addEventListener('submit', function (e) {
       e.preventDefault();
-      var email = leadBox.querySelector('input').value.replace(/^\s+|\s+$/g, '');
+      var email = emailInput.value.trim();
       if (!email) return;
+      submitBtn.disabled = true;
+      emailInput.disabled = true;
       fetch(LEAD_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email, message: message })
-      }).catch(function () {}).then(function () {
-        leadBox.querySelector('p').hidden = false;
-        leadBox.querySelector('button').disabled = true;
+      }).then(function (res) {
+        if (!res.ok) throw new Error('Lead request failed');
+        okMsg.hidden = false;
+      }).catch(function () {
+        errMsg.hidden = false;
+        submitBtn.disabled = false;
+        emailInput.disabled = false;
       });
     });
   }
