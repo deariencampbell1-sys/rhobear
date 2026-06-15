@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>RHOBEAR — FAQ</title><link rel="stylesheet" href="../../colors_and_type.css"><link rel="stylesheet" href="shell.css?v=1780636292"><link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1780636292"></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>RHOBEAR — FAQ</title><link rel="stylesheet" href="../../colors_and_type.css"><link rel="stylesheet" href="shell.css?v=1780637600"><link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1780636292"></head>
 <body>
 <nav class="top-nav" aria-label="Primary"><div class="top-nav-inner"><a class="brand-lockup" href="index.html"><img src="../../assets/rhobear-logo.png?v=1780636292" alt="" class="pixelated"><span>RHOBEAR</span></a><div class="nav-tabs"><a href="index.html" class="nav-tab ">HOME</a><a href="crew.html" class="nav-tab ">CREW</a><a href="hub.html" class="nav-tab ">HUB</a><a href="workbench.html" class="nav-tab ">WORKBENCH</a><a href="learn.html" class="nav-tab ">LEARN</a><div class="nav-dropdown"><a href="substrate.html" class="nav-tab " aria-haspopup="true">SUBSTRATE ▾</a><div class="nav-dropdown-panel"><a href="goal-autoloop.html" class="">Goal Autoloop</a><a href="judgment-loop.html" class="">Judgment Loop</a><a href="substrate.html" class="">Substrate Overview</a><a href="compass.html" class="">Compass</a><a href="worker-sessions.html" class="">Worker Sessions</a><a href="handoff-bus.html" class="">Handoff Bus</a><a href="safety-registry.html" class="">Safety Registry</a><a href="hub-contract.html" class="">Hub Contract</a><a href="openclaw.html" class="">OpenClaw</a></div></div><a href="built-with.html" class="nav-tab ">BUILT WITH</a></div><span class="nav-spacer"></span><a href="spin-it-up.html" class="btn-amber nav-cta">Spin it up →</a></div></nav>
 <main>
@@ -42,9 +42,110 @@
       </details>
     
   </div>
+
+  <section class="chat-panel" aria-labelledby="support-chat-title" style="padding:22px;">
+    <div class="chat-panel-head">
+      <div>
+        <p class="chat-panel-kicker">FAQ SUPPORT</p>
+        <h2 id="support-chat-title">Still stuck? Ask our support assistant.</h2>
+        <p class="chat-panel-note">Runs locally on our own box. It answers from the support knowledge base first, then streams a grounded reply.</p>
+      </div>
+      <span class="chat-panel-badge">Local · Private · Plain English</span>
+    </div>
+    <div id="support-chat-log" class="chat-panel-log" aria-live="polite">
+      <div class="chat-panel-msg bot">Tell me what's stuck — refunds, privacy, install help, activation keys, or whether there's a subscription.</div>
+    </div>
+    <form id="support-chat-form" class="chat-panel-form">
+      <label class="chat-panel-label" for="support-chat-input">Ask support</label>
+      <textarea id="support-chat-input" maxlength="1200" placeholder="Example: My activation key says it's too short…" required></textarea>
+      <button type="submit">Send</button>
+    </form>
+    <p id="support-chat-status" class="chat-panel-status">Grounded support answers only. For account-specific help, email support@rhobear.ai.</p>
+  </section>
 </section>
 </main>
 <div class="prevnext"><div class="prevnext-inner"><a href="story.html" class="pn-link "><span class="pn-mini">← Previous</span><span class="pn-name">Story</span></a><a href="closer.html" class="pn-link "><span class="pn-mini">Next →</span><span class="pn-name">Closer</span></a></div></div>
 <footer class="site-footer"><div class="site-footer-inner"><div class="footer-row"><div class="footer-copy">© 2026 Sun Sponge LLC · <a href="https://github.com/rhobear">GitHub</a> · <a href="https://github.com/deariencampbell1-sys/rhobear/blob/main/PRIVACY.md" target="_blank" rel="noopener">privacy</a> · <a href="faq.html">FAQ</a></div><div class="footer-tag">Lean. Local. Private. Yours.</div></div><div class="footer-disclaimer">All third-party trademarks and logos are property of their respective owners and shown here for integration identification purposes only. No partnership, sponsorship, or endorsement is implied.</div></div></footer>
-<script src="shell.js?v=1780636292" defer></script>
+<script src="shell.js?v=1780637600" defer></script>
+<script>
+(function(){
+  var form = document.getElementById('support-chat-form');
+  if (!form) return;
+  var input = document.getElementById('support-chat-input');
+  var log = document.getElementById('support-chat-log');
+  var status = document.getElementById('support-chat-status');
+  var button = form.querySelector('button');
+  var CHAT_URL = 'https://chat.rhobear.ai/support/chat';
+
+  function addMsg(who, text) {
+    var el = document.createElement('div');
+    el.className = 'chat-panel-msg ' + who;
+    el.textContent = text || '';
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+    return el;
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var message = (input.value || '').trim();
+    if (!message) return;
+    addMsg('user', message);
+    input.value = '';
+    input.style.height = '';
+    button.disabled = true;
+    status.textContent = 'Streaming a grounded support answer…';
+    var bot = addMsg('bot', '');
+
+    fetch(CHAT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: message })
+    }).then(function(resp){
+      if (!resp.ok || !resp.body) throw new Error('Support chat is unavailable.');
+      var reader = resp.body.getReader();
+      var decoder = new TextDecoder();
+      var buffer = '';
+
+      function pump() {
+        return reader.read().then(function(result){
+          if (result.done) return;
+          buffer += decoder.decode(result.value, { stream: true });
+          var events = buffer.split('\n\n');
+          buffer = events.pop() || '';
+          events.forEach(function(evt){
+            evt.split('\n').forEach(function(line){
+              if (line.indexOf('data: ') !== 0) return;
+              try {
+                var data = JSON.parse(line.slice(6));
+                if (data.error) throw new Error(data.error);
+                if (data.chunk) {
+                  bot.textContent += data.chunk;
+                  log.scrollTop = log.scrollHeight;
+                }
+                if (data.done) status.textContent = data.suggest_lead ? 'That may need a human. Email support@rhobear.ai with the details.' : 'Answered from the support knowledge base.';
+              } catch (err) {
+                status.textContent = 'Support chat had trouble parsing a reply. Email support@rhobear.ai if this keeps happening.';
+              }
+            });
+          });
+          return pump();
+        });
+      }
+      return pump();
+    }).catch(function(err){
+      bot.textContent = 'Sorry — the support assistant is unavailable right now. Email support@rhobear.ai and a human can help.';
+      status.textContent = err && err.message ? err.message : 'Support chat unavailable.';
+    }).finally(function(){
+      button.disabled = false;
+      input.focus();
+    });
+  });
+
+  input.addEventListener('input', function(){
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 140) + 'px';
+  });
+})();
+</script>
 </body></html>
