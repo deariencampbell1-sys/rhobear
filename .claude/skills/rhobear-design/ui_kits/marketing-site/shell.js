@@ -144,3 +144,282 @@
     });
   }
 })();
+
+/* =====================================================================
+   RHOBEAR curious greeter — light, local-first, no dependencies.
+   Injects its own DOM, pauses proactive timers when hidden, and keeps the
+   FAQ page clear for the support bot.
+   ===================================================================== */
+(function () {
+  if (document.getElementById('rho-greeter')) return;
+  if (/\/faq\.html(?:$|[?#])/.test(window.location.pathname)) return;
+
+  var CHAT_URL = 'https://chat.rhobear.ai/chat';
+  var LEAD_URL = 'https://chat.rhobear.ai/lead';
+  var DISMISS_KEY = 'rho_greeter_dismissed';
+  var DISMISS_MS = 7 * 24 * 60 * 60 * 1000;
+  var NUDGE_MS = 12000;
+  var NUDGE_SCROLL = 0.4;
+  var lines = [
+    'What would you build first?',
+    'Curious what you\'d spin up?',
+    'Want a 30-sec tour of what it does?',
+    'What are you trying to get off the ground?'
+  ];
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var root, launcher, nudge, nudgeText, nudgeClose, panel, closeBtn, form, input, transcript, typing, leadBox;
+  var open = false, nudged = false, dismissed = false, streaming = false, visibleMs = 0, lastTick = Date.now();
+  var nudgeLine = 0, nudgeRotate = null;
+  var focusBefore = null;
+
+  function ready(fn) {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+
+  function isDismissed() {
+    try {
+      var then = parseInt(localStorage.getItem(DISMISS_KEY) || '0', 10);
+      return then && Date.now() - then < DISMISS_MS;
+    } catch (e) { return false; }
+  }
+
+  function setDismissed() {
+    dismissed = true;
+    try { localStorage.setItem(DISMISS_KEY, String(Date.now())); } catch (e) {}
+  }
+
+  function make(tag, cls, text) {
+    var el = document.createElement(tag);
+    if (cls) el.className = cls;
+    if (text) el.textContent = text;
+    return el;
+  }
+
+  function mount() {
+    dismissed = isDismissed();
+    root = make('div', 'rho-greeter', '');
+    root.id = 'rho-greeter';
+    root.setAttribute('data-reduce-motion', reduce ? 'true' : 'false');
+
+    nudge = make('div', 'rho-greeter-nudge', '');
+    nudge.setAttribute('role', 'status');
+    nudge.setAttribute('aria-live', 'polite');
+    nudgeText = make('button', 'rho-greeter-nudge-text', lines[Math.floor(Math.random() * lines.length)]);
+    nudgeText.type = 'button';
+    nudgeText.setAttribute('aria-label', 'Open RHOBEAR greeter');
+    nudgeClose = make('button', 'rho-greeter-nudge-close', '×');
+    nudgeClose.type = 'button';
+    nudgeClose.setAttribute('aria-label', 'Dismiss greeter nudge for 7 days');
+    nudge.appendChild(nudgeText);
+    nudge.appendChild(nudgeClose);
+
+    launcher = make('button', 'rho-greeter-launcher', '');
+    launcher.type = 'button';
+    launcher.setAttribute('aria-label', 'Open RHOBEAR greeter');
+    launcher.setAttribute('aria-expanded', 'false');
+    launcher.innerHTML = '<span aria-hidden="true">?</span><strong>Ask</strong>';
+
+    panel = make('section', 'rho-greeter-panel', '');
+    panel.setAttribute('role', 'dialog');
+    panel.setAttribute('aria-modal', 'true');
+    panel.setAttribute('aria-labelledby', 'rho-greeter-title');
+    panel.setAttribute('tabindex', '-1');
+    panel.innerHTML = [
+      '<div class="rho-greeter-head">',
+      '  <div><p class="rho-greeter-kicker">RHOBEAR guide</p><h2 id="rho-greeter-title">What are you trying to build?</h2></div>',
+      '  <button type="button" class="rho-greeter-close" aria-label="Close RHOBEAR greeter">×</button>',
+      '</div>',
+      '<div class="rho-greeter-transcript" aria-live="polite"></div>',
+      '<div class="rho-greeter-typing" hidden><span></span><span></span><span></span><em>Thinking…</em></div>',
+      '<form class="rho-greeter-form">',
+      '  <label class="rho-greeter-label" for="rho-greeter-input">Ask a curious question</label>',
+      '  <div class="rho-greeter-inputrow"><textarea id="rho-greeter-input" rows="2" maxlength="1200" placeholder="Tell me what you want to spin up…"></textarea><button type="submit">Send</button></div>',
+      '</form>',
+      '<a class="rho-greeter-cta" href="spin-it-up.html">→ Spin it up</a>'
+    ].join('');
+
+    root.appendChild(nudge);
+    root.appendChild(launcher);
+    root.appendChild(panel);
+    document.body.appendChild(root);
+
+    closeBtn = panel.querySelector('.rho-greeter-close');
+    form = panel.querySelector('.rho-greeter-form');
+    input = panel.querySelector('#rho-greeter-input');
+    transcript = panel.querySelector('.rho-greeter-transcript');
+    typing = panel.querySelector('.rho-greeter-typing');
+
+    addMessage('bot', 'I can give a quick tour, sketch a use case, or help you think through what RHOBEAR could automate first.');
+
+    launcher.addEventListener('click', openPanel);
+    nudgeText.addEventListener('click', openPanel);
+    nudgeClose.addEventListener('click', function () { setDismissed(); hideNudge(); });
+    closeBtn.addEventListener('click', closePanel);
+    form.addEventListener('submit', sendMessage);
+    document.addEventListener('keydown', onKeydown);
+    document.addEventListener('visibilitychange', function () { lastTick = Date.now(); });
+    window.addEventListener('scroll', checkScroll, { passive: true });
+    setInterval(checkTime, 500);
+    checkScroll();
+  }
+
+  function showNudge() {
+    if (nudged || dismissed || open) return;
+    nudged = true;
+    nudgeLine = Math.floor(Math.random() * lines.length);
+    nudgeText.textContent = lines[nudgeLine];
+    root.classList.add('nudge-on');
+    nudgeRotate = setInterval(function () {
+      if (document.hidden || open || !root.classList.contains('nudge-on')) return;
+      nudgeLine = (nudgeLine + 1) % lines.length;
+      nudgeText.textContent = lines[nudgeLine];
+    }, 4200);
+  }
+
+  function hideNudge() {
+    root.classList.remove('nudge-on');
+    if (nudgeRotate) { clearInterval(nudgeRotate); nudgeRotate = null; }
+  }
+
+  function checkTime() {
+    var now = Date.now();
+    if (!document.hidden) visibleMs += now - lastTick;
+    lastTick = now;
+    if (visibleMs >= NUDGE_MS) showNudge();
+  }
+
+  function checkScroll() {
+    if (document.hidden) return;
+    var doc = document.documentElement;
+    var max = Math.max(1, doc.scrollHeight - window.innerHeight);
+    if ((window.scrollY || doc.scrollTop || 0) / max >= NUDGE_SCROLL) showNudge();
+  }
+
+  function openPanel() {
+    if (open) return;
+    focusBefore = document.activeElement;
+    open = true;
+    hideNudge();
+    root.classList.add('open');
+    launcher.setAttribute('aria-expanded', 'true');
+    setTimeout(function () { input.focus(); }, 30);
+  }
+
+  function closePanel() {
+    if (!open) return;
+    open = false;
+    root.classList.remove('open');
+    launcher.setAttribute('aria-expanded', 'false');
+    if (focusBefore && focusBefore.focus) focusBefore.focus();
+  }
+
+  function onKeydown(e) {
+    if (!open) return;
+    if (e.key === 'Escape' || e.key === 'Esc') { e.preventDefault(); closePanel(); return; }
+    if (e.key !== 'Tab') return;
+    var items = panel.querySelectorAll('a[href],button:not([disabled]),textarea:not([disabled]),input:not([disabled]),[tabindex]:not([tabindex="-1"])');
+    items = Array.prototype.slice.call(items).filter(function (el) { return el.offsetParent !== null; });
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+
+  function addMessage(who, text) {
+    var msg = make('div', 'rho-greeter-msg ' + who, '');
+    msg.textContent = text;
+    transcript.appendChild(msg);
+    transcript.scrollTop = transcript.scrollHeight;
+    return msg;
+  }
+
+  function setTyping(on) { typing.hidden = !on; }
+
+  function sendMessage(e) {
+    e.preventDefault();
+    if (streaming) return;
+    var message = input.value.replace(/^\s+|\s+$/g, '');
+    if (!message) return;
+    input.value = '';
+    addMessage('user', message);
+    streamAnswer(message);
+  }
+
+  function streamAnswer(message) {
+    streaming = true;
+    setTyping(true);
+    var botMsg = addMessage('bot', '');
+    var acc = '';
+
+    fetch(CHAT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: message })
+    }).then(function (res) {
+      if (!res.ok) throw new Error('Chat request failed');
+      if (!res.body || !window.TextDecoder) return res.text().then(function (t) { handleRaw(t, botMsg, message, function (v) { acc += v; }); });
+      var reader = res.body.getReader();
+      var decoder = new TextDecoder();
+      var buf = '';
+      function pump() {
+        return reader.read().then(function (r) {
+          if (r.done) { handleRaw(buf, botMsg, message, function (v) { acc += v; }); return; }
+          buf += decoder.decode(r.value, { stream: true });
+          var parts = buf.split('\n\n');
+          buf = parts.pop();
+          parts.forEach(function (part) { handleRaw(part, botMsg, message, function (v) { acc += v; }); });
+          return pump();
+        });
+      }
+      return pump();
+    }).catch(function () {
+      if (!acc) botMsg.textContent = 'I could not reach the RHOBEAR brain just now. Try again in a moment.';
+    }).then(function () {
+      streaming = false;
+      setTyping(false);
+      transcript.scrollTop = transcript.scrollHeight;
+    });
+  }
+
+  function handleRaw(raw, botMsg, originalMessage, append) {
+    raw.split('\n').forEach(function (line) {
+      line = line.replace(/^\s+|\s+$/g, '');
+      if (!line || line.indexOf('data:') !== 0) return;
+      var payload = line.slice(5).replace(/^\s+/, '');
+      if (payload === '[DONE]') return;
+      try {
+        var data = JSON.parse(payload);
+        if (data.chunk) {
+          append(data.chunk);
+          botMsg.textContent += data.chunk;
+          transcript.scrollTop = transcript.scrollHeight;
+        }
+        if (data.done && data.suggest_lead) showLead(originalMessage);
+      } catch (e) {}
+    });
+  }
+
+  function showLead(message) {
+    if (leadBox) return;
+    leadBox = make('form', 'rho-greeter-lead', '');
+    leadBox.innerHTML = '<label>Want the quick-start when it\'s ready? Drop an email <span>(optional)</span></label><div><input type="email" placeholder="you@example.com" aria-label="Email for quick-start update"><button type="submit">Send</button></div><p hidden>Thanks — saved.</p>';
+    transcript.appendChild(leadBox);
+    transcript.scrollTop = transcript.scrollHeight;
+    leadBox.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = leadBox.querySelector('input').value.replace(/^\s+|\s+$/g, '');
+      if (!email) return;
+      fetch(LEAD_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, message: message })
+      }).catch(function () {}).then(function () {
+        leadBox.querySelector('p').hidden = false;
+        leadBox.querySelector('button').disabled = true;
+      });
+    });
+  }
+
+  ready(mount);
+})();
