@@ -146,15 +146,127 @@
 })();
 
 /* =====================================================================
+   RHOBEAR live chat stream — shared by the greeter and the Try Demo.
+   One SSE parser, one contract: POST {message} to the public brain and
+   stream data: {chunk, source, safety_category, done, suggest_lead}.
+   ===================================================================== */
+(function () {
+  if (window.RHOBEARChat && window.RHOBEARChat.stream) return;
+
+  var CHAT_URL = 'https://chat.rhobear.ai/chat';
+
+  function noop() {}
+
+  function stream(message, hooks) {
+    if (message && typeof message === 'object') {
+      hooks = message;
+      message = hooks.message;
+    }
+    hooks = hooks || {};
+    message = (message || '').toString();
+
+    var onChunk = hooks.onChunk || noop;
+    var onMeta = hooks.onMeta || noop;
+    var onDone = hooks.onDone || noop;
+    var onError = hooks.onError || noop;
+    var controller = window.AbortController ? new AbortController() : null;
+    var state = {
+      text: '',
+      source: '',
+      safety_category: '',
+      done: false,
+      low_confidence: false,
+      suggest_lead: false
+    };
+
+    function applyMeta(data) {
+      if (!data) return;
+      if (data.source) state.source = data.source;
+      if (data.safety_category) state.safety_category = data.safety_category;
+      if (typeof data.low_confidence !== 'undefined') state.low_confidence = !!data.low_confidence;
+      if (typeof data.suggest_lead !== 'undefined') state.suggest_lead = !!data.suggest_lead;
+      onMeta(data, state);
+    }
+
+    function handleRaw(raw) {
+      raw.split('\n').forEach(function (line) {
+        line = line.trim();
+        if (!line || line.indexOf('data:') !== 0) return;
+        var payload = line.slice(5).trim();
+        if (payload === '[DONE]') {
+          state.done = true;
+          onDone({ done: true }, state);
+          return;
+        }
+        var data;
+        try {
+          data = JSON.parse(payload);
+        } catch (e) { return; }
+        if (data && data.error) throw new Error(data.error);
+        applyMeta(data);
+        if (data.chunk) {
+          state.text += data.chunk;
+          onChunk(data.chunk, data, state);
+        }
+        if (data.done) {
+          state.done = true;
+          onDone(data, state);
+        }
+      });
+    }
+
+    var fetchOpts = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: message })
+    };
+    if (controller) fetchOpts.signal = controller.signal;
+
+    var promise = fetch(CHAT_URL, fetchOpts).then(function (res) {
+      if (!res.ok) throw new Error('Chat request failed');
+      if (!res.body || !window.TextDecoder) return res.text().then(handleRaw);
+      var reader = res.body.getReader();
+      var decoder = new TextDecoder();
+      var buf = '';
+      function pump() {
+        return reader.read().then(function (r) {
+          if (r.done) {
+            buf += decoder.decode();
+            handleRaw(buf);
+            return;
+          }
+          buf += decoder.decode(r.value, { stream: true });
+          var parts = buf.split('\n');
+          buf = parts.pop();
+          parts.forEach(handleRaw);
+          return pump();
+        });
+      }
+      return pump();
+    }).catch(function (err) {
+      onError(err, state);
+      throw err;
+    });
+
+    return {
+      promise: promise,
+      abort: function () { if (controller) controller.abort(); },
+      state: state
+    };
+  }
+
+  window.RHOBEARChat = { stream: stream, chatUrl: CHAT_URL };
+})();
+
+/* =====================================================================
    RHOBEAR curious greeter — light, local-first, no dependencies.
    Injects its own DOM, pauses proactive timers when hidden, and keeps the
-   FAQ page clear for the support bot.
+   FAQ / Try Demo pages clear for their first-party chat surfaces.
    ===================================================================== */
 (function () {
   if (document.getElementById('rho-greeter')) return;
-  if (/\/faq(?:\.html)?(?:$|[?#])/i.test(window.location.pathname)) return;
+  if (/\/(?:faq|try)(?:\.html)?(?:$|[?#])/i.test(window.location.pathname)) return;
 
-  var CHAT_URL = 'https://chat.rhobear.ai/chat';
   var LEAD_URL = 'https://chat.rhobear.ai/lead';
   var DISMISS_KEY = 'rho_greeter_dismissed';
   var DISMISS_MS = 7 * 24 * 60 * 60 * 1000;
@@ -384,28 +496,18 @@
     var botMsg = addMessage('bot', '');
     var acc = '';
 
-    fetch(CHAT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: message })
-    }).then(function (res) {
-      if (!res.ok) throw new Error('Chat request failed');
-      if (!res.body || !window.TextDecoder) return res.text().then(function (t) { handleRaw(t, botMsg, message, function (v) { acc += v; }); });
-      var reader = res.body.getReader();
-      var decoder = new TextDecoder();
-      var buf = '';
-      function pump() {
-        return reader.read().then(function (r) {
-          if (r.done) { handleRaw(buf, botMsg, message, function (v) { acc += v; }); return; }
-          buf += decoder.decode(r.value, { stream: true });
-          var parts = buf.split('\n');
-          buf = parts.pop();
-          parts.forEach(function (part) { handleRaw(part, botMsg, message, function (v) { acc += v; }); });
-          return pump();
-        });
+    var request = window.RHOBEARChat.stream(message, {
+      onChunk: function (chunk) {
+        acc += chunk;
+        botMsg.textContent += chunk;
+        transcript.scrollTop = transcript.scrollHeight;
+      },
+      onDone: function (data) {
+        if (data && data.suggest_lead) showLead(message);
       }
-      return pump();
-    }).catch(function (err) {
+    });
+
+    request.promise.catch(function (err) {
       var msg = err && err.message ? err.message : 'Connection lost';
       if (!acc) {
         botMsg.textContent = msg;
@@ -416,26 +518,6 @@
       streaming = false;
       setTyping(false);
       transcript.scrollTop = transcript.scrollHeight;
-    });
-  }
-
-  function handleRaw(raw, botMsg, originalMessage, append) {
-    raw.split('\n').forEach(function (line) {
-      line = line.trim();
-      if (!line || line.indexOf('data:') !== 0) return;
-      var payload = line.slice(5).trim();
-      if (payload === '[DONE]') return;
-      var data;
-      try {
-        data = JSON.parse(payload);
-      } catch (e) { return; }
-      if (data && data.error) throw new Error(data.error);
-      if (data.chunk) {
-        append(data.chunk);
-        botMsg.textContent += data.chunk;
-        transcript.scrollTop = transcript.scrollHeight;
-      }
-      if (data.done && data.suggest_lead) showLead(originalMessage);
     });
   }
 
