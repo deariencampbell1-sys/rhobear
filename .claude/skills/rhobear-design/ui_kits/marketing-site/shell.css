@@ -2256,6 +2256,11 @@ section.wrap-md > .card-paper.stitched{ margin-top:18px; }
   .rho-greeter-nudge,
   .rho-greeter-typing span { transition: none; animation: none; }
 }
+@media (pointer: coarse) {
+  /* WCAG 2.5.5 — bump close controls to 44x44 on touch devices */
+  .rho-greeter-nudge-close,
+  .rho-greeter-close { width: 44px; height: 44px; }
+}
 .rho-greeter[data-reduce-motion="true"] .rho-greeter-typing span { animation: none; }
 
 /* FAQ support assistant panel */
