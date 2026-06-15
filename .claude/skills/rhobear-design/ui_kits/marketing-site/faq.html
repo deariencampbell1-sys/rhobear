@@ -129,7 +129,7 @@
           return null;
         }
         // Propagate server-side errors so the outer .catch can surface them.
-        if (data.error) throw new Error(data.error);
+        if (data && data.error) throw new Error(data.error);
         return data;
       }
 

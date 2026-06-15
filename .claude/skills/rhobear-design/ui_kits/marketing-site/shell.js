@@ -170,6 +170,7 @@
   var root, launcher, nudge, nudgeText, nudgeClose, panel, closeBtn, form, input, transcript, typing, leadBox;
   var open = false, nudged = false, dismissed = false, streaming = false, visibleMs = 0, lastTick = Date.now();
   var nudgeLine = 0, nudgeRotate = null, checkTimeInterval = null;
+  var scrollTicking = false;
   var focusBefore = null;
 
   function ready(fn) {
@@ -304,10 +305,15 @@
   }
 
   function checkScroll() {
-    if (document.hidden) return;
-    var doc = document.documentElement;
-    var max = Math.max(1, doc.scrollHeight - window.innerHeight);
-    if ((window.scrollY || doc.scrollTop || 0) / max >= NUDGE_SCROLL) showNudge();
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(function () {
+      scrollTicking = false;
+      if (document.hidden) return;
+      var doc = document.documentElement;
+      var max = Math.max(1, doc.scrollHeight - window.innerHeight);
+      if ((window.scrollY || doc.scrollTop || 0) / max >= NUDGE_SCROLL) showNudge();
+    });
   }
 
   function openPanel() {
@@ -334,7 +340,9 @@
     if (e.key === 'Escape' || e.key === 'Esc') { e.preventDefault(); closePanel(); return; }
     if (e.key !== 'Tab') return;
     var items = panel.querySelectorAll('a[href],button:not([disabled]),textarea:not([disabled]),input:not([disabled]),[tabindex]:not([tabindex="-1"])');
-    items = Array.prototype.slice.call(items).filter(function (el) { return el.offsetWidth > 0 || el.offsetHeight > 0; });
+    items = Array.prototype.slice.call(items).filter(function (el) {
+      return (el.offsetWidth > 0 || el.offsetHeight > 0) && el.getAttribute('tabindex') !== '-1';
+    });
     if (!items.length) return;
     var first = items[0], last = items[items.length - 1];
     var active = document.activeElement;
@@ -421,7 +429,7 @@
       try {
         data = JSON.parse(payload);
       } catch (e) { return; }
-      if (data.error) throw new Error(data.error);
+      if (data && data.error) throw new Error(data.error);
       if (data.chunk) {
         append(data.chunk);
         botMsg.textContent += data.chunk;
