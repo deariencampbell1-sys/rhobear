@@ -76,6 +76,7 @@
   var status = document.getElementById('support-chat-status');
   var button = form.querySelector('button');
   var CHAT_URL = 'https://chat.rhobear.ai/support/chat';
+  var streaming = false;
 
   function addMsg(who, text) {
     var el = document.createElement('div');
@@ -88,8 +89,10 @@
 
   form.addEventListener('submit', function(e){
     e.preventDefault();
+    if (streaming) return;
     var message = (input.value || '').trim();
     if (!message) return;
+    streaming = true;
     addMsg('user', message);
     input.value = '';
     input.style.height = '';
@@ -151,7 +154,7 @@
             return;
           }
           buffer += decoder.decode(result.value, { stream: true });
-          var events = buffer.split('\n\n');
+          var events = buffer.split(/\r?\n\r?\n/);
           buffer = events.pop() || '';
           processEvents(events);
           if (stopped) return;
@@ -164,6 +167,7 @@
       status.textContent = err && err.message ? err.message : 'Support chat unavailable.';
     }).finally(function(){
       button.disabled = false;
+      streaming = false;
       input.focus();
     });
   });

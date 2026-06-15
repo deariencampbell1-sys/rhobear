@@ -2278,12 +2278,12 @@ section.wrap-md > .card-paper.stitched{ margin-top:18px; }
 .chat-panel-note{margin:8px 0 0;color:var(--c-ink-2);line-height:1.5}
 .chat-panel-badge{flex:0 0 auto;border:1px solid rgba(247,168,54,.45);background:var(--c-amber-soft);color:var(--c-amber-deep);border-radius:999px;padding:7px 10px;font-family:var(--font-display);font-size:10px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
 .chat-panel-log{min-height:156px;max-height:360px;overflow:auto;padding:14px;border:1px dashed var(--c-stitch);border-radius:14px;background:rgba(255,255,255,.58);display:flex;flex-direction:column;gap:10px}
-.chat-panel-msg{max-width:82%;padding:10px 12px;border-radius:14px;font-size:.98rem;line-height:1.45;border:1px solid var(--c-line)}
+.chat-panel-msg{max-width:82%;padding:10px 12px;border-radius:14px;font-size:.98rem;line-height:1.45;border:1px solid var(--c-line);white-space:pre-wrap;overflow-wrap:break-word}
 .chat-panel-msg.bot{align-self:flex-start;background:var(--c-surface);color:var(--c-ink-2);border-top-left-radius:4px}
 .chat-panel-msg.user{align-self:flex-end;background:var(--c-amber-soft);color:var(--c-ink);border-top-right-radius:4px}
 .chat-panel-form{margin-top:12px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:end}
 .chat-panel-label{grid-column:1/-1;font-family:var(--font-display);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--c-ink-3)}
-.chat-panel textarea{width:100%;min-height:54px;max-height:140px;resize:vertical;border:1px solid var(--c-line);border-radius:12px;background:var(--c-surface);color:var(--c-ink);font:1rem/1.35 var(--font-body);padding:10px 12px}
+.chat-panel textarea{width:100%;min-height:54px;max-height:140px;resize:none;border:1px solid var(--c-line);border-radius:12px;background:var(--c-surface);color:var(--c-ink);font:1rem/1.35 var(--font-body);padding:10px 12px}
 .chat-panel textarea:focus{outline:0;border-color:var(--c-amber-deep);box-shadow:0 0 0 3px var(--c-amber-soft)}
 .chat-panel button{border:0;border-radius:12px;background:var(--c-amber);color:var(--c-ink);font-family:var(--font-display);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:13px 16px;cursor:pointer;box-shadow:0 8px 18px -12px rgba(26,23,20,.45)}
 .chat-panel button:hover{background:var(--c-amber-deep)}
