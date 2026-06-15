@@ -309,6 +309,7 @@
     focusBefore = document.activeElement;
     open = true;
     hideNudge();
+    clearProactive();
     root.classList.add('open');
     launcher.setAttribute('aria-expanded', 'true');
     setTimeout(function () { input.focus(); }, 30);
@@ -383,7 +384,7 @@
         return reader.read().then(function (r) {
           if (r.done) { handleRaw(buf, botMsg, message, function (v) { acc += v; }); return; }
           buf += decoder.decode(r.value, { stream: true });
-          var parts = buf.split('\n\n');
+          var parts = buf.split('\n');
           buf = parts.pop();
           parts.forEach(function (part) { handleRaw(part, botMsg, message, function (v) { acc += v; }); });
           return pump();
@@ -435,6 +436,8 @@
       if (!email) return;
       submitBtn.disabled = true;
       emailInput.disabled = true;
+      okMsg.hidden = true;
+      errMsg.hidden = true;
       fetch(LEAD_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
