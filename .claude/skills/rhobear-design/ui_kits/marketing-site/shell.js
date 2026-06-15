@@ -334,7 +334,9 @@
     if (e.key === 'Escape' || e.key === 'Esc') { e.preventDefault(); closePanel(); return; }
     if (e.key !== 'Tab') return;
     var items = panel.querySelectorAll('a[href],button:not([disabled]),textarea:not([disabled]),input:not([disabled]),[tabindex]:not([tabindex="-1"])');
-    items = Array.prototype.slice.call(items).filter(function (el) { return el.offsetParent !== null; });
+    items = Array.prototype.slice.call(items).filter(function (el) {
+      return (el.offsetWidth > 0 || el.offsetHeight > 0) && el.getAttribute('tabindex') !== '-1';
+    });
     if (!items.length) return;
     var first = items[0], last = items[items.length - 1];
     var active = document.activeElement;
@@ -421,7 +423,7 @@
       try {
         data = JSON.parse(payload);
       } catch (e) { return; }
-      if (data.error) throw new Error(data.error);
+      if (data && data.error) throw new Error(data.error);
       if (data.chunk) {
         append(data.chunk);
         botMsg.textContent += data.chunk;
