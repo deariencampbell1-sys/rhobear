@@ -169,6 +169,7 @@
     var onMeta = hooks.onMeta || noop;
     var onDone = hooks.onDone || noop;
     var onError = hooks.onError || noop;
+    var endpoint = hooks.endpoint || CHAT_URL;
     var controller = window.AbortController ? new AbortController() : null;
     var state = {
       text: '',
@@ -215,14 +216,20 @@
       });
     }
 
+    var body = { message: message };
+    if (hooks.operator) body.operator = hooks.operator;
+    if (hooks.body && typeof hooks.body === 'object') {
+      Object.keys(hooks.body).forEach(function (key) { body[key] = hooks.body[key]; });
+    }
+
     var fetchOpts = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: message })
+      body: JSON.stringify(body)
     };
     if (controller) fetchOpts.signal = controller.signal;
 
-    var promise = fetch(CHAT_URL, fetchOpts).then(function (res) {
+    var promise = fetch(endpoint, fetchOpts).then(function (res) {
       if (!res.ok) throw new Error('Chat request failed');
       if (!res.body || !window.TextDecoder) return res.text().then(handleRaw);
       var reader = res.body.getReader();

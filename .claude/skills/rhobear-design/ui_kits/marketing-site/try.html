@@ -194,12 +194,18 @@ body.try-demo-page {
   border-radius: var(--r-3);
   background: var(--c-surface);
   color: var(--c-ink-2);
+  cursor: pointer;
+  text-align: left;
 }
 .try-operator.active {
   border-color: var(--c-amber-deep);
   background: var(--c-amber-soft);
   color: var(--c-ink);
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 0 0 2px var(--c-amber-soft), 0 0 24px rgba(245, 158, 44, 0.28), var(--shadow-card);
+}
+.try-operator:focus-visible {
+  outline: 2px solid var(--c-amber-deep);
+  outline-offset: 2px;
 }
 .try-operator img {
   width: 42px;
@@ -328,6 +334,13 @@ body.try-demo-page {
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
+.try-msg-avatar {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.25));
+}
 .try-msg-speaker {
   color: var(--c-amber-deep);
   font-weight: 800;
@@ -397,6 +410,25 @@ body.try-demo-page {
   align-items: end;
   padding: var(--s-3);
   border-top: 1px solid var(--c-line);
+  background: var(--c-bg-2);
+}
+.try-active-line {
+  padding: 0 var(--s-4) var(--s-3);
+  background: var(--c-bg-2);
+  color: var(--c-ink-3);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+.try-handoff {
+  align-self: center;
+  color: var(--c-ink-3);
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: var(--s-1) var(--s-3);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-pill);
   background: var(--c-bg-2);
 }
 .try-label {
@@ -562,8 +594,26 @@ body.try-demo-page {
   .try-app-search,
   .try-app-tab { display: none; }
   .try-world-picker { justify-self: end; }
-  .try-hub-body { grid-template-columns: minmax(0, 1fr); }
-  .try-rail { display: none; }
+  .try-hub-body { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+  .try-side-rail { display: none; }
+  .try-crew-rail {
+    display: block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: var(--s-2);
+  }
+  .try-crew-rail .try-rail-head { margin-bottom: var(--s-2); }
+  .try-crew-grid {
+    display: flex;
+    gap: var(--s-2);
+    min-width: max-content;
+  }
+  .try-crew-grid .try-operator {
+    width: 92px;
+    min-height: 88px;
+    margin: 0;
+    flex: 0 0 92px;
+  }
   .try-chat-column { padding: var(--s-2); }
   .try-chat-shell { border-radius: var(--r-4); }
   .try-chat-badge { margin: var(--s-3) var(--s-3) 0; font-size: 0.68rem; }
@@ -601,34 +651,15 @@ body.try-demo-page {
     </div>
 
     <div class="try-hub-body">
-      <aside class="try-rail" aria-label="Crew operator rail">
-        <div class="try-rail-head"><span>Active voice</span><span>live</span></div>
-        <div class="try-operator active" aria-current="true">
-          <img src="../../assets/pops.png?v=1780636292" alt="">
-          <span><span class="try-operator-name">Pops</span><span class="try-operator-role">sales brain</span></span>
-        </div>
-        <div class="try-rail-head" style="margin-top:var(--s-4);"><span>Crew on deck</span><span>9</span></div>
-        <div class="try-crew-grid">
-          <div class="try-operator"><img src="../../assets/architect_ship.png?v=1780636292" alt=""><span><span class="try-operator-name">Architect</span><span class="try-operator-role">plan</span></span></div>
-          <div class="try-operator"><img src="../../assets/crew-builder-ship.png?v=1780636292" alt=""><span><span class="try-operator-name">Builder</span><span class="try-operator-role">ship</span></span></div>
-          <div class="try-operator"><img src="../../assets/crew-designer-ship.png?v=1780636292" alt=""><span><span class="try-operator-name">Designer</span><span class="try-operator-role">polish</span></span></div>
-          <div class="try-operator"><img src="../../assets/foreman_ship.png?v=1780636292" alt=""><span><span class="try-operator-name">Foreman</span><span class="try-operator-role">route</span></span></div>
-          <div class="try-operator"><img src="../../assets/guardian_ship.png?v=1780636292" alt=""><span><span class="try-operator-name">Guardian</span><span class="try-operator-role">safe</span></span></div>
-          <div class="try-operator"><img src="../../assets/hero-armored-ship.png?v=1780636292" alt=""><span><span class="try-operator-name">Lattice</span><span class="try-operator-role">memory</span></span></div>
-          <div class="try-operator"><img src="../../assets/spark_ship.png?v=1780636292" alt=""><span><span class="try-operator-name">Spark</span><span class="try-operator-role">wire</span></span></div>
-          <div class="try-operator"><img src="../../assets/wizard_ship.png?v=1780636292" alt=""><span><span class="try-operator-name">Wizard</span><span class="try-operator-role">teach</span></span></div>
-          <div class="try-operator"><img src="../../assets/crew-reviewer-ship.png?v=1780636292" alt=""><span><span class="try-operator-name">Reviewer</span><span class="try-operator-role">check</span></span></div>
-        </div>
+      <aside id="try-operator-rail" class="try-rail try-crew-rail" aria-label="Crew operator rail" tabindex="0">
+        <div class="try-rail-head"><span>Crew voices</span><span id="try-operator-count">loading</span></div>
+        <div id="try-operator-list" class="try-crew-grid" role="listbox" aria-label="Choose active RHOBEAR crew voice" aria-activedescendant=""></div>
       </aside>
 
       <section class="try-chat-column" aria-label="Live RHOBEAR chat demo">
         <div class="try-chat-shell">
           <div class="try-chat-badge">Live demo · public chat — when you own RHOBEAR, you set its rules.</div>
           <div id="try-chat-log" class="try-chat-log" role="log" aria-live="polite" aria-relevant="additions text">
-            <article class="try-message bot" data-source="demo">
-              <div class="try-msg-head"><span class="try-msg-speaker">Pops</span><span class="try-msg-source">public demo</span></div>
-              <div class="try-msg-text">You're already in the room. Ask the same brain that greets people at chat.rhobear.ai — no lead form, no gate, just the crew talking back.</div>
-            </article>
           </div>
           <div class="try-quick-chips" aria-label="Sample prompts">
             <button class="try-chip" type="button" data-prompt="What is RHOBEAR?">What is RHOBEAR?</button>
@@ -637,10 +668,11 @@ body.try-demo-page {
             <button class="try-chip" type="button" data-prompt="Show me what your crew can do.">Show me what your crew can do.</button>
           </div>
           <form class="try-composer" id="try-chat-form">
-            <label class="try-label" for="try-chat-input">Message Pops</label>
+            <label id="try-chat-label" class="try-label" for="try-chat-input">Message the active crew operator</label>
             <textarea id="try-chat-input" class="try-input" rows="2" maxlength="1200" placeholder="Talk to your crew — plan, build, ship..." autocomplete="off"></textarea>
             <button class="try-send" type="submit">Send</button>
           </form>
+          <div id="try-active-line" class="try-active-line">Active: loading crew — click another crew member to switch voice.</div>
         </div>
         <div class="try-demo-note">
           <span>This chat actually runs on the same brain you'll be talking to inside RHOBEAR. Right now, on a $5 VPS.</span>
@@ -648,7 +680,7 @@ body.try-demo-page {
         </div>
       </section>
 
-      <aside class="try-rail" aria-label="Visual skills and lessons panels">
+      <aside class="try-rail try-side-rail" aria-label="Visual skills and lessons panels">
         <div class="try-panel">
           <div class="try-panel-title">Skills</div>
           <div class="try-panel-chiprow" aria-hidden="true">
@@ -687,27 +719,112 @@ body.try-demo-page {
   ready(function () {
     var form = document.getElementById('try-chat-form');
     var input = document.getElementById('try-chat-input');
+    var label = document.getElementById('try-chat-label');
     var log = document.getElementById('try-chat-log');
+    var rail = document.getElementById('try-operator-rail');
+    var operatorList = document.getElementById('try-operator-list');
+    var operatorCount = document.getElementById('try-operator-count');
+    var activeLine = document.getElementById('try-active-line');
     var activeTab = document.querySelector('.nav-tabs .nav-tab.active');
     var sendBtn = form.querySelector('.try-send');
-    var chips = Array.prototype.slice.call(document.querySelectorAll('.try-chip'));
+    var chipsWrap = document.querySelector('.try-quick-chips');
+    var chips = [];
     var streaming = false;
+    var operators = [];
+    var operatorsByKey = {};
+    var activeKey = 'architect';
+
+    var ASSETS = {
+      pops: '../../assets/pops.png?v=1780636292',
+      architect: '../../assets/architect_ship.png?v=1780636292',
+      builder: '../../assets/crew-builder-ship.png?v=1780636292',
+      designer: '../../assets/crew-designer-ship.png?v=1780636292',
+      foreman: '../../assets/foreman_ship.png?v=1780636292',
+      guardian: '../../assets/guardian_ship.png?v=1780636292',
+      lattice: '../../assets/hero-armored-ship.png?v=1780636292',
+      reviewer: '../../assets/crew-reviewer-ship.png?v=1780636292',
+      spark: '../../assets/spark_ship.png?v=1780636292'
+    };
+
+    var FALLBACK_OPERATORS = [
+      { key: 'pops', display_name: 'Pops', role: 'host', tagline: 'Warm workshop host who walks you in.' },
+      { key: 'architect', display_name: 'Architect', role: 'plans', tagline: 'Boundary first. Clean structure. No bleed.' },
+      { key: 'builder', display_name: 'Builder', role: 'ship', tagline: 'Give him the lane; he closes it.' },
+      { key: 'designer', display_name: 'Designer', role: 'feel', tagline: 'Less, but better. Cut the clutter.' },
+      { key: 'foreman', display_name: 'Foreman', role: 'execution', tagline: 'Three lanes open. Watch him move.' },
+      { key: 'guardian', display_name: 'Guardian', role: 'safety', tagline: 'Pinned. Scanned. Reviewed.' },
+      { key: 'lattice', display_name: 'Lattice', role: 'coordination', tagline: 'She sees the seams two beats early.' },
+      { key: 'reviewer', display_name: 'Reviewer', role: 'judgment', tagline: 'Reads every diff before it lands.' },
+      { key: 'spark', display_name: 'Spark', role: 'creative', tagline: 'Fast, eager, and already on the next one.' }
+    ];
+
+    var CHIP_SETS = {
+      pops: ['Show me around the Hub', 'What is RHOBEAR?', 'How do I start?'],
+      architect: ['Walk me through the structure', "What's the architecture", 'How do Worlds work?'],
+      builder: ['What can I ship with this?', 'Show me a connector', 'How does local AI run?'],
+      designer: ['Make this feel cleaner', 'What can I make beautiful?', 'Show me the simple version'],
+      foreman: ['Turn this into lanes', 'What happens on the Board?', 'How does work move?'],
+      guardian: ['How safe is it?', 'Talk to me about privacy', 'What gets vetted?'],
+      lattice: ['Who should handle this?', 'How does the crew hand off?', 'Show me the seams'],
+      reviewer: ['What gets reviewed?', 'Explain the Wall', 'When do I sign off?'],
+      spark: ['Show me something cool', 'What can I MAKE with this', 'Give me a fast idea']
+    };
+
+    var GREETINGS = {
+      pops: "Hi — I'm Pops, part of RHOBEAR's crew. You're in the Hub now. Ask me anything — I'll wait.",
+      architect: "Hi — I'm Architect, part of RHOBEAR's crew. Ask me anything; I'll draw the clean line first.",
+      builder: "Hi — I'm Builder, part of RHOBEAR's crew. Give me the lane. Ask me what ships.",
+      designer: "Hi — I'm Designer, part of RHOBEAR's crew. Ask me anything. We'll cut the clutter.",
+      foreman: "Hi — I'm Foreman, part of RHOBEAR's crew. Outcome first. Ask me anything.",
+      guardian: "Hi — I'm Guardian, part of RHOBEAR's crew. Ask me anything. I scan the door first.",
+      lattice: "Hi — I'm Lattice, part of RHOBEAR's crew. Ask me anything; I'll show you where the seams fit.",
+      reviewer: "Hi — I'm Reviewer, part of RHOBEAR's crew. Ask me anything. I read before it lands.",
+      spark: "Hi — I'm Spark, part of RHOBEAR's crew. Ask me anything — ooh, let's make something."
+    };
+
+    function chatBase() {
+      var url = (window.RHOBEARChat && window.RHOBEARChat.chatUrl) || 'https://chat.rhobear.ai/chat';
+      return url.replace(/\/chat\/?$/, '');
+    }
+
+    function demoEndpoint() { return chatBase() + '/chat/demo'; }
+    function operatorsEndpoint() { return chatBase() + '/chat/demo/operators'; }
+
+    function display(opKey) {
+      return (operatorsByKey[opKey] && operatorsByKey[opKey].display_name) || opKey;
+    }
+
+    function role(opKey) {
+      return (operatorsByKey[opKey] && operatorsByKey[opKey].role) || 'crew';
+    }
+
+    function avatar(opKey) {
+      return ASSETS[opKey] || ASSETS.architect;
+    }
 
     function scrollLog() {
       log.scrollTop = log.scrollHeight;
     }
 
-    function makeMessage(who, text) {
+    function makeMessage(who, text, opKey) {
       var msg = document.createElement('article');
       msg.className = 'try-message ' + who;
+      if (opKey) msg.dataset.operator = opKey;
       var head = document.createElement('div');
       head.className = 'try-msg-head';
+      if (who === 'bot') {
+        var img = document.createElement('img');
+        img.className = 'try-msg-avatar';
+        img.src = avatar(opKey || activeKey);
+        img.alt = '';
+        head.appendChild(img);
+      }
       var speaker = document.createElement('span');
       speaker.className = 'try-msg-speaker';
-      speaker.textContent = who === 'user' ? 'You' : 'Pops';
+      speaker.textContent = who === 'user' ? 'You' : display(opKey || activeKey);
       var source = document.createElement('span');
       source.className = 'try-msg-source';
-      source.textContent = who === 'user' ? 'owner' : 'waiting';
+      source.textContent = who === 'user' ? 'owner' : 'public demo';
       var body = document.createElement('div');
       body.className = 'try-msg-text';
       body.textContent = text || '';
@@ -720,10 +837,19 @@ body.try-demo-page {
       return { root: msg, speaker: speaker, source: source, body: body };
     }
 
+    function addHandoff(opKey) {
+      var line = document.createElement('div');
+      line.className = 'try-handoff';
+      line.textContent = '→ ' + display(opKey) + ' is here';
+      log.appendChild(line);
+      scrollLog();
+    }
+
     function setBusy(on) {
       streaming = on;
       sendBtn.disabled = on;
       chips.forEach(function (chip) { chip.disabled = on; });
+      operatorList.querySelectorAll('button').forEach(function (btn) { btn.disabled = on; });
       log.setAttribute('aria-busy', on ? 'true' : 'false');
     }
 
@@ -737,28 +863,95 @@ body.try-demo-page {
       return typing;
     }
 
-    function applyMeta(msg, data, state) {
+    function applyMeta(msg, data, state, opKey) {
       var source = (state && state.source) || (data && data.source) || '';
       var safety = (state && state.safety_category) || (data && data.safety_category) || '';
-      if (!source) return;
+      var doneOperator = data && data.operator && data.operator !== 'system' ? data.operator : opKey;
+      if (!source && doneOperator) {
+        msg.speaker.textContent = display(doneOperator);
+        return;
+      }
       msg.root.dataset.source = source;
       if (source === 'safety') {
         msg.root.classList.add('is-safety');
         msg.speaker.textContent = 'RHOBEAR safety';
         msg.source.textContent = safety ? 'safety · ' + safety : 'safety';
-      } else {
+      } else if (source) {
         msg.root.classList.remove('is-safety');
-        msg.speaker.textContent = 'Pops';
+        msg.speaker.textContent = display(doneOperator);
         msg.source.textContent = source;
       }
+    }
+
+    function setActive(opKey, opts) {
+      opts = opts || {};
+      if (!operatorsByKey[opKey] || streaming) return;
+      var changed = activeKey !== opKey;
+      activeKey = opKey;
+      operatorList.setAttribute('aria-activedescendant', 'try-op-' + opKey);
+      operatorList.querySelectorAll('.try-operator').forEach(function (btn) {
+        var on = btn.getAttribute('data-operator') === opKey;
+        btn.classList.toggle('active', on);
+        btn.setAttribute('aria-selected', on ? 'true' : 'false');
+        if (on) btn.setAttribute('aria-current', 'true');
+        else btn.removeAttribute('aria-current');
+      });
+      renderChips();
+      var name = display(opKey);
+      label.textContent = 'Message ' + name;
+      input.placeholder = 'Talk to ' + name + ' — stay in the Hub...';
+      activeLine.textContent = 'Active: ' + name + ' — click another crew member to switch voice.';
+      if (changed && !opts.silent) addHandoff(opKey);
+    }
+
+    function renderOperators(list) {
+      operators = list.filter(function (op) { return op && op.key && ASSETS[op.key]; });
+      operatorsByKey = {};
+      operatorList.innerHTML = '';
+      operators.forEach(function (op) {
+        operatorsByKey[op.key] = op;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.id = 'try-op-' + op.key;
+        btn.className = 'try-operator';
+        btn.setAttribute('data-operator', op.key);
+        btn.setAttribute('role', 'option');
+        btn.setAttribute('aria-label', op.display_name + ' — ' + op.tagline);
+        btn.setAttribute('title', op.tagline);
+        btn.innerHTML = '<img src="' + avatar(op.key) + '" alt=""><span><span class="try-operator-name"></span><span class="try-operator-role"></span></span>';
+        btn.querySelector('.try-operator-name').textContent = op.display_name;
+        btn.querySelector('.try-operator-role').textContent = op.role || op.tagline;
+        btn.addEventListener('click', function () { setActive(op.key); input.focus(); });
+        operatorList.appendChild(btn);
+      });
+      operatorCount.textContent = String(operators.length);
+      var defaultKey = operatorsByKey.pops ? 'pops' : (operatorsByKey.architect ? 'architect' : operators[0].key);
+      setActive(defaultKey, { silent: true });
+      makeMessage('bot', GREETINGS[activeKey] || ('Hi — I\'m ' + display(activeKey) + ", part of RHOBEAR's crew. Ask me anything."), activeKey);
+    }
+
+    function renderChips() {
+      var prompts = CHIP_SETS[activeKey] || ['What is RHOBEAR?', 'How much does it cost?', 'Can it work offline?'];
+      chipsWrap.innerHTML = '';
+      chips = prompts.map(function (prompt) {
+        var chip = document.createElement('button');
+        chip.className = 'try-chip';
+        chip.type = 'button';
+        chip.setAttribute('data-prompt', prompt);
+        chip.textContent = prompt;
+        chip.addEventListener('click', function () { sendMessage(prompt); });
+        chipsWrap.appendChild(chip);
+        return chip;
+      });
     }
 
     function sendMessage(text) {
       var message = (text || input.value || '').trim();
       if (!message || streaming) return;
+      var opKey = activeKey;
       input.value = '';
       makeMessage('user', message);
-      var bot = makeMessage('bot', '');
+      var bot = makeMessage('bot', '', opKey);
       var typing = addTyping(bot);
       setBusy(true);
 
@@ -771,19 +964,21 @@ body.try-demo-page {
       }
 
       var request = window.RHOBEARChat.stream(message, {
+        endpoint: demoEndpoint(),
+        operator: opKey,
         onMeta: function (data, state) {
-          applyMeta(bot, data, state);
+          applyMeta(bot, data, state, opKey);
         },
         onChunk: function (chunk, data, state) {
           if (typing.parentNode) typing.parentNode.removeChild(typing);
-          applyMeta(bot, data, state);
+          applyMeta(bot, data, state, opKey);
           if (!((state && state.source) || (data && data.source))) bot.source.textContent = 'streaming';
           bot.body.textContent += chunk;
           scrollLog();
         },
         onDone: function (data, state) {
           if (typing.parentNode) typing.parentNode.removeChild(typing);
-          applyMeta(bot, data, state);
+          applyMeta(bot, data, state, opKey);
           if (!bot.body.textContent.trim()) bot.body.textContent = 'Done.';
           scrollLog();
         }
@@ -809,10 +1004,15 @@ body.try-demo-page {
         sendMessage();
       }
     });
-    chips.forEach(function (chip) {
-      chip.addEventListener('click', function () {
-        sendMessage(chip.getAttribute('data-prompt'));
-      });
+    rail.addEventListener('keydown', function (event) {
+      if (!operators.length) return;
+      var keys = ['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp'];
+      if (keys.indexOf(event.key) === -1) return;
+      event.preventDefault();
+      var idx = operators.findIndex(function (op) { return op.key === activeKey; });
+      var delta = (event.key === 'ArrowRight' || event.key === 'ArrowDown') ? 1 : -1;
+      var next = operators[(idx + delta + operators.length) % operators.length];
+      if (next) setActive(next.key);
     });
     document.addEventListener('keydown', function (event) {
       if (event.key === 'Escape' || event.key === 'Esc') {
@@ -820,6 +1020,12 @@ body.try-demo-page {
         window.location.href = 'index.html';
       }
     });
+
+    fetch(operatorsEndpoint(), { headers: { 'Accept': 'application/json' } })
+      .then(function (res) { if (!res.ok) throw new Error('operators failed'); return res.json(); })
+      .then(function (data) { renderOperators((data && data.operators) || FALLBACK_OPERATORS); })
+      .catch(function () { renderOperators(FALLBACK_OPERATORS); });
+
     if (activeTab && activeTab.scrollIntoView) activeTab.scrollIntoView({ block: 'nearest', inline: 'center' });
     setTimeout(function () { input.focus(); }, 60);
   });
