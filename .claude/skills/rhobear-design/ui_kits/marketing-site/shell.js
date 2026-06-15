@@ -170,6 +170,7 @@
   var root, launcher, nudge, nudgeText, nudgeClose, panel, closeBtn, form, input, transcript, typing, leadBox;
   var open = false, nudged = false, dismissed = false, streaming = false, visibleMs = 0, lastTick = Date.now();
   var nudgeLine = 0, nudgeRotate = null, checkTimeInterval = null;
+  var scrollTicking = false;
   var focusBefore = null;
 
   function ready(fn) {
@@ -304,10 +305,15 @@
   }
 
   function checkScroll() {
-    if (document.hidden) return;
-    var doc = document.documentElement;
-    var max = Math.max(1, doc.scrollHeight - window.innerHeight);
-    if ((window.scrollY || doc.scrollTop || 0) / max >= NUDGE_SCROLL) showNudge();
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(function () {
+      scrollTicking = false;
+      if (document.hidden) return;
+      var doc = document.documentElement;
+      var max = Math.max(1, doc.scrollHeight - window.innerHeight);
+      if ((window.scrollY || doc.scrollTop || 0) / max >= NUDGE_SCROLL) showNudge();
+    });
   }
 
   function openPanel() {
