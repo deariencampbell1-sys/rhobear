@@ -246,6 +246,24 @@ body.try-demo-page {
   margin: 0;
   min-height: 96px;
 }
+.try-crew-rail.is-disabled .try-crew-grid {
+  opacity: 0.5;
+  filter: grayscale(0.2);
+}
+.try-crew-rail.is-disabled .try-operator {
+  cursor: not-allowed;
+}
+.try-crew-empty {
+  grid-column: 1 / -1;
+  padding: var(--s-3);
+  border: 1px dashed var(--c-line-strong);
+  border-radius: var(--r-3);
+  background: var(--c-bg-2);
+  color: var(--c-ink-3);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
 .try-crew-grid img {
   width: 46px;
   height: 46px;
@@ -651,9 +669,9 @@ body.try-demo-page {
     </div>
 
     <div class="try-hub-body">
-      <aside id="try-operator-rail" class="try-rail try-crew-rail" aria-label="Crew operator rail" tabindex="0">
+      <aside id="try-operator-rail" class="try-rail try-crew-rail" aria-label="Crew operator rail">
         <div class="try-rail-head"><span>Crew voices</span><span id="try-operator-count">loading</span></div>
-        <div id="try-operator-list" class="try-crew-grid" role="listbox" aria-label="Choose active RHOBEAR crew voice" aria-activedescendant=""></div>
+        <div id="try-operator-list" class="try-crew-grid" role="listbox" tabindex="0" aria-label="Choose active RHOBEAR crew voice" aria-activedescendant="" aria-disabled="false"></div>
       </aside>
 
       <section class="try-chat-column" aria-label="Live RHOBEAR chat demo">
@@ -732,7 +750,7 @@ body.try-demo-page {
     var streaming = false;
     var operators = [];
     var operatorsByKey = {};
-    var activeKey = 'pops';
+    var activeKey = '';
 
     var ASSETS = {
       pops: '../../assets/pops.png?v=1780636292',
@@ -745,18 +763,6 @@ body.try-demo-page {
       reviewer: '../../assets/crew-reviewer-ship.png?v=1780636292',
       spark: '../../assets/spark_ship.png?v=1780636292'
     };
-
-    var FALLBACK_OPERATORS = [
-      { key: 'pops', display_name: 'Pops', role: 'Always-on. Holding the spot.', tagline: 'Always-on. Holding the spot.' },
-      { key: 'architect', display_name: 'Architect', role: 'I design the boundary first.', tagline: 'I design the boundary first.' },
-      { key: 'builder', display_name: 'Builder', role: "Give me the lane, I'll close it.", tagline: "Give me the lane, I'll close it." },
-      { key: 'designer', display_name: 'Designer', role: 'Less, but better.', tagline: 'Less, but better.' },
-      { key: 'foreman', display_name: 'Foreman', role: 'Three lanes open. Watch me move.', tagline: 'Three lanes open. Watch me move.' },
-      { key: 'guardian', display_name: 'Guardian', role: 'Pinned. Scanned. Reviewed.', tagline: 'Pinned. Scanned. Reviewed.' },
-      { key: 'lattice', display_name: 'Lattice', role: 'I caught the drift two beats before.', tagline: 'I caught the drift two beats before.' },
-      { key: 'reviewer', display_name: 'Reviewer', role: 'I read every diff before it lands.', tagline: 'I read every diff before it lands.' },
-      { key: 'spark', display_name: 'Spark', role: "Ooh — got one. Let's go.", tagline: "Ooh — got one. Let's go." }
-    ];
 
     var CHIP_SETS = {
       pops: ['Where do you live?', 'What is RHOBEAR?', 'Walk me in.'],
@@ -840,6 +846,8 @@ body.try-demo-page {
       sendBtn.disabled = on;
       chips.forEach(function (chip) { chip.disabled = on; });
       operatorList.querySelectorAll('button').forEach(function (btn) { btn.disabled = on; });
+      operatorList.setAttribute('aria-disabled', on ? 'true' : 'false');
+      rail.classList.toggle('is-disabled', on);
       log.setAttribute('aria-busy', on ? 'true' : 'false');
     }
 
@@ -894,10 +902,39 @@ body.try-demo-page {
       if (changed && !opts.silent) addHandoff(opKey);
     }
 
+    function renderOperatorEmpty(message) {
+      operators = [];
+      operatorsByKey = {};
+      activeKey = '';
+      operatorList.innerHTML = '';
+      operatorList.setAttribute('aria-activedescendant', '');
+      operatorList.setAttribute('aria-disabled', 'true');
+      operatorCount.textContent = '0';
+      var empty = document.createElement('div');
+      empty.className = 'try-crew-empty';
+      empty.setAttribute('role', 'status');
+      empty.textContent = message || 'Crew voices are unavailable right now. Refresh and try again in a moment.';
+      operatorList.appendChild(empty);
+      label.textContent = 'Crew voices unavailable';
+      input.placeholder = 'The public crew rail did not load. Refresh and try again.';
+      activeLine.textContent = 'Crew voices unavailable — refresh and try again.';
+      sendBtn.disabled = true;
+      input.disabled = true;
+      chipsWrap.innerHTML = '';
+      chips = [];
+    }
+
     function renderOperators(list) {
-      operators = list.map(function (op) { if (op && !op.key && op.id) op.key = op.id; if (op && !op.display_name && op.display) op.display_name = op.display; if (op && !op.role && op.tagline) op.role = op.tagline; return op; }).filter(function (op) { return op && op.key && ASSETS[op.key]; });
+      operators = (list || []).map(function (op) { if (op && !op.key && op.id) op.key = op.id; if (op && !op.display_name && op.display) op.display_name = op.display; if (op && !op.role && op.tagline) op.role = op.tagline; return op; }).filter(function (op) { return op && op.key && ASSETS[op.key]; });
       operatorsByKey = {};
       operatorList.innerHTML = '';
+      operatorList.setAttribute('aria-disabled', 'false');
+      sendBtn.disabled = false;
+      input.disabled = false;
+      if (!operators.length) {
+        renderOperatorEmpty('No crew voices came back from the demo service. Refresh and try again in a moment.');
+        return;
+      }
       operators.forEach(function (op) {
         operatorsByKey[op.key] = op;
         var btn = document.createElement('button');
@@ -906,6 +943,7 @@ body.try-demo-page {
         btn.className = 'try-operator';
         btn.setAttribute('data-operator', op.key);
         btn.setAttribute('role', 'option');
+        btn.setAttribute('tabindex', '-1');
         btn.setAttribute('aria-label', op.display_name + ' — ' + op.tagline);
         btn.setAttribute('title', op.tagline);
         btn.innerHTML = '<img src="' + avatar(op.key) + '" alt=""><span><span class="try-operator-name"></span><span class="try-operator-role"></span></span>';
@@ -937,7 +975,7 @@ body.try-demo-page {
 
     function sendMessage(text) {
       var message = (text || input.value || '').trim();
-      if (!message || streaming) return;
+      if (!message || streaming || !activeKey) return;
       var opKey = activeKey;
       input.value = '';
       makeMessage('user', message);
@@ -994,7 +1032,7 @@ body.try-demo-page {
         sendMessage();
       }
     });
-    rail.addEventListener('keydown', function (event) {
+    operatorList.addEventListener('keydown', function (event) {
       if (!operators.length) return;
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
@@ -1018,8 +1056,8 @@ body.try-demo-page {
 
     fetch(operatorsEndpoint(), { headers: { 'Accept': 'application/json' } })
       .then(function (res) { if (!res.ok) throw new Error('operators failed'); return res.json(); })
-      .then(function (data) { renderOperators((data && data.operators) || FALLBACK_OPERATORS); })
-      .catch(function () { renderOperators(FALLBACK_OPERATORS); });
+      .then(function (data) { renderOperators((data && data.operators) || []); })
+      .catch(function () { renderOperatorEmpty('Crew voices could not be loaded from the demo service. Refresh and try again in a moment.'); });
 
     if (activeTab && activeTab.scrollIntoView) activeTab.scrollIntoView({ block: 'nearest', inline: 'center' });
     setTimeout(function () { input.focus(); }, 60);
