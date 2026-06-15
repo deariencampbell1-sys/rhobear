@@ -106,29 +106,55 @@
       var reader = resp.body.getReader();
       var decoder = new TextDecoder();
       var buffer = '';
+      var stopped = false;
+
+      function parseLine(line) {
+        // Accept both "data: " (with space) and "data:" (no space) per SSE spec.
+        if (line.indexOf('data:') !== 0) return null;
+        var payload = line.slice(5).replace(/^\s+/, '');
+        if (payload === '[DONE]') return { done: true };
+        var data;
+        try { data = JSON.parse(payload); }
+        catch (err) {
+          status.textContent = 'Support chat had trouble parsing a reply. Email support@rhobear.ai if this keeps happening.';
+          return null;
+        }
+        // Propagate server-side errors so the outer .catch can surface them.
+        if (data.error) throw new Error(data.error);
+        return data;
+      }
+
+      function processEvents(events) {
+        events.forEach(function(evt){
+          if (stopped) return;
+          evt.split('\n').forEach(function(line){
+            var data = parseLine(line.trim());
+            if (!data) return;
+            if (data.chunk) {
+              bot.textContent += data.chunk;
+              log.scrollTop = log.scrollHeight;
+            }
+            if (data.done) {
+              status.textContent = data.suggest_lead ? 'That may need a human. Email support@rhobear.ai with the details.' : 'Answered from the support knowledge base.';
+              stopped = true;
+            }
+          });
+        });
+      }
 
       function pump() {
         return reader.read().then(function(result){
-          if (result.done) return;
+          if (result.done) {
+            // Flush any trailing data left in the buffer before exiting.
+            if (buffer.trim()) processEvents([buffer]);
+            buffer = '';
+            return;
+          }
           buffer += decoder.decode(result.value, { stream: true });
           var events = buffer.split('\n\n');
           buffer = events.pop() || '';
-          events.forEach(function(evt){
-            evt.split('\n').forEach(function(line){
-              if (line.indexOf('data: ') !== 0) return;
-              try {
-                var data = JSON.parse(line.slice(6));
-                if (data.error) throw new Error(data.error);
-                if (data.chunk) {
-                  bot.textContent += data.chunk;
-                  log.scrollTop = log.scrollHeight;
-                }
-                if (data.done) status.textContent = data.suggest_lead ? 'That may need a human. Email support@rhobear.ai with the details.' : 'Answered from the support knowledge base.';
-              } catch (err) {
-                status.textContent = 'Support chat had trouble parsing a reply. Email support@rhobear.ai if this keeps happening.';
-              }
-            });
-          });
+          processEvents(events);
+          if (stopped) return;
           return pump();
         });
       }
