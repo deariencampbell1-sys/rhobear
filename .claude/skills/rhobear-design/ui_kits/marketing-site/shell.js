@@ -152,7 +152,7 @@
    ===================================================================== */
 (function () {
   if (document.getElementById('rho-greeter')) return;
-  if (/\/faq\.html(?:$|[?#])/.test(window.location.pathname)) return;
+  if (/\/faq\.html(?:$|[?#])/i.test(window.location.pathname)) return;
 
   var CHAT_URL = 'https://chat.rhobear.ai/chat';
   var LEAD_URL = 'https://chat.rhobear.ai/lead';

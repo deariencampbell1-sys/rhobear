@@ -105,7 +105,12 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: message })
     }).then(function(resp){
-      if (!resp.ok || !resp.body) throw new Error('Support chat is unavailable.');
+      if (!resp.ok) throw new Error('Support chat is unavailable.');
+      if (!resp.body || !window.TextDecoder) {
+        // Fallback for browsers without streaming support — process the
+        // entire body as a single SSE event block.
+        return resp.text().then(function(t){ processEvents([t]); });
+      }
       var reader = resp.body.getReader();
       var decoder = new TextDecoder();
       var buffer = '';
@@ -115,6 +120,7 @@
         // Accept both "data: " (with space) and "data:" (no space) per SSE spec.
         if (line.indexOf('data:') !== 0) return null;
         var payload = line.slice(5).replace(/^\s+/, '');
+        if (!payload) return null; // keep-alive or blank line — ignore
         if (payload === '[DONE]') return { done: true };
         var data;
         try { data = JSON.parse(payload); }
@@ -163,8 +169,13 @@
       }
       return pump();
     }).catch(function(err){
-      bot.textContent = 'Sorry — the support assistant is unavailable right now. Email support@rhobear.ai and a human can help.';
-      status.textContent = err && err.message ? err.message : 'Support chat unavailable.';
+      var msg = err && err.message ? err.message : 'Connection lost';
+      if (!bot.textContent) {
+        bot.textContent = 'Sorry — the support assistant is unavailable right now. Email support@rhobear.ai and a human can help.';
+      } else {
+        bot.textContent += '\n\n[Error: ' + msg + ']';
+      }
+      status.textContent = msg;
     }).finally(function(){
       button.disabled = false;
       streaming = false;
