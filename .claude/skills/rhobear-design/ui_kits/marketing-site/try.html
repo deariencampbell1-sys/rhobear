@@ -156,7 +156,9 @@ body.try-demo-page {
   min-width: 0;
   min-height: 0;
   display: grid;
-  grid-template-columns: minmax(180px, 240px) minmax(0, 1fr) minmax(220px, 300px);
+  /* Crew rail widened to fit two 132px cards + padding so 9-char names
+     (ARCHITECT, GUARDIAN, REVIEWER) render in full at desktop sizes. */
+  grid-template-columns: minmax(280px, 304px) minmax(0, 1fr) minmax(220px, 300px);
   gap: 1px;
   background: var(--c-line);
 }
@@ -196,6 +198,9 @@ body.try-demo-page {
   color: var(--c-ink-2);
   cursor: pointer;
   text-align: left;
+  /* Contain anything that tries to escape the card boundary — sprite glow,
+     role-text overflow, future bloat. Doesn't change visible layout. */
+  overflow: hidden;
 }
 .try-operator.active {
   border-color: var(--c-amber-deep);
@@ -216,6 +221,7 @@ body.try-demo-page {
 }
 .try-operator-name {
   display: block;
+  width: 100%;
   overflow: hidden;
   color: inherit;
   font-size: 0.74rem;
@@ -226,25 +232,55 @@ body.try-demo-page {
   white-space: nowrap;
 }
 .try-operator-role {
-  display: block;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  width: 100%;
   overflow: hidden;
   color: var(--c-ink-3);
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.66rem;
+  line-height: 1.35;
+  /* ellipsis on multi-line clamp */
   text-overflow: ellipsis;
-  white-space: nowrap;
+  word-break: break-word;
 }
 .try-crew-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--s-2);
+  /* 2 cols at desktop, each track wide enough for the longest name
+     (ARCHITECT 9 chars / GUARDIAN 8 / REVIEWER 8) at the display font
+     size without ellipsis. 110px is the floor: at 1024w the rail narrows
+     to ~248px and a 9-char ARCHITECT may ellipsis-truncate by a hair —
+     acceptable per the responsive-collapse spec. */
+  grid-template-columns: repeat(2, minmax(110px, 1fr));
+  gap: var(--s-3);
 }
 .try-crew-grid .try-operator {
+  /* Card layout in the grid: sprite on top, then the text block. The text
+     block is the second grid item and needs min-width: 0 for the role
+     line to truncate to the card width — without it the grid track
+     grows to fit the longest unbreakable text and the role bleeds into
+     the adjacent card. */
   grid-template-columns: 1fr;
   justify-items: center;
   text-align: center;
+  align-items: start;
   margin: 0;
-  min-height: 96px;
+  min-height: 132px;
+  padding: var(--s-3) var(--s-2);
+  gap: var(--s-2);
+}
+.try-crew-grid .try-operator > span {
+  /* Second grid item (the text wrapper). min-width: 0 is the fix for the
+     "Always-on. HoldingItdesignthebound..." bleed — without it the
+     nowrap role text expands the column past the card border. */
+  min-width: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
 }
 .try-crew-rail.is-disabled .try-crew-grid {
   opacity: 0.5;
@@ -265,8 +301,11 @@ body.try-demo-page {
   line-height: 1.5;
 }
 .try-crew-grid img {
-  width: 46px;
-  height: 46px;
+  width: 52px;
+  height: 52px;
+  /* Contain any sprite glow/halo within a fixed box so the asset can't
+     bleed past the card border into the adjacent cell. */
+  display: block;
 }
 .try-chat-column {
   display: grid;
@@ -597,9 +636,16 @@ body.try-demo-page {
   50% { transform: translateY(-3px); opacity: 1; }
 }
 @media (max-width: 1120px) {
-  .try-hub-body { grid-template-columns: minmax(150px, 200px) minmax(0, 1fr) minmax(190px, 240px); }
+  /* Rail can shrink further at this breakpoint — still keeps two 110px+
+     cards so names like ARCHITECT stay readable, but the right rail
+     doesn't get crushed. */
+  .try-hub-body { grid-template-columns: minmax(248px, 268px) minmax(0, 1fr) minmax(190px, 240px); }
   .try-app-chrome { grid-template-columns: auto auto minmax(120px, 1fr) auto; }
   .try-status-pill { display: none; }
+  /* At 1024w viewport the rail is 248px; 2 cards + gap need at least
+     ~240px to fit 110px min each. Loosen the card min to 116px so the
+     grid doesn't overflow the rail. */
+  .try-crew-grid { grid-template-columns: repeat(2, minmax(116px, 1fr)); }
 }
 @media (max-width: 860px) {
   body.try-demo-page { overflow: hidden; }
@@ -628,9 +674,20 @@ body.try-demo-page {
   }
   .try-crew-grid .try-operator {
     width: 92px;
-    min-height: 88px;
+    min-height: 96px;
     margin: 0;
     flex: 0 0 92px;
+    padding: var(--s-2);
+    gap: var(--s-1);
+  }
+  .try-crew-grid .try-operator > span {
+    /* Same min-width: 0 fix for the mobile horizontal-scroll rail. */
+    min-width: 0;
+    width: 100%;
+  }
+  .try-crew-grid img {
+    width: 40px;
+    height: 40px;
   }
   .try-chat-column { padding: var(--s-2); }
   .try-chat-shell { border-radius: var(--r-4); }
