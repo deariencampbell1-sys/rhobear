@@ -377,6 +377,35 @@
       <div class="eyebrow-row" style="color:var(--c-cyan); margin-bottom:8px;">FOUNDER EDITION · FIRST 1,000 HUBS</div>
       <h3 style="font-family:var(--font-display); font-size:1.4rem; color:var(--c-dark-ink); margin:0 0 10px;">Buy once. <em>Yours for life.</em></h3>
       <p style="color:var(--c-dark-ink-2); font-size:0.96rem; max-width:620px; margin:0 0 18px;">The beta is small and kept tight on purpose, and v1 lands shortly after. The <strong style="color:var(--c-cyan);">first 1,000 hubs</strong> go out as <strong style="color:var(--c-cyan);">Founder Edition</strong> — a one-time price, never a monthly bill, and free updates for life. Up to two hubs per address.</p>
+
+      <!-- ===== PAYPAL HOSTED BUTTON — Founder Edition ($47 one-time) ===== -->
+      <style>
+        .rho-buy { max-width:340px; margin:24px auto 28px; padding:24px; border-radius:18px;
+                   background:linear-gradient(180deg,#141318,#0b0b0d);
+                   border:1px solid rgba(125,255,213,0.30);
+                   box-shadow:0 12px 40px rgba(125,255,213,0.18);
+                   text-align:center; font-family:var(--font-body,Inter,system-ui,sans-serif);
+                   color:var(--c-dark-ink,#ECEAF2); }
+        .rho-buy__head { display:flex; align-items:baseline; justify-content:center; gap:8px; }
+        .rho-buy__price { font-family:var(--font-display); font-size:44px; font-weight:800;
+                          color:#fff; letter-spacing:-1px; line-height:1; }
+        .rho-buy__terms { font-size:13px; color:var(--c-dark-ink-2,#8b8a93); }
+        .rho-buy__sub { margin:6px 0 18px; font-size:14px; color:var(--c-dark-ink-2,#b7b5c0); }
+        .rho-buy__pp { min-height:48px; }
+        .rho-buy__secure { margin-top:12px; font-size:12px; color:var(--c-dark-ink-2,#8b8a93); }
+      </style>
+      <div class="rho-buy">
+        <div class="rho-buy__head">
+          <span class="rho-buy__price">$47</span>
+          <span class="rho-buy__terms">one-time · lifetime</span>
+        </div>
+        <p class="rho-buy__sub">Own RHOBEAR forever. No subscription.</p>
+        <div id="paypal-container-84AFSRNM4G24S" class="rho-buy__pp"></div>
+        <p class="rho-buy__secure">🔒 Secure checkout · PayPal &amp; Venmo</p>
+      </div>
+      <script src="https://www.paypal.com/sdk/js?client-id=BAA4VFw0oUGYGSyK1ORfsLYlh-Aj9hashfsbK6pdS8dJiN0Uki7TLS7F9jm9dbXEvVpF8xgpBf214LiaLs&components=hosted-buttons&enable-funding=venmo&currency=USD"></script>
+      <script>paypal.HostedButtons({hostedButtonId:"84AFSRNM4G24S"}).render("#paypal-container-84AFSRNM4G24S");</script>
+
       <p style="color:var(--c-dark-ink-2); font-size:0.92rem; max-width:620px; margin:0 0 18px; opacity:0.85;">Prefer to boot from source while you wait? Here's the whole thing:</p>
       <div class="install-terminal">
         <div class="terminal-headerbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
