@@ -7,6 +7,18 @@
   <link rel="stylesheet" href="../../colors_and_type.css">
   <link rel="stylesheet" href="shell.css?v=1781510100">
   <link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782900000">
+<style>
+    /* === bd-bears: per-page tinted brand bear marker === */
+    .page-marker{display:flex;align-items:center;margin:0 0 14px;}
+    .page-bear{width:56px;height:56px;border-radius:50%;object-fit:cover;padding:7px;flex:none;
+      background:radial-gradient(circle at 50% 35%,color-mix(in srgb,var(--acc) 30%,transparent),rgba(8,12,22,.7) 72%);
+      border:1.5px solid color-mix(in srgb,var(--acc) 55%,transparent);
+      box-shadow:0 0 20px -4px var(--acc);
+      filter:var(--bear-tint) drop-shadow(0 1px 3px rgba(0,0,0,.5));
+      transition:transform .25s,box-shadow .25s;}
+    .page-bear:hover{transform:translateY(-1px) scale(1.04);box-shadow:0 0 26px -2px var(--acc);}
+    @media(prefers-reduced-motion:reduce){.page-bear{transition:none;}}
+  </style>
 </head>
 <body>
 
@@ -25,6 +37,7 @@
 
 <section class="wrap">
   <div style="text-align:center; max-width:780px; margin:0 auto;">
+  <div class="page-marker" style="--acc:#7dffd5; --bear-tint:hue-rotate(0deg) saturate(1.1)"><img class="page-bear" src="../../assets/rhobear-logo.png?v=1782900000" alt="RHOBEAR bear"></div>
   <div class="eyebrow-row" style="display:inline-flex;">SECTION · SUBSTRATE · 07 / 20</div>
   <h1 class="h1-page">Type /goal. Walk away. <em>Come back to ship.</em></h1>
   <p class="lead">This is the one feature that actually justifies leaving a chat window behind — your fleet keeps building while you go live your life.</p>

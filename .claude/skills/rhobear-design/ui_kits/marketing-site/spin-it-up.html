@@ -11,6 +11,17 @@
 <!-- PayPal hosted-button SDK (client-id is public by design). Loads the Founders' Edition button below. -->
 <script src="https://www.paypal.com/sdk/js?client-id=BAA4VFw0oUGYGSyK1ORfsLYlh-Aj9hashfsbK6pdS8dJiN0Uki7TLS7F9jm9dbXEvVpF8xgpBf214LiaLs&components=hosted-buttons&enable-funding=venmo&currency=USD"></script>
 <style>
+    /* === bd-bears: per-page tinted brand bear marker === */
+    .page-marker{display:flex;align-items:center;margin:0 0 14px;}
+    .page-bear{width:56px;height:56px;border-radius:50%;object-fit:cover;padding:7px;flex:none;
+      background:radial-gradient(circle at 50% 35%,color-mix(in srgb,var(--acc) 30%,transparent),rgba(8,12,22,.7) 72%);
+      border:1.5px solid color-mix(in srgb,var(--acc) 55%,transparent);
+      box-shadow:0 0 20px -4px var(--acc);
+      filter:var(--bear-tint) drop-shadow(0 1px 3px rgba(0,0,0,.5));
+      transition:transform .25s,box-shadow .25s;}
+    .page-bear:hover{transform:translateY(-1px) scale(1.04);box-shadow:0 0 26px -2px var(--acc);}
+    @media(prefers-reduced-motion:reduce){.page-bear{transition:none;}}
+
   /* Page-specific play styles */
   .sav-hero { text-align: center; padding: 56px 0 24px; position: relative; overflow: visible; }
   .sav-hero h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 5.5vw, 4.5rem); margin: 0 0 14px; line-height: 1; }
@@ -284,6 +295,7 @@
 
 <!-- HERO -->
 <section class="wrap sav-hero">
+  <div class="page-marker" style="--acc:#7dffd5; --bear-tint:hue-rotate(0deg) saturate(1.1)"><img class="page-bear" src="../../assets/rhobear-logo.png?v=1782900000" alt="RHOBEAR bear"></div>
   <div class="eyebrow-row" style="display:inline-flex;">SECTION · STORY · FINALE / 20</div>
   <h1>Spin it up <em>free.</em></h1>
   <p>The beta costs nothing — get in the boot queue and pay nothing now. At launch it's <strong>$50/mo</strong> for a crew that saves you more than that in a week. Other agent products bill you per word; RHOBEAR runs the dispatch on the brain we bundled and leans on the subscription you already have. Here's the receipt that makes the price the easiest math you'll do today.</p>
