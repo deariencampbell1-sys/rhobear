@@ -40,8 +40,13 @@
     .hero .eyebrow .spark{ width:6px; height:6px; border-radius:50%; background:var(--gold); box-shadow:0 0 12px var(--gold); }
     .hero h1{ font-family:var(--font-display); font-weight:800; font-size:clamp(2.7rem,6.3vw,4.8rem);
       line-height:1.0; letter-spacing:-0.025em; margin:22px 0 0; color:#f3f7fb; }
-    .hero h1 em{ font-style:normal; background:linear-gradient(120deg,var(--teal),var(--gold));
-      -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .hero h1 em{ font-style:normal; background:linear-gradient(120deg,var(--teal),var(--gold),var(--teal));
+      background-size:220% 100%; -webkit-background-clip:text; background-clip:text; color:transparent;
+      animation:sellPulse 3.4s ease-in-out infinite; will-change:filter,background-position; }
+    @keyframes sellPulse{
+      0%,100%{ background-position:0% 50%; filter:drop-shadow(0 0 10px rgba(125,255,213,.30)) drop-shadow(0 0 22px rgba(255,215,106,.12)); }
+      50%{ background-position:100% 50%; filter:drop-shadow(0 0 22px rgba(125,255,213,.65)) drop-shadow(0 0 40px rgba(255,215,106,.40)); }
+    }
     .hero .lead{ font-size:clamp(1.06rem,2vw,1.32rem); color:#aeb9c8; margin:24px 0 0; max-width:64ch; line-height:1.58; }
     .hero .lead b{ color:#e7eef6; font-weight:600; }
     .cta-row{ margin-top:30px; display:flex; gap:14px; flex-wrap:wrap; }
@@ -86,8 +91,13 @@
     .chrome i{ width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,0.16); }
     .chrome i:first-child{ background:color-mix(in srgb, var(--acc) 70%, #888); }
     .chrome .url{ margin-left:10px; font-family:var(--font-mono); font-size:11px; color:#8a98aa; letter-spacing:.02em; }
-    .screen{ position:relative; padding:26px 26px 24px; text-decoration:none; display:block;
+    .screen{ position:relative; padding:24px 26px 24px; text-decoration:none; display:flex; gap:18px; align-items:flex-start;
       background:radial-gradient(120% 130% at 0% 0%, color-mix(in srgb, var(--acc) 14%, transparent), transparent 58%); }
+    .screen .bear{ flex:none; width:56px; height:56px; border-radius:50%; object-fit:cover; padding:7px;
+      background:radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--acc) 30%, transparent), rgba(8,12,22,.7) 72%);
+      border:1.5px solid color-mix(in srgb, var(--acc) 55%, transparent);
+      box-shadow:0 0 20px -4px var(--acc); filter:var(--bear-tint) drop-shadow(0 1px 3px rgba(0,0,0,.5)); }
+    .screen .body2{ flex:1; min-width:0; }
     .screen .verb{ font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--acc); }
     .screen .name{ font-family:var(--font-display); font-weight:700; font-size:1.5rem; color:#f1f6fb; margin:7px 0 0; letter-spacing:-.01em; }
     .screen .name .meta{ font-family:var(--font-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:#7d8aa0; margin-left:10px; vertical-align:middle; }
@@ -101,6 +111,15 @@
     .handoff::before{ content:"↳"; color:var(--acc); font-size:1.05rem; }
     .handoff b{ color:#dfe7f0; font-weight:600; }
     .loop{ text-align:center; margin-top:8px; font-family:var(--font-mono); font-size:.86rem; color:#9fb; color:#86d8b8; }
+
+    /* greeter (chat bubble) — give it room + match the deep-space teal (never amber) */
+    .rho-greeter-launcher{ min-width:118px !important; height:54px !important; padding:0 22px 0 12px !important;
+      gap:11px !important; white-space:nowrap !important; letter-spacing:.13em !important;
+      background:linear-gradient(120deg,var(--teal),var(--teal-dim)) !important; color:#04140f !important;
+      border:1.5px solid rgba(125,255,213,.55) !important; box-shadow:0 12px 30px -10px rgba(125,255,213,.6) !important; }
+    .rho-greeter-launcher:hover{ background:linear-gradient(120deg,#9affe0,var(--teal)) !important; transform:translateY(-2px) !important; }
+    .rho-greeter-launcher span{ background:rgba(4,16,12,.92) !important; color:var(--teal) !important; border-color:rgba(125,255,213,.5) !important; }
+    .rho-greeter-nudge-text{ max-width:340px !important; white-space:normal !important; line-height:1.5 !important; font-size:12px !important; padding:13px 16px !important; }
 
     /* ---------- closing ---------- */
     .closer{ text-align:center; padding:92px 0 30px; }
@@ -145,7 +164,7 @@
           <a href="#workflow" class="nav-tab" aria-haspopup="true">MORE &#9662;</a>
           <div class="nav-dropdown-panel">
             <a href="https://github.com/deariencampbell1-sys/sunsponge">SunSponge Captures</a>
-            <a href="https://sales.rhobear.ai">Sales by Saguaro</a>
+            <a href="https://sales.rhobear.ai">Sales by RHOBEAR</a>
             <a href="app.html">The Hub, in depth</a>
           </div>
         </div>
@@ -184,17 +203,20 @@
     <div class="relay">
 
       <!-- 1 HUB -->
-      <div class="stop" style="--acc:#7dffd5">
+      <div class="stop" style="--acc:#7dffd5; --bear-tint:hue-rotate(0deg) saturate(1.1)">
         <div class="spine"><div class="num">1</div><div class="line"></div></div>
         <div>
           <a class="win" href="app.html">
             <div class="chrome"><i></i><i></i><i></i><span class="url">rhobear.ai/hub</span></div>
             <div class="screen">
+              <img class="bear" src="../../assets/rhobear-logo.png?v=1782940000" alt="">
+              <div class="body2">
               <div class="verb">Build it</div>
               <div class="name">RHOBEAR Hub<span class="meta">Flagship &middot; Desktop</span></div>
               <p class="desc">The workbench. Describe the product you want; an AI crew sets up the stack and builds it — no terminal, no fear. This is where everything starts.</p>
               <div class="chips"><span>AI crew</span><span>no terminal</span><span>skills drop-in</span></div>
               <span class="go">Open the Hub &rarr;</span>
+              </div>
             </div>
           </a>
           <div class="handoff">Got something built? <b>Hand it to Designs to make it yours.</b></div>
@@ -202,17 +224,20 @@
       </div>
 
       <!-- 2 DESIGNS -->
-      <div class="stop" style="--acc:#e94560">
+      <div class="stop" style="--acc:#e94560; --bear-tint:hue-rotate(180deg) saturate(1.25)">
         <div class="spine"><div class="num">2</div><div class="line"></div></div>
         <div>
           <a class="win" href="https://github.com/deariencampbell1-sys/rhobear-designs">
             <div class="chrome"><i></i><i></i><i></i><span class="url">github.com/&hellip;/rhobear-designs</span></div>
             <div class="screen">
+              <img class="bear" src="../../assets/rhobear-logo.png?v=1782940000" alt="">
+              <div class="body2">
               <div class="verb">Shape it</div>
               <div class="name">RHOBEAR Designs<span class="meta">Open source &middot; MIT</span></div>
               <p class="desc">Open any HTML on an infinite canvas and edit it with AI. Ships with a local-LLM stub that integrates the moment you download it — or pipe in your own key. The file is always yours to keep.</p>
               <div class="chips"><span>edit on canvas</span><span>local LLM stub</span><span>OpenRouter-compatible</span></div>
               <span class="go">Read the source &rarr;</span>
+              </div>
             </div>
           </a>
           <div class="handoff">Looks the way you want? <b>Rest the finished site in SunSponge.</b></div>
@@ -220,17 +245,20 @@
       </div>
 
       <!-- 3 SUNSPONGE -->
-      <div class="stop" style="--acc:#f5a524">
+      <div class="stop" style="--acc:#f5a524; --bear-tint:hue-rotate(235deg) saturate(1.3)">
         <div class="spine"><div class="num">3</div><div class="line"></div></div>
         <div>
           <a class="win" href="https://github.com/deariencampbell1-sys/sunsponge">
             <div class="chrome"><i></i><i></i><i></i><span class="url">github.com/&hellip;/sunsponge</span></div>
             <div class="screen">
+              <img class="bear" src="../../assets/rhobear-logo.png?v=1782940000" alt="">
+              <div class="body2">
               <div class="verb">Capture it</div>
               <div class="name">SunSponge Captures<span class="meta">Open source &middot; not AI</span></div>
               <p class="desc">Soak a whole finished site into rested screenshots. Feed it a map and it grabs every page and UI state in one pass — so you can move on to the next build while it works. Just fast and thorough.</p>
               <div class="chips"><span>whole-site capture</span><span>map-driven</span><span>rested while you work</span></div>
               <span class="go">Read the source &rarr;</span>
+              </div>
             </div>
           </a>
           <div class="handoff">All the while, every PR runs through&nbsp;<b>Reviews.</b></div>
@@ -238,17 +266,20 @@
       </div>
 
       <!-- 4 REVIEWS (+ Verifies feature) -->
-      <div class="stop" style="--acc:#38bdf8">
+      <div class="stop" style="--acc:#38bdf8; --bear-tint:hue-rotate(36deg) saturate(1.1)">
         <div class="spine"><div class="num">4</div><div class="line"></div></div>
         <div>
           <a class="win" href="https://reviews.rhobear.ai">
             <div class="chrome"><i></i><i></i><i></i><span class="url">reviews.rhobear.ai</span></div>
             <div class="screen">
+              <img class="bear" src="../../assets/rhobear-logo.png?v=1782940000" alt="">
+              <div class="body2">
               <div class="verb">Keep it clean</div>
               <div class="name">RHOBEAR Reviews<span class="meta">GitHub App</span></div>
-              <p class="desc">AI code review on every pull request — an honest verdict before anything merges, in the spirit of CodeRabbit. Then <b>Verifies</b> (built in) maps your app's pathways and flags dead code, dead routes, and wasted tokens at PR time — three full app-maps a month, so you never rebase through a graveyard.</p>
+              <p class="desc">AI code review on every pull request — an honest verdict before anything merges. Then <b>Verifies</b> (built in) maps your app's pathways and flags dead code, dead routes, and wasted tokens at PR time — three full app-maps a month, so you never rebase through a graveyard.</p>
               <div class="chips"><span>PR review</span><span>Verifies: dead-path maps</span><span>3 app-maps / mo</span></div>
               <span class="go">See it review &rarr;</span>
+              </div>
             </div>
           </a>
           <div class="handoff">Clean and built? <b>Take it to market with Plans.</b></div>
@@ -256,17 +287,20 @@
       </div>
 
       <!-- 5 PLANS -->
-      <div class="stop" style="--acc:#7c5cff">
+      <div class="stop" style="--acc:#7c5cff; --bear-tint:hue-rotate(90deg) saturate(1.2)">
         <div class="spine"><div class="num">5</div><div class="line"></div></div>
         <div>
           <a class="win" href="https://plans.rhobear.ai">
             <div class="chrome"><i></i><i></i><i></i><span class="url">plans.rhobear.ai</span></div>
             <div class="screen">
+              <img class="bear" src="../../assets/rhobear-logo.png?v=1782940000" alt="">
+              <div class="body2">
               <div class="verb">Take it to market</div>
               <div class="name">RHOBEAR Plans<span class="meta">Web &middot; local-first</span></div>
-              <p class="desc">Your booking, billing, and business engine. Calendar and appointments, PayPal + Stripe forms that track every sale, sales-setup templates, and Zoom/email that fires the second a slot is booked. Telegram bots and multiple calendars — just talk to it and run the whole business. Comes with a local Qwen-4B for drafting and tool use, or bring a stronger model.</p>
-              <div class="chips"><span>calendar + booking</span><span>PayPal + Stripe</span><span>Telegram bots</span><span>Qwen-4B built in</span></div>
+              <p class="desc">Your booking, billing, and business engine. Calendar and appointments, PayPal + Stripe forms that track every sale, sales-setup templates, and Zoom/email that fires the second a slot is booked. Telegram bots and multiple calendars — just talk to it and run the whole business. It ships with a local <b>Qwen-4B</b> that keeps your tokens cheap and reads your email privately on-device. When you need the big moves — sharp diagrams, rock-solid always-on crons, crons wired to your own cloud — switch to <b>Ursa</b>, our onboard LLM (credits or monthly sub). Discreet by default: we never train on your data.</p>
+              <div class="chips"><span>calendar + booking</span><span>PayPal + Stripe</span><span>Telegram bots</span><span>Qwen-4B private</span><span>Ursa for big moves</span></div>
               <span class="go">Open in your browser &rarr;</span>
+              </div>
             </div>
           </a>
           <div class="handoff">And the rep that answers your leads? <b>Sales proves it closes.</b></div>
@@ -274,17 +308,20 @@
       </div>
 
       <!-- 6 SALES -->
-      <div class="stop" style="--acc:#f5c84c">
+      <div class="stop" style="--acc:#f5c84c; --bear-tint:hue-rotate(243deg) saturate(1.15)">
         <div class="spine"><div class="num">6</div></div>
         <div>
           <a class="win" href="https://sales.rhobear.ai">
             <div class="chrome"><i></i><i></i><i></i><span class="url">sales.rhobear.ai</span></div>
             <div class="screen">
+              <img class="bear" src="../../assets/rhobear-logo.png?v=1782940000" alt="">
+              <div class="body2">
               <div class="verb">And it sells itself</div>
-              <div class="name">Sales, by Saguaro<span class="meta">24/7 &middot; local LLM</span></div>
-              <p class="desc">The chatbot you're talking to on these sites runs on a small, cheap local model — and it's surprisingly sharp. The whole stack is hosted at basically no cost: a credit-funded VPS, no GoDaddy, no hosting bill, just a domain. Like what it's doing? We'll set one up for you.</p>
-              <div class="chips"><span>weak LLM, strong results</span><span>~$0 to host</span><span>answers every lead</span></div>
-              <span class="go">Meet your rep &rarr;</span>
+              <div class="name">Sales, by RHOBEAR<span class="meta">our sales chatbot</span></div>
+              <p class="desc">Most people think a sales chatbot means renting a server, a hosting subscription, a whole CMS just to route an LLM. It doesn't. The bot greeting you on these sites runs on a tiny <b>Qwen-3B</b> — smaller than the model in Plans — and it's the same one that sold you a <b>$47 one-time</b> product. No server, no hosting bill, just a domain. We set the same thing up for clients like Saguaro. Like what it's doing here? We'll build you one.</p>
+              <div class="chips"><span>$47 one-time</span><span>no server, no hosting</span><span>tiny Qwen-3B</span><span>answers every lead</span></div>
+              <span class="go">Get your chatbot &rarr;</span>
+              </div>
             </div>
           </a>
           <div class="loop">&#8635;&nbsp; &hellip; and back to the Hub for the next product.</div>
@@ -323,7 +360,7 @@
     <div>
       <h4>Go to market</h4>
       <a href="https://plans.rhobear.ai">RHOBEAR Plans — booking & billing</a>
-      <a href="https://sales.rhobear.ai">Sales by Saguaro — the chatbot</a>
+      <a href="https://sales.rhobear.ai">Sales by RHOBEAR — the chatbot</a>
       <a href="story.html">The story</a>
       <a href="built-with.html">Built with</a>
     </div>
@@ -348,8 +385,8 @@
     if(near.length){ near[0].gold=true; near[0].r=2.6; }
   }
   function step(){
-    t+=0.016; tx+=(mx-tx)*0.04; ty+=(my-ty)*0.04; ctx.clearRect(0,0,W,H);
-    var cxp=W/2+tx*22, cyp=H/2+ty*22, speed=reduce?0:0.0016;
+    t+=0.016; tx+=(mx-tx)*0.06; ty+=(my-ty)*0.06; ctx.clearRect(0,0,W,H);
+    var cxp=W/2+tx*64, cyp=H/2+ty*64, speed=reduce?0:0.0016;
     for(var i=0;i<stars.length;i++){ var s=stars[i]; s.pz=s.z; s.z-=speed; if(s.z<=0.02){stars[i]=newStar(false);continue;}
       var k=128/s.z,k2=128/s.pz,sx=cxp+s.x*k,sy=cyp+s.y*k,px=cxp+s.x*k2,py=cyp+s.y*k2;
       if(sx<0||sx>W||sy<0||sy>H) continue;
@@ -358,9 +395,9 @@
       ctx.fillStyle='rgba(225,255,247,'+b+')'; ctx.beginPath(); ctx.arc(sx,sy,rad*0.7,0,6.2832); ctx.fill(); }
     for(var a=0;a<near.length;a++){ var p=near[a];
       if(!reduce){ p.x+=p.vx;p.y+=p.vy; if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1; }
-      var ox=p.x+tx*10,oy=p.y+ty*10;
+      var ox=p.x+tx*32,oy=p.y+ty*32;
       for(var b2=a+1;b2<near.length;b2++){ var q=near[b2],dx=p.x-q.x,dy=p.y-q.y,d=dx*dx+dy*dy,lim=148*148;
-        if(d<lim){ var al=(1-d/lim)*0.16; ctx.strokeStyle='rgba(125,255,213,'+al+')'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(ox,oy); ctx.lineTo(q.x+tx*10,q.y+ty*10); ctx.stroke(); } }
+        if(d<lim){ var al=(1-d/lim)*0.16; ctx.strokeStyle='rgba(125,255,213,'+al+')'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(ox,oy); ctx.lineTo(q.x+tx*32,q.y+ty*32); ctx.stroke(); } }
       var pulse=0.6+0.4*Math.sin(t*1.3+a);
       if(p.gold){ var g=ctx.createRadialGradient(ox,oy,0,ox,oy,18); g.addColorStop(0,'rgba(255,215,106,'+(0.9*pulse)+')'); g.addColorStop(1,'rgba(255,215,106,0)'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(ox,oy,18,0,6.2832); ctx.fill(); ctx.fillStyle='rgba(255,235,170,1)'; }
       else ctx.fillStyle='rgba(125,255,213,'+(0.55+0.35*pulse)+')';
