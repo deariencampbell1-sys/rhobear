@@ -31,7 +31,9 @@
     .eco-grid{ display:grid; grid-template-columns:repeat(6,1fr); gap:18px; margin-top:36px; }
     .pcard{ position:relative; display:flex; flex-direction:column; border:1px solid var(--c-line); border-radius:18px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); transition:border-color .2s, transform .2s; text-decoration:none; }
     .pcard:hover{ transform:translateY(-4px); border-color:var(--acc); }
-    .pcard .shot{ aspect-ratio:1360/900; background:#06060a center/cover no-repeat; border-bottom:1px solid var(--c-line); }
+    .pcard .shot{ aspect-ratio:1360/900; background:#06060a center/cover no-repeat; border-bottom:1px solid var(--c-line); position:relative; }
+    .pcard .shot--tame{ filter:brightness(.86) saturate(1.04); }
+    .pcard .shot--tame::after{ content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg, rgba(8,8,10,0.46), rgba(8,8,10,0.14) 46%, rgba(8,8,10,0.52)), radial-gradient(120% 100% at 28% 0%, color-mix(in srgb, var(--acc) 26%, transparent), transparent 56%); }
     .pcard .tile{ aspect-ratio:1360/900; display:flex; align-items:center; justify-content:center; border-bottom:1px solid var(--c-line); background:radial-gradient(120% 120% at 30% 0%, color-mix(in srgb, var(--acc) 16%, transparent), transparent 60%), #0a0a0e; }
     .pcard .tile span{ font-family:var(--font-display); font-weight:800; font-size:3.4rem; color:var(--acc); opacity:.92; letter-spacing:-0.03em; }
     .pcard .body{ padding:20px 22px 24px; display:flex; flex-direction:column; gap:8px; flex:1; }
@@ -128,7 +130,7 @@
       </a>
 
       <a class="pcard span3" style="--acc:#7c5cff" href="https://plans.rhobear.ai">
-        <div class="shot" style="background-image:url('../../assets/eco-plans.png?v=1782900000')"></div>
+        <div class="shot shot--tame" style="background-image:url('../../assets/eco-plans.png?v=1782900000')"></div>
         <div class="body">
           <div class="row1"><span class="dot"></span><span class="name">RHOBEAR Plans</span><span class="kind">Web &middot; Local-first</span></div>
           <p class="tag">Docs and whiteboard on one edgeless canvas. Write, draw, and plan in the same place &mdash; and keep all of it on your own disk.</p>
