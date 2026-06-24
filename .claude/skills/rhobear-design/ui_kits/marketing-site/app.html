@@ -7,7 +7,25 @@
   <link rel="stylesheet" href="../../colors_and_type.css">
   <link rel="stylesheet" href="shell.css?v=1781510100">
   <link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782900000">
-<style id="rho-tweaks-style"></style>
+<style id="rho-tweaks-style">
+/* ===== HUB PAGE LOCK-IN — teal accent (its relay color), retire legacy amber ===== */
+:root{
+  --c-amber:#7dffd5 !important;       --c-amber-deep:#a9ffe6 !important;
+  --c-amber-soft:rgba(125,255,213,0.16) !important;  --c-amber-tint:rgba(125,255,213,0.12) !important;
+}
+.btn-amber{ color:#04140f !important; box-shadow:0 0 0 1px rgba(125,255,213,0.40),0 10px 26px -10px rgba(125,255,213,0.55) !important; }
+.btn-amber:hover{ color:#04140f !important; background:var(--c-amber-deep) !important; }
+.chip-amber,.pillar-ribbon .chip-amber{ background:rgba(125,255,213,0.13) !important; border-color:rgba(125,255,213,0.45) !important; color:#bff6e8 !important; }
+.rho-greeter-launcher{ color:#04140f !important; box-shadow:0 0 0 1px rgba(125,255,213,0.40),0 10px 26px -10px rgba(125,255,213,0.55) !important; }
+.rho-greeter-inputrow button,.rho-greeter-lead button,.rho-greeter-cta{ color:#04140f !important; border-color:rgba(125,255,213,0.40) !important; box-shadow:0 0 0 1px rgba(125,255,213,0.40),0 10px 26px -10px rgba(125,255,213,0.55) !important; }
+.rho-greeter-msg.user{ background:rgba(125,255,213,0.16) !important; border-color:rgba(125,255,213,0.35) !important; }
+/* hand-to-hand relay strip */
+.relay-next{ display:flex; flex-wrap:wrap; align-items:center; gap:9px 10px; margin-top:20px; font-family:var(--font-display); font-size:.96rem; }
+.relay-next .now{ color:var(--c-amber-deep); border:1px solid rgba(125,255,213,0.45); border-radius:999px; padding:6px 13px; background:rgba(125,255,213,0.10); }
+.relay-next a{ color:var(--c-ink-2); text-decoration:none; border:1px solid var(--c-line); border-radius:999px; padding:6px 13px; transition:color .18s,border-color .18s,background .18s; }
+.relay-next a:hover{ color:var(--c-amber-deep); border-color:rgba(125,255,213,0.5); background:rgba(125,255,213,0.07); }
+.relay-next .arw{ color:var(--c-ink-3); }
+</style>
 </head>
 <body>
 
@@ -38,8 +56,8 @@
     <div>
       <div class="eyebrow-row">DAY ONE · NOT MONTH ONE</div>
       <h1 class="h1-hero">Drop in a skill. <em>Your AI crew does the hard part.</em></h1>
-      <p class="lead">VPS setup, server keys, the technical stuff that stops most people — your agents handle it. You answer one question and pick who does the work. No code. No fear. Built for people who've never touched a terminal.</p>
-      <div class="quant-line">30+ models &middot; 19 MCPs built in &middot; $0 markup &middot; day-one usable &middot; Telegram from day one &middot; lessons that build themselves</div>
+      <p class="lead">VPS setup, server keys, the technical stuff that stops most people — your agents handle it. You answer one question and pick who does the work. <strong>Pi, Plot, OpenClaw and OpenRouter all run through one hub</strong>, so you reach any model with the polished feel of a pro coding app — no terminal, no code, no fear. Built for people who've never touched a command line.</p>
+      <div class="quant-line">one harness &middot; Pi &middot; Plot &middot; OpenClaw &middot; OpenRouter &middot; 30+ models &middot; 19 MCPs built in &middot; $0 markup &middot; Telegram day one</div>
       <div class="cta-row">
         <a href="closer.html" class="btn-amber">Spin it up →</a>
         <a href="try.html" class="btn-ghost">Try the demo →</a>
@@ -461,6 +479,21 @@
   intervalId = setInterval(tick, 1000);
 })();
 </script>
+
+<!-- ===== WHAT'S NEXT — the hand-to-hand relay ===== -->
+<section class="wrap" style="padding-top:8px; padding-bottom:40px;">
+  <div class="eyebrow-row">ONE WORKFLOW · IT HANDS OFF</div>
+  <h2 style="font-size:clamp(1.7rem,3vw,2.5rem); margin:0 0 10px;">The Hub is where it starts. <em>It doesn't end here.</em></h2>
+  <p class="lead" style="max-width:64ch;">Build it in the Hub, and the rest of the workflow is right there — each tool picks up exactly where the last one set it down.</p>
+  <div class="relay-next">
+    <span class="now">Build it · Hub</span>
+    <span class="arw">→</span><a href="https://github.com/deariencampbell1-sys/rhobear-designs">Shape it · Designs</a>
+    <span class="arw">→</span><a href="https://github.com/deariencampbell1-sys/sunsponge">Capture it · SunSponge</a>
+    <span class="arw">→</span><a href="https://reviews.rhobear.ai">Keep it clean · Reviews</a>
+    <span class="arw">→</span><a href="https://plans.rhobear.ai">Take it to market · Plans</a>
+    <span class="arw">→</span><a href="https://sales.rhobear.ai">It sells itself · Sales</a>
+  </div>
+</section>
 
 </main>
 
