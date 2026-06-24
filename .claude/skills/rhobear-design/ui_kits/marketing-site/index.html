@@ -84,7 +84,7 @@
     /* browser-window card = "the web page" */
     .win{ border:1px solid color-mix(in srgb, var(--acc) 34%, var(--glass-line)); border-radius:16px; overflow:hidden;
       background:linear-gradient(180deg, var(--glass), rgba(255,255,255,0.008)); margin-bottom:14px;
-      transition:transform .2s, box-shadow .2s; }
+      text-decoration:none; transition:transform .2s, box-shadow .2s; }
     .win:hover{ transform:translateY(-3px); box-shadow:0 24px 54px -28px var(--acc); }
     .chrome{ display:flex; align-items:center; gap:7px; padding:10px 14px; border-bottom:1px solid rgba(255,255,255,0.06);
       background:rgba(255,255,255,0.02); }
@@ -102,6 +102,8 @@
     .screen .name{ font-family:var(--font-display); font-weight:700; font-size:1.5rem; color:#f1f6fb; margin:7px 0 0; letter-spacing:-.01em; }
     .screen .name .meta{ font-family:var(--font-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:#7d8aa0; margin-left:10px; vertical-align:middle; }
     .screen .desc{ color:#aab6c6; font-size:1rem; line-height:1.56; margin:10px 0 0; max-width:60ch; }
+    .screen .desc b{ color:#e7eef6; font-weight:600; }
+    .screen .desc em{ font-style:normal; color:var(--acc); }
     .chips{ display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
     .chips span{ font-family:var(--font-mono); font-size:11px; color:#cdd6e2; border:1px solid color-mix(in srgb, var(--acc) 26%, var(--glass-line));
       border-radius:999px; padding:4px 11px; background:color-mix(in srgb, var(--acc) 8%, transparent); }
@@ -119,7 +121,9 @@
       border:1.5px solid rgba(125,255,213,.55) !important; box-shadow:0 12px 30px -10px rgba(125,255,213,.6) !important; }
     .rho-greeter-launcher:hover{ background:linear-gradient(120deg,#9affe0,var(--teal)) !important; transform:translateY(-2px) !important; }
     .rho-greeter-launcher span{ background:rgba(4,16,12,.92) !important; color:var(--teal) !important; border-color:rgba(125,255,213,.5) !important; }
-    .rho-greeter-nudge-text{ max-width:340px !important; white-space:normal !important; line-height:1.5 !important; font-size:12px !important; padding:13px 16px !important; }
+    .rho-greeter-nudge-text{ min-width:260px !important; max-width:460px !important; width:max-content !important;
+      white-space:normal !important; text-wrap:pretty !important; line-height:1.5 !important; font-size:12.5px !important;
+      padding:14px 18px !important; }
 
     /* ---------- closing ---------- */
     .closer{ text-align:center; padding:92px 0 30px; }
@@ -136,6 +140,14 @@
     .foot .lock{ display:flex; align-items:center; gap:10px; margin-bottom:14px; text-decoration:none; }
     .foot .lock img{ width:30px; height:30px; }
     .foot .lock span{ font-family:var(--font-display); font-weight:800; letter-spacing:.04em; color:#eef3f8; }
+    .foot .social{ display:flex; align-items:center; flex-wrap:wrap; gap:11px; margin-top:34px; padding-top:22px; border-top:1px solid var(--glass-line); }
+    .foot .social .lbl{ font-family:var(--font-mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:#7d8aa0; margin-right:3px; }
+    .foot .social a{ display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:10px;
+      border:1px solid var(--glass-line); background:rgba(255,255,255,0.02); color:#9fb6c9;
+      transition:transform .18s, color .18s, border-color .18s, background .18s; }
+    .foot .social a:hover{ transform:translateY(-2px); color:var(--teal); border-color:var(--teal); background:rgba(125,255,213,0.06); }
+    .foot .social a svg{ width:18px; height:18px; display:block; }
+    .foot .social a.fiverr:hover{ color:#9fb6c9; border-color:#1dbf73; background:rgba(29,191,115,0.08); }
 
     @media(max-width:920px){ .truth{ grid-template-columns:1fr 1fr; } .foot .cols{ grid-template-columns:1fr 1fr; } }
     @media(max-width:560px){
@@ -212,9 +224,9 @@
               <img class="bear" src="../../assets/rhobear-logo.png?v=1782940000" alt="">
               <div class="body2">
               <div class="verb">Build it</div>
-              <div class="name">RHOBEAR Hub<span class="meta">Flagship &middot; Desktop</span></div>
-              <p class="desc">The workbench. Describe the product you want; an AI crew sets up the stack and builds it — no terminal, no fear. This is where everything starts.</p>
-              <div class="chips"><span>AI crew</span><span>no terminal</span><span>skills drop-in</span></div>
+              <div class="name">RHOBEAR Hub<span class="meta">The harness &middot; Desktop</span></div>
+              <p class="desc">The harness everything else runs on. Your whole AI crew on the desktop — no terminal, no bash, no fear. <b>Pi, Plot, OpenClaw, and OpenRouter</b> all flow through it, so you talk to any model and run more than one harness side by side, with the polished feel of a pro coding app <em>without the command line</em>. The skills, lessons, and a ready-built crew come baked in — built to <b>teach</b> you, not gatekeep you. Run one at home and one at work, then send an agent that knows your whole workflow across to fix what broke — and report back when it's done.</p>
+              <div class="chips"><span>$47 one-time</span><span>Pi &middot; Plot &middot; OpenClaw</span><span>any model &middot; OpenRouter</span><span>MCP-native</span><span>crew + skills baked in</span><span>hub-to-hub</span></div>
               <span class="go">Open the Hub &rarr;</span>
               </div>
             </div>
@@ -234,8 +246,8 @@
               <div class="body2">
               <div class="verb">Shape it</div>
               <div class="name">RHOBEAR Designs<span class="meta">Open source &middot; MIT</span></div>
-              <p class="desc">Open any HTML on an infinite canvas and edit it with AI. Ships with a local-LLM stub that integrates the moment you download it — or pipe in your own key. The file is always yours to keep.</p>
-              <div class="chips"><span>edit on canvas</span><span>local LLM stub</span><span>OpenRouter-compatible</span></div>
+              <p class="desc">Stop burning tokens just to nudge a pixel. Build ninety percent with your crew like always — then open the near-done HTML on an infinite canvas and <em>finish the last ten yourself</em>: move it a hair, warm the tone, swap the font, instantly, no round-trip. It's smart enough to touch real <b>JS, CSS, and HTML with hidden embeds</b> without wrecking what the agent already got right. Ships with a local-LLM stub that works the moment you download it — or pipe in your own key through OpenRouter. The file is always yours, MIT, forever.</p>
+              <div class="chips"><span>finish the last 10%</span><span>infinite canvas</span><span>won't break your embeds</span><span>local stub or your key</span><span>MIT</span></div>
               <span class="go">Read the source &rarr;</span>
               </div>
             </div>
@@ -255,8 +267,8 @@
               <div class="body2">
               <div class="verb">Capture it</div>
               <div class="name">SunSponge Captures<span class="meta">Open source &middot; not AI</span></div>
-              <p class="desc">Soak a whole finished site into rested screenshots. Feed it a map and it grabs every page and UI state in one pass — so you can move on to the next build while it works. Just fast and thorough.</p>
-              <div class="chips"><span>whole-site capture</span><span>map-driven</span><span>rested while you work</span></div>
+              <p class="desc">Letting a frontier model take your screenshots costs a fortune — you don't feel it until the bill lands. SunSponge does it for <em>almost nothing</em>. Feed it a map and it soaks a whole finished site into clean, rested screenshots in one pass — every page, every UI state — while you move on to the next build. It's the picture-taker for whatever <b>Designs</b> just made: point a swarm of captors at your apps, then pour the results straight into Remotion for hundreds of videos that cost you nothing to shoot.</p>
+              <div class="chips"><span>whole-site capture</span><span>map-driven</span><span>costs almost nothing</span><span>feeds Remotion</span></div>
               <span class="go">Read the source &rarr;</span>
               </div>
             </div>
@@ -276,8 +288,8 @@
               <div class="body2">
               <div class="verb">Keep it clean</div>
               <div class="name">RHOBEAR Reviews<span class="meta">GitHub App</span></div>
-              <p class="desc">AI code review on every pull request — an honest verdict before anything merges. Then <b>Verifies</b> (built in) maps your app's pathways and flags dead code, dead routes, and wasted tokens at PR time — three full app-maps a month, so you never rebase through a graveyard.</p>
-              <div class="chips"><span>PR review</span><span>Verifies: dead-path maps</span><span>3 app-maps / mo</span></div>
+              <p class="desc">Stop paying for hundreds of reviews that don't actually know your code. Reviews spins up a <em>fresh reviewer on every pull request</em> — thrown away after, so its context never rots — but it's dialed: it reads your whole codebase with <b>CodeGraph</b>, with a second model grading its work over its shoulder. You get an honest verdict that's <b>more than a diff</b>, before anything merges. Built in, <b>Verifies</b> maps your app's pathways and flags dead code, dead routes, and wasted tokens — three full app-maps a month, so you never rebase through a graveyard or ship the old UI again.</p>
+              <div class="chips"><span>fresh reviewer every PR</span><span>knows your codebase &middot; CodeGraph</span><span>Verifies: dead-path maps</span><span>3 app-maps / mo</span></div>
               <span class="go">See it review &rarr;</span>
               </div>
             </div>
@@ -297,8 +309,8 @@
               <div class="body2">
               <div class="verb">Take it to market</div>
               <div class="name">RHOBEAR Plans<span class="meta">Web &middot; local-first</span></div>
-              <p class="desc">Your booking, billing, and business engine. Calendar and appointments, PayPal + Stripe forms that track every sale, sales-setup templates, and Zoom/email that fires the second a slot is booked. Telegram bots and multiple calendars — just talk to it and run the whole business. It ships with a local <b>Qwen-4B</b> that keeps your tokens cheap and reads your email privately on-device. When you need the big moves — sharp diagrams, rock-solid always-on crons, crons wired to your own cloud — switch to <b>Ursa</b>, our onboard LLM (credits or monthly sub). Discreet by default: we never train on your data.</p>
-              <div class="chips"><span>calendar + booking</span><span>PayPal + Stripe</span><span>Telegram bots</span><span>Qwen-4B private</span><span>Ursa for big moves</span></div>
+              <p class="desc">The one tool that runs your business <em>and speaks your agents' language.</em> It started as a living handoff dock — your crew writes the build's path in Mermaid so you spot drift at a glance instead of pinging anyone — and grew into the whole back office: calendar and appointments, PayPal + Stripe forms that track every sale, booking templates that match your site, Zoom and email that fire the second a slot is booked. <b>One Telegram bot per calendar</b> — personal, work, business — each managing invites and email for you. Just talk to it and run the whole thing. A local <b>Qwen-4B</b> keeps tokens cheap and reads your email privately on-device; for the big moves — sharp diagrams, always-on crons wired to your own cloud — switch to <b>Ursa</b>, our onboard LLM. We never train on your data.</p>
+              <div class="chips"><span>calendar + booking</span><span>PayPal + Stripe</span><span>a bot per calendar</span><span>Qwen-4B private</span><span>Ursa for big moves</span></div>
               <span class="go">Open in your browser &rarr;</span>
               </div>
             </div>
@@ -318,8 +330,8 @@
               <div class="body2">
               <div class="verb">And it sells itself</div>
               <div class="name">Sales, by RHOBEAR<span class="meta">our sales chatbot</span></div>
-              <p class="desc">Most people think a sales chatbot means renting a server, a hosting subscription, a whole CMS just to route an LLM. It doesn't. The bot greeting you on these sites runs on a tiny <b>Qwen-3B</b> — smaller than the model in Plans — and it's the same one that sold you a <b>$47 one-time</b> product. No server, no hosting bill, just a domain. We set the same thing up for clients like Saguaro. Like what it's doing here? We'll build you one.</p>
-              <div class="chips"><span>$47 one-time</span><span>no server, no hosting</span><span>tiny Qwen-3B</span><span>answers every lead</span></div>
+              <p class="desc">Love everything here but still don't want to wire it up yourself? Then this one's for you. We hand-build and run your sales page <b>for</b> you — the white-glove version — and <em>this page is us doing exactly that, live, right now.</em> The bot greeting you runs on a tiny <b>Qwen-3B</b>: no rented server, no hosting bill, no CMS — just a domain, the same setup we'll stand up for you (we did it for clients like Saguaro). Like what it's doing here? <b>We'll build you one.</b></p>
+              <div class="chips"><span>done-for-you</span><span>no server, no hosting</span><span>tiny Qwen-3B</span><span>answers every lead</span></div>
               <span class="go">Get your chatbot &rarr;</span>
               </div>
             </div>
@@ -360,10 +372,27 @@
     <div>
       <h4>Go to market</h4>
       <a href="https://plans.rhobear.ai">RHOBEAR Plans — booking & billing</a>
-      <a href="https://sales.rhobear.ai">Sales by RHOBEAR — the chatbot</a>
+      <a href="https://sales.rhobear.ai">Sales by RHOBEAR — done for you</a>
       <a href="story.html">The story</a>
       <a href="built-with.html">Built with</a>
     </div>
+  </div>
+
+  <!-- social — parked profiles (destinations not content-ready yet); real brand marks only -->
+  <div class="social">
+    <span class="lbl">Meet us on</span>
+    <a href="#" aria-label="RHOBEAR on X" title="X">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg>
+    </a>
+    <a href="#" aria-label="RHOBEAR on Instagram" title="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="2.2" y="2.2" width="19.6" height="19.6" rx="5.4"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.6" cy="6.4" r="1.15" fill="currentColor" stroke="none"/></svg>
+    </a>
+    <a href="#" aria-label="RHOBEAR on Facebook" title="Facebook">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.971h-1.514c-1.491 0-1.956.93-1.956 1.886v2.264h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073Z"/></svg>
+    </a>
+    <a href="#" class="fiverr" aria-label="RHOBEAR on Fiverr" title="Fiverr">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="#1dbf73"/><path fill="#fff" d="M13.06 8.27c0-.62.41-1.02 1.03-1.02h1.66V5.4h-1.74c-1.63 0-2.84 1.07-2.84 2.74v.56H9.3v1.74h1.87v5.66h2.02v-5.66h1.88V8.83h-1.88z"/><rect x="15.78" y="8.83" width="2.02" height="6.97" fill="#fff"/><circle cx="16.79" cy="6.43" r="1.13" fill="#fff"/></svg>
+    </a>
   </div>
 </footer>
 
