@@ -1811,17 +1811,18 @@ body {
 }
 
 /* =====================================================================
-   ★ CONSTELLATION RE-SKIN — sister to the hub (deep-space premium)
+   ★ JET-BLACK RE-SKIN — sister to the hub (pixel-dust on black)
    Appended last so it wins the cascade. Re-values the design tokens to
-   a deep-space palette, swaps the display face to a premium system stack
+   a jet-black palette, swaps the display face to a premium system stack
    (no pixel font — owner law), converts the warm-paper surfaces to dark
-   glass, and seats the hub's live starfield behind all content.
+   glass, and seats the product's pixel-dust canvas behind all content.
    The copy is untouched; only the skin changes.
    ===================================================================== */
 :root{
-  /* deep-space base — !important so index.html's inline TWEAKS style block
-     (a light-theme live-editor that loads after shell.css) can't override them. */
-  --c-bg:#070b14 !important;  --c-bg-2:#0a1020 !important;  --c-bg-3:#0e1526 !important;
+  /* jet-black base — matches the product UI (rhobear-plans rhobear-dark.css /
+     app hub). !important so index.html's inline TWEAKS style block (a light-theme
+     live-editor that loads after shell.css) can't override them. */
+  --c-bg:#08080a !important;  --c-bg-2:#111114 !important;  --c-bg-3:#16161a !important;
   --c-surface:rgba(17,25,43,0.55) !important;  --c-surface-2:rgba(22,31,52,0.62) !important;
 
   /* light ink on space */
@@ -1856,12 +1857,10 @@ body {
 
 html{ color-scheme:dark; }
 
-/* the space wash sits under the starfield canvas */
+/* jet-black sky — flat, so the pixel-dust specks read crisp. No suns, no
+   planets, no nebula glow (the product dropped that look). */
 body{
-  background:
-    radial-gradient(120% 80% at 12% -10%, rgba(60,120,180,0.15), transparent 55%),
-    radial-gradient(120% 90% at 92% 6%, rgba(120,84,180,0.18), transparent 58%),
-    linear-gradient(165deg,#06121b 0%,#070a16 48%,#0a0814 100%) !important;
+  background:#08080a !important;
   background-attachment:fixed;
   -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
 }
