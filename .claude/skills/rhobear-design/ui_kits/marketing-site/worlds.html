@@ -1,9 +1,22 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>RHOBEAR — Worlds</title><link rel="stylesheet" href="../../colors_and_type.css"><link rel="stylesheet" href="shell.css?v=1781510100"><link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782900000"></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>RHOBEAR — Worlds</title><link rel="stylesheet" href="../../colors_and_type.css"><link rel="stylesheet" href="shell.css?v=1781510100"><link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782900000"><style>
+    /* === bd-bears: per-page tinted brand bear marker === */
+    .page-marker{display:flex;align-items:center;margin:0 0 14px;}
+    .page-bear{width:56px;height:56px;border-radius:50%;object-fit:cover;padding:7px;flex:none;
+      background:radial-gradient(circle at 50% 35%,color-mix(in srgb,var(--acc) 30%,transparent),rgba(8,12,22,.7) 72%);
+      border:1.5px solid color-mix(in srgb,var(--acc) 55%,transparent);
+      box-shadow:0 0 20px -4px var(--acc);
+      filter:var(--bear-tint) drop-shadow(0 1px 3px rgba(0,0,0,.5));
+      transition:transform .25s,box-shadow .25s;}
+    .page-bear:hover{transform:translateY(-1px) scale(1.04);box-shadow:0 0 26px -2px var(--acc);}
+    @media(prefers-reduced-motion:reduce){.page-bear{transition:none;}}
+  </style>
+</head>
 <body>
 <nav class="top-nav" aria-label="Primary"><div class="top-nav-inner"><a class="brand-lockup" href="index.html"><img src="../../assets/rhobear-logo.png?v=1782900000" alt="" class="pixelated"><span>RHOBEAR</span></a><div class="nav-tabs"><a href="index.html" class="nav-tab ">HOME</a><a href="crew.html" class="nav-tab ">CREW</a><a href="hub.html" class="nav-tab ">HUB</a><a href="workbench.html" class="nav-tab ">WORKBENCH</a><a href="try.html" class="nav-tab ">TRY THE DEMO</a><a href="learn.html" class="nav-tab ">LEARN</a><div class="nav-dropdown"><a href="substrate.html" class="nav-tab " aria-haspopup="true">SUBSTRATE ▾</a><div class="nav-dropdown-panel"><a href="goal-autoloop.html" class="">Goal Autoloop</a><a href="judgment-loop.html" class="">Judgment Loop</a><a href="substrate.html" class="">Substrate Overview</a><a href="compass.html" class="">Compass</a><a href="worker-sessions.html" class="">Worker Sessions</a><a href="handoff-bus.html" class="">Handoff Bus</a><a href="safety-registry.html" class="">Safety Registry</a><a href="hub-contract.html" class="">Hub Contract</a><a href="openclaw.html" class="">OpenClaw</a></div></div><a href="built-with.html" class="nav-tab ">BUILT WITH</a></div><span class="nav-spacer"></span><a href="spin-it-up.html" class="btn-amber nav-cta">Spin it up →</a></div></nav>
 <main>
 <section class="wrap">
+  <div class="page-marker" style="--acc:#7dffd5; --bear-tint:hue-rotate(0deg) saturate(1.1)"><img class="page-bear" src="../../assets/rhobear-logo.png?v=1782900000" alt="RHOBEAR bear"></div>
   <div class="eyebrow-row">SECTION · STORY · 17 / 20</div>
   <h1 class="h1-page">Three worlds. <em>Same crew.</em></h1>
   <p class="lead">SPACE · WEST · NEON. The room reskins, the crew stays themselves. Same workflow, different lighting. Pick the world that matches your mood — the work is the same.</p>

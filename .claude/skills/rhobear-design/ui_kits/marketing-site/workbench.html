@@ -9,6 +9,18 @@
   <link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782900000">
 
   
+<style>
+    /* === bd-bears: per-page tinted brand bear marker === */
+    .page-marker{display:flex;align-items:center;margin:0 0 14px;}
+    .page-bear{width:56px;height:56px;border-radius:50%;object-fit:cover;padding:7px;flex:none;
+      background:radial-gradient(circle at 50% 35%,color-mix(in srgb,var(--acc) 30%,transparent),rgba(8,12,22,.7) 72%);
+      border:1.5px solid color-mix(in srgb,var(--acc) 55%,transparent);
+      box-shadow:0 0 20px -4px var(--acc);
+      filter:var(--bear-tint) drop-shadow(0 1px 3px rgba(0,0,0,.5));
+      transition:transform .25s,box-shadow .25s;}
+    .page-bear:hover{transform:translateY(-1px) scale(1.04);box-shadow:0 0 26px -2px var(--acc);}
+    @media(prefers-reduced-motion:reduce){.page-bear{transition:none;}}
+  </style>
 </head>
 <body>
 
@@ -27,6 +39,7 @@
 
 <!-- ===================== HERO — LIVE, SINGLE-MACHINE ===================== -->
 <section class="wrap">
+  <div class="page-marker" style="--acc:#7dffd5; --bear-tint:hue-rotate(0deg) saturate(1.1)"><img class="page-bear" src="../../assets/rhobear-logo.png?v=1782900000" alt="RHOBEAR bear"></div>
   <div class="eyebrow-row">SECTION · STORY · 04 / 20</div>
   <h1 class="h1-page">One goal. Many agents. <em>One reviewer.</em></h1>
   <p class="lead" style="max-width:760px;">A chat is one model, alone in a box. The workbench is a team of named workers running side by side — each in its own lane, with its own session, its own diff, its own gate. You watch all of them at once, promote the one that's right, and reject the rest. In real time, on your machine.</p>
