@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RHOBEAR — calm tools that do real work</title>
-  <meta name="description" content="A family of apps that edit, plan, build, review, and sell. Bring your own AI or use ours, keep your data on your disk, never get locked in.">
+  <title>RHOBEAR — build it, ship it, sell it. One connected workflow.</title>
+  <meta name="description" content="One workflow that hands off to itself: build in the Hub, shape in Designs, capture with SunSponge, keep it clean with Reviews, take it to market with Plans — and it sells itself. Bring your own AI, own your data, run it for the price of a domain.">
   <link rel="stylesheet" href="../../colors_and_type.css">
-  <link rel="stylesheet" href="shell.css?v=1782920000">
-  <link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782920000">
+  <link rel="stylesheet" href="shell.css?v=1782940000">
+  <link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782940000">
   <style>
     /* ============================================================
-       RHOBEAR ecosystem front door — one living constellation.
-       Deep space, teal + gold, never orange. The family is ONE
-       connected sky, not a grid of borrowed screenshots.
+       RHOBEAR ecosystem front door — one connected workflow.
+       The products are a relay: each hands off to the next.
+       Deep space, teal + gold, never orange.
        ============================================================ */
     :root{
       --teal:#7dffd5; --teal-dim:#48d8b0; --gold:#ffd76a;
@@ -20,11 +20,8 @@
       --glass:rgba(255,255,255,0.035); --glass-line:rgba(125,255,213,0.16);
     }
     html,body{ background:var(--void); }
-    /* the living sky sits behind everything */
-    #sky{ position:fixed; inset:0; width:100%; height:100%; z-index:0;
-      display:block; background:
-        radial-gradient(120% 90% at 50% -10%, #0b1424 0%, var(--void-2)42%, var(--void) 78%); }
-    /* a soft aurora wash that breathes over the stars */
+    #sky{ position:fixed; inset:0; width:100%; height:100%; z-index:0; display:block;
+      background:radial-gradient(120% 90% at 50% -10%, #0b1424 0%, var(--void-2)42%, var(--void) 78%); }
     .aurora{ position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.5;
       background:
         radial-gradient(60% 40% at 22% 12%, rgba(125,255,213,0.10), transparent 60%),
@@ -33,97 +30,99 @@
       animation:auroraDrift 24s ease-in-out infinite alternate; }
     @keyframes auroraDrift{ from{ transform:translate3d(-1.5%,-1%,0) scale(1.02);} to{ transform:translate3d(2%,1.5%,0) scale(1.06);} }
     body > nav, main, footer{ position:relative; z-index:2; }
-
     .wrap{ max-width:1120px; margin:0 auto; padding:0 26px; }
 
     /* ---------- hero ---------- */
-    .hero{ padding:108px 0 40px; max-width:920px; }
+    .hero{ padding:104px 0 32px; max-width:940px; }
     .hero .eyebrow{ display:inline-flex; align-items:center; gap:10px;
-      font-family:var(--font-mono); font-size:11px; letter-spacing:.22em; text-transform:uppercase;
-      color:var(--teal); border:1px solid var(--glass-line); border-radius:999px; padding:7px 14px;
-      background:rgba(125,255,213,0.05); }
+      font-family:var(--font-mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+      color:var(--teal); border:1px solid var(--glass-line); border-radius:999px; padding:7px 14px; background:rgba(125,255,213,0.05); }
     .hero .eyebrow .spark{ width:6px; height:6px; border-radius:50%; background:var(--gold); box-shadow:0 0 12px var(--gold); }
-    .hero h1{ font-family:var(--font-display); font-weight:800; font-size:clamp(2.8rem,6.6vw,5rem);
+    .hero h1{ font-family:var(--font-display); font-weight:800; font-size:clamp(2.7rem,6.3vw,4.8rem);
       line-height:1.0; letter-spacing:-0.025em; margin:22px 0 0; color:#f3f7fb; }
     .hero h1 em{ font-style:normal; background:linear-gradient(120deg,var(--teal),var(--gold));
       -webkit-background-clip:text; background-clip:text; color:transparent; }
-    .hero .lead{ font-size:clamp(1.08rem,2.1vw,1.36rem); color:#aeb9c8; margin:24px 0 0; max-width:60ch; line-height:1.55; }
+    .hero .lead{ font-size:clamp(1.06rem,2vw,1.32rem); color:#aeb9c8; margin:24px 0 0; max-width:64ch; line-height:1.58; }
+    .hero .lead b{ color:#e7eef6; font-weight:600; }
     .cta-row{ margin-top:30px; display:flex; gap:14px; flex-wrap:wrap; }
     .btn{ font-family:var(--font-display); font-weight:650; font-size:1rem; padding:13px 22px; border-radius:12px;
       text-decoration:none; transition:transform .18s, box-shadow .18s, border-color .18s; display:inline-flex; align-items:center; gap:8px; }
-    .btn-primary{ color:#04140f; background:linear-gradient(120deg,var(--teal),var(--teal-dim));
-      box-shadow:0 10px 34px -12px rgba(125,255,213,.6); }
+    .btn-primary{ color:#04140f; background:linear-gradient(120deg,var(--teal),var(--teal-dim)); box-shadow:0 10px 34px -12px rgba(125,255,213,.6); }
     .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 16px 40px -12px rgba(125,255,213,.8); }
     .btn-ghost{ color:#dfe7f0; border:1px solid var(--glass-line); background:var(--glass); }
     .btn-ghost:hover{ transform:translateY(-2px); border-color:var(--teal); }
 
-    /* ---------- honest differentiators ---------- */
-    .truth{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:56px; }
+    /* ---------- honest band ---------- */
+    .truth{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:52px; }
     .truth .cell{ border:1px solid var(--glass-line); border-radius:16px; padding:22px 20px;
-      background:linear-gradient(180deg, var(--glass), rgba(125,255,213,0.01));
-      backdrop-filter:blur(2px); }
+      background:linear-gradient(180deg, var(--glass), rgba(125,255,213,0.01)); }
     .truth .k{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--teal-dim); }
-    .truth h3{ font-family:var(--font-display); font-size:1.06rem; margin:9px 0 5px; color:#eef3f8; }
+    .truth h3{ font-family:var(--font-display); font-size:1.05rem; margin:9px 0 5px; color:#eef3f8; }
     .truth p{ font-size:.9rem; color:#94a1b2; margin:0; line-height:1.45; }
 
-    /* ---------- the family as ONE constellation ---------- */
-    .family{ padding:96px 0 20px; }
-    .sec-head{ max-width:62ch; text-align:center; margin:0 auto; }
-    .sec-head .eyebrow{ font-family:var(--font-mono); font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--teal-dim); }
-    .sec-head h2{ font-family:var(--font-display); font-weight:750; font-size:clamp(2rem,4vw,2.9rem); letter-spacing:-.02em; margin:14px 0 0; color:#f1f6fb; }
-    .sec-head p{ color:#9fabbb; font-size:1.08rem; margin:14px auto 0; max-width:52ch; line-height:1.55; }
+    /* ---------- the relay ---------- */
+    .relay-head{ text-align:center; max-width:62ch; margin:96px auto 0; }
+    .relay-head .eyebrow{ font-family:var(--font-mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--teal-dim); }
+    .relay-head h2{ font-family:var(--font-display); font-weight:750; font-size:clamp(2rem,4vw,2.9rem); letter-spacing:-.02em; margin:14px 0 0; color:#f1f6fb; }
+    .relay-head p{ color:#9fabbb; font-size:1.08rem; margin:14px auto 0; max-width:54ch; line-height:1.55; }
 
-    /* the constellation: a core star + product stars on faint lines */
-    .constellation{ position:relative; margin:54px auto 0; }
-    .nodes{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-    .node{ position:relative; display:flex; flex-direction:column; gap:9px; text-decoration:none;
-      border:1px solid var(--glass-line); border-radius:18px; padding:22px 22px 20px;
-      background:linear-gradient(180deg, var(--glass), rgba(255,255,255,0.008));
-      transition:transform .2s, border-color .2s, box-shadow .2s; overflow:hidden; }
-    .node::before{ content:""; position:absolute; inset:0; opacity:0; transition:opacity .25s;
-      background:radial-gradient(120% 90% at 18% 0%, color-mix(in srgb, var(--acc) 22%, transparent), transparent 60%); }
-    .node:hover{ transform:translateY(-5px); border-color:var(--acc);
-      box-shadow:0 22px 50px -24px var(--acc); }
-    .node:hover::before{ opacity:1; }
-    .node .top{ display:flex; align-items:center; gap:10px; position:relative; }
-    .node .star{ width:11px; height:11px; border-radius:50%; background:var(--acc); flex:none;
-      box-shadow:0 0 16px var(--acc), 0 0 4px #fff inset; }
-    .node .name{ font-family:var(--font-display); font-weight:700; font-size:1.16rem; color:#eef3f8; }
-    .node .kind{ font-family:var(--font-mono); font-size:9.5px; letter-spacing:.13em; text-transform:uppercase; color:#7d8aa0; margin-left:auto; }
-    .node .tag{ position:relative; color:#9fabbb; font-size:.96rem; line-height:1.5; }
-    .node .go{ position:relative; margin-top:auto; padding-top:6px; font-family:var(--font-mono); font-size:.8rem; letter-spacing:.03em; color:var(--acc); }
-    .node.core{ grid-column:span 3; align-items:center; text-align:center; padding:30px;
-      border-color:rgba(125,255,213,.28); background:
-        radial-gradient(90% 120% at 50% 0%, rgba(125,255,213,0.08), transparent 60%), var(--glass); }
-    .node.core .name{ font-size:1.5rem; }
-    .node.core .tag{ max-width:54ch; }
-    .node.core .crest{ width:54px; height:54px; margin-bottom:6px; filter:drop-shadow(0 0 18px rgba(125,255,213,.5)); }
+    .relay{ margin:40px auto 0; max-width:860px; }
+    .stop{ display:grid; grid-template-columns:64px 1fr; gap:20px; }
+    .spine{ display:flex; flex-direction:column; align-items:center; }
+    .spine .num{ width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+      font-family:var(--font-mono); font-size:14px; font-weight:600; color:#04140f; background:var(--acc);
+      box-shadow:0 0 22px -2px var(--acc); flex:none; }
+    .spine .line{ width:2px; flex:1; min-height:38px; margin:6px 0;
+      background:linear-gradient(var(--acc), color-mix(in srgb, var(--acc) 25%, transparent)); opacity:.5; }
+    .stop:last-child .spine .line{ display:none; }
+
+    /* browser-window card = "the web page" */
+    .win{ border:1px solid color-mix(in srgb, var(--acc) 34%, var(--glass-line)); border-radius:16px; overflow:hidden;
+      background:linear-gradient(180deg, var(--glass), rgba(255,255,255,0.008)); margin-bottom:14px;
+      transition:transform .2s, box-shadow .2s; }
+    .win:hover{ transform:translateY(-3px); box-shadow:0 24px 54px -28px var(--acc); }
+    .chrome{ display:flex; align-items:center; gap:7px; padding:10px 14px; border-bottom:1px solid rgba(255,255,255,0.06);
+      background:rgba(255,255,255,0.02); }
+    .chrome i{ width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,0.16); }
+    .chrome i:first-child{ background:color-mix(in srgb, var(--acc) 70%, #888); }
+    .chrome .url{ margin-left:10px; font-family:var(--font-mono); font-size:11px; color:#8a98aa; letter-spacing:.02em; }
+    .screen{ position:relative; padding:26px 26px 24px; text-decoration:none; display:block;
+      background:radial-gradient(120% 130% at 0% 0%, color-mix(in srgb, var(--acc) 14%, transparent), transparent 58%); }
+    .screen .verb{ font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--acc); }
+    .screen .name{ font-family:var(--font-display); font-weight:700; font-size:1.5rem; color:#f1f6fb; margin:7px 0 0; letter-spacing:-.01em; }
+    .screen .name .meta{ font-family:var(--font-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:#7d8aa0; margin-left:10px; vertical-align:middle; }
+    .screen .desc{ color:#aab6c6; font-size:1rem; line-height:1.56; margin:10px 0 0; max-width:60ch; }
+    .chips{ display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
+    .chips span{ font-family:var(--font-mono); font-size:11px; color:#cdd6e2; border:1px solid color-mix(in srgb, var(--acc) 26%, var(--glass-line));
+      border-radius:999px; padding:4px 11px; background:color-mix(in srgb, var(--acc) 8%, transparent); }
+    .screen .go{ display:inline-block; margin-top:16px; font-family:var(--font-mono); font-size:.82rem; letter-spacing:.03em; color:var(--acc); }
+    /* the hand-off line between stops */
+    .handoff{ font-family:var(--font-mono); font-size:.84rem; color:#8da; color:#8aa0b6; padding:0 0 18px 4px; display:flex; align-items:center; gap:9px; }
+    .handoff::before{ content:"↳"; color:var(--acc); font-size:1.05rem; }
+    .handoff b{ color:#dfe7f0; font-weight:600; }
+    .loop{ text-align:center; margin-top:8px; font-family:var(--font-mono); font-size:.86rem; color:#9fb; color:#86d8b8; }
 
     /* ---------- closing ---------- */
-    .closer{ text-align:center; padding:100px 0 30px; }
-    .closer h2{ font-family:var(--font-display); font-weight:800; font-size:clamp(2rem,4.4vw,3.2rem); letter-spacing:-.02em; margin:0; color:#f1f6fb; }
-    .closer p{ color:#9fabbb; font-size:1.12rem; margin:16px auto 0; max-width:48ch; }
+    .closer{ text-align:center; padding:92px 0 30px; }
+    .closer h2{ font-family:var(--font-display); font-weight:800; font-size:clamp(2rem,4.4vw,3.1rem); letter-spacing:-.02em; margin:0; color:#f1f6fb; }
+    .closer p{ color:#9fabbb; font-size:1.12rem; margin:16px auto 0; max-width:52ch; line-height:1.55; }
 
     .foot{ border-top:1px solid var(--glass-line); margin-top:70px; padding:40px 0 60px; }
     .foot .cols{ display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:30px; }
     .foot h4{ font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#7d8aa0; margin:0 0 12px; }
     .foot a{ display:block; color:#9fabbb; font-size:.95rem; padding:4px 0; text-decoration:none; }
     .foot a:hover{ color:var(--teal); }
-    .foot .blurb{ color:#7d8aa0; font-size:.92rem; max-width:34ch; line-height:1.55; }
+    .foot .sub{ display:block; color:#6f7d8e; font-size:.82rem; padding:0 0 4px 14px; }
+    .foot .blurb{ color:#7d8aa0; font-size:.92rem; max-width:36ch; line-height:1.55; }
     .foot .lock{ display:flex; align-items:center; gap:10px; margin-bottom:14px; text-decoration:none; }
     .foot .lock img{ width:30px; height:30px; }
     .foot .lock span{ font-family:var(--font-display); font-weight:800; letter-spacing:.04em; color:#eef3f8; }
 
-    @media(max-width:920px){
-      .truth{ grid-template-columns:1fr 1fr; }
-      .nodes{ grid-template-columns:1fr 1fr; }
-      .node.core{ grid-column:span 2; }
-      .foot .cols{ grid-template-columns:1fr 1fr; }
-    }
+    @media(max-width:920px){ .truth{ grid-template-columns:1fr 1fr; } .foot .cols{ grid-template-columns:1fr 1fr; } }
     @media(max-width:560px){
-      .hero{ padding-top:84px; }
-      .truth, .nodes, .foot .cols{ grid-template-columns:1fr; }
-      .node.core{ grid-column:span 1; }
+      .hero{ padding-top:82px; } .truth, .foot .cols{ grid-template-columns:1fr; }
+      .stop{ grid-template-columns:40px 1fr; gap:12px; } .spine .num{ width:34px; height:34px; font-size:12px; }
+      .screen .name{ font-size:1.28rem; }
     }
     @media(prefers-reduced-motion:reduce){ .aurora{ animation:none; } }
   </style>
@@ -135,10 +134,7 @@
 
   <nav class="top-nav" aria-label="Primary">
     <div class="top-nav-inner">
-      <a class="brand-lockup" href="index.html">
-        <img src="../../assets/rhobear-logo.png?v=1782920000" alt="">
-        <span>RHOBEAR</span>
-      </a>
+      <a class="brand-lockup" href="index.html"><img src="../../assets/rhobear-logo.png?v=1782940000" alt=""><span>RHOBEAR</span></a>
       <div class="nav-tabs">
         <a href="index.html" class="nav-tab active">HOME</a>
         <a href="app.html" class="nav-tab">HUB</a>
@@ -146,11 +142,10 @@
         <a href="https://plans.rhobear.ai" class="nav-tab">PLANS</a>
         <a href="https://reviews.rhobear.ai" class="nav-tab">REVIEWS</a>
         <div class="nav-dropdown">
-          <a href="#family" class="nav-tab" aria-haspopup="true">MORE &#9662;</a>
+          <a href="#workflow" class="nav-tab" aria-haspopup="true">MORE &#9662;</a>
           <div class="nav-dropdown-panel">
-            <a href="https://github.com/deariencampbell1-sys/rhobear-verifier">Verifies</a>
-            <a href="https://github.com/deariencampbell1-sys/sunsponge">SunSponge</a>
-            <a href="https://sales.rhobear.ai">Sales</a>
+            <a href="https://github.com/deariencampbell1-sys/sunsponge">SunSponge Captures</a>
+            <a href="https://sales.rhobear.ai">Sales by Saguaro</a>
             <a href="app.html">The Hub, in depth</a>
           </div>
         </div>
@@ -163,91 +158,149 @@
 <main>
 
   <section class="wrap hero">
-    <span class="eyebrow"><span class="spark"></span>ONE FAMILY &middot; OWN YOUR DATA &middot; BRING YOUR OWN AI</span>
-    <h1>Calm tools that do <em>real work</em>.</h1>
-    <p class="lead">RHOBEAR is a family of apps that edit, plan, build, review, and sell. Use your own AI key or ours, keep your work on your own disk, and walk away with everything you make. No lock-in, no markup games.</p>
+    <span class="eyebrow"><span class="spark"></span>ONE WORKFLOW &middot; OWN YOUR DATA &middot; BRING YOUR OWN AI</span>
+    <h1>Build it. Ship it. <em>Sell it.</em></h1>
+    <p class="lead">RHOBEAR isn't a pile of apps — it's <b>one workflow that hands off to itself</b>. Build a product in the Hub, shape it in Designs, rest it in SunSponge, keep it clean with Reviews, then take it to market with Plans. Each tool passes the work to the next. Bring your own AI or use ours, keep everything on your disk, and run the whole thing for about the price of a domain.</p>
     <div class="cta-row">
-      <a href="#family" class="btn btn-primary">See the family &rarr;</a>
-      <a href="https://plans.rhobear.ai" class="btn btn-ghost">Try Plans in your browser &rarr;</a>
+      <a href="#workflow" class="btn btn-primary">Follow the workflow &rarr;</a>
+      <a href="app.html" class="btn btn-ghost">Start at the Hub &rarr;</a>
     </div>
 
     <div class="truth">
       <div class="cell"><div class="k">Own your data</div><h3>It lives on your disk</h3><p>Local-first by default. Export the file and leave whenever you want.</p></div>
-      <div class="cell"><div class="k">Bring your own AI</div><h3>Your key, no markup</h3><p>Plug in your own model for free, or use ours metered. No padded per-token bill.</p></div>
-      <div class="cell"><div class="k">Open source</div><h3>Where it counts</h3><p>The editor and the tools are open. Fork them, host them, build on them.</p></div>
-      <div class="cell"><div class="k">One family</div><h3>They work together</h3><p>Edit a page, plan the work, review the code, capture the result &mdash; same hand.</p></div>
+      <div class="cell"><div class="k">Bring your own AI</div><h3>Your key, no markup</h3><p>Local LLM stubs included, or pipe in your own — OpenRouter-compatible.</p></div>
+      <div class="cell"><div class="k">Near-zero cost</div><h3>Priced like a domain</h3><p>The whole stack runs on a credit-funded VPS. No hosting bill, no seat tax.</p></div>
+      <div class="cell"><div class="k">One workflow</div><h3>They hand off</h3><p>Build, shape, capture, review, sell — each tool feeds the next one.</p></div>
     </div>
   </section>
 
-  <section class="wrap family" id="family">
-    <div class="sec-head">
-      <div class="eyebrow">THE FAMILY</div>
-      <h2>One sky. Each star does one job well.</h2>
-      <p>Pick the one you need today &mdash; they share a brain and a look, so adding the next one feels like coming home.</p>
+  <section class="wrap" id="workflow">
+    <div class="relay-head">
+      <div class="eyebrow">THE WORKFLOW</div>
+      <h2>One hand passes to the next.</h2>
+      <p>Follow a product all the way from an idea to its first paying customer — without ever leaving the family.</p>
     </div>
 
-    <div class="constellation">
-      <div class="nodes">
+    <div class="relay">
 
-        <div class="node core" style="--acc:#7dffd5">
-          <img class="crest" src="../../assets/rhobear-logo.png?v=1782920000" alt="">
-          <div class="top" style="justify-content:center"><span class="name">The RHOBEAR core</span></div>
-          <p class="tag">One brain, one look, one promise across every tool: your data stays yours, your AI key is your own, and nothing locks shut behind you.</p>
+      <!-- 1 HUB -->
+      <div class="stop" style="--acc:#7dffd5">
+        <div class="spine"><div class="num">1</div><div class="line"></div></div>
+        <div>
+          <a class="win" href="app.html">
+            <div class="chrome"><i></i><i></i><i></i><span class="url">rhobear.ai/hub</span></div>
+            <div class="screen">
+              <div class="verb">Build it</div>
+              <div class="name">RHOBEAR Hub<span class="meta">Flagship &middot; Desktop</span></div>
+              <p class="desc">The workbench. Describe the product you want; an AI crew sets up the stack and builds it — no terminal, no fear. This is where everything starts.</p>
+              <div class="chips"><span>AI crew</span><span>no terminal</span><span>skills drop-in</span></div>
+              <span class="go">Open the Hub &rarr;</span>
+            </div>
+          </a>
+          <div class="handoff">Got something built? <b>Hand it to Designs to make it yours.</b></div>
         </div>
-
-        <a class="node" style="--acc:#7dffd5" href="app.html">
-          <div class="top"><span class="star"></span><span class="name">RHOBEAR Hub</span><span class="kind">Desktop &middot; Windows</span></div>
-          <p class="tag">An AI crew that handles the technical setup so you don't have to. Drop in a skill, answer one question, watch it run &mdash; no terminal, no fear.</p>
-          <span class="go">Get the Hub &rarr;</span>
-        </a>
-
-        <a class="node" style="--acc:#7c5cff" href="https://plans.rhobear.ai">
-          <div class="top"><span class="star"></span><span class="name">RHOBEAR Plans</span><span class="kind">Web &middot; Local-first</span></div>
-          <p class="tag">Docs and whiteboard on one edgeless canvas. Write, draw, and plan in the same place &mdash; and keep all of it on your own disk.</p>
-          <span class="go">Open in your browser &rarr;</span>
-        </a>
-
-        <a class="node" style="--acc:#e94560" href="https://github.com/deariencampbell1-sys/rhobear-designs">
-          <div class="top"><span class="star"></span><span class="name">RHOBEAR Designs</span><span class="kind">Open source &middot; MIT</span></div>
-          <p class="tag">A website editor that hands you the file back. Open any HTML, edit on canvas, export clean code you own.</p>
-          <span class="go">Read the source &rarr;</span>
-        </a>
-
-        <a class="node" style="--acc:#38bdf8" href="https://reviews.rhobear.ai">
-          <div class="top"><span class="star"></span><span class="name">RHOBEAR Reviews</span><span class="kind">GitHub App</span></div>
-          <p class="tag">AI code review that doesn't sleep. Every pull request gets read, checked, and given an honest verdict before it merges.</p>
-          <span class="go">See it review &rarr;</span>
-        </a>
-
-        <a class="node" style="--acc:#34d399" href="https://github.com/deariencampbell1-sys/rhobear-verifier">
-          <div class="top"><span class="star"></span><span class="name">RHOBEAR Verifies</span><span class="kind">No LLM &middot; No tokens</span></div>
-          <p class="tag">Finds the buttons that promise a feature and do nothing, and the routes your UI calls that don't exist. Pure mechanical checks.</p>
-          <span class="go">Read the source &rarr;</span>
-        </a>
-
-        <a class="node" style="--acc:#f5a524" href="https://github.com/deariencampbell1-sys/sunsponge">
-          <div class="top"><span class="star"></span><span class="name">SunSponge</span><span class="kind">Open source &middot; sibling</span></div>
-          <p class="tag">Soak up a whole website into screenshots. Feed it a site map and it captures every page and UI state in one pass. Not AI &mdash; just fast and thorough.</p>
-          <span class="go">Read the source &rarr;</span>
-        </a>
-
-        <a class="node" style="--acc:#f5c84c" href="https://sales.rhobear.ai">
-          <div class="top"><span class="star"></span><span class="name">Sales</span><span class="kind">24/7 &middot; by Saguaro</span></div>
-          <p class="tag">A private sales rep that answers every lead, day or night, in your voice. Built on the same RHOBEAR brain.</p>
-          <span class="go">Meet your rep &rarr;</span>
-        </a>
-
       </div>
+
+      <!-- 2 DESIGNS -->
+      <div class="stop" style="--acc:#e94560">
+        <div class="spine"><div class="num">2</div><div class="line"></div></div>
+        <div>
+          <a class="win" href="https://github.com/deariencampbell1-sys/rhobear-designs">
+            <div class="chrome"><i></i><i></i><i></i><span class="url">github.com/&hellip;/rhobear-designs</span></div>
+            <div class="screen">
+              <div class="verb">Shape it</div>
+              <div class="name">RHOBEAR Designs<span class="meta">Open source &middot; MIT</span></div>
+              <p class="desc">Open any HTML on an infinite canvas and edit it with AI. Ships with a local-LLM stub that integrates the moment you download it — or pipe in your own key. The file is always yours to keep.</p>
+              <div class="chips"><span>edit on canvas</span><span>local LLM stub</span><span>OpenRouter-compatible</span></div>
+              <span class="go">Read the source &rarr;</span>
+            </div>
+          </a>
+          <div class="handoff">Looks the way you want? <b>Rest the finished site in SunSponge.</b></div>
+        </div>
+      </div>
+
+      <!-- 3 SUNSPONGE -->
+      <div class="stop" style="--acc:#f5a524">
+        <div class="spine"><div class="num">3</div><div class="line"></div></div>
+        <div>
+          <a class="win" href="https://github.com/deariencampbell1-sys/sunsponge">
+            <div class="chrome"><i></i><i></i><i></i><span class="url">github.com/&hellip;/sunsponge</span></div>
+            <div class="screen">
+              <div class="verb">Capture it</div>
+              <div class="name">SunSponge Captures<span class="meta">Open source &middot; not AI</span></div>
+              <p class="desc">Soak a whole finished site into rested screenshots. Feed it a map and it grabs every page and UI state in one pass — so you can move on to the next build while it works. Just fast and thorough.</p>
+              <div class="chips"><span>whole-site capture</span><span>map-driven</span><span>rested while you work</span></div>
+              <span class="go">Read the source &rarr;</span>
+            </div>
+          </a>
+          <div class="handoff">All the while, every PR runs through&nbsp;<b>Reviews.</b></div>
+        </div>
+      </div>
+
+      <!-- 4 REVIEWS (+ Verifies feature) -->
+      <div class="stop" style="--acc:#38bdf8">
+        <div class="spine"><div class="num">4</div><div class="line"></div></div>
+        <div>
+          <a class="win" href="https://reviews.rhobear.ai">
+            <div class="chrome"><i></i><i></i><i></i><span class="url">reviews.rhobear.ai</span></div>
+            <div class="screen">
+              <div class="verb">Keep it clean</div>
+              <div class="name">RHOBEAR Reviews<span class="meta">GitHub App</span></div>
+              <p class="desc">AI code review on every pull request — an honest verdict before anything merges, in the spirit of CodeRabbit. Then <b>Verifies</b> (built in) maps your app's pathways and flags dead code, dead routes, and wasted tokens at PR time — three full app-maps a month, so you never rebase through a graveyard.</p>
+              <div class="chips"><span>PR review</span><span>Verifies: dead-path maps</span><span>3 app-maps / mo</span></div>
+              <span class="go">See it review &rarr;</span>
+            </div>
+          </a>
+          <div class="handoff">Clean and built? <b>Take it to market with Plans.</b></div>
+        </div>
+      </div>
+
+      <!-- 5 PLANS -->
+      <div class="stop" style="--acc:#7c5cff">
+        <div class="spine"><div class="num">5</div><div class="line"></div></div>
+        <div>
+          <a class="win" href="https://plans.rhobear.ai">
+            <div class="chrome"><i></i><i></i><i></i><span class="url">plans.rhobear.ai</span></div>
+            <div class="screen">
+              <div class="verb">Take it to market</div>
+              <div class="name">RHOBEAR Plans<span class="meta">Web &middot; local-first</span></div>
+              <p class="desc">Your booking, billing, and business engine. Calendar and appointments, PayPal + Stripe forms that track every sale, sales-setup templates, and Zoom/email that fires the second a slot is booked. Telegram bots and multiple calendars — just talk to it and run the whole business. Comes with a local Qwen-4B for drafting and tool use, or bring a stronger model.</p>
+              <div class="chips"><span>calendar + booking</span><span>PayPal + Stripe</span><span>Telegram bots</span><span>Qwen-4B built in</span></div>
+              <span class="go">Open in your browser &rarr;</span>
+            </div>
+          </a>
+          <div class="handoff">And the rep that answers your leads? <b>Sales proves it closes.</b></div>
+        </div>
+      </div>
+
+      <!-- 6 SALES -->
+      <div class="stop" style="--acc:#f5c84c">
+        <div class="spine"><div class="num">6</div></div>
+        <div>
+          <a class="win" href="https://sales.rhobear.ai">
+            <div class="chrome"><i></i><i></i><i></i><span class="url">sales.rhobear.ai</span></div>
+            <div class="screen">
+              <div class="verb">And it sells itself</div>
+              <div class="name">Sales, by Saguaro<span class="meta">24/7 &middot; local LLM</span></div>
+              <p class="desc">The chatbot you're talking to on these sites runs on a small, cheap local model — and it's surprisingly sharp. The whole stack is hosted at basically no cost: a credit-funded VPS, no GoDaddy, no hosting bill, just a domain. Like what it's doing? We'll set one up for you.</p>
+              <div class="chips"><span>weak LLM, strong results</span><span>~$0 to host</span><span>answers every lead</span></div>
+              <span class="go">Meet your rep &rarr;</span>
+            </div>
+          </a>
+          <div class="loop">&#8635;&nbsp; &hellip; and back to the Hub for the next product.</div>
+        </div>
+      </div>
+
     </div>
   </section>
 
   <section class="wrap closer">
-    <div class="eyebrow" style="font-family:var(--font-mono); font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--teal-dim);">START ANYWHERE</div>
-    <h2 style="margin-top:14px;">Pick one tool. Keep the rest for when you need them.</h2>
-    <p>They share a brain and a look, so the second one always feels familiar.</p>
+    <div class="eyebrow" style="font-family:var(--font-mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--teal-dim);">START ANYWHERE</div>
+    <h2 style="margin-top:14px;">Grab one hand. The rest are right there.</h2>
+    <p>Every tool stands on its own — and quietly hands off to the next when you're ready.</p>
     <div class="cta-row" style="justify-content:center; margin-top:26px;">
-      <a href="https://plans.rhobear.ai" class="btn btn-primary">Try Plans free &rarr;</a>
-      <a href="app.html" class="btn btn-ghost">Get the Hub &rarr;</a>
+      <a href="app.html" class="btn btn-primary">Start at the Hub &rarr;</a>
+      <a href="https://plans.rhobear.ai" class="btn btn-ghost">Jump to market with Plans &rarr;</a>
     </div>
   </section>
 
@@ -256,21 +309,21 @@
 <footer class="wrap foot">
   <div class="cols">
     <div>
-      <a class="lock" href="index.html"><img src="../../assets/rhobear-logo.png?v=1782920000" alt=""><span>RHOBEAR</span></a>
-      <p class="blurb">Calm tools that do real work. Own your data, bring your own AI, never get locked in.</p>
+      <a class="lock" href="index.html"><img src="../../assets/rhobear-logo.png?v=1782940000" alt=""><span>RHOBEAR</span></a>
+      <p class="blurb">One workflow that hands off to itself. Build it, ship it, sell it — own your data, bring your own AI, run it for the price of a domain.</p>
     </div>
     <div>
-      <h4>The family</h4>
-      <a href="app.html">RHOBEAR Hub</a>
-      <a href="https://plans.rhobear.ai">RHOBEAR Plans</a>
-      <a href="https://github.com/deariencampbell1-sys/rhobear-designs">RHOBEAR Designs</a>
-      <a href="https://reviews.rhobear.ai">RHOBEAR Reviews</a>
-      <a href="https://github.com/deariencampbell1-sys/rhobear-verifier">RHOBEAR Verifies</a>
+      <h4>The workflow</h4>
+      <a href="app.html">RHOBEAR Hub — build</a>
+      <a href="https://github.com/deariencampbell1-sys/rhobear-designs">RHOBEAR Designs — shape</a>
+      <a href="https://github.com/deariencampbell1-sys/sunsponge">SunSponge Captures — capture</a>
+      <a href="https://reviews.rhobear.ai">RHOBEAR Reviews — keep clean</a>
+      <span class="sub">includes Verifies — dead-path maps</span>
     </div>
     <div>
-      <h4>More</h4>
-      <a href="https://github.com/deariencampbell1-sys/sunsponge">SunSponge</a>
-      <a href="https://sales.rhobear.ai">Sales by Saguaro</a>
+      <h4>Go to market</h4>
+      <a href="https://plans.rhobear.ai">RHOBEAR Plans — booking & billing</a>
+      <a href="https://sales.rhobear.ai">Sales by Saguaro — the chatbot</a>
       <a href="story.html">The story</a>
       <a href="built-with.html">Built with</a>
     </div>
@@ -278,111 +331,50 @@
 </footer>
 
 <script>
-/* ============================================================
-   The living sky — dependency-free 3D starfield + constellation.
-   Calm drift (not a warp), teal stars, a single gold north star,
-   faint lines between near stars, gentle mouse parallax. Respects
-   reduced-motion + pauses when the tab is hidden.
-   ============================================================ */
+/* Living sky — dependency-free 3D starfield + constellation. Calm drift, teal
+   stars, a gold north star, faint links, gentle parallax. Reduced-motion aware. */
 (function(){
-  var c = document.getElementById('sky'); if(!c) return;
-  var ctx = c.getContext('2d', { alpha:true });
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-  var W=0,H=0,DPR=Math.min(window.devicePixelRatio||1, 2);
-  var stars=[], near=[], mx=0, my=0, tx=0, ty=0, t=0;
-
-  function resize(){
-    W=c.clientWidth; H=c.clientHeight;
-    c.width=Math.floor(W*DPR); c.height=Math.floor(H*DPR);
-    ctx.setTransform(DPR,0,0,DPR,0,0);
-    build();
-  }
+  var c=document.getElementById('sky'); if(!c) return;
+  var ctx=c.getContext('2d',{alpha:true});
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var W=0,H=0,DPR=Math.min(window.devicePixelRatio||1,2);
+  var stars=[],near=[],mx=0,my=0,tx=0,ty=0,t=0,raf=0;
+  function resize(){ W=c.clientWidth;H=c.clientHeight;c.width=Math.floor(W*DPR);c.height=Math.floor(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);build(); }
+  function newStar(sp){ return {x:(Math.random()*2-1),y:(Math.random()*2-1),z:sp?Math.random():1,pz:0}; }
   function build(){
-    // depth starfield — count scales with area, capped for perf
-    var n = Math.min(360, Math.floor(W*H/5200));
-    stars=[];
-    for(var i=0;i<n;i++) stars.push(newStar(true));
-    // constellation layer — fewer, brighter, drift slowly, get linked
-    var m = Math.min(34, Math.floor(W/46));
-    near=[];
-    for(var j=0;j<m;j++) near.push({
-      x:Math.random()*W, y:Math.random()*H,
-      vx:(Math.random()-0.5)*0.10, vy:(Math.random()-0.5)*0.10,
-      r:Math.random()*1.4+0.8, gold:false
-    });
-    if(near.length){ near[0].gold=true; near[0].r=2.6; } // the north star
-  }
-  function newStar(spread){
-    return { x:(Math.random()*2-1), y:(Math.random()*2-1),
-             z:spread?Math.random():1, pz:0 };
+    var n=Math.min(360,Math.floor(W*H/5200)); stars=[]; for(var i=0;i<n;i++) stars.push(newStar(true));
+    var m=Math.min(34,Math.floor(W/46)); near=[];
+    for(var j=0;j<m;j++) near.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-0.5)*0.10,vy:(Math.random()-0.5)*0.10,r:Math.random()*1.4+0.8,gold:false});
+    if(near.length){ near[0].gold=true; near[0].r=2.6; }
   }
   function step(){
-    t+=0.016;
-    // ease parallax toward pointer
-    tx += (mx-tx)*0.04; ty += (my-ty)*0.04;
-    ctx.clearRect(0,0,W,H);
-    var cxp=W/2+tx*22, cyp=H/2+ty*22;
-
-    // --- depth starfield ---
-    var speed = reduce?0:0.0016;
-    for(var i=0;i<stars.length;i++){
-      var s=stars[i];
-      s.pz=s.z;
-      s.z-=speed; if(s.z<=0.02){ stars[i]=newStar(false); continue; }
-      var k=128/s.z, k2=128/s.pz;
-      var sx=cxp + s.x*k, sy=cyp + s.y*k;
-      var px=cxp + s.x*k2, py=cyp + s.y*k2;
+    t+=0.016; tx+=(mx-tx)*0.04; ty+=(my-ty)*0.04; ctx.clearRect(0,0,W,H);
+    var cxp=W/2+tx*22, cyp=H/2+ty*22, speed=reduce?0:0.0016;
+    for(var i=0;i<stars.length;i++){ var s=stars[i]; s.pz=s.z; s.z-=speed; if(s.z<=0.02){stars[i]=newStar(false);continue;}
+      var k=128/s.z,k2=128/s.pz,sx=cxp+s.x*k,sy=cyp+s.y*k,px=cxp+s.x*k2,py=cyp+s.y*k2;
       if(sx<0||sx>W||sy<0||sy>H) continue;
-      var b=Math.min(1,(1-s.z)*1.1);
-      var rad=Math.max(0.4,(1-s.z)*1.7);
-      // teal-white star, faint trail for motion
-      ctx.strokeStyle='rgba(125,255,213,'+(b*0.5)+')';
-      ctx.lineWidth=rad; ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(sx,sy); ctx.stroke();
-      ctx.fillStyle='rgba(225,255,247,'+b+')';
-      ctx.beginPath(); ctx.arc(sx,sy,rad*0.7,0,6.2832); ctx.fill();
-    }
-
-    // --- constellation layer (lines between near nodes) ---
-    for(var a=0;a<near.length;a++){
-      var p=near[a];
-      if(!reduce){ p.x+=p.vx; p.y+=p.vy;
-        if(p.x<0||p.x>W) p.vx*=-1; if(p.y<0||p.y>H) p.vy*=-1; }
-      var ox=p.x+tx*10, oy=p.y+ty*10;
-      for(var b2=a+1;b2<near.length;b2++){
-        var q=near[b2]; var dx=p.x-q.x, dy=p.y-q.y; var d=dx*dx+dy*dy;
-        var lim=148*148;
-        if(d<lim){
-          var al=(1-d/lim)*0.16;
-          ctx.strokeStyle='rgba(125,255,213,'+al+')'; ctx.lineWidth=1;
-          ctx.beginPath(); ctx.moveTo(ox,oy); ctx.lineTo(q.x+tx*10,q.y+ty*10); ctx.stroke();
-        }
-      }
-      // node
+      var b=Math.min(1,(1-s.z)*1.1),rad=Math.max(0.4,(1-s.z)*1.7);
+      ctx.strokeStyle='rgba(125,255,213,'+(b*0.5)+')'; ctx.lineWidth=rad; ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(sx,sy); ctx.stroke();
+      ctx.fillStyle='rgba(225,255,247,'+b+')'; ctx.beginPath(); ctx.arc(sx,sy,rad*0.7,0,6.2832); ctx.fill(); }
+    for(var a=0;a<near.length;a++){ var p=near[a];
+      if(!reduce){ p.x+=p.vx;p.y+=p.vy; if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1; }
+      var ox=p.x+tx*10,oy=p.y+ty*10;
+      for(var b2=a+1;b2<near.length;b2++){ var q=near[b2],dx=p.x-q.x,dy=p.y-q.y,d=dx*dx+dy*dy,lim=148*148;
+        if(d<lim){ var al=(1-d/lim)*0.16; ctx.strokeStyle='rgba(125,255,213,'+al+')'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(ox,oy); ctx.lineTo(q.x+tx*10,q.y+ty*10); ctx.stroke(); } }
       var pulse=0.6+0.4*Math.sin(t*1.3+a);
-      if(p.gold){
-        var g=ctx.createRadialGradient(ox,oy,0,ox,oy,18);
-        g.addColorStop(0,'rgba(255,215,106,'+(0.9*pulse)+')'); g.addColorStop(1,'rgba(255,215,106,0)');
-        ctx.fillStyle=g; ctx.beginPath(); ctx.arc(ox,oy,18,0,6.2832); ctx.fill();
-        ctx.fillStyle='rgba(255,235,170,1)';
-      } else {
-        ctx.fillStyle='rgba(125,255,213,'+(0.55+0.35*pulse)+')';
-      }
-      ctx.beginPath(); ctx.arc(ox,oy,p.r,0,6.2832); ctx.fill();
-    }
+      if(p.gold){ var g=ctx.createRadialGradient(ox,oy,0,ox,oy,18); g.addColorStop(0,'rgba(255,215,106,'+(0.9*pulse)+')'); g.addColorStop(1,'rgba(255,215,106,0)'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(ox,oy,18,0,6.2832); ctx.fill(); ctx.fillStyle='rgba(255,235,170,1)'; }
+      else ctx.fillStyle='rgba(125,255,213,'+(0.55+0.35*pulse)+')';
+      ctx.beginPath(); ctx.arc(ox,oy,p.r,0,6.2832); ctx.fill(); }
     raf=requestAnimationFrame(step);
   }
-
-  var raf=0;
   function start(){ if(!raf) raf=requestAnimationFrame(step); }
   function stop(){ cancelAnimationFrame(raf); raf=0; }
-  window.addEventListener('resize', resize, {passive:true});
-  window.addEventListener('pointermove', function(e){
-    mx=(e.clientX/window.innerWidth)*2-1; my=(e.clientY/window.innerHeight)*2-1;
-  }, {passive:true});
-  document.addEventListener('visibilitychange', function(){ document.hidden?stop():start(); });
+  window.addEventListener('resize',resize,{passive:true});
+  window.addEventListener('pointermove',function(e){ mx=(e.clientX/window.innerWidth)*2-1; my=(e.clientY/window.innerHeight)*2-1; },{passive:true});
+  document.addEventListener('visibilitychange',function(){ document.hidden?stop():start(); });
   resize(); start();
 })();
 </script>
-<script src="shell.js?v=1782920000" defer></script>
+<script src="shell.js?v=1782940000" defer></script>
 </body>
 </html>
