@@ -36,10 +36,12 @@
 
 
 /* =====================================================================
-   ★ Constellation starfield — the hub's exact sky, seated behind the page.
-   Self-contained WebGL (no dependencies, no CDN). Injects its own canvas,
-   drifts always, breathes an occasional ambient pulse, pauses when hidden,
-   and calms down for prefers-reduced-motion.
+   ★ Pixel-dust — the product's current sky, seated behind the page.
+   Jet-black with fine pixel specks: slow organic drift, whole-field
+   rotation, and a mouse ripple. No suns, no planets, no glow.
+   Vanilla port of rhobear-plans PixelDust (itself from the app hub's
+   constellation.jsx). Self-contained 2D canvas, no deps. Pauses when
+   hidden; renders a still frame for prefers-reduced-motion.
    ===================================================================== */
 (function () {
   if (document.getElementById('rho-stars')) return;
@@ -52,96 +54,131 @@
   };
   if (!document.body) { document.addEventListener('DOMContentLoaded', mount); } else { mount(); }
 
+  var TAU = Math.PI * 2;
+  var DENSITY_DIV = 6000;   // ~345 specks on 1920×1080
+  var FPS_CAP = 48, DPR_CAP = 1.5;
+  var FIELD_OMEGA = 0.006;  // rad/s — whole-field slow rotation
+  var RIPPLE = 130, RIPPLE2 = RIPPLE * RIPPLE;
+
+  function rand(a, b) { return a + Math.random() * (b - a); }
+
+  function makeParticles(W, H) {
+    var count = Math.max(60, Math.min(560, Math.round((W * H) / DENSITY_DIV)));
+    var out = [];
+    for (var i = 0; i < count; i++) {
+      var colored = Math.random() < 0.08;   // ~8% faintly tinted, rest near-white
+      var ax = Math.random() * W, ay = Math.random() * H;
+      out.push({
+        ax: ax, ay: ay, x: ax, y: ay, vx: 0, vy: 0,
+        phx: Math.random() * TAU, phy: Math.random() * TAU,
+        fx: rand(0.04, 0.13), fy: rand(0.03, 0.11),
+        amx: rand(18, 44), amy: rand(14, 36),
+        wx: rand(-1.6, 1.6), wy: rand(-1.3, 1.3),
+        r: rand(0.35, 1.0), baseA: rand(0.32, 0.78),
+        tw: Math.random() * TAU, twv: rand(0.5, 1.1),
+        colored: colored, hue: Math.random() * 360,
+        hueDrift: colored ? rand(-1.5, 1.5) : 0,
+        sat: colored ? rand(14, 30) : 0, lum: rand(86, 96)
+      });
+    }
+    return out;
+  }
+
   function start() {
-    var gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false, antialias: false })
-          || canvas.getContext('experimental-webgl');
-    if (!gl) { canvas.style.display = 'none'; return; }
+    var ctx = canvas.getContext('2d');
+    if (!ctx) { canvas.style.display = 'none'; return; }
+    var rmQuery = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+    function reduceMotion() { return !!(rmQuery && rmQuery.matches); }
 
-    var PULSE_RGB = { green:[0.30,1.00,0.62], amber:[1.00,0.66,0.18], purple:[0.70,0.47,1.00], neutral:[0.80,0.88,1.00] };
-    var VERT = 'attribute vec2 a_pos;void main(){gl_Position=vec4(a_pos,0.0,1.0);}';
-    var FRAG = [
-      'precision highp float;','uniform vec2 u_res;','uniform float u_time;','uniform float u_bright;',
-      'uniform float u_pulseEl[6];','uniform vec3 u_pulseC[6];',
-      'float hash21(vec2 p){p=fract(p*vec2(123.34,345.45));p+=dot(p,p+34.345);return fract(p.x*p.y);}',
-      'vec3 starLayer(vec2 uv,float scale,float bright,float drift,float t){',
-      ' vec2 g=uv*scale+vec2(drift,drift*0.4);vec2 id=floor(g);vec2 gv=fract(g)-0.5;vec3 acc=vec3(0.0);',
-      ' for(int y=-1;y<=1;y++){for(int x=-1;x<=1;x++){vec2 off=vec2(float(x),float(y));vec2 cid=id+off;',
-      '  float h=hash21(cid);float on=step(0.55,h);vec2 sp=off+vec2(hash21(cid+1.7),hash21(cid+4.3))-0.5-gv;',
-      '  float r=length(sp);float size=0.010+h*0.030;float tw=0.55+0.45*sin(t*(0.7+h*1.3)+h*28.0);',
-      '  float core=smoothstep(size,0.0,r);float halo=exp(-r*r*90.0)*0.55;float glow=exp(-r*r*16.0)*0.05;',
-      '  float s=(core+halo+glow)*tw*on;float temp=hash21(cid+9.1);',
-      '  vec3 col=mix(vec3(0.62,0.78,1.0),vec3(1.0,0.92,0.74),step(0.82,temp));',
-      '  col=mix(col,vec3(0.78,0.62,1.0),step(0.93,temp));acc+=col*s*bright;}}return acc;}',
-      'void main(){vec2 uv=gl_FragCoord.xy/u_res.xy;float aspect=u_res.x/u_res.y;',
-      ' vec2 p=vec2(uv.x*aspect,uv.y);float py=uv.y;vec3 stars=vec3(0.0);',
-      ' stars+=starLayer(p,26.0,0.55,u_time*0.10,u_time);',
-      ' stars+=starLayer(p,15.0,0.85,u_time*0.18,u_time);',
-      ' stars+=starLayer(p,8.0,1.15,u_time*0.30,u_time);',
-      ' vec3 pulseGlow=vec3(0.0);',
-      ' for(int i=0;i<6;i++){float el=u_pulseEl[i];float active=step(0.0,el);float pr=el/1.75;',
-      '  float eased=1.0-pow(1.0-clamp(pr,0.0,1.0),2.0);float front=1.0-eased*1.25;float d=abs(py-front);',
-      '  float band=smoothstep(0.18,0.0,d);float fade=1.0-smoothstep(0.85,1.25,pr);',
-      '  pulseGlow+=u_pulseC[i]*band*fade*active;}',
-      ' vec3 col=stars+stars*pulseGlow*2.2+pulseGlow*0.05;col*=u_bright;',
-      ' col=col/(col+vec3(0.55));float lum=clamp(max(max(col.r,col.g),col.b),0.0,1.0);',
-      ' gl_FragColor=vec4(col,lum*0.92);}'
-    ].join('\n');
-
-    function comp(t, s) { var sh = gl.createShader(t); gl.shaderSource(sh, s); gl.compileShader(sh); return sh; }
-    var prog = gl.createProgram();
-    gl.attachShader(prog, comp(gl.VERTEX_SHADER, VERT));
-    gl.attachShader(prog, comp(gl.FRAGMENT_SHADER, FRAG));
-    gl.linkProgram(prog); gl.useProgram(prog);
-    var buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
-    var aPos = gl.getAttribLocation(prog, 'a_pos'); gl.enableVertexAttribArray(aPos);
-    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
-    var uRes = gl.getUniformLocation(prog, 'u_res'), uTime = gl.getUniformLocation(prog, 'u_time'),
-        uBright = gl.getUniformLocation(prog, 'u_bright'),
-        uEl = gl.getUniformLocation(prog, 'u_pulseEl[0]'), uC = gl.getUniformLocation(prog, 'u_pulseC[0]');
-
+    var W = 0, H = 0, dpr = 1, particles = [];
     function resize() {
-      var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      canvas.width = Math.floor(window.innerWidth * dpr);
-      canvas.height = Math.floor(window.innerHeight * dpr);
-      gl.viewport(0, 0, canvas.width, canvas.height);
+      dpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
+      W = window.innerWidth; H = window.innerHeight;
+      canvas.width = Math.max(1, Math.floor(W * dpr));
+      canvas.height = Math.max(1, Math.floor(H * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      particles = makeParticles(W, H);
+      if (reduceMotion()) drawStill();
     }
-    resize(); window.addEventListener('resize', resize);
+    window.addEventListener('resize', resize);
 
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var pulses = [], LIFE = 2300;
-    function fireP(n) { pulses.push({ t0: performance.now(), rgb: PULSE_RGB[n] || PULSE_RGB.neutral }); while (pulses.length > 6) pulses.shift(); }
-    var el = new Float32Array(6), cb = new Float32Array(18), startT = performance.now(), running = true;
+    var mouse = { x: -9999, y: -9999, active: false };
+    function onMove(e) { mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true; }
+    function onLeave() { mouse.active = false; mouse.x = mouse.y = -9999; }
+    window.addEventListener('pointermove', onMove, { passive: true });
+    window.addEventListener('pointerdown', onMove, { passive: true });
+    document.addEventListener('mouseleave', onLeave);
 
-    function frame() {
-      if (!running) return;
-      requestAnimationFrame(frame);
-      var now = performance.now();
-      for (var i = pulses.length - 1; i >= 0; i--) if (now - pulses[i].t0 > LIFE) pulses.splice(i, 1);
-      for (var j = 0; j < 6; j++) {
-        if (j < pulses.length) { el[j] = (now - pulses[j].t0) / 1000; cb[j*3] = pulses[j].rgb[0]; cb[j*3+1] = pulses[j].rgb[1]; cb[j*3+2] = pulses[j].rgb[2]; }
-        else { el[j] = -1; cb[j*3] = cb[j*3+1] = cb[j*3+2] = 0; }
+    var origin = performance.now(), lastT = origin, last = 0, paused = false, raf = 0;
+
+    function step(now) {
+      var dt = Math.min(0.05, (now - lastT) / 1000) || 0.016;
+      lastT = now;
+      var t = (now - origin) / 1000;
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.clearRect(0, 0, W, H);
+      var cx = W / 2, cy = H / 2;
+      var cosw = Math.cos(FIELD_OMEGA * dt), sinw = Math.sin(FIELD_OMEGA * dt);
+      var M = 40;
+      for (var i = 0; i < particles.length; i++) {
+        var st = particles[i];
+        st.ax += st.wx * dt; st.ay += st.wy * dt;
+        var ox = st.ax - cx, oy = st.ay - cy;
+        st.ax = cx + ox * cosw - oy * sinw;
+        st.ay = cy + ox * sinw + oy * cosw;
+        if (st.ax < -M) st.ax += W + 2 * M; else if (st.ax > W + M) st.ax -= W + 2 * M;
+        if (st.ay < -M) st.ay += H + 2 * M; else if (st.ay > H + M) st.ay -= H + 2 * M;
+        var homeX = st.ax + Math.sin(t * TAU * st.fx + st.phx) * st.amx;
+        var homeY = st.ay + Math.cos(t * TAU * st.fy + st.phy) * st.amy;
+        var wake = 0;
+        if (mouse.active) {
+          var dx = st.x - mouse.x, dy = st.y - mouse.y, d2 = dx * dx + dy * dy;
+          if (d2 < RIPPLE2 && d2 > 0.01) {
+            var d = Math.sqrt(d2), force = 1 - d / RIPPLE, f = force * force * 2.0;
+            st.vx += (dx / d) * f; st.vy += (dy / d) * f; wake = force;
+          }
+        }
+        st.vx += (homeX - st.x) * 0.012; st.vy += (homeY - st.y) * 0.012;
+        st.vx *= 0.9; st.vy *= 0.9; st.x += st.vx; st.y += st.vy;
+        st.tw += st.twv * dt;
+        var twinkle = 0.72 + 0.28 * Math.sin(st.tw);
+        if (st.colored) { st.hue += st.hueDrift * dt; if (st.hue < 0) st.hue += 360; else if (st.hue >= 360) st.hue -= 360; }
+        var a = st.baseA * twinkle * (1 + wake * 1.25); if (a > 1) a = 1;
+        var rad = st.r * (1 + wake * 0.4);
+        ctx.fillStyle = 'hsla(' + st.hue.toFixed(0) + ',' + st.sat.toFixed(0) + '%,' + st.lum.toFixed(0) + '%,' + a.toFixed(3) + ')';
+        ctx.beginPath(); ctx.arc(st.x, st.y, rad, 0, TAU); ctx.fill();
       }
-      gl.uniform2f(uRes, canvas.width, canvas.height);
-      gl.uniform1f(uTime, (now - startT) / 1000);
-      gl.uniform1f(uBright, 1.0);
-      gl.uniform1fv(uEl, el); gl.uniform3fv(uC, cb);
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
     }
-    requestAnimationFrame(frame);
 
-    // an occasional quiet breath of life (not on reduced-motion)
-    if (!reduce) {
-      fireP('neutral');
-      setInterval(function () {
-        if (!document.hidden) fireP(Math.random() < 0.5 ? 'neutral' : (Math.random() < 0.5 ? 'green' : 'purple'));
-      }, 14000);
+    function drawStill() {
+      var now = performance.now(), t = (now - origin) / 1000;
+      for (var i = 0; i < particles.length; i++) {
+        var st = particles[i];
+        st.x = st.ax + Math.sin(t * TAU * st.fx + st.phx) * st.amx;
+        st.y = st.ay + Math.cos(t * TAU * st.fy + st.phy) * st.amy;
+        st.vx = st.vy = 0;
+      }
+      step(now);
     }
-    // pause render when the tab is hidden
+
+    function frame(now) {
+      raf = requestAnimationFrame(frame);
+      if (paused || reduceMotion()) return;
+      if (now - last < 1000 / FPS_CAP) return;
+      last = now; lastT = now - 16; step(now);
+    }
+
+    resize();
+    if (reduceMotion()) drawStill();
+    else raf = requestAnimationFrame(frame);
+
     document.addEventListener('visibilitychange', function () {
-      if (document.hidden) { running = false; }
-      else if (!running) { running = true; requestAnimationFrame(frame); }
+      paused = document.hidden;
+      if (!paused) { last = 0; lastT = performance.now(); }
     });
+    if (rmQuery && rmQuery.addEventListener) {
+      rmQuery.addEventListener('change', function () { if (reduceMotion()) drawStill(); });
+    }
   }
 })();
 
