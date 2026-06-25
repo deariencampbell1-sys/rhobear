@@ -3,6 +3,21 @@
    Top nav · prev/next · footer · per-page blocks
    ========================================================================= */
 
+/* ===== MARKETING-SITE TOKEN OVERRIDE — scoped to this shell only =====
+   Loads after colors_and_type.css (same :root specificity → this wins), so it
+   flips every legacy-amber var to the deep-space teal/gold palette site-wide
+   in one place. A page's own inline <style> still wins over this (intended:
+   per-page accents keep working). Does NOT touch the shared root file, so the
+   `app` UI kit is unaffected. — rhobear-app design Iron Man, 2026-06-24 */
+:root{
+  --c-amber:      #7dffd5;            /* was #f59e2c — now teal */
+  --c-amber-deep: #ffd76a;            /* was #d97a1a — now gold */
+  --c-amber-soft: rgba(125,255,213,0.14);
+  --c-amber-tint: rgba(125,255,213,0.07);
+  --teal:#7dffd5; --teal-dim:#48d8b0; --gold:#ffd76a;
+  --void:#04060c; --void-2:#070b16;
+}
+
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 body {

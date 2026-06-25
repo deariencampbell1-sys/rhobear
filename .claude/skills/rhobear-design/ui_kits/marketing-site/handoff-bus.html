@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RHOBEAR — Handoff bus</title>
+  <title>RHOBEAR · Handoff bus</title>
   <link rel="stylesheet" href="../../colors_and_type.css">
   <link rel="stylesheet" href="shell.css?v=1782950001">
   <link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782900000">
@@ -27,7 +27,7 @@
   <div style="text-align:center; max-width:780px; margin:0 auto;">
   <div class="eyebrow-row" style="display:inline-flex;">SECTION · SUBSTRATE · 12 / 20</div>
   <h1 class="h1-page">Crew hands work off. <em>You don't shuttle messages.</em></h1>
-  <p class="lead">The handoff bus is the message floor where agents pass work to each other — envelopes, results, leave-behinds, and aggregated lane outcomes — without routing through you.</p>
+  <p class="lead">The handoff bus is the message floor where agents pass work to each other. Envelopes, results, leave-behinds, and aggregated lane outcomes move without routing through you.</p>
   </div>
 
   <div style="max-width:880px; margin:36px auto 0;">
@@ -35,20 +35,20 @@
       <div class="sub-main">
         <div class="pair-eyebrow">HANDOFF BUS</div>
         <div class="pair-label">HOOK</div>
-        <p class="pair-hook">Your agents pass work to each other directly — no babysitting copy-paste between tabs.</p>
+        <p class="pair-hook">Your agents pass work to each other directly. No babysitting copy-paste between tabs.</p>
         <div class="pair-label" style="margin-top:14px;">TECH</div>
-        <p class="pair-tech">Typed envelopes in local SQLite (WAL). Recipients claim atomically with <code>BEGIN IMMEDIATE</code> so two workers can't grab the same job; TTL expires inline during claim — no background daemon to die and leave zombie work.</p>
+        <p class="pair-tech">Typed envelopes in local SQLite (WAL). Recipients claim atomically with <code>BEGIN IMMEDIATE</code> so two workers can't grab the same job; TTL expires inline during claim. No background daemon to die and leave zombie work.</p>
         <details class="dig">
           <summary>dig in</summary>
           <div class="dig-body">
             <pre class="code-artifact"><span class="tok">BEGIN IMMEDIATE</span>;   -- one recipient wins the claim; the other backs off</pre>
             <div class="dig-block">
               <div class="dig-tag tag-limit">THE HONEST PART</div>
-              <p>The bus is local to one box — agents share a single SQLite workspace, not a network. You can run that box anywhere: your laptop, or a VPS you reach over SSH or Tailscale (we smoke-tested VPS-from-day-one). What it's NOT yet is a mesh of agents coordinating across separate machines — that's roadmap, not shipped. We'd rather nail one box bulletproof than ship a distributed bus that silently drops messages.</p>
+              <p>The bus is local to one box. Agents share a single SQLite workspace, not a network. You can run that box anywhere: your laptop, or a VPS you reach over SSH or Tailscale (we smoke-tested VPS-from-day-one). What it's NOT yet is a mesh of agents coordinating across separate machines. That's roadmap, not shipped. We'd rather nail one box bulletproof than ship a distributed bus that silently drops messages.</p>
             </div>
             <div class="dig-block">
               <div class="dig-tag tag-diy">WHY NOT BUILD IT YOURSELF</div>
-              <p>You can. You'll have the happy path running in a weekend. Then two agents claim the same ticket because you skipped the atomic lock, your retry daemon dies overnight and leaves work in limbo, and month two is you rebuilding a message bus instead of your product. We already paid that tax — this is the part where DIY buys you nothing but lost time.</p>
+              <p>You can. You'll have the happy path running in a weekend. Then two agents claim the same ticket because you skipped the atomic lock, your retry daemon dies overnight and leaves work in limbo, and month two is you rebuilding a message bus instead of your product. We already paid that tax. This is the part where DIY buys you nothing but lost time.</p>
             </div>
           </div>
         </details>
