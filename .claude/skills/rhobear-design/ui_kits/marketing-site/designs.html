@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RHOBEAR · Designs</title>
+  <meta name="description" content="RHOBEAR Designs is the open-source infinite canvas where you finish the last 10% by hand: drag it, swap a font, fix one color, with no model round-trip. It touches real JS, CSS, and HTML with hidden embeds without breaking them. MIT. Stop 2 of the RHOBEAR ecosystem: shape it.">
+  <link rel="stylesheet" href="../../colors_and_type.css">
+  <link rel="stylesheet" href="shell.css?v=1782960000">
+  <link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782900000">
+<style id="rho-tweaks-style">
+/* ===== DESIGNS PAGE LOCK-IN — red accent (its relay color) ===== */
+:root{
+  --c-amber:#e94560 !important;       --c-amber-deep:#ff6b81 !important;
+  --c-amber-soft:rgba(233,69,96,0.16) !important;  --c-amber-tint:rgba(233,69,96,0.10) !important;
+}
+.btn-amber{ color:#fff !important; box-shadow:0 0 0 1px rgba(233,69,96,0.40),0 10px 26px -10px rgba(233,69,96,0.55) !important; }
+.btn-amber:hover{ color:#fff !important; background:var(--c-amber-deep) !important; }
+.eyebrow-row::before{ background:var(--c-amber) !important; }
+/* hand-to-hand relay strip (mirrors the front-page connective wording) */
+.relay-next{ display:flex; flex-wrap:wrap; align-items:center; gap:9px 10px; margin-top:22px; font-family:var(--font-display); font-size:.96rem; }
+.relay-next .now{ color:var(--c-amber-deep); border:1px solid rgba(233,69,96,0.5); border-radius:999px; padding:6px 13px; background:rgba(233,69,96,0.12); }
+.relay-next a{ color:var(--c-ink-2); text-decoration:none; border:1px solid var(--c-line); border-radius:999px; padding:6px 13px; transition:color .18s,border-color .18s,background .18s; }
+.relay-next a:hover{ color:var(--c-amber-deep); border-color:rgba(233,69,96,0.5); background:rgba(233,69,96,0.07); }
+.relay-next .arw{ color:var(--c-ink-3); }
+</style>
+</head>
+<body>
+
+  <nav class="top-nav" aria-label="Primary">
+    <div class="top-nav-inner">
+      <a class="brand-lockup" href="index.html">
+        <img src="../../assets/rhobear-logo.png?v=1782900000" alt="" class="pixelated">
+        <span>RHOBEAR</span>
+      </a>
+      <div class="nav-tabs"><a href="index.html" class="nav-tab ">HOME</a><a href="crew.html" class="nav-tab ">CREW</a><a href="hub.html" class="nav-tab ">HUB</a><a href="workbench.html" class="nav-tab ">WORKBENCH</a><a href="try.html" class="nav-tab ">TRY THE DEMO</a><a href="learn.html" class="nav-tab ">LEARN</a><div class="nav-dropdown"><a href="substrate.html" class="nav-tab " aria-haspopup="true">SUBSTRATE ▾</a><div class="nav-dropdown-panel"><a href="goal-autoloop.html" class="">Goal Autoloop</a><a href="judgment-loop.html" class="">Judgment Loop</a><a href="substrate.html" class="">Substrate Overview</a><a href="compass.html" class="">Compass</a><a href="worker-sessions.html" class="">Worker Sessions</a><a href="handoff-bus.html" class="">Handoff Bus</a><a href="safety-registry.html" class="">Safety Registry</a><a href="hub-contract.html" class="">Hub Contract</a><a href="openclaw.html" class="">OpenClaw</a></div></div><a href="built-with.html" class="nav-tab ">BUILT WITH</a></div>
+      <span class="nav-spacer"></span>
+      <a href="https://github.com/deariencampbell1-sys/rhobear-designs" class="btn-amber nav-cta">Read the source →</a>
+    </div>
+  </nav>
+<main>
+
+<section class="wrap-md" style="padding-top:48px;">
+  <div class="eyebrow-row">PRODUCT · DESIGNS · STOP 2 · SHAPE IT</div>
+  <h1 class="h1-page">Finish the last ten percent <em>by hand.</em></h1>
+  <p class="lead">You build ninety percent with your crew, same as always. The last ten is where the tokens bleed out, nudging one pixel at a time. Designs opens the near-done HTML on an infinite canvas so you finish it directly: drag it where you want it, swap a font, fix the one color that's off. No round-trip to the model.</p>
+  <div class="cta-row">
+    <a href="https://github.com/deariencampbell1-sys/rhobear-designs" class="btn-amber">Read the source →</a>
+    <a href="index.html#workflow" class="btn-ghost">See the whole family →</a>
+  </div>
+  <div class="quant-line">finish the last 10% &middot; infinite canvas &middot; won't break your embeds &middot; local stub or your key &middot; MIT</div>
+</section>
+
+<!-- WHERE THE TOKENS GO -->
+<section class="wrap">
+  <div class="eyebrow-row">WHY THE LAST TEN HURTS</div>
+  <h2 style="font-size:clamp(1.8rem,3vw,2.5rem); margin:0 0 14px;">The build is cheap. The <em>fiddling</em> is where it bleeds.</h2>
+  <p class="lead" style="max-width:64ch;">A crew gets you a working site fast. Then you spend a fortune in tokens asking a model to move a button four pixels, undo it, try a warmer red. Designs takes that part off the model and puts it back in your hands, where a nudge is just a nudge.</p>
+  <div class="terminal" style="max-width:880px;"><span class="dim"># the old way · one nudge, one round-trip</span>
+<span class="role">you &gt;</span> move the CTA up a little, warmer red, tighter gap
+<span class="role">model &gt;</span> regenerating section &middot; 3.2k tokens &middot; <span class="ok">guesses</span>
+<span class="dim"># designs · you just move it</span>
+<span class="role">canvas &gt;</span> drag &middot; recolor &middot; snap &middot; <span class="ok">0 tokens</span></div>
+</section>
+
+<!-- WHAT IT TOUCHES -->
+<section class="wrap" style="padding-top:8px;">
+  <div class="eyebrow-row">IT EDITS THE REAL FILE</div>
+  <h2 style="font-size:clamp(1.7rem,2.8vw,2.3rem); margin:0 0 8px;">Real code in, real code out.</h2>
+  <p class="lead" style="max-width:66ch;">Designs is smart enough to touch real JS, CSS, and HTML with hidden embeds, and leave what the agent already got right alone. You shape the page, and the file stays a file you can ship.</p>
+  <div class="card-grid cols-2" style="margin-top:24px; row-gap:26px;">
+    <div class="card-paper stitched feature-card">
+      <div class="num">A · INFINITE CANVAS</div>
+      <h3>The whole page, room to work.</h3>
+      <p>Open the near-done HTML and pan across it like a drafting table. One thing reads red at a time: the element your hand is on. Everything else rests.</p>
+    </div>
+    <div class="card-paper stitched feature-card">
+      <div class="num">B · WON'T BREAK YOUR EMBEDS</div>
+      <h3>It knows what not to touch.</h3>
+      <p>Hidden embeds, scripts, the markup the agent got right. Designs edits around them so a font swap doesn't take your analytics or your forms down with it.</p>
+    </div>
+    <div class="card-paper stitched feature-card">
+      <div class="num">C · LOCAL STUB OR YOUR KEY</div>
+      <h3>It works the moment you download it.</h3>
+      <p>Ships with a local-LLM stub that runs on day one. Want more reach? Pipe in your own key through OpenRouter. Your choice, your spend.</p>
+    </div>
+    <div class="card-paper stitched feature-card">
+      <div class="num">D · MIT, FOREVER</div>
+      <h3>The file stays yours.</h3>
+      <p>MIT. Read the source, fork it, ship what you make. No seat tax, no lock-in, nothing that expires when you stop paying.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RELAY HANDOFF -->
+<section class="band-dark install-band">
+  <div class="wrap" style="position:relative;">
+    <div style="max-width:780px;">
+      <div class="eyebrow-row">WHERE DESIGNS SITS</div>
+      <h2 style="font-size:clamp(1.8rem,3vw,2.5rem); margin:0 0 18px;">Built work comes in. <em>A finished site goes out.</em></h2>
+      <p style="color:var(--c-dark-ink-2); font-size:1.05rem; line-height:1.65;">Got something built? Hand it to Designs to make it yours. You shape the last ten by hand, and when it looks the way you want, you rest the finished site in SunSponge. One hand passes to the next.</p>
+      <div class="relay-next">
+        <a href="app.html"><span class="arw">←</span> The Hub</a>
+        <span class="now">Designs</span>
+        <a href="sunsponge.html">SunSponge <span class="arw">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<div class="prevnext"><div class="prevnext-inner"><a href="app.html" class="pn-link "><span class="pn-mini">← Previous</span><span class="pn-name">The Hub</span></a><a href="sunsponge.html" class="pn-link "><span class="pn-mini">Next →</span><span class="pn-name">SunSponge Captures</span></a></div></div>
+<footer class="site-footer"><div class="site-footer-inner"><div class="footer-row"><div class="footer-copy">© 2026 Sun Sponge LLC · <a href="https://github.com/rhobear-ai">GitHub</a> · <a href="https://github.com/deariencampbell1-sys/rhobear/blob/main/PRIVACY.md" target="_blank" rel="noopener">privacy</a> · <a href="faq.html">FAQ</a></div><div class="footer-tag">Lean. Local. Private. Yours.</div></div><div class="footer-disclaimer">All third-party trademarks and logos are property of their respective owners and shown here for integration identification purposes only. No partnership, sponsorship, or endorsement is implied.</div></div></footer>
+<script src="shell.js?v=1782950001" defer></script>
+</body>
+</html>
