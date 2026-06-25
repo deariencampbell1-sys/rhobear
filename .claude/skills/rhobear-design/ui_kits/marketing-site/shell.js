@@ -169,6 +169,12 @@
     }
 
     resize();
+    // The first resize can land before the viewport has laid out (at defer-time
+    // window.innerWidth can read 0), leaving the buffer 0×0 and the sky invisible
+    // until something fires a resize. Re-measure after first paint and after full
+    // load so the starfield reliably appears on EVERY page, not just the front page.
+    requestAnimationFrame(resize);
+    window.addEventListener('load', resize);
     if (reduceMotion()) drawStill();
     else raf = requestAnimationFrame(frame);
 

@@ -1955,11 +1955,34 @@ h1,h2,h3,h4,h5,.h1-hero,.h-display{
 .site-footer{ background:transparent !important; border-top:1px solid var(--c-line) !important; }
 .footer-copy,.footer-copy a{ color:var(--c-ink-3) !important; }
 
-/* integration logos are mostly dark/mono → lift them to read on space, color on hover */
+/* integration logos show their REAL brand colors (owner: don't grey them out).
+   A touch of opacity keeps them calm on the black; full color on hover. */
 .marquee-track img,.marquee-strip .marquee-track img{
-  filter:grayscale(1) brightness(0) invert(1) opacity(0.68); }
+  filter:none !important; opacity:0.92; transition:opacity .18s ease; }
 .marquee-track img:hover,.marquee-strip .marquee-track img:hover{
-  filter:none !important; opacity:1 !important; }
+  opacity:1 !important; }
+
+/* ===== AI "thinking" glow — a light sweeps left→right across the text, like a
+   model working a prompt (the shimmer Claude/Codex show while thinking). The
+   accent matches the page: var(--c-amber-deep) is the per-page accent. Use on a
+   few key headings; the front-page hero keeps its own pulse. ===== */
+@keyframes rho-ai-sweep{ 0%{ background-position:-40% 0; } 100%{ background-position:160% 0; } }
+.ai-glow{
+  background:linear-gradient(100deg,
+    var(--c-ink) 0%, var(--c-ink) 42%,
+    var(--c-amber-deep) 50%,
+    var(--c-ink) 58%, var(--c-ink) 100%);
+  background-size:220% 100%;
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent; -webkit-text-fill-color:transparent;
+  animation:rho-ai-sweep 3.4s linear infinite; }
+@media (prefers-reduced-motion: reduce){
+  .ai-glow{ animation:none; background:none; color:var(--c-amber-deep); -webkit-text-fill-color:var(--c-amber-deep); } }
+
+/* greeter nudge: size the bubble to its text. Without the front page's inline
+   fix it was collapsing to a sliver and wrapping one word per line. */
+.rho-greeter-nudge{ width:max-content; max-width:min(320px, calc(100vw - 36px)); }
+.rho-greeter-nudge-text{ white-space:normal; }
 
 /* links */
 a{ color:var(--c-amber-deep); }  a:hover{ color:var(--c-amber); }
