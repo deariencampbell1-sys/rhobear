@@ -733,7 +733,7 @@ body.try-demo-page {
 
       <section class="try-chat-column" aria-label="Live RHOBEAR chat demo">
         <div class="try-chat-shell">
-          <div class="try-chat-badge">Live demo · public chat — when you own RHOBEAR, you set its rules.</div>
+          <div class="try-chat-badge">Live demo · public chat. When you own RHOBEAR, you set its rules.</div>
           <div id="try-chat-log" class="try-chat-log" role="log" aria-live="polite" aria-relevant="additions text">
           </div>
           <div class="try-quick-chips" aria-label="Sample prompts">
@@ -744,10 +744,10 @@ body.try-demo-page {
           </div>
           <form class="try-composer" id="try-chat-form">
             <label id="try-chat-label" class="try-label" for="try-chat-input">Message the active crew operator</label>
-            <textarea id="try-chat-input" class="try-input" rows="2" maxlength="1200" placeholder="Talk to your crew — plan, build, ship..." autocomplete="off"></textarea>
+            <textarea id="try-chat-input" class="try-input" rows="2" maxlength="1200" placeholder="Talk to your crew: plan, build, ship..." autocomplete="off"></textarea>
             <button class="try-send" type="submit">Send</button>
           </form>
-          <div id="try-active-line" class="try-active-line">Active: loading crew — click another crew member to switch voice.</div>
+          <div id="try-active-line" class="try-active-line">Active: loading crew. Click another crew member to switch voice.</div>
         </div>
         <div class="try-demo-note">
           <span>This chat actually runs on the same brain you'll be talking to inside RHOBEAR. Right now, on a $5 VPS.</span>
@@ -833,7 +833,7 @@ body.try-demo-page {
       spark: ['What can I make for money?', 'Show me a gig.', 'How fast can I start?']
     };
 
-    var GREETING = "There you are. Been holding this spot for you. Ask me anything about RHOBEAR — or if you'd rather talk to one of the crew, tap any of them on the left. I'll wait.";
+    var GREETING = "There you are. Been holding this spot for you. Ask me anything about RHOBEAR, or if you'd rather talk to one of the crew, tap any of them on the left. I'll wait.";
 
     function chatBase() {
       var url = (window.RHOBEARChat && window.RHOBEARChat.chatUrl) || 'https://chat.rhobear.ai/chat';
@@ -954,7 +954,7 @@ body.try-demo-page {
       renderChips();
       var name = display(opKey);
       label.textContent = 'Message ' + name;
-      input.placeholder = 'Talk to ' + name + ' — stay in the Hub...';
+      input.placeholder = 'Talk to ' + name + ', stay in the Hub...';
       activeLine.textContent = 'Active: ' + name + '. Tap any of the crew to switch the voice.';
       if (changed && !opts.silent) addHandoff(opKey);
     }
@@ -974,7 +974,7 @@ body.try-demo-page {
       operatorList.appendChild(empty);
       label.textContent = 'Crew voices unavailable';
       input.placeholder = 'The public crew rail did not load. Refresh and try again.';
-      activeLine.textContent = 'Crew voices unavailable — refresh and try again.';
+      activeLine.textContent = 'Crew voices unavailable. Refresh and try again.';
       sendBtn.disabled = true;
       input.disabled = true;
       chipsWrap.innerHTML = '';
@@ -1001,7 +1001,7 @@ body.try-demo-page {
         btn.setAttribute('data-operator', op.key);
         btn.setAttribute('role', 'option');
         btn.setAttribute('tabindex', '-1');
-        btn.setAttribute('aria-label', op.display_name + ' — ' + op.tagline);
+        btn.setAttribute('aria-label', op.display_name + ': ' + op.tagline);
         btn.setAttribute('title', op.tagline);
         btn.innerHTML = '<img src="' + avatar(op.key) + '" alt=""><span><span class="try-operator-name"></span><span class="try-operator-role"></span></span>';
         btn.querySelector('.try-operator-name').textContent = op.display_name;

@@ -27,7 +27,7 @@
   <div style="text-align:center; max-width:780px; margin:0 auto;">
   <div class="eyebrow-row" style="display:inline-flex;">SECTION · SUBSTRATE · 11 / 20</div>
   <h1 class="h1-page">Every worker. <em>Every transcript.</em> Replayable.</h1>
-  <p class="lead">Worker sessions are the receipts. Each AI worker gets its own durable session — what it was told, what it did, what it produced — and you can read all of them from one hub.</p>
+  <p class="lead">Worker sessions are the receipts. Each AI worker gets its own durable session that holds what it was told, what it did, and what it produced. You read all of them from one hub.</p>
   </div>
 
   <div style="max-width:880px; margin:36px auto 0;">
@@ -35,7 +35,7 @@
       <div class="sub-main">
         <div class="pair-eyebrow">WORKERSESSION STORE</div>
         <div class="pair-label">HOOK</div>
-        <p class="pair-hook">Every agent gets its own tracked session, so its work doesn't vanish into chat history — you always know which worker touched which files.</p>
+        <p class="pair-hook">Every agent gets its own tracked session, so its work doesn't vanish into chat history. You always know which worker touched which files.</p>
         <div class="pair-label" style="margin-top:14px;">TECH</div>
         <p class="pair-tech">Each worker gets a durable JSON session plus an append-only JSONL event log under OPENCLAW_WORKSPACE, tracking harness, tool profile, branch/worktree, transcript ref, evidence, and touched files.</p>
         <details class="dig">
@@ -43,7 +43,7 @@
           <div class="dig-body">
             <div class="dig-block">
               <div class="dig-tag tag-diy">WHY NOT BUILD IT YOURSELF</div>
-              <p>The moment you run agents in parallel, you need provenance — who edited what, on which branch, which output got promoted. Skip it and parallel agents become loose chats you can't audit or replay. We store <code>card_ref</code> to join workers to plan cards without mutating the Compass schema — the kind of boring decision that keeps the system from breaking when it grows.</p>
+              <p>The moment you run agents in parallel, you need provenance: who edited what, on which branch, which output got promoted. Skip it and parallel agents become loose chats you can't audit or replay. We store <code>card_ref</code> to join workers to plan cards without mutating the Compass schema, the kind of boring decision that keeps the system from breaking when it grows.</p>
               <pre class="code-artifact"><span class="tok">card_ref</span> = {"plan_id": "...", "step_id": "..."}</pre>
             </div>
           </div>

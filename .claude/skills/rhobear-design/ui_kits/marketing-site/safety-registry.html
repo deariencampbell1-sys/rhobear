@@ -6,8 +6,8 @@
 <section class="wrap">
   <div style="text-align:center; max-width:780px; margin:0 auto;">
   <div class="eyebrow-row" style="display:inline-flex;">SECTION · SUBSTRATE · 13 / 20</div>
-  <h1 class="h1-page">In writing — <em>what each agent can and can't do.</em></h1>
-  <p class="lead">"Read-only" shouldn't be a hope. The safety registry maps each agent to a permission profile the runtime enforces at the tool boundary — and it tells you exactly where that wall is concrete and where it's still being poured.</p>
+  <h1 class="h1-page">In writing: <em>what each agent can and can't do.</em></h1>
+  <p class="lead">"Read-only" shouldn't be a hope. The safety registry maps each agent to a permission profile the runtime enforces at the tool boundary. It tells you exactly where that wall is concrete and where it's still being poured.</p>
   </div>
 
   <div style="max-width:880px; margin:36px auto 0;">
@@ -15,20 +15,20 @@
       <div class="sub-main">
         <div class="pair-eyebrow">SAFETY REGISTRY · PERMISSION CONTRACT</div>
         <div class="pair-label">HOOK</div>
-        <p class="pair-hook">"Read-only worker" isn't a hope here — it's a permission contract the runtime enforces, not a sentence in a prompt.</p>
+        <p class="pair-hook">"Read-only worker" isn't a hope here. It's a permission contract the runtime enforces, not a sentence in a prompt.</p>
         <div class="pair-label" style="margin-top:14px;">TECH</div>
-        <p class="pair-tech"><code>worker_permissions.py</code> maps profiles (read-only, code-edit, github-readonly, github-merge, shell-limited) to explicit tool allowlists, and separates capability from permission — an agent can be capable of review but still needs an enforced tool profile before it touches merge/comment tools.</p>
+        <p class="pair-tech"><code>worker_permissions.py</code> maps profiles (read-only, code-edit, github-readonly, github-merge, shell-limited) to explicit tool allowlists, and separates capability from permission: an agent can be capable of review but still needs an enforced tool profile before it touches merge/comment tools.</p>
         <pre class="code-artifact"><span class="tok">GITHUB_MERGE</span>: ("gh:pr:merge", "git:push_branch")</pre>
         <details class="dig">
           <summary>dig in</summary>
           <div class="dig-body">
             <div class="dig-block">
-              <div class="dig-tag tag-limit">THE HONEST PART — WHERE THE WALL IS CONCRETE, AND WHERE IT ISN'T</div>
-              <p>Enforcement is hard where we own the runtime — native, OpenClaw, local, and Pi paths get real allowlists enforced at the tool boundary. For Claude and Codex tmux sessions, the contract is currently injected and logged rather than syscall-sandboxed, with high-risk routes blocked elsewhere. We're telling you exactly where the wall is concrete and where it's still a painted line, because you'd find out anyway — and a tool that lies about its own security is the one you should never trust with merge rights.</p>
+              <div class="dig-tag tag-limit">THE HONEST PART · WHERE THE WALL IS CONCRETE, AND WHERE IT ISN'T</div>
+              <p>Enforcement is hard where we own the runtime: native, OpenClaw, local, and Pi paths get real allowlists enforced at the tool boundary. For Claude and Codex tmux sessions, the contract is currently injected and logged rather than syscall-sandboxed, with high-risk routes blocked elsewhere. We're telling you exactly where the wall is concrete and where it's still a painted line, because you'd find out anyway. A tool that lies about its own security is the one you should never trust with merge rights.</p>
             </div>
             <div class="dig-block">
               <div class="dig-tag tag-diy">WHY NOT BUILD IT YOURSELF</div>
-              <p>The hard part isn't writing "read-only" in a system prompt — it's enforcing it when the model drifts. Build it yourself and you'll discover prompt-level permissions don't hold; you need enforcement at the adapter boundary, per profile, per role. That's months of unglamorous plumbing nobody gives you credit for.</p>
+              <p>The hard part isn't writing "read-only" in a system prompt. It's enforcing it when the model drifts. Build it yourself and you'll discover prompt-level permissions don't hold; you need enforcement at the adapter boundary, per profile, per role. That's months of unglamorous plumbing nobody gives you credit for.</p>
             </div>
           </div>
         </details>
@@ -38,7 +38,7 @@
   </div>
 
   <div class="screenshot-frame stitched" style="margin-top:50px;">
-    <img src="../../assets/10-settings.png?v=1782900000" alt="Settings — gates and scopes" >
+    <img src="../../assets/10-settings.png?v=1782900000" alt="Settings: gates and scopes" >
   </div>
 </section>
 </main>
