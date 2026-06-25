@@ -14,7 +14,7 @@
     <div class="card-paper stitched paired" style="overflow:visible;">
       <div class="pair-eyebrow">VISIBLE WORKERS · HUB CONTRACT</div>
       <div class="pair-label">HOOK</div>
-      <p class="pair-hook">You see and control every worker, task, and result from one hub. Nothing mutates your goals or plans without owner authorization.</p>
+      <p class="pair-hook">You see and control every worker, task, and result from <a href="app.html">one hub</a>. Nothing mutates your goals or plans without owner authorization.</p>
       <div class="pair-label" style="margin-top:14px;">TECH</div>
       <p class="pair-tech">Mutating routes use <code>require_owner</code>. Same-origin localhost is allowed for the local hub; otherwise a bearer token (<code>COMPASS_OWNER_TOKEN</code>) is required. Worker events stream over SSE; promote/reject UI actions become structured HandoffResultEnvelopes.</p>
       <pre class="code-artifact"><span class="tok">if</span> is_same_origin <span class="tok">and</span> allowed_host: <span class="tok">return</span>      <span style="color:#6c7795">## local hub, trusted</span>

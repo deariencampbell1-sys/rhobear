@@ -62,7 +62,7 @@
     <div class="bw-expand">
       <div class="receipt-grid">
         <div><h4>The power</h4><ul><li>Reads a real shipping codebase without flattening it</li><li>Multi-file edits with a diff you can argue with before it lands</li><li>Plan mode drafts the work, execute mode does it: same session</li><li>Tool-use that waits for the file to be there before pretending to edit</li></ul></div>
-        <div><h4>Why we chose it</h4><ul><li>Does the unglamorous part well: find the file, edit surgically, explain the diff</li><li>Session log feeds straight into worker-sessions</li><li>Plan/execute split maps one-to-one onto Architect and Foreman</li></ul></div>
+        <div><h4>Why we chose it</h4><ul><li>Sign in with your Claude subscription and the crew runs with no per-token meter, so the quality bar stays high while the bill stays flat. It anchors <a href="app.html">the harness</a>.</li><li>Does the unglamorous part well: find the file, edit surgically, explain the diff</li><li>Session log feeds straight into worker-sessions</li><li>Plan/execute split maps one-to-one onto Architect and Foreman</li></ul></div>
         <div><h4>Evolution</h4><ul><li>2024 Q3: released as CLI companion to Sonnet 3.5</li><li>2025: Sonnet 4 brought clean multi-file edits</li><li>2026: Sonnet 4.5 makes plan-mode the default, autoloop stabilizes</li></ul></div>
         <div><h4>Where you might know it from</h4><ul><li>The CLI you launch with <code>claude</code> after npm install</li><li>The "plan mode / execute mode" agent everyone has tried</li><li>Anthropic's first-party terminal coding agent</li></ul></div>
       </div>
@@ -97,7 +97,7 @@
     <div class="bw-expand">
       <div class="receipt-grid">
         <div><h4>The power</h4><ul><li>Apache-2.0 Rust: fast cold start, no Node dependency tree</li><li>Native tool-use: shell, file, search, structured patches</li><li>GPT-5 Codex reasoning with terminal-native discipline</li><li>Pushed near-daily: actively maintained inside OpenAI</li></ul></div>
-        <div><h4>Why we chose it</h4><ul><li>Provider-agnostic Foreman needs a strong second rail next to Claude Code</li><li>Apache-2.0 lets us ship inside the Tauri installer without a license fight</li><li>Different model lineage from Claude: head-to-head surfaces real differences</li></ul></div>
+        <div><h4>Why we chose it</h4><ul><li>We built MCP servers around it on the OpenClaw network, and its annotation and vision support kept that wiring clean.</li><li>The zero-auth subscription made it a clear win, and Codex helped us design <a href="sunsponge.html">SunSponge Captures</a>, so the crew builds our own products together.</li><li>Provider-agnostic Foreman needs a strong second rail next to Claude Code</li><li>Apache-2.0 lets us ship inside the Tauri installer without a license fight</li></ul></div>
         <div><h4>Evolution</h4><ul><li>2021: the original Codex model that kicked off AI pair-programming</li><li>2025: repo relaunched as first-party Rust CLI under openai/codex</li><li>2026: GPT-5 Codex becomes default model, tool-use stabilizes</li></ul></div>
         <div><h4>Where you might know it from</h4><ul><li>OpenAI's official Rust CLI for GPT-5 Codex</li><li>The terminal agent that ships from OpenAI org, not a third-party wrapper</li><li>The "I just want a focused terminal coder" answer from OpenAI</li></ul></div>
       </div>
@@ -206,6 +206,7 @@
       <span class="bw-lead-use">
         <span class="bw-h4" role="heading" aria-level="4">How it lives inside RHOBEAR</span>
         <span class="bw-ul">
+          <span class="bw-li">A bundled local model is on deck the day you install <a href="app.html">the hub</a>, no key required.</span>
           <span class="bw-li">Set every role's provider to <code>ollama</code> in .env: the crew binds to local models.</span>
           <span class="bw-li">Run Pi on a paid lane, Ollama on a free lane, compare in head-to-head.</span>
           <span class="bw-li">Boot on a $5 VPS with Ollama and run fully API-free.</span>
@@ -215,7 +216,7 @@
     <div class="bw-expand">
       <div class="receipt-grid">
         <div><h4>The power</h4><ul><li>MIT: fully open, fully local</li><li>Single-binary runtime for Llama 3.2, Qwen, Mistral, and ~100 other open weights</li><li>Net-egress can be turned off and the runtime keeps working</li><li>Same CLI shape as <code>docker run</code>: easy mental model</li></ul></div>
-        <div><h4>Why we chose it</h4><ul><li>"Your AI" promise has a floor: nothing leaves the box when you say so</li><li>Every role in the hub contract has an ollama provider option</li><li>Safety registry can pin <code>net:egress=off</code> and the autoloop runs slower instead of failing</li></ul></div>
+        <div><h4>Why we chose it</h4><ul><li>"Your AI" promise has a floor: nothing leaves the box when you say so</li><li><a href="plans.html">Plans</a> runs a heavier on-device model to read your email, with the Ursa cloud option held in reserve for the big moves.</li><li>Every role in the hub contract has an ollama provider option</li><li>Safety registry can pin <code>net:egress=off</code> and the autoloop runs slower instead of failing</li></ul></div>
         <div><h4>Evolution</h4><ul><li>2023: initial release as a Mac-first local runner</li><li>2024: Windows + Linux first-class support, library explodes</li><li>2025-2026: Llama 3.2 and Qwen 2.5 ship same-day as Ollama recipes</li></ul></div>
         <div><h4>Where you might know it from</h4><ul><li>The <code>ollama run llama3.2</code> command that made local models a one-liner</li><li>The runtime that took the friction out of "I just want to try a model on my laptop"</li><li>The thing that turned "run a model offline" from a weekend project into a CLI command</li></ul></div>
       </div>

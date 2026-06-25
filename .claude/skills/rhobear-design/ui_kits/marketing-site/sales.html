@@ -23,6 +23,9 @@
 .relay-next a{ color:var(--c-ink-2); text-decoration:none; border:1px solid var(--c-line); border-radius:999px; padding:6px 13px; transition:color .18s,border-color .18s,background .18s; }
 .relay-next a:hover{ color:var(--c-amber-deep); border-color:rgba(96,165,250,0.5); background:rgba(96,165,250,0.07); }
 .relay-next .arw{ color:var(--c-ink-3); }
+/* A/B/C/D cards link nowhere, but should still feel alive under the cursor */
+.feature-card{ transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+.feature-card:hover{ transform:translateY(-3px); border-color:rgba(96,165,250,0.45); box-shadow:0 14px 30px -16px rgba(96,165,250,0.55); }
 </style>
 </head>
 <body>
@@ -89,6 +92,24 @@
       <div class="num">D · $47 ONE-TIME</div>
       <h3>One price, stated flat.</h3>
       <p>Forty-seven dollars, once. No subscription, no countdown, no upsell waiting on the next screen. You get the chatbot and the page it lives on.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IT COSTS -->
+<section class="wrap" style="padding-top:8px;">
+  <div class="eyebrow-row">WHAT IT COSTS TO RUN</div>
+  <h2 style="font-size:clamp(1.7rem,2.8vw,2.3rem); margin:0 0 8px;">One build, once. <em class="ai-glow">Then a domain to keep it up.</em></h2>
+  <div class="card-grid cols-2" style="margin-top:24px; row-gap:26px;">
+    <div class="card-paper stitched feature-card">
+      <div class="num">ONE-TIME · $47</div>
+      <h3>I build it, you own it.</h3>
+      <p>Forty-seven dollars, once. I hand-build the page and the bot and hand it over running. No subscription, no seat tax, nothing that expires when you stop paying.</p>
+    </div>
+    <div class="card-paper stitched feature-card">
+      <div class="num">TO RUN · A DOMAIN</div>
+      <h3>No server, no hosting bill.</h3>
+      <p>The greeting bot runs on a tiny Qwen-3B on your own box, so there's no rented server behind it. The only standing cost is the domain it answers on.</p>
     </div>
   </div>
 </section>
