@@ -621,12 +621,12 @@
     band.innerHTML =
       '<div class="rb-label">One workflow · it hands off</div>' +
       '<div class="relay-next">' +
-        '<span class="now">Build it · Hub</span>' +
-        '<span class="arw">→</span><a href="https://github.com/deariencampbell1-sys/rhobear-designs">Shape it · Designs</a>' +
-        '<span class="arw">→</span><a href="https://github.com/deariencampbell1-sys/sunsponge">Capture it · SunSponge</a>' +
-        '<span class="arw">→</span><a href="https://reviews.rhobear.ai">Keep it clean · Reviews</a>' +
-        '<span class="arw">→</span><a href="https://plans.rhobear.ai">Take it to market · Plans</a>' +
-        '<span class="arw">→</span><a href="https://sales.rhobear.ai">It sells itself · Sales</a>' +
+        '<a href="app.html">Build it · Hub</a>' +
+        '<span class="arw">→</span><a href="designs.html">Shape it · Designs</a>' +
+        '<span class="arw">→</span><a href="sunsponge.html">Capture it · SunSponge</a>' +
+        '<span class="arw">→</span><a href="reviews.html">Keep it clean · Reviews</a>' +
+        '<span class="arw">→</span><a href="plans.html">Take it to market · Plans</a>' +
+        '<span class="arw">→</span><a href="sales.html">It sells itself · Sales</a>' +
       '</div>';
     if (foot && foot.parentNode) foot.parentNode.insertBefore(band, foot);
     else main.appendChild(band);
