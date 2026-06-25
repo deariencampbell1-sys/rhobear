@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RHOBEAR · Plans</title>
+  <meta name="description" content="RHOBEAR Plans is the local-first cockpit your crew works from and you talk to: calendar, booking, payments, and a Telegram bot per calendar. A local Qwen-4B reads your email on-device. Stop 5 of the RHOBEAR ecosystem: take it to market.">
+  <link rel="stylesheet" href="../../colors_and_type.css">
+  <link rel="stylesheet" href="shell.css?v=1782960000">
+  <link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782900000">
+<style id="rho-tweaks-style">
+/* ===== PLANS PAGE LOCK-IN — purple accent (its relay color) ===== */
+:root{
+  --c-amber:#7c5cff !important;       --c-amber-deep:#b3a0ff !important;
+  --c-amber-soft:rgba(124,92,255,0.16) !important;  --c-amber-tint:rgba(124,92,255,0.10) !important;
+}
+.btn-amber{ color:#fff !important; box-shadow:0 0 0 1px rgba(124,92,255,0.40),0 10px 26px -10px rgba(124,92,255,0.55) !important; }
+.btn-amber:hover{ color:#fff !important; background:var(--c-amber-deep) !important; }
+.eyebrow-row::before{ background:var(--c-amber) !important; }
+/* calendar category dots — muted; the active note stays the loudest purple */
+.cal-legend{ display:flex; flex-wrap:wrap; gap:10px 18px; margin:18px 0 4px; font-family:var(--font-display); font-size:.9rem; color:var(--c-ink-2); }
+.cal-legend span{ display:inline-flex; align-items:center; }
+.cal-dot{ width:11px; height:11px; border-radius:3px; margin-right:8px; }
+/* hand-to-hand relay strip (mirrors the front-page connective wording) */
+.relay-next{ display:flex; flex-wrap:wrap; align-items:center; gap:9px 10px; margin-top:22px; font-family:var(--font-display); font-size:.96rem; }
+.relay-next .now{ color:var(--c-amber-deep); border:1px solid rgba(124,92,255,0.5); border-radius:999px; padding:6px 13px; background:rgba(124,92,255,0.12); }
+.relay-next a{ color:var(--c-ink-2); text-decoration:none; border:1px solid var(--c-line); border-radius:999px; padding:6px 13px; transition:color .18s,border-color .18s,background .18s; }
+.relay-next a:hover{ color:var(--c-amber-deep); border-color:rgba(124,92,255,0.5); background:rgba(124,92,255,0.07); }
+.relay-next .arw{ color:var(--c-ink-3); }
+</style>
+</head>
+<body>
+
+  <nav class="top-nav" aria-label="Primary">
+    <div class="top-nav-inner">
+      <a class="brand-lockup" href="index.html">
+        <img src="../../assets/rhobear-logo.png?v=1782900000" alt="" class="pixelated">
+        <span>RHOBEAR</span>
+      </a>
+      <div class="nav-tabs"><a href="index.html" class="nav-tab ">HOME</a><a href="crew.html" class="nav-tab ">CREW</a><a href="hub.html" class="nav-tab ">HUB</a><a href="workbench.html" class="nav-tab ">WORKBENCH</a><a href="try.html" class="nav-tab ">TRY THE DEMO</a><a href="learn.html" class="nav-tab ">LEARN</a><div class="nav-dropdown"><a href="substrate.html" class="nav-tab " aria-haspopup="true">SUBSTRATE ▾</a><div class="nav-dropdown-panel"><a href="goal-autoloop.html" class="">Goal Autoloop</a><a href="judgment-loop.html" class="">Judgment Loop</a><a href="substrate.html" class="">Substrate Overview</a><a href="compass.html" class="">Compass</a><a href="worker-sessions.html" class="">Worker Sessions</a><a href="handoff-bus.html" class="">Handoff Bus</a><a href="safety-registry.html" class="">Safety Registry</a><a href="hub-contract.html" class="">Hub Contract</a><a href="openclaw.html" class="">OpenClaw</a></div></div><a href="built-with.html" class="nav-tab ">BUILT WITH</a></div>
+      <span class="nav-spacer"></span>
+      <a href="https://plans.rhobear.ai" class="btn-amber nav-cta">Open Plans →</a>
+    </div>
+  </nav>
+<main>
+
+<section class="wrap-md" style="padding-top:48px;">
+  <div class="eyebrow-row">PRODUCT · PLANS · STOP 5 · TAKE IT TO MARKET</div>
+  <h1 class="h1-page">Run your business where <em>your agents read it.</em></h1>
+  <p class="lead">Plans is the cockpit your crew works from and you talk to. Calendar, booking, payments, and the bots that answer for you, all in one local-first place. It reads your day the same way your agents do, so the business and the build never drift apart.</p>
+  <div class="cta-row">
+    <a href="https://plans.rhobear.ai" class="btn-amber">Open in your browser →</a>
+    <a href="https://github.com/apps/rhobear-plans" class="btn-ghost">Install the GitHub App →</a>
+    <a href="index.html#workflow" class="btn-ghost">See the whole family →</a>
+  </div>
+  <div class="quant-line">calendar + booking &middot; PayPal + Stripe &middot; a bot per calendar &middot; Qwen-4B private &middot; Ursa for big moves</div>
+</section>
+
+<!-- ORIGIN -->
+<section class="wrap">
+  <div class="eyebrow-row">WHERE IT STARTED</div>
+  <h2 style="font-size:clamp(1.8rem,3vw,2.5rem); margin:0 0 14px;">It began as a <em>handoff dock.</em></h2>
+  <p class="lead" style="max-width:64ch;">I built Plans so the crew could write each build's path in Mermaid and I could spot drift at a glance, instead of pinging anyone. Then I kept adding until it ran the whole back office.</p>
+  <div class="terminal" style="max-width:880px;"><span class="dim"># the dock the crew writes to</span>
+<span class="role">builder &gt;</span> path drawn &middot; checkout &rarr; review &rarr; deploy
+<span class="role">plans &gt;</span> rendered to board &middot; drift check: <span class="ok">none</span>
+<span class="role">foreman &gt;</span> slot booked &middot; Zoom + email fired
+<span class="role">plans &gt;</span> sale logged &middot; calendar and ledger agree</div>
+</section>
+
+<!-- THE BACK OFFICE -->
+<section class="wrap" style="padding-top:8px;">
+  <div class="eyebrow-row">THE BACK OFFICE</div>
+  <h2 style="font-size:clamp(1.7rem,2.8vw,2.3rem); margin:0 0 8px;">One place runs the parts that used to need five.</h2>
+  <div class="cal-legend">
+    <span><i class="cal-dot" style="background:#7c5cff;"></i>Personal</span>
+    <span><i class="cal-dot" style="background:#48d8b0;"></i>Site</span>
+    <span><i class="cal-dot" style="background:#f5a524;"></i>Support</span>
+    <span><i class="cal-dot" style="background:#4ade80;"></i>Billing</span>
+  </div>
+  <div class="card-grid cols-2" style="margin-top:24px; row-gap:26px;">
+    <div class="card-paper stitched feature-card">
+      <div class="num">A · CALENDAR + APPOINTMENTS</div>
+      <h3>Real calendars, not a to-do list.</h3>
+      <p>Personal, site, support, and billing each get their own muted accent, so a glance tells you which part of the business a day belongs to. The live thread is the only thing lit purple.</p>
+    </div>
+    <div class="card-paper stitched feature-card">
+      <div class="num">B · PAYMENTS THAT TRACK</div>
+      <h3>The money and the calendar agree.</h3>
+      <p>PayPal and Stripe forms log every sale inline. You see the booking and the payment as one row, not two systems you reconcile by hand later.</p>
+    </div>
+    <div class="card-paper stitched feature-card">
+      <div class="num">C · BOOKING THAT MATCHES YOUR SITE</div>
+      <h3>A slot books and the rest fires itself.</h3>
+      <p>Booking templates themed to your site. The moment a slot is taken, Zoom and email go out, so the lead never waits on you to push a button.</p>
+    </div>
+    <div class="card-paper stitched feature-card">
+      <div class="num">D · EMAIL, READ ON YOUR MACHINE</div>
+      <h3>Your inbox, surfaced by a local model.</h3>
+      <p>A local model reads your email on-device and brings up what needs you. The reading never leaves your machine, so the convenience costs you no privacy.</p>
+    </div>
+  </div>
+</section>
+
+<!-- A BOT PER CALENDAR -->
+<section class="wrap" style="padding-top:8px;">
+  <div class="eyebrow-row">TALK TO IT</div>
+  <h2 style="font-size:clamp(1.7rem,2.8vw,2.3rem); margin:0 0 12px;">One Telegram bot <em>per calendar.</em></h2>
+  <p class="lead" style="max-width:66ch;">One bot for personal, one for work, one for business. Each handles its own invites and email, keeps its own settings log, and answers in plain language. You do not open the app to run your day. You just talk to the bot that owns that part of it.</p>
+</section>
+
+<!-- PRIVATE BY DEFAULT -->
+<section class="band-dark install-band">
+  <div class="wrap" style="position:relative;">
+    <div style="max-width:760px;">
+      <div class="eyebrow-row">PRIVATE BY DEFAULT</div>
+      <h2 style="font-size:clamp(1.8rem,3vw,2.5rem); margin:0 0 18px;">Your data stays <em>on your machine.</em></h2>
+      <p style="color:var(--c-dark-ink-2); font-size:1.05rem; line-height:1.65;">A local <strong>Qwen-4B</strong> keeps tokens cheap and reads your email on-device, so nothing leaves your machine. For the big moves, sharp diagrams or always-on crons wired to your own cloud, switch to <strong>Ursa</strong>, our onboard LLM, on credits or a monthly sub. We do not train on your data.</p>
+  </div>
+  </div>
+</section>
+
+<!-- RELAY HANDOFF -->
+<section class="wrap">
+  <div class="eyebrow-row">WHERE PLANS SITS</div>
+  <h2 style="font-size:clamp(1.7rem,2.8vw,2.3rem); margin:0 0 12px;">Clean and built comes in. <em>A closing rep goes out.</em></h2>
+  <p style="max-width:66ch; color:var(--c-ink-2); line-height:1.65;">Reviews hands Plans work that already passed the gate. Plans turns it into a running business, then hands the part that answers your leads to Sales. One hand passes to the next.</p>
+  <div class="relay-next">
+    <a href="reviews.html"><span class="arw">←</span> Reviews</a>
+    <span class="now">Plans</span>
+    <a href="sales.html">Sales <span class="arw">→</span></a>
+  </div>
+</section>
+</main>
+
+<div class="prevnext"><div class="prevnext-inner"><a href="reviews.html" class="pn-link "><span class="pn-mini">← Previous</span><span class="pn-name">Reviews &amp; Verifies</span></a><a href="sales.html" class="pn-link "><span class="pn-mini">Next →</span><span class="pn-name">Sales, by RHOBEAR</span></a></div></div>
+<footer class="site-footer"><div class="site-footer-inner"><div class="footer-row"><div class="footer-copy">© 2026 Sun Sponge LLC · <a href="https://github.com/rhobear-ai">GitHub</a> · <a href="https://github.com/deariencampbell1-sys/rhobear/blob/main/PRIVACY.md" target="_blank" rel="noopener">privacy</a> · <a href="faq.html">FAQ</a></div><div class="footer-tag">Lean. Local. Private. Yours.</div></div><div class="footer-disclaimer">All third-party trademarks and logos are property of their respective owners and shown here for integration identification purposes only. No partnership, sponsorship, or endorsement is implied.</div></div></footer>
+<script src="shell.js?v=1782950001" defer></script>
+</body>
+</html>
