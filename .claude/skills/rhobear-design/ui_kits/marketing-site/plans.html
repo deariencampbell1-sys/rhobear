@@ -1,168 +1,464 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RHOBEAR · Plans</title>
-  <meta name="description" content="RHOBEAR Plans is the local-first cockpit your crew works from and you talk to: calendar, booking, payments, and a Telegram bot per calendar. A local Qwen-4B reads your email on-device. Stop 5 of the RHOBEAR ecosystem: take it to market.">
-  <link rel="stylesheet" href="../../colors_and_type.css">
-  <link rel="stylesheet" href="shell.css?v=1782970000">
-  <link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782900000">
-<style id="rho-tweaks-style">
-/* ===== PLANS PAGE LOCK-IN — purple accent (its relay color) ===== */
-:root{
-  --c-amber:#7c5cff !important;       --c-amber-deep:#b3a0ff !important;
-  --c-amber-soft:rgba(124,92,255,0.16) !important;  --c-amber-tint:rgba(124,92,255,0.10) !important;
-}
-/* ===== AMBIENT TONE — this page's own accent, washed behind the shared
-   starfield so it reads as itself, not the home page. ===== */
-body::before{
-  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
-  background:
-    radial-gradient(58% 44% at 15% 3%,  var(--c-amber-soft), transparent 60%),
-    radial-gradient(50% 40% at 88% 13%, var(--c-amber-tint), transparent 62%),
-    radial-gradient(74% 56% at 66% 106%, var(--c-amber-soft), transparent 66%);
-}
-.btn-amber{ color:#fff !important; box-shadow:0 0 0 1px rgba(124,92,255,0.40),0 10px 26px -10px rgba(124,92,255,0.55) !important; }
-.btn-amber:hover{ color:#fff !important; background:var(--c-amber-deep) !important; }
-.eyebrow-row::before{ background:var(--c-amber) !important; }
-/* calendar category dots — muted; the active note stays the loudest purple */
-.cal-legend{ display:flex; flex-wrap:wrap; gap:10px 18px; margin:18px 0 4px; font-family:var(--font-display); font-size:.9rem; color:var(--c-ink-2); }
-.cal-legend span{ display:inline-flex; align-items:center; }
-.cal-dot{ width:11px; height:11px; border-radius:3px; margin-right:8px; }
-/* hand-to-hand relay strip (mirrors the front-page connective wording) */
-.relay-next{ display:flex; flex-wrap:wrap; align-items:center; gap:9px 10px; margin-top:22px; font-family:var(--font-display); font-size:.96rem; }
-.relay-next .now{ color:var(--c-amber-deep); border:1px solid rgba(124,92,255,0.5); border-radius:999px; padding:6px 13px; background:rgba(124,92,255,0.12); }
-.relay-next a{ color:var(--c-ink-2); text-decoration:none; border:1px solid var(--c-line); border-radius:999px; padding:6px 13px; transition:color .18s,border-color .18s,background .18s; }
-.relay-next a:hover{ color:var(--c-amber-deep); border-color:rgba(124,92,255,0.5); background:rgba(124,92,255,0.07); }
-.relay-next .arw{ color:var(--c-ink-3); }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RHOBEAR Plans — run your business where your agents read it</title>
+<meta name="description" content="The local-first cockpit your crew works from and you talk to: calendar, booking, payments, and one Telegram bot per calendar. A local Qwen-4B reads your email on-device, so nothing leaves your machine. Free on your machine; Ursa cloud only when you ask.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782940000">
+<style>
+  :root{
+    --bg:#0b0814; --bg-2:#120d20; --bg-3:#171029; --panel:rgba(255,255,255,0.03);
+    --border:rgba(255,255,255,0.07); --border-hi:rgba(124,92,255,0.22);
+    --text:#ece9f7; --text-2:#a59fc0; --text-dim:#6c6490;
+    --purple:#7c5cff; --purple-hi:#b3a0ff; --purple-glow:rgba(124,92,255,0.18);
+    --teal:#48d8b0; --amber:#f5a524; --green:#4ade80; --red:#f87171;
+    --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+    --sans:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  section[id],#top{scroll-margin-top:84px}
+  a{color:inherit;text-decoration:none}a:hover{color:var(--purple-hi)}
+  ::selection{background:var(--purple);color:#fff}
+
+  /* background */
+  .bg-layer{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+  .grid-bg{position:absolute;inset:-100px;
+    background-image:linear-gradient(rgba(124,92,255,0.05) 1px, transparent 1px),linear-gradient(90deg, rgba(124,92,255,0.05) 1px, transparent 1px);
+    background-size:54px 54px;
+    mask-image:radial-gradient(ellipse 92% 72% at 50% 26%, #000 26%, transparent 80%);
+    -webkit-mask-image:radial-gradient(ellipse 92% 72% at 50% 26%, #000 26%, transparent 80%);
+    animation:gridDrift 90s linear infinite}
+  @keyframes gridDrift{0%{transform:translate(0,0)}100%{transform:translate(54px,54px)}}
+  .glow-orb{position:absolute;border-radius:50%;filter:blur(82px);opacity:0.5;animation:orbDrift 26s ease-in-out infinite alternate}
+  .orb-1{width:540px;height:540px;background:radial-gradient(circle, rgba(124,92,255,0.32) 0%, transparent 70%);top:-90px;right:-110px;animation-duration:32s}
+  .orb-2{width:460px;height:460px;background:radial-gradient(circle, rgba(72,216,176,0.16) 0%, transparent 70%);top:42vh;left:-130px;animation-duration:40s;animation-delay:-8s}
+  .orb-3{width:380px;height:380px;background:radial-gradient(circle, rgba(124,92,255,0.16) 0%, transparent 70%);top:122vh;right:10vw;animation-duration:48s;animation-delay:-15s}
+  @keyframes orbDrift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-30px) scale(1.08)}100%{transform:translate(-30px,40px) scale(0.94)}}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(36px);filter:blur(6px);transition:opacity 1.0s cubic-bezier(0.16,1,0.3,1), transform 1.0s cubic-bezier(0.16,1,0.3,1), filter 1.0s ease}
+  .reveal.in{opacity:1;transform:translateY(0);filter:blur(0)}
+  .reveal-stagger > *{opacity:0;transform:translateY(28px) scale(0.98);filter:blur(4px);transition:opacity 0.8s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s ease}
+  .reveal-stagger.in > *{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
+  .reveal-stagger.in > *:nth-child(1){transition-delay:0.04s}.reveal-stagger.in > *:nth-child(2){transition-delay:0.14s}
+  .reveal-stagger.in > *:nth-child(3){transition-delay:0.24s}.reveal-stagger.in > *:nth-child(4){transition-delay:0.34s}
+  .reveal-stagger.in > *:nth-child(5){transition-delay:0.44s}.reveal-stagger.in > *:nth-child(6){transition-delay:0.54s}
+  @media (prefers-reduced-motion: reduce){.reveal,.reveal-stagger > *{opacity:1;transform:none;filter:none;transition:none}}
+
+  /* topbar */
+  .top{position:sticky;top:0;z-index:50;background:rgba(11,8,20,0.7);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+  .top-inner{max-width:1240px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:24px}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:600;font-size:15px}
+  .brand img{width:34px;height:34px;display:block;image-rendering:pixelated;filter:hue-rotate(90deg) saturate(1.4) drop-shadow(0 0 7px rgba(124,92,255,0.65))}
+  .brand-name{display:flex;align-items:baseline;gap:8px}
+  .brand-name b{font-weight:700;color:var(--text)}.brand-name span{color:var(--text-2);font-weight:400}
+  .nav{display:flex;gap:4px;margin-left:auto;font-size:13px;font-weight:500}
+  .nav a{padding:8px 14px;border-radius:8px;color:var(--text-2);transition:all 0.15s}
+  .nav a:hover{background:var(--panel);color:var(--text)}.nav a.active{color:var(--purple-hi)}
+  .cta-pill{background:var(--purple);color:#fff;padding:10px 18px;border-radius:99px;font-weight:600;font-size:13px;border:1px solid var(--purple);transition:all 0.2s;display:inline-flex;align-items:center;gap:8px}
+  .cta-pill:hover{background:var(--purple-hi);color:#1a1030;transform:translateY(-1px);box-shadow:0 8px 24px -6px rgba(124,92,255,0.45)}
+  .cta-pill svg{width:14px;height:14px}
+
+  /* hero */
+  .hero{max-width:1240px;margin:0 auto;padding:96px 24px 80px;position:relative}
+  .hero-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:center}
+  .live-tag{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11px;color:var(--purple-hi);padding:6px 12px;background:rgba(124,92,255,0.08);border:1px solid rgba(124,92,255,0.22);border-radius:99px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:26px}
+  .live-dot{width:6px;height:6px;background:var(--purple);border-radius:50%;box-shadow:0 0 10px var(--purple);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.45}}
+  h1{font-size:clamp(40px,5.5vw,64px);line-height:1.06;letter-spacing:-0.025em;font-weight:700;margin-bottom:24px}
+  h1 .accent{background:linear-gradient(110deg, var(--purple) 30%, var(--purple-hi) 50%, var(--purple) 70%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 5s linear infinite}
+  @keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+  .lede{font-size:19px;color:var(--text-2);line-height:1.55;max-width:580px;margin-bottom:34px}
+  .lede strong{color:var(--text);font-weight:500}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .btn-primary{background:var(--purple);color:#fff;padding:15px 28px;border-radius:99px;font-weight:600;font-size:15px;border:1px solid var(--purple);transition:all 0.2s;display:inline-flex;align-items:center;gap:10px;box-shadow:0 8px 28px -8px rgba(124,92,255,0.45)}
+  .btn-primary:hover{background:var(--purple-hi);color:#1a1030;transform:translateY(-2px);box-shadow:0 14px 38px -10px rgba(124,92,255,0.6)}
+  .btn-primary svg{width:18px;height:18px}
+  .btn-secondary{background:rgba(255,255,255,0.04);color:var(--text);padding:15px 28px;border-radius:99px;font-weight:500;font-size:15px;border:1px solid var(--border-hi);transition:all 0.2s;display:inline-flex;align-items:center;gap:10px}
+  .btn-secondary:hover{background:rgba(255,255,255,0.08);border-color:var(--text-2);transform:translateY(-2px)}
+  .hero-stamp{margin-top:22px;display:inline-flex;align-items:center;gap:10px;color:var(--text-dim);font-size:13px;font-family:var(--mono)}
+  .hero-stamp svg{width:14px;height:14px;color:var(--purple-hi)}
+
+  /* hero cockpit card */
+  .ck-card{background:linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 24px 64px -20px rgba(0,0,0,0.6),0 0 0 1px rgba(124,92,255,0.05)}
+  .ck-bar{display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.25);font-family:var(--mono);font-size:11px;color:var(--text-2)}
+  .ck-bar .pd{width:5px;height:5px;border-radius:50%;background:var(--purple);box-shadow:0 0 8px var(--purple);animation:pulse 1.8s ease-in-out infinite}
+  .ck-body{padding:18px}
+  .ck-week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:14px}
+  .ck-day{aspect-ratio:1/1.1;border:1px solid var(--border);border-radius:7px;background:var(--bg-2);padding:5px;font-family:var(--mono);font-size:9px;color:var(--text-dim);position:relative}
+  .ck-day .dot{position:absolute;bottom:5px;left:5px;width:6px;height:6px;border-radius:2px}
+  .ck-day .dot.p{background:var(--purple)}.ck-day .dot.t{background:var(--teal)}.ck-day .dot.a{background:var(--amber)}.ck-day .dot.g{background:var(--green)}
+  .ck-day.now{border-color:var(--purple);box-shadow:0 0 0 1px var(--purple)}
+  .ck-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:9px;background:var(--bg-2);font-size:12px;margin-bottom:8px}
+  .ck-row .t{font-family:var(--mono);color:var(--purple-hi);font-size:11px}
+  .ck-row .lbl{color:var(--text);font-weight:500}
+  .ck-row .fired{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--green)}
+  .ck-bot{display:flex;gap:8px;align-items:flex-start;padding:11px 12px;border-radius:9px;background:linear-gradient(90deg,rgba(124,92,255,0.12),transparent);border:1px solid rgba(124,92,255,0.2);font-size:12px;color:var(--text-2)}
+  .ck-bot b{color:var(--purple-hi);font-family:var(--mono);font-size:10px}
+  .ck-meta{display:flex;border-top:1px solid var(--border);font-family:var(--mono)}
+  .ck-meta div{flex:1;padding:13px 16px;border-right:1px solid var(--border);font-size:11px;color:var(--text-dim)}
+  .ck-meta div:last-child{border-right:none}
+  .ck-meta b{display:block;font-size:15px;color:var(--purple-hi);font-weight:600;margin-top:3px}
+
+  /* stat strip */
+  .strip{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:linear-gradient(180deg,var(--bg-2),var(--bg-3));position:relative;overflow:hidden}
+  .strip-inner{max-width:1240px;margin:0 auto;padding:38px 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+  .stat-cell{display:flex;flex-direction:column;gap:6px}
+  .stat-n{font-family:var(--mono);font-size:30px;font-weight:600;color:var(--purple-hi);line-height:1.05;letter-spacing:-0.02em}
+  .stat-l{font-size:12px;color:var(--text-2);text-transform:uppercase;letter-spacing:0.09em;font-weight:500}
+  .stat-s{font-size:11px;color:var(--text-dim);font-family:var(--mono)}
+
+  /* section base */
+  section{padding:120px 0;position:relative}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 24px;position:relative}
+  .eyebrow{display:inline-block;font-family:var(--mono);font-size:11px;color:var(--purple-hi);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:14px;padding:5px 12px;background:var(--purple-glow);border:1px solid rgba(124,92,255,0.22);border-radius:99px}
+  h2{font-size:clamp(32px,4vw,46px);line-height:1.1;letter-spacing:-0.02em;font-weight:700;margin-bottom:18px;max-width:780px}
+  h2 .accent{color:var(--purple-hi)}
+  .section-lede{font-size:17px;color:var(--text-2);max-width:680px;margin-bottom:56px;line-height:1.55}
+
+  /* how */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .step{background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01));border:1px solid var(--border);border-radius:16px;padding:30px 24px;position:relative;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);overflow:hidden}
+  .step::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%, rgba(124,92,255,0.08), transparent 60%);opacity:0;transition:opacity 0.3s}
+  .step:hover{border-color:var(--border-hi);transform:translateY(-4px);box-shadow:0 18px 40px -16px rgba(0,0,0,0.5)}.step:hover::before{opacity:1}
+  .step-n{position:absolute;top:22px;right:24px;font-family:var(--mono);font-size:11px;color:var(--text-dim)}
+  .step-icon{width:48px;height:48px;background:linear-gradient(135deg, rgba(124,92,255,0.18), rgba(124,92,255,0.06));border:1px solid rgba(124,92,255,0.28);border-radius:12px;display:grid;place-items:center;margin-bottom:22px;color:var(--purple-hi);position:relative;z-index:1}
+  .step-icon svg{width:24px;height:24px}
+  .step h3{font-size:17px;font-weight:600;margin-bottom:8px;position:relative;z-index:1}
+  .step p{font-size:14px;color:var(--text-2);line-height:1.55;position:relative;z-index:1}
+  .step code{font-family:var(--mono);font-size:12px;background:rgba(124,92,255,0.12);color:var(--purple-hi);padding:2px 7px;border-radius:5px}
+
+  /* signature */
+  .cb-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center}
+  .cb-steps{display:flex;flex-direction:column;gap:24px;margin-top:40px}
+  .cb-step{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:flex-start;padding:22px 26px;background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01));border:1px solid var(--border);border-radius:14px;transition:all 0.2s}
+  .cb-step:hover{border-color:var(--border-hi);transform:translateX(4px)}
+  .cb-step-tag{font-family:var(--mono);font-size:10px;font-weight:600;color:var(--purple-hi);background:var(--purple-glow);border:1px solid rgba(124,92,255,0.22);border-radius:6px;padding:6px 10px;letter-spacing:0.1em;white-space:nowrap;align-self:flex-start;margin-top:2px}
+  .cb-step h4{font-size:16px;font-weight:600;margin-bottom:6px}.cb-step p{font-size:14px;color:var(--text-2);line-height:1.55}
+  .cb-callout{margin-top:32px;padding:18px 22px;background:linear-gradient(90deg, rgba(124,92,255,0.08), transparent);border-left:3px solid var(--purple);border-radius:0 12px 12px 0;font-size:15px;font-style:italic;color:var(--text);line-height:1.5}
+  .cb-callout strong{color:var(--purple-hi);font-style:normal;font-weight:600}
+  .code-card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.005));border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 24px 64px -24px rgba(0,0,0,0.6)}
+  .code-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.25);font-family:var(--mono);font-size:11px;color:var(--text-2)}
+  .code-head .pulse{display:inline-flex;align-items:center;gap:7px;color:var(--purple-hi)}
+  .code-head .pulse-dot{width:5px;height:5px;background:var(--purple);border-radius:50%;box-shadow:0 0 8px var(--purple);animation:pulse 2s ease-in-out infinite}
+  .code-body{padding:20px 22px;font-family:var(--mono);font-size:12.5px;line-height:1.7;color:var(--text-2)}
+  .code-body .ln{display:block;white-space:pre}
+  .code-body .k{color:var(--purple-hi)}.code-body .ok{color:var(--green)}.code-body .dim{color:var(--text-dim)}
+  .code-stats{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--border)}
+  .code-stat{padding:16px 20px;border-right:1px solid var(--border)}
+  .code-stat:nth-child(2n){border-right:none}.code-stat:nth-child(n+3){border-top:1px solid var(--border)}
+  .code-stat-k{font-family:var(--mono);font-size:10px;color:var(--text-2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px}
+  .code-stat-v{font-family:var(--mono);font-size:18px;color:var(--text);font-weight:600}.code-stat-v.purple{color:var(--purple-hi)}
+
+  /* pricing */
+  .pricing{background:linear-gradient(180deg, var(--bg-2), var(--bg-3) 50%, var(--bg-2));border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .price-head{text-align:center;margin-bottom:56px}
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1100px;margin:0 auto}
+  .plan{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:38px;display:flex;flex-direction:column;position:relative;transition:all 0.3s}
+  .plan:hover{border-color:var(--border-hi);transform:translateY(-2px)}
+  .plan.featured{border-color:rgba(124,92,255,0.5);background:linear-gradient(180deg, rgba(124,92,255,0.05), var(--bg) 50%);box-shadow:0 0 0 1px rgba(124,92,255,0.15),0 24px 60px -20px rgba(124,92,255,0.18)}
+  .plan-flag{position:absolute;top:-12px;left:38px;background:var(--purple);color:#fff;font-size:11px;font-weight:600;padding:6px 14px;border-radius:99px;letter-spacing:0.05em;text-transform:uppercase;font-family:var(--mono);box-shadow:0 6px 18px -4px rgba(124,92,255,0.5)}
+  .plan-name{font-size:13px;color:var(--text-2);font-family:var(--mono);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:18px}
+  .plan-price{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}
+  .price-n{font-size:54px;font-weight:700;letter-spacing:-0.03em;line-height:1}
+  .price-per{font-size:15px;color:var(--text-2)}
+  .plan-sub{font-size:14px;color:var(--text-2);margin-bottom:32px;min-height:22px}
+  .plan-features{list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:36px;flex:1}
+  .plan-features li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text);line-height:1.5}
+  .check{width:18px;height:18px;flex-shrink:0;color:var(--purple-hi);margin-top:2px}
+  .plan-cta{display:flex;align-items:center;justify-content:center;gap:8px;padding:15px;border-radius:99px;font-weight:600;font-size:15px;transition:all 0.2s}
+  .plan-cta.primary{background:var(--purple);color:#fff;border:1px solid var(--purple)}
+  .plan-cta.primary:hover{background:var(--purple-hi);color:#1a1030;transform:translateY(-1px);box-shadow:0 12px 32px -10px rgba(124,92,255,0.5)}
+  .plan-cta.outline{background:transparent;color:var(--text);border:1px solid var(--border-hi)}
+  .plan-cta.outline:hover{background:var(--panel);border-color:var(--text-2)}
+  .pricing-note{text-align:center;color:var(--text-dim);font-size:13px;margin-top:36px;font-family:var(--mono)}
+  .pricing-note strong{color:var(--text-2);font-weight:500}
+
+  /* faq */
+  .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .faq{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));border:1px solid var(--border);border-radius:14px;padding:26px 30px;transition:all 0.2s}
+  .faq:hover{border-color:var(--border-hi)}
+  .faq h4{font-size:16px;font-weight:600;margin-bottom:10px;color:var(--text);display:flex;align-items:center;gap:10px}
+  .faq h4::before{content:'';width:5px;height:5px;background:var(--purple);border-radius:50%;flex-shrink:0;box-shadow:0 0 0 3px rgba(124,92,255,0.18)}
+  .faq p{font-size:14px;color:var(--text-2);line-height:1.6}
+  .faq p code{font-family:var(--mono);font-size:12px;background:rgba(124,92,255,0.12);color:var(--purple-hi);padding:1px 6px;border-radius:5px}
+
+  /* final */
+  .final{padding:140px 0;text-align:center;position:relative;overflow:hidden}
+  .final::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%, rgba(124,92,255,0.09), transparent 70%);pointer-events:none}
+  .final h2{font-size:clamp(36px,5vw,58px);max-width:none;margin:0 auto 24px;position:relative}
+  .final p{font-size:18px;color:var(--text-2);max-width:560px;margin:0 auto 36px;position:relative}
+  .final-ctas{position:relative;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+  /* footer */
+  .rb-footer{border-top:1px solid var(--border);background:var(--bg-2);padding:56px 20px 42px}
+  .rb-footer-inner{max-width:1080px;margin:0 auto;display:grid;gap:30px}
+  .rb-foot-kicker{display:block;font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-dim);margin-bottom:11px}
+  .rb-foot-family .rb-foot-copy{font-size:15px;line-height:1.75;color:var(--text-2);max-width:70ch;margin:0}
+  .rb-footer a{color:var(--text);border-bottom:1px solid transparent;transition:color .18s, border-color .18s}
+  .rb-footer a:hover{color:var(--purple-hi);border-bottom-color:var(--purple)}
+  .rb-foot-more{color:var(--purple-hi) !important;white-space:nowrap}
+  .rb-foot-icons{display:flex;flex-wrap:wrap;gap:18px 24px;align-items:center;font-family:var(--mono);font-size:13px}
+  .rb-foot-icons a{display:inline-flex;align-items:center;gap:8px;color:var(--text-2);border:none}
+  .rb-foot-icons a:hover{color:var(--purple-hi)}.rb-foot-icons svg{width:18px;height:18px;fill:currentColor}
+  .rb-foot-base{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center;padding-top:24px;border-top:1px solid var(--border);font-size:12.5px;color:var(--text-dim);font-family:var(--mono)}
+  .rb-foot-base img{width:15px;height:15px;vertical-align:-3px;margin-right:6px;image-rendering:pixelated;filter:hue-rotate(90deg) saturate(1.4)}
+  .rb-foot-base a{color:var(--text-dim)}
+
+  @media (max-width:1080px){.price-grid{grid-template-columns:1fr;gap:18px;max-width:520px}}
+  @media (max-width:900px){
+    .hero-grid,.cb-grid,.faq-grid{grid-template-columns:1fr;gap:48px}
+    .strip-inner{grid-template-columns:repeat(2,1fr);gap:28px}
+    .steps{grid-template-columns:1fr;gap:16px}.cb-step{grid-template-columns:1fr;gap:12px}
+    .nav{display:none}.top-inner{justify-content:space-between;gap:12px}
+    section{padding:80px 0}.hero{padding:64px 24px 56px}
+  }
 </style>
 </head>
 <body>
 
-  <nav class="top-nav" aria-label="Primary">
-    <div class="top-nav-inner">
-      <a class="brand-lockup" href="index.html">
-        <img src="../../assets/rhobear-logo.png?v=1782900000" alt="" class="pixelated" style="filter:hue-rotate(90deg) saturate(1.2) drop-shadow(0 0 7px rgba(124,92,255,0.55))">
-        <span>RHOBEAR</span>
-      </a>
-      <div class="nav-tabs"><a href="index.html" class="nav-tab ">HOME</a><a href="crew.html" class="nav-tab ">CREW</a><a href="hub.html" class="nav-tab ">HUB</a><a href="workbench.html" class="nav-tab ">WORKBENCH</a><a href="learn.html" class="nav-tab ">LEARN</a><div class="nav-dropdown"><a href="substrate.html" class="nav-tab " aria-haspopup="true">SUBSTRATE ▾</a><div class="nav-dropdown-panel"><a href="goal-autoloop.html" class="">Goal Autoloop</a><a href="judgment-loop.html" class="">Judgment Loop</a><a href="substrate.html" class="">Substrate Overview</a><a href="compass.html" class="">Compass</a><a href="worker-sessions.html" class="">Worker Sessions</a><a href="handoff-bus.html" class="">Handoff Bus</a><a href="safety-registry.html" class="">Safety Registry</a><a href="hub-contract.html" class="">Hub Contract</a><a href="openclaw.html" class="">OpenClaw</a></div></div><a href="built-with.html" class="nav-tab ">BUILT WITH</a></div>
-      <span class="nav-spacer"></span>
-      <a href="https://plans.rhobear.ai" class="btn-amber nav-cta">Open Plans →</a>
-    </div>
-  </nav>
-<main>
+<div class="bg-layer"><div class="grid-bg"></div><div class="glow-orb orb-1"></div><div class="glow-orb orb-2"></div><div class="glow-orb orb-3"></div></div>
 
-<section class="wrap-md" style="padding-top:48px;">
-  <img src="../../assets/rhobear-logo.png?v=1782940000" alt="" class="pixelated" style="float:right; height:132px; margin:0 0 14px 26px; image-rendering:auto; filter:hue-rotate(90deg) saturate(1.2) drop-shadow(0 0 26px rgba(124,92,255,0.5));">
-  <div class="eyebrow-row">PRODUCT · PLANS · STOP 5 · TAKE IT TO MARKET</div>
-  <h1 class="h1-page">Run your business where <em class="ai-glow">your agents read it.</em></h1>
-  <p class="lead">Plans is the cockpit your crew works from and you talk to. Calendar, booking, payments, and the bots that answer for you, all in one local-first place. It reads your day the same way your agents do, so the business and the build never drift apart.</p>
-  <div class="cta-row">
-    <a href="https://plans.rhobear.ai" class="btn-amber">Open in your browser →</a>
-    <a href="https://github.com/apps/rhobear-plans" class="btn-ghost">Install the GitHub App →</a>
-    <a href="index.html#workflow" class="btn-ghost">See the whole family →</a>
+<header class="top">
+  <div class="top-inner">
+    <a href="index.html" class="brand" aria-label="RHOBEAR — back to the Hub">
+      <img src="../../assets/rhobear-logo.png?v=1782940000" alt="">
+      <span class="brand-name"><b>RHOBEAR</b><span>Plans</span></span>
+    </a>
+    <nav class="nav">
+      <a href="#how" data-nav>How it works</a>
+      <a href="#private" data-nav>Private</a>
+      <a href="#pricing" data-nav>Pricing</a>
+      <a href="#faq" data-nav>FAQ</a>
+    </nav>
+    <a href="https://plans.rhobear.ai" class="cta-pill">Open Plans →</a>
   </div>
-  <div class="quant-line">calendar + booking &middot; PayPal + Stripe &middot; a bot per calendar &middot; Qwen-4B private &middot; Ursa for big moves</div>
-</section>
+</header>
 
-<!-- ORIGIN -->
-<section class="wrap">
-  <div class="eyebrow-row">WHERE IT STARTED</div>
-  <h2 style="font-size:clamp(1.8rem,3vw,2.5rem); margin:0 0 14px;">It began as a <em>handoff dock.</em></h2>
-  <p class="lead" style="max-width:64ch;">I built Plans so the crew could write each build's path in Mermaid and I could spot drift at a glance, instead of pinging anyone. Then I kept adding until it ran the whole back office.</p>
-  <div class="terminal" style="max-width:880px;"><span class="dim"># the dock the crew writes to</span>
-<span class="role">builder &gt;</span> path drawn &middot; checkout &rarr; review &rarr; deploy
-<span class="role">plans &gt;</span> rendered to board &middot; drift check: <span class="ok">none</span>
-<span class="role">foreman &gt;</span> slot booked &middot; Zoom + email fired
-<span class="role">plans &gt;</span> sale logged &middot; calendar and ledger agree</div>
-</section>
+<section class="hero" id="top">
+  <div class="hero-grid">
+    <div class="reveal">
+      <div class="live-tag"><span class="live-dot"></span> Local-first · your agents read it too</div>
+      <h1>Run your business where <span class="accent">your agents read it.</span></h1>
+      <p class="lede"><strong>Plans is the cockpit your crew works from and you talk to.</strong> Calendar, booking, payments, and the bots that answer for you, all in one local-first place. It reads your day the same way your agents do, so the business and the build never drift apart.</p>
+      <div class="hero-ctas">
+        <a href="https://plans.rhobear.ai" class="btn-primary">Open in your browser →</a>
+        <a href="#how" class="btn-secondary">See how it works →</a>
+      </div>
+      <div class="hero-stamp">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,11 8,16 17,5"/></svg>
+        Local Qwen-4B · reads email on-device · we don't train on your data
+      </div>
+    </div>
 
-<!-- THE BACK OFFICE -->
-<section class="wrap" style="padding-top:8px;">
-  <div class="eyebrow-row">THE BACK OFFICE</div>
-  <h2 style="font-size:clamp(1.7rem,2.8vw,2.3rem); margin:0 0 8px;">One place runs the parts that used to need five.</h2>
-  <div class="cal-legend">
-    <span><i class="cal-dot" style="background:#7c5cff;"></i>Personal</span>
-    <span><i class="cal-dot" style="background:#48d8b0;"></i>Site</span>
-    <span><i class="cal-dot" style="background:#f5a524;"></i>Support</span>
-    <span><i class="cal-dot" style="background:#4ade80;"></i>Billing</span>
-  </div>
-  <div class="card-grid cols-2" style="margin-top:24px; row-gap:26px;">
-    <div class="card-paper stitched feature-card">
-      <div class="num">A · CALENDAR + APPOINTMENTS</div>
-      <h3>Real calendars, not a to-do list.</h3>
-      <p>Personal, site, support, and billing each get their own muted accent, so a glance tells you which part of the business a day belongs to. The live thread is the only thing lit purple.</p>
-    </div>
-    <div class="card-paper stitched feature-card">
-      <div class="num">B · PAYMENTS THAT TRACK</div>
-      <h3>The money and the calendar agree.</h3>
-      <p>PayPal and Stripe forms log every sale inline. You see the booking and the payment as one row, not two systems you reconcile by hand later.</p>
-    </div>
-    <div class="card-paper stitched feature-card">
-      <div class="num">C · BOOKING THAT MATCHES YOUR SITE</div>
-      <h3>A slot books and the rest fires itself.</h3>
-      <p>Booking templates themed to your site. The moment a slot is taken, Zoom and email go out, so the lead never waits on you to push a button.</p>
-    </div>
-    <div class="card-paper stitched feature-card">
-      <div class="num">D · EMAIL, READ ON YOUR MACHINE</div>
-      <h3>Your inbox, surfaced by a local model.</h3>
-      <p>A local model reads your email on-device and brings up what needs you. The reading never leaves your machine, so the convenience costs you no privacy.</p>
+    <div class="reveal" style="transition-delay:0.18s">
+      <div class="ck-card">
+        <div class="ck-bar"><span class="pd"></span> plans · this week · 4 calendars</div>
+        <div class="ck-body">
+          <div class="ck-week">
+            <div class="ck-day">M<span class="dot t"></span></div>
+            <div class="ck-day">T<span class="dot p"></span></div>
+            <div class="ck-day now">W<span class="dot a"></span></div>
+            <div class="ck-day">T<span class="dot g"></span></div>
+            <div class="ck-day">F<span class="dot p"></span></div>
+            <div class="ck-day">S</div>
+            <div class="ck-day">S</div>
+          </div>
+          <div class="ck-row"><span class="t">10:30</span><span class="lbl">Discovery call</span><span class="fired">Zoom + email fired ✓</span></div>
+          <div class="ck-row"><span class="t">14:00</span><span class="lbl">Invoice · $1,200</span><span class="fired">Stripe logged ✓</span></div>
+          <div class="ck-bot"><b>bot ›</b> Booked Wednesday 10:30, sent the invite, and flagged one email that needs you.</div>
+        </div>
+        <div class="ck-meta">
+          <div>calendars<b>4</b></div>
+          <div>on-device<b>Qwen-4B</b></div>
+          <div>cloud<b>only on ask</b></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- A BOT PER CALENDAR -->
-<section class="wrap" style="padding-top:8px;">
-  <div class="eyebrow-row">TALK TO IT</div>
-  <h2 style="font-size:clamp(1.7rem,2.8vw,2.3rem); margin:0 0 12px;">One Telegram bot <em>per calendar.</em></h2>
-  <p class="lead" style="max-width:66ch;">One bot for personal, one for work, one for business. Each handles its own invites and email, keeps its own settings log, and answers in plain language. You do not open the app to run your day. You just talk to the bot that owns that part of it.</p>
-</section>
-
-<!-- PRIVATE BY DEFAULT -->
-<section class="band-dark install-band">
-  <div class="wrap" style="position:relative;">
-    <div style="max-width:760px;">
-      <div class="eyebrow-row">PRIVATE BY DEFAULT</div>
-      <h2 style="font-size:clamp(1.8rem,3vw,2.5rem); margin:0 0 18px;">Your data stays <em>on your machine.</em></h2>
-      <p style="color:var(--c-dark-ink-2); font-size:1.05rem; line-height:1.65;">A local <strong>Qwen-4B</strong> keeps tokens cheap and reads your email on-device, so nothing leaves your machine. For the big moves, sharp diagrams or always-on crons wired to your own cloud, switch to <strong>Ursa</strong>, our onboard LLM, on credits or a monthly sub. We do not train on your data.</p>
+<div class="strip">
+  <div class="strip-inner reveal-stagger">
+    <div class="stat-cell"><div class="stat-n">4-in-1</div><div class="stat-l">Calendar · booking · pay · bots</div><div class="stat-s">One place, not five tools</div></div>
+    <div class="stat-cell"><div class="stat-n">1 / cal</div><div class="stat-l">Telegram bot per calendar</div><div class="stat-s">Talk to it, don't open the app</div></div>
+    <div class="stat-cell"><div class="stat-n">On-device</div><div class="stat-l">Qwen-4B reads your email</div><div class="stat-s">Nothing leaves your machine</div></div>
+    <div class="stat-cell"><div class="stat-n">PayPal+Stripe</div><div class="stat-l">Payments that track</div><div class="stat-s">Booking and money agree</div></div>
   </div>
-  </div>
-</section>
+</div>
 
-<!-- WHAT IT COSTS -->
-<section class="wrap" style="padding-top:8px;">
-  <div class="eyebrow-row">WHAT IT COSTS TO RUN</div>
-  <h2 style="font-size:clamp(1.7rem,2.8vw,2.3rem); margin:0 0 8px;">Free on your machine. <em class="ai-glow">Cloud only when you ask.</em></h2>
-  <div class="card-grid cols-2" style="margin-top:24px; row-gap:26px;">
-    <div class="card-paper stitched feature-card">
-      <div class="num">LOCAL · QWEN-4B</div>
-      <h3>Zero tokens, zero meter.</h3>
-      <p>The on-device Qwen-4B reads your email and runs the day for nothing. It lives on your machine, so the calendar, the bots, and the inbox cost you no per-token bill.</p>
+<section id="how">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">How it works</span>
+      <h2>It started as a handoff dock. <span class="accent">Then it ran everything.</span></h2>
+      <p class="section-lede">I built Plans so the crew could write each build's path and I could spot drift at a glance. Then I kept adding until it ran the whole back office.</p>
     </div>
-    <div class="card-paper stitched feature-card">
-      <div class="num">CLOUD · URSA</div>
-      <h3>Pay only for the big moves.</h3>
-      <p>Sharp diagrams and always-on crons wired to your own cloud run on Ursa, our onboard LLM, on credits or a monthly sub. You reach for it when a job earns it, not by default.</p>
+    <div class="steps reveal-stagger">
+      <div class="step"><span class="step-n">01</span><div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></div><h3>Real calendars, not a to-do list</h3><p>Personal, site, support, billing each get a muted accent. A glance tells you which part of the business a day belongs to.</p></div>
+      <div class="step"><span class="step-n">02</span><div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div><h3>A slot books, the rest fires</h3><p>The moment a slot is taken, Zoom and email go out. The lead never waits on you to push a button.</p></div>
+      <div class="step"><span class="step-n">03</span><div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div><h3>Money and calendar agree</h3><p><code>PayPal</code> and <code>Stripe</code> log every sale inline. You see the booking and the payment as one row, not two systems to reconcile.</p></div>
+      <div class="step"><span class="step-n">04</span><div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><h3>Talk to the bot</h3><p>One Telegram bot per calendar. Each answers in plain language and keeps its own log. You run your day without opening the app.</p></div>
     </div>
   </div>
 </section>
 
-<!-- RELAY HANDOFF -->
-<section class="wrap">
-  <div class="eyebrow-row">WHERE PLANS SITS</div>
-  <h2 style="font-size:clamp(1.7rem,2.8vw,2.3rem); margin:0 0 12px;">Clean and built comes in. <em>A closing rep goes out.</em></h2>
-  <p style="max-width:66ch; color:var(--c-ink-2); line-height:1.65;">Reviews hands Plans work that already passed the gate. Plans turns it into a running business, then hands the part that answers your leads to Sales. One hand passes to the next.</p>
-  <div class="relay-next">
-    <a href="https://reviews.rhobear.ai/"><span class="arw">←</span> Reviews</a>
-    <span class="now">Plans</span>
-    <a href="sales.html">Sales <span class="arw">→</span></a>
+<section id="private">
+  <div class="wrap">
+    <div class="cb-grid">
+      <div class="reveal">
+        <span class="eyebrow">Private by default</span>
+        <h2>Your data stays <span class="accent">on your machine.</span></h2>
+        <p class="section-lede" style="margin-bottom:0">A local <strong style="color:var(--text)">Qwen-4B</strong> keeps tokens cheap and reads your email on-device, so nothing leaves your machine and the convenience costs you no privacy. For the big moves, sharp diagrams or always-on crons wired to your own cloud, you reach for Ursa. We do not train on your data.</p>
+        <div class="cb-steps">
+          <div class="cb-step"><div class="cb-step-tag">ON-DEVICE</div><div><h4>The model lives with your data</h4><p>Qwen-4B runs on your box. Your inbox is read where it sits, not shipped to someone else's server to be summarized.</p></div></div>
+          <div class="cb-step"><div class="cb-step-tag">CHEAP</div><div><h4>No token meter on the day-to-day</h4><p>The local model runs the calendar, the bots, and the inbox for nothing. You only spend when you ask the cloud for something big.</p></div></div>
+          <div class="cb-step"><div class="cb-step-tag">YOURS</div><div><h4>We don't train on you</h4><p>No fine-tuning on your calendar, your clients, or your mail. The data is yours, and it stays that way.</p></div></div>
+        </div>
+        <div class="cb-callout"><strong>Local first, cloud on ask.</strong> Ursa is there for the big moves, never the default.</div>
+      </div>
+      <div class="reveal" style="transition-delay:0.18s">
+        <div class="code-card">
+          <div class="code-head"><span>plans · this morning</span><span class="pulse"><span class="pulse-dot"></span> on-device</span></div>
+          <div class="code-body">
+<span class="ln"><span class="dim"># local Qwen-4B · your inbox, read where it sits</span></span>
+<span class="ln"><span class="k">scan</span> 38 new · 2 need you · <span class="ok">0 sent to cloud</span></span>
+<span class="ln"><span class="k">flag</span> "contract — reply by 5pm"</span>
+<span class="ln"><span class="k">book</span> Wed 10:30 · Zoom + email <span class="ok">fired</span></span>
+<span class="ln"><span class="k">pay</span> invoice #1180 · Stripe <span class="ok">logged</span></span>
+<span class="ln"><span class="k">bot</span> answered 6 DMs across 3 calendars</span>
+          </div>
+          <div class="code-stats">
+            <div class="code-stat"><div class="code-stat-k">Read on-device</div><div class="code-stat-v">100%</div></div>
+            <div class="code-stat"><div class="code-stat-k">Sent to cloud</div><div class="code-stat-v">0</div></div>
+            <div class="code-stat"><div class="code-stat-k">Bots answering</div><div class="code-stat-v">3</div></div>
+            <div class="code-stat"><div class="code-stat-k">Trained on your data</div><div class="code-stat-v purple">never</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
-</main>
 
-<div class="prevnext"><div class="prevnext-inner"><a href="https://reviews.rhobear.ai/" class="pn-link "><span class="pn-mini">← Previous</span><span class="pn-name">Reviews &amp; Verifies</span></a><a href="sales.html" class="pn-link "><span class="pn-mini">Next →</span><span class="pn-name">Sales, by RHOBEAR</span></a></div></div>
-<footer class="site-footer"><div class="site-footer-inner"><div class="footer-row"><div class="footer-copy">© 2026 Sun Sponge LLC · <a href="https://github.com/rhobear-ai">GitHub</a> · <a href="https://github.com/deariencampbell1-sys/rhobear/blob/main/PRIVACY.md" target="_blank" rel="noopener">privacy</a> · <a href="faq.html">FAQ</a></div><div class="footer-tag">Lean. Local. Private. Yours.</div></div><div class="footer-disclaimer">All third-party trademarks and logos are property of their respective owners and shown here for integration identification purposes only. No partnership, sponsorship, or endorsement is implied.</div></div></footer>
-<script src="shell.js?v=1782980000" defer></script>
+<section id="pricing" class="pricing">
+  <div class="wrap">
+    <div class="price-head reveal">
+      <span class="eyebrow">Pricing</span>
+      <h2 style="margin:0 auto 18px">Free on your machine. <span class="accent">Cloud only when you ask.</span></h2>
+      <p class="section-lede" style="margin:0 auto">The whole cockpit runs locally for nothing. Ursa, our onboard cloud LLM, is there for the big moves, and you reach for it when a job earns it, not by default.</p>
+    </div>
+    <div class="price-grid reveal-stagger">
+      <div class="plan featured">
+        <div class="plan-flag">★ Runs it all</div>
+        <div class="plan-name">Local</div>
+        <div class="plan-price"><span class="price-n">$0</span><span class="price-per">/ forever</span></div>
+        <div class="plan-sub">The cockpit, on your own box.</div>
+        <ul class="plan-features">
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Calendar, booking, payments, all 4 calendars</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>One Telegram bot per calendar</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Local Qwen-4B reads your email on-device</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>PayPal + Stripe, no per-token bill</li>
+        </ul>
+        <a href="https://plans.rhobear.ai" class="plan-cta primary">Open Plans →</a>
+      </div>
+      <div class="plan">
+        <div class="plan-name">Ursa · cloud</div>
+        <div class="plan-price"><span class="price-n">Credits</span></div>
+        <div class="plan-sub">Pay only for the big moves.</div>
+        <ul class="plan-features">
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Everything in Local</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Sharp diagrams and heavier reasoning on demand</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Pay as you go, only when you invoke it</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Top up credits, no standing meter</li>
+        </ul>
+        <a href="https://plans.rhobear.ai" class="plan-cta outline">Add Ursa credits →</a>
+      </div>
+      <div class="plan">
+        <div class="plan-name">Ursa+ · always-on</div>
+        <div class="plan-price"><span class="price-n">Sub</span></div>
+        <div class="plan-sub">For crons that never sleep.</div>
+        <ul class="plan-features">
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Everything in Ursa</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Always-on crons wired to your own cloud</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Heavier scheduled jobs, monthly</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Cancel anytime, local keeps working</li>
+        </ul>
+        <a href="https://plans.rhobear.ai" class="plan-cta outline">Go always-on →</a>
+      </div>
+    </div>
+    <p class="pricing-note"><strong>Local is the whole product.</strong> Ursa is a tool you pick up for the big moves, never a tax on the day-to-day.</p>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">FAQ</span>
+      <h2>Honest answers to the obvious questions.</h2>
+      <p class="section-lede">Anything not here, ping us.</p>
+    </div>
+    <div class="faq-grid reveal-stagger">
+      <div class="faq"><h4>Is my data really private?</h4><p>Yes. A local <code>Qwen-4B</code> reads your email on-device. The day-to-day never leaves your machine, and we don't train on your data.</p></div>
+      <div class="faq"><h4>What is Ursa?</h4><p>Our onboard cloud LLM, for the big moves only, like sharp diagrams or always-on crons. You pay for it with credits or a monthly sub, and only when you reach for it.</p></div>
+      <div class="faq"><h4>What's a bot per calendar?</h4><p>One Telegram bot for personal, one for work, one for the business. Each handles its own invites and email and answers in plain language.</p></div>
+      <div class="faq"><h4>Does it take payments?</h4><p>Yes. <code>PayPal</code> and <code>Stripe</code> forms log every sale inline, so the booking and the money show up as one row.</p></div>
+      <div class="faq"><h4>Why local-first?</h4><p>Because your business data is the last thing you want metered or mined. Local keeps it cheap, private, and fast. Cloud is opt-in.</p></div>
+      <div class="faq"><h4>Where does Plans sit?</h4><p>Reviews hands Plans work that already passed the gate. Plans turns it into a running business, then hands the part that answers leads to Sales.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="install" class="final">
+  <div class="wrap reveal">
+    <h2>Stop running your business<br><span class="accent">in five tabs.</span></h2>
+    <p>One local-first cockpit. Calendar, booking, payments, and a bot per calendar, on your machine.</p>
+    <div class="final-ctas">
+      <a href="https://plans.rhobear.ai" class="btn-primary">Open in your browser →</a>
+      <a href="#pricing" class="btn-secondary">See pricing →</a>
+    </div>
+  </div>
+</section>
+
+<footer class="rb-footer">
+  <div class="rb-footer-inner">
+    <div class="rb-foot-family">
+      <span class="rb-foot-kicker">Stop 5 of the RHOBEAR family</span>
+      <p class="rb-foot-copy">
+        Plans is the engine that turns finished work into a running business.
+        <a href="https://reviews.rhobear.ai/">Reviews</a> hands it code that already passed the gate; Plans runs the calendar, the bookings, and the money, then hands the part that answers your leads to
+        <a href="https://rhobear.ai/sales.html">Sales</a>. The crew that builds it all lives in
+        <a href="https://rhobear.ai/app.html">the Hub</a>, shaping in <a href="https://rhobear.ai/designs.html">Designs</a> and capturing with <a href="https://rhobear.ai/sunsponge.html">SunSponge</a>.
+        <a href="https://rhobear.ai/" class="rb-foot-more">See the whole workflow →</a>
+      </p>
+    </div>
+    <div class="rb-foot-social">
+      <span class="rb-foot-kicker">Find us elsewhere</span>
+      <div class="rb-foot-icons">
+        <a href="https://x.com/rhobearai" target="_blank" rel="noopener" aria-label="RHOBEAR on X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-6.9l-5.4-7-6.2 7H1.7l8.1-9.3L1 2h7l4.9 6.5L18.9 2Zm-1.2 18h1.9L7.4 4H5.4l12.3 16Z"/></svg>X</a>
+        <a href="https://instagram.com/rhobear.ai" target="_blank" rel="noopener" aria-label="RHOBEAR on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>Instagram</a>
+        <a href="https://github.com/rhobear-ai" target="_blank" rel="noopener" aria-label="RHOBEAR on GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.2.8-.5v-1.8c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.3 11.3 0 0 1 6 0C17 5 18 5.3 18 5.3c.6 1.6.2 2.9.1 3.2.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.3v3.4c0 .3.2.6.8.5A11.5 11.5 0 0 0 12 .5Z"/></svg>GitHub</a>
+      </div>
+    </div>
+    <div class="rb-foot-base">
+      <span><img src="../../assets/rhobear-logo.png?v=1782940000" alt="">© 2026 RHOBEAR · A SunSponge LLC product · Local-first · we don't train on your data.</span>
+      <span><a href="https://rhobear.ai/">The family</a> · <a href="https://github.com/deariencampbell1-sys/rhobear/blob/main/PRIVACY.md">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -80px 0px'});
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(el=>io.observe(el));
+  const sections=['how','private','pricing','faq'].map(id=>document.getElementById(id));
+  const navLinks=document.querySelectorAll('a[data-nav]');
+  const navIO=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){const id=e.target.id;navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));}});},{rootMargin:'-30% 0px -60% 0px'});
+  sections.forEach(s=>s&&navIO.observe(s));
+</script>
 </body>
 </html>
