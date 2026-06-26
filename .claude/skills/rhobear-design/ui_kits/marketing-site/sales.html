@@ -14,6 +14,15 @@
   --c-amber:#60a5fa !important;       --c-amber-deep:#93c5fd !important;
   --c-amber-soft:rgba(96,165,250,0.16) !important;  --c-amber-tint:rgba(96,165,250,0.10) !important;
 }
+/* ===== AMBIENT TONE — this page's own accent, washed behind the shared
+   starfield so it reads as itself, not the home page. ===== */
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(58% 44% at 15% 3%,  var(--c-amber-soft), transparent 60%),
+    radial-gradient(50% 40% at 88% 13%, var(--c-amber-tint), transparent 62%),
+    radial-gradient(74% 56% at 66% 106%, var(--c-amber-soft), transparent 66%);
+}
 .btn-amber{ color:#04140f !important; box-shadow:0 0 0 1px rgba(96,165,250,0.40),0 10px 26px -10px rgba(96,165,250,0.55) !important; }
 .btn-amber:hover{ color:#04140f !important; background:var(--c-amber-deep) !important; }
 .eyebrow-row::before{ background:var(--c-amber) !important; }
