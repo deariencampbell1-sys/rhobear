@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>RHOBEAR · Reviews</title>
-  <meta name="description" content="RHOBEAR Reviews is AI code review on every pull request: a fresh reviewer each PR, no context carryover, reads your whole repo through CodeGraph, with a second model grading it. Verifies maps dead code and dead routes. Stop 4 of the RHOBEAR ecosystem: keep it clean.">
+  <meta name="description" content="RHOBEAR Reviews is AI code review on every pull request: a fresh reviewer each PR, no context carryover, reads your whole repo as a graph, with a second model grading it. Verifies maps dead code and dead routes. Stop 4 of the RHOBEAR ecosystem: keep it clean.">
   <link rel="stylesheet" href="../../colors_and_type.css">
   <link rel="stylesheet" href="shell.css?v=1782970000">
   <link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782900000">
@@ -50,13 +50,13 @@
   <img src="../../assets/rhobear-logo.png?v=1782940000" alt="" class="pixelated" style="float:right; height:132px; margin:0 0 14px 26px; image-rendering:auto; filter:hue-rotate(250deg) saturate(1.35) brightness(1.05) drop-shadow(0 0 26px rgba(255,184,0,0.5));">
   <div class="eyebrow-row">PRODUCT · REVIEWS · STOP 4 · KEEP IT CLEAN</div>
   <h1 class="h1-page">An honest verdict before anything <em class="ai-glow">merges.</em></h1>
-  <p class="lead">Reviews is the gate every pull request walks through. A fresh reviewer spins up on each PR and is thrown away after, so last week's context never bleeds into this week's work. It still knows your code, reading the whole repo through CodeGraph with a second model grading over its shoulder.</p>
+  <p class="lead">Reviews is the gate every pull request walks through. A fresh reviewer spins up on each PR and is thrown away after, so last week's context never bleeds into this week's work. It still knows your code, reading the whole repo as a graph with a second model grading over its shoulder.</p>
   <div class="cta-row">
     <a href="https://reviews.rhobear.ai" class="btn-amber">See it review →</a>
     <a href="https://github.com/apps/rhobear-reviews" class="btn-ghost">Install Reviews →</a>
     <a href="index.html#workflow" class="btn-ghost">See the whole family →</a>
   </div>
-  <div class="quant-line">fresh reviewer every PR &middot; knows your repo via CodeGraph &middot; second model grades it &middot; pass / block, stated plainly</div>
+  <div class="quant-line">fresh reviewer every PR &middot; reads your whole repo as a graph &middot; second model grades it &middot; pass / block, stated plainly</div>
 </section>
 
 <!-- THE FRESH REVIEWER -->
@@ -68,7 +68,7 @@
     <div class="score">A−</div>
     <div class="vmeta">
       PR #142 &middot; <span class="vdot pass"></span>merge-ready<br>
-      reviewed against CodeGraph &middot; second model agreed<br>
+      reviewed against the whole-repo graph &middot; second model agreed<br>
       1 note: rename <code>fetchUser2</code>, it shadows the live one
     </div>
   </div>
@@ -104,7 +104,7 @@
     <div class="card-paper stitched feature-card">
       <div class="num">YOUR KEY · NO MARKUP</div>
       <h3>Point it at the model you already pay for.</h3>
-      <p>Reviews reads through CodeGraph, so a review is cheap on tokens to start with. Bring your own key and you pay the model directly, with nothing added on top.</p>
+      <p>Reviews reads your whole repo as a graph, so a review is cheap on tokens to start with. Bring your own key and you pay the model directly, with nothing added on top.</p>
     </div>
     <div class="card-paper stitched feature-card">
       <div class="num">HOSTED · WE RUN IT</div>
