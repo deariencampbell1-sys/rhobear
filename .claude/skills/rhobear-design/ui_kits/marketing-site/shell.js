@@ -624,7 +624,7 @@
         '<a href="app.html">Build it · Hub</a>' +
         '<span class="arw">→</span><a href="designs.html">Shape it · Designs</a>' +
         '<span class="arw">→</span><a href="sunsponge.html">Capture it · SunSponge</a>' +
-        '<span class="arw">→</span><a href="reviews.html">Keep it clean · Reviews</a>' +
+        '<span class="arw">→</span><a href="https://reviews.rhobear.ai/">Keep it clean · Reviews</a>' +
         '<span class="arw">→</span><a href="plans.html">Take it to market · Plans</a>' +
         '<span class="arw">→</span><a href="sales.html">It sells itself · Sales</a>' +
       '</div>';
