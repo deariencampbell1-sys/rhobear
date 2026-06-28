@@ -142,6 +142,17 @@
   .niche-chips{display:flex;flex-wrap:wrap;gap:9px;max-width:560px}
   .chip{font-family:var(--mono);font-size:12px;color:var(--text);padding:8px 14px;border-radius:99px;background:var(--bg-2);border:1px solid var(--border)}
   .chip.more{color:var(--purple-hi);border-color:var(--border-hi);background:var(--purple-glow)}
+  /* glowing, clickable niche chips -> dive-in docs pages */
+  a.chip.glow{--cg:var(--purple);cursor:pointer;display:inline-flex;align-items:center;gap:7px;color:#fff;text-decoration:none;
+    border-color:color-mix(in srgb,var(--cg) 55%,transparent);background:color-mix(in srgb,var(--cg) 14%,var(--bg-2));
+    box-shadow:0 0 0 1px color-mix(in srgb,var(--cg) 28%,transparent),0 0 16px -5px var(--cg);
+    transition:transform .18s ease, box-shadow .25s ease, border-color .2s ease;animation:chipPulse 3.4s ease-in-out infinite}
+  a.chip.glow::after{content:"→";opacity:.55;font-size:11px;transition:transform .18s ease}
+  a.chip.glow:hover{color:#fff;transform:translateY(-2px);border-color:var(--cg);box-shadow:0 0 0 1px var(--cg),0 0 26px -2px var(--cg)}
+  a.chip.glow:hover::after{transform:translateX(3px);opacity:1}
+  @keyframes chipPulse{0%,100%{box-shadow:0 0 0 1px color-mix(in srgb,var(--cg) 26%,transparent),0 0 12px -6px var(--cg)}
+    50%{box-shadow:0 0 0 1px color-mix(in srgb,var(--cg) 46%,transparent),0 0 22px -3px var(--cg)}}
+  @media (prefers-reduced-motion: reduce){a.chip.glow{animation:none}}
 
   /* how */
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
@@ -454,15 +465,16 @@
     <div class="niche reveal">
       <div class="niche-copy">
         <h4>Plus agents built for your trade</h4>
-        <p>Niche agents that already know how your industry runs — more land in the catalog every week.</p>
+        <p>Niche agents that already know how your industry runs. <strong>Tap one</strong> to dive into the exact problems it solves, the workflows it runs daily, and the work it does in the background — more land in the catalog every week.</p>
       </div>
       <div class="niche-chips">
-        <span class="chip">Roofing</span>
-        <span class="chip">Dental</span>
-        <span class="chip">Law</span>
-        <span class="chip">Solar</span>
-        <span class="chip">HVAC</span>
-        <span class="chip">Real estate</span>
+        <a class="chip glow" href="plans-use.html?n=roofing"    style="--cg:var(--amber);animation-delay:0s">Roofing</a>
+        <a class="chip glow" href="plans-use.html?n=dental"     style="--cg:var(--teal);animation-delay:.35s">Dental</a>
+        <a class="chip glow" href="plans-use.html?n=law"        style="--cg:var(--purple);animation-delay:.7s">Law</a>
+        <a class="chip glow" href="plans-use.html?n=solar"      style="--cg:var(--green);animation-delay:1.05s">Solar</a>
+        <a class="chip glow" href="plans-use.html?n=hvac"       style="--cg:var(--blue,#5b9dff);animation-delay:1.4s">HVAC</a>
+        <a class="chip glow" href="plans-use.html?n=realestate" style="--cg:var(--rose,#fb7185);animation-delay:1.75s">Real estate</a>
+        <a class="chip glow" href="plans-use.html?n=home"       style="--cg:var(--amber);animation-delay:2.1s">Home &amp; family</a>
         <span class="chip more">+ new every week →</span>
       </div>
     </div>
