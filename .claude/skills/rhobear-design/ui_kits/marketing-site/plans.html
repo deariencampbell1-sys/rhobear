@@ -347,6 +347,18 @@
   .flow-foot{margin:20px 0 0;text-align:center;font-size:15px;color:#fff}.flow-foot b{color:var(--purple-hi)}
   @media(max-width:900px){.act-grid{grid-template-columns:1fr 1fr}}
   @media(max-width:600px){.act-grid{grid-template-columns:1fr}}
+  /* marquee strip — self-contained (this page does not load shell.css) */
+  .marquee-strip{padding:11px 0;overflow:hidden;background:var(--bg-3);border-top:1px solid rgba(170,200,255,.12);border-bottom:1px solid rgba(170,200,255,.12);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 6%,#000 94%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 6%,#000 94%,transparent 100%)}
+  .marquee-strip .marquee-row{display:flex;overflow:hidden;width:100%;align-items:center;height:26px;margin:0}
+  .marquee-strip .marquee-track{display:flex;gap:40px;align-items:center;flex-shrink:0;white-space:nowrap;padding-right:40px;animation:marquee-l 46s linear infinite;will-change:transform}
+  .marquee-strip .marquee-track.r{animation:marquee-r 46s linear infinite}
+  .marquee-strip .marquee-track>*{flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;min-width:44px;height:26px}
+  .marquee-strip .marquee-track img{height:22px;max-width:92px;width:auto;opacity:.6;filter:grayscale(.4);transition:opacity .2s ease,filter .2s ease}
+  .marquee-strip .marquee-track img:hover{opacity:1;filter:grayscale(0)}
+  .marquee-strip:hover .marquee-track{animation-play-state:paused}
+  @keyframes marquee-l{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  @keyframes marquee-r{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
+  @media(prefers-reduced-motion:reduce){.marquee-strip .marquee-track{animation:none}}
 </style>
 </head>
 <body>
