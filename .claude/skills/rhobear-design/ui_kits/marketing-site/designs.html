@@ -1,135 +1,605 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RHOBEAR · Designs</title>
-  <meta name="description" content="RHOBEAR Designs is the open-source infinite canvas where you finish the last 10% by hand: drag it, swap a font, fix one color, with no model round-trip. It touches real JS, CSS, and HTML with hidden embeds without breaking them. MIT. Stop 2 of the RHOBEAR ecosystem: shape it.">
-  <link rel="stylesheet" href="../../colors_and_type.css">
-  <link rel="stylesheet" href="shell.css?v=1782970000">
-  <link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782900000">
-<style id="rho-tweaks-style">
-/* ===== DESIGNS PAGE LOCK-IN — red accent (its relay color) ===== */
-:root{
-  --c-amber:#e94560 !important;       --c-amber-deep:#ff6b81 !important;
-  --c-amber-soft:rgba(233,69,96,0.16) !important;  --c-amber-tint:rgba(233,69,96,0.10) !important;
-}
-.btn-amber{ color:#fff !important; box-shadow:0 0 0 1px rgba(233,69,96,0.40),0 10px 26px -10px rgba(233,69,96,0.55) !important; }
-.btn-amber:hover{ color:#fff !important; background:var(--c-amber-deep) !important; }
-.eyebrow-row::before{ background:var(--c-amber) !important; }
-/* hand-to-hand relay strip (mirrors the front-page connective wording) */
-.relay-next{ display:flex; flex-wrap:wrap; align-items:center; gap:9px 10px; margin-top:22px; font-family:var(--font-display); font-size:.96rem; }
-.relay-next .now{ color:var(--c-amber-deep); border:1px solid rgba(233,69,96,0.5); border-radius:999px; padding:6px 13px; background:rgba(233,69,96,0.12); }
-.relay-next a{ color:var(--c-ink-2); text-decoration:none; border:1px solid var(--c-line); border-radius:999px; padding:6px 13px; transition:color .18s,border-color .18s,background .18s; }
-.relay-next a:hover{ color:var(--c-amber-deep); border-color:rgba(233,69,96,0.5); background:rgba(233,69,96,0.07); }
-.relay-next .arw{ color:var(--c-ink-3); }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RHOBEAR Designs — finish the last ten percent by hand</title>
+<meta name="description" content="Open your real HTML on an infinite canvas and finish it by hand: drag it, swap a font, fix one color, with no round-trip to a model. Edits the real DOM, won't break your embeds, exports clean code you own. MIT. Bring your own model. Free forever.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782940000">
+<style>
+  :root{
+    --bg:#05100e; --bg-2:#081813; --bg-3:#0a1f1a; --panel:rgba(255,255,255,0.03);
+    --panel-hi:rgba(255,255,255,0.05);
+    --border:rgba(255,255,255,0.07); --border-hi:rgba(255,107,129,0.20);
+    --text:#e9f5f1; --text-2:#97b3ab; --text-dim:#5a7a71;
+    --teal:#e94560; --teal-hi:#ff6b81; --teal-glow:rgba(233,69,96,0.18);
+    --aqua:#ff8fa3; --green:#4ade80; --red:#f87171;
+    --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+    --sans:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  section[id],#top{scroll-margin-top:84px}
+  a{color:inherit;text-decoration:none}
+  a:hover{color:var(--teal-hi)}
+  ::selection{background:var(--teal);color:#fff}
+
+  /* ═══════════ DOT-CANVAS BACKGROUND (a drafting table, not a terminal) ═══════════ */
+  .bg-layer{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+  .grid-bg{
+    position:absolute;inset:-100px;
+    background-image:radial-gradient(rgba(255,107,129,0.13) 1.1px, transparent 1.4px);
+    background-size:26px 26px;
+    mask-image:radial-gradient(ellipse 92% 72% at 50% 28%, #000 28%, transparent 80%);
+    -webkit-mask-image:radial-gradient(ellipse 92% 72% at 50% 28%, #000 28%, transparent 80%);
+    animation:gridDrift 90s linear infinite;
+  }
+  @keyframes gridDrift{0%{transform:translate(0,0)}100%{transform:translate(26px,26px)}}
+  .glow-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.5;animation:orbDrift 26s ease-in-out infinite alternate}
+  .orb-1{width:520px;height:520px;background:radial-gradient(circle, rgba(233,69,96,0.30) 0%, transparent 70%);top:-90px;right:-110px;animation-duration:32s}
+  .orb-2{width:460px;height:460px;background:radial-gradient(circle, rgba(255,143,163,0.18) 0%, transparent 70%);top:42vh;left:-130px;animation-duration:40s;animation-delay:-8s}
+  .orb-3{width:380px;height:380px;background:radial-gradient(circle, rgba(233,69,96,0.16) 0%, transparent 70%);top:122vh;right:10vw;animation-duration:48s;animation-delay:-15s}
+  @keyframes orbDrift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-30px) scale(1.08)}100%{transform:translate(-30px,40px) scale(0.94)}}
+
+  /* ═══════════ REVEAL ON SCROLL ═══════════ */
+  .reveal{opacity:0;transform:translateY(36px);filter:blur(6px);transition:opacity 1.0s cubic-bezier(0.16,1,0.3,1), transform 1.0s cubic-bezier(0.16,1,0.3,1), filter 1.0s ease}
+  .reveal.in{opacity:1;transform:translateY(0);filter:blur(0)}
+  .reveal-stagger > *{opacity:0;transform:translateY(28px) scale(0.98);filter:blur(4px);transition:opacity 0.8s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s ease}
+  .reveal-stagger.in > *{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
+  .reveal-stagger.in > *:nth-child(1){transition-delay:0.04s}
+  .reveal-stagger.in > *:nth-child(2){transition-delay:0.14s}
+  .reveal-stagger.in > *:nth-child(3){transition-delay:0.24s}
+  .reveal-stagger.in > *:nth-child(4){transition-delay:0.34s}
+  .reveal-stagger.in > *:nth-child(5){transition-delay:0.44s}
+  .reveal-stagger.in > *:nth-child(6){transition-delay:0.54s}
+  @media (prefers-reduced-motion: reduce){.reveal,.reveal-stagger > *{opacity:1;transform:none;filter:none;transition:none}}
+
+  /* ═══════════ TOPBAR ═══════════ */
+  .top{position:sticky;top:0;z-index:50;background:rgba(5,16,14,0.7);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+  .top-inner{max-width:1240px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:24px}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:600;font-size:15px;letter-spacing:0.01em}
+  .brand img{width:34px;height:34px;display:block;image-rendering:pixelated;filter:hue-rotate(180deg) saturate(1.25) drop-shadow(0 0 7px rgba(233,69,96,0.6))}
+  .brand-name{display:flex;align-items:baseline;gap:8px;letter-spacing:0.005em}
+  .brand-name b{font-weight:700;color:var(--text)}
+  .brand-name span{color:var(--text-2);font-weight:400}
+  .nav{display:flex;gap:4px;margin-left:auto;font-size:13px;font-weight:500}
+  .nav a{padding:8px 14px;border-radius:8px;color:var(--text-2);transition:all 0.15s}
+  .nav a:hover{background:var(--panel);color:var(--text)}
+  .nav a.active{color:var(--teal)}
+  .cta-pill{background:var(--teal);color:#fff;padding:10px 18px;border-radius:99px;font-weight:600;font-size:13px;letter-spacing:0.01em;border:1px solid var(--teal);transition:all 0.2s;display:inline-flex;align-items:center;gap:8px}
+  .cta-pill:hover{background:var(--teal-hi);color:#fff;transform:translateY(-1px);box-shadow:0 8px 24px -6px rgba(233,69,96,0.45)}
+  .cta-pill svg{width:14px;height:14px}
+
+  /* ═══════════ HERO ═══════════ */
+  .hero{max-width:1240px;margin:0 auto;padding:96px 24px 80px;position:relative}
+  .hero-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:64px;align-items:center}
+  .live-tag{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11px;color:var(--teal);padding:6px 12px;background:rgba(233,69,96,0.08);border:1px solid rgba(233,69,96,0.22);border-radius:99px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:26px}
+  .live-dot{width:6px;height:6px;background:var(--teal);border-radius:50%;box-shadow:0 0 10px var(--teal);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.45}}
+  h1{font-size:clamp(40px,5.5vw,66px);line-height:1.05;letter-spacing:-0.025em;font-weight:700;margin-bottom:24px}
+  h1 .accent{background:linear-gradient(110deg, var(--teal) 30%, var(--teal-hi) 50%, var(--teal) 70%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 5s linear infinite}
+  @keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+  .lede{font-size:19px;color:var(--text-2);line-height:1.55;max-width:580px;margin-bottom:34px}
+  .lede strong{color:var(--text);font-weight:500}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .btn-primary{background:var(--teal);color:#fff;padding:15px 28px;border-radius:99px;font-weight:600;font-size:15px;border:1px solid var(--teal);transition:all 0.2s;display:inline-flex;align-items:center;gap:10px;box-shadow:0 8px 28px -8px rgba(233,69,96,0.4)}
+  .btn-primary:hover{background:var(--teal-hi);color:#fff;transform:translateY(-2px);box-shadow:0 14px 38px -10px rgba(233,69,96,0.55)}
+  .btn-primary svg{width:18px;height:18px}
+  .btn-secondary{background:rgba(255,255,255,0.04);color:var(--text);padding:15px 28px;border-radius:99px;font-weight:500;font-size:15px;border:1px solid var(--border-hi);transition:all 0.2s;display:inline-flex;align-items:center;gap:10px}
+  .btn-secondary:hover{background:rgba(255,255,255,0.08);border-color:var(--text-2);transform:translateY(-2px)}
+  .hero-stamp{margin-top:22px;display:inline-flex;align-items:center;gap:10px;color:var(--text-dim);font-size:13px;font-family:var(--mono)}
+  .hero-stamp svg{width:14px;height:14px;color:var(--teal)}
+
+  /* hero canvas card — a selected element on a drafting table */
+  .canvas-card{background:linear-gradient(180deg,rgba(255,255,255,0.045) 0%,rgba(255,255,255,0.015) 100%);border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 24px 64px -20px rgba(0,0,0,0.6),0 0 0 1px rgba(233,69,96,0.05)}
+  .cc-bar{display:flex;align-items:center;gap:6px;padding:14px 18px;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.2)}
+  .cc-dot{width:10px;height:10px;border-radius:50%}
+  .cc-dot.r{background:#ff5f57}.cc-dot.y{background:#febc2e}.cc-dot.g{background:#28c840}
+  .cc-url{margin-left:8px;font-family:var(--mono);font-size:11px;color:var(--text-2);letter-spacing:0.04em}
+  .cc-stage{position:relative;padding:46px 34px 40px;background:
+      radial-gradient(rgba(255,107,129,0.10) 1px, transparent 1.3px) 0 0 / 18px 18px;
+    min-height:230px}
+  .cc-el{position:relative;display:inline-block;padding:14px 20px;border-radius:10px;background:linear-gradient(180deg,rgba(233,69,96,0.12),rgba(233,69,96,0.03));border:1px solid rgba(233,69,96,0.25);font-weight:600;font-size:20px;color:var(--text);outline:1.5px solid var(--teal);outline-offset:6px}
+  .cc-el .hnd{position:absolute;width:9px;height:9px;background:var(--teal);border:1.5px solid #fff;border-radius:2px;box-shadow:0 0 8px rgba(233,69,96,0.7)}
+  .cc-el .tl{top:-11px;left:-11px}.cc-el .tr{top:-11px;right:-11px}.cc-el .bl{bottom:-11px;left:-11px}.cc-el .br{bottom:-11px;right:-11px}
+  .cc-chip{position:absolute;right:26px;bottom:26px;font-family:var(--mono);font-size:11px;color:var(--text-2);background:rgba(0,0,0,0.35);border:1px solid var(--border);border-radius:10px;padding:11px 14px;line-height:1.7;backdrop-filter:blur(6px)}
+  .cc-chip .k{color:var(--text-dim)}.cc-chip .v{color:var(--teal)}.cc-chip .ok{color:var(--green)}
+  .cc-meta{display:flex;gap:0;border-top:1px solid var(--border);font-family:var(--mono)}
+  .cc-meta div{flex:1;padding:13px 18px;border-right:1px solid var(--border);font-size:11px;color:var(--text-dim)}
+  .cc-meta div:last-child{border-right:none}
+  .cc-meta b{display:block;font-size:15px;color:var(--teal);font-weight:600;margin-top:3px;letter-spacing:-0.01em}
+
+  /* ═══════════ STAT STRIP ═══════════ */
+  .strip{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:linear-gradient(180deg,var(--bg-2) 0%,var(--bg-3) 100%);position:relative;overflow:hidden}
+  .strip-inner{max-width:1240px;margin:0 auto;padding:38px 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:32px;position:relative}
+  .stat-cell{display:flex;flex-direction:column;gap:6px}
+  .stat-n{font-family:var(--mono);font-size:34px;font-weight:600;color:var(--teal);line-height:1;letter-spacing:-0.02em}
+  .stat-l{font-size:12px;color:var(--text-2);text-transform:uppercase;letter-spacing:0.09em;font-weight:500}
+  .stat-s{font-size:11px;color:var(--text-dim);font-family:var(--mono)}
+
+  /* ═══════════ SECTION BASE ═══════════ */
+  section{padding:120px 0;position:relative}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 24px;position:relative}
+  .eyebrow{display:inline-block;font-family:var(--mono);font-size:11px;color:var(--teal);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:14px;padding:5px 12px;background:var(--teal-glow);border:1px solid rgba(233,69,96,0.22);border-radius:99px}
+  h2{font-size:clamp(32px,4vw,46px);line-height:1.1;letter-spacing:-0.02em;font-weight:700;margin-bottom:18px;max-width:780px}
+  h2 .accent{color:var(--teal)}
+  .section-lede{font-size:17px;color:var(--text-2);max-width:680px;margin-bottom:56px;line-height:1.55}
+
+  /* ═══════════ HOW IT WORKS ═══════════ */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .step{background:linear-gradient(180deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.01) 100%);border:1px solid var(--border);border-radius:16px;padding:30px 24px;position:relative;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);overflow:hidden}
+  .step::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%, rgba(233,69,96,0.08) 0%, transparent 60%);opacity:0;transition:opacity 0.3s}
+  .step:hover{border-color:var(--border-hi);transform:translateY(-4px);box-shadow:0 18px 40px -16px rgba(0,0,0,0.5)}
+  .step:hover::before{opacity:1}
+  .step-n{position:absolute;top:22px;right:24px;font-family:var(--mono);font-size:11px;color:var(--text-dim);letter-spacing:0.1em;font-weight:500}
+  .step-icon{width:48px;height:48px;background:linear-gradient(135deg, rgba(233,69,96,0.18) 0%, rgba(233,69,96,0.06) 100%);border:1px solid rgba(233,69,96,0.28);border-radius:12px;display:grid;place-items:center;margin-bottom:22px;color:var(--teal);position:relative;z-index:1}
+  .step-icon svg{width:24px;height:24px}
+  .step h3{font-size:17px;font-weight:600;margin-bottom:8px;letter-spacing:-0.01em;position:relative;z-index:1}
+  .step p{font-size:14px;color:var(--text-2);line-height:1.55;position:relative;z-index:1}
+  .step code{font-family:var(--mono);font-size:12px;background:rgba(233,69,96,0.1);color:var(--teal);padding:2px 7px;border-radius:5px}
+
+  /* ═══════════ SIGNATURE: EDITS THE REAL FILE ═══════════ */
+  .cb-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center}
+  .cb-steps{display:flex;flex-direction:column;gap:24px;margin-top:40px}
+  .cb-step{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:flex-start;padding:22px 26px;background:linear-gradient(180deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.01) 100%);border:1px solid var(--border);border-radius:14px;transition:all 0.2s}
+  .cb-step:hover{border-color:var(--border-hi);transform:translateX(4px)}
+  .cb-step-tag{font-family:var(--mono);font-size:10px;font-weight:600;color:var(--teal);background:var(--teal-glow);border:1px solid rgba(233,69,96,0.22);border-radius:6px;padding:6px 10px;letter-spacing:0.1em;white-space:nowrap;align-self:flex-start;margin-top:2px}
+  .cb-step h4{font-size:16px;font-weight:600;margin-bottom:6px;letter-spacing:-0.005em}
+  .cb-step p{font-size:14px;color:var(--text-2);line-height:1.55}
+  .cb-callout{margin-top:32px;padding:18px 22px;background:linear-gradient(90deg, rgba(233,69,96,0.08) 0%, transparent 100%);border-left:3px solid var(--teal);border-radius:0 12px 12px 0;font-size:15px;font-style:italic;color:var(--text);line-height:1.5}
+  .cb-callout strong{color:var(--teal);font-style:normal;font-weight:600}
+
+  .code-card{background:linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.005) 100%);border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 24px 64px -24px rgba(0,0,0,0.6)}
+  .code-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.2);font-family:var(--mono);font-size:11px;color:var(--text-2)}
+  .code-head .pulse{display:inline-flex;align-items:center;gap:7px;color:var(--teal)}
+  .code-head .pulse-dot{width:5px;height:5px;background:var(--teal);border-radius:50%;box-shadow:0 0 8px var(--teal);animation:pulse 2s ease-in-out infinite}
+  .code-body{padding:20px 22px;font-family:var(--mono);font-size:12.5px;line-height:1.7;color:var(--text-2)}
+  .code-body .ln{display:block;white-space:pre}
+  .code-body .tag{color:var(--aqua)}
+  .code-body .at{color:var(--text-dim)}
+  .code-body .add{color:var(--green)}
+  .code-body .add::before{content:'+ ';color:var(--green)}
+  .code-body .keep{opacity:0.6}
+  .code-stats{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--border)}
+  .code-stat{padding:16px 20px;border-right:1px solid var(--border)}
+  .code-stat:nth-child(2n){border-right:none}
+  .code-stat:nth-child(n+3){border-top:1px solid var(--border)}
+  .code-stat-k{font-family:var(--mono);font-size:10px;color:var(--text-2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px}
+  .code-stat-v{font-family:var(--mono);font-size:18px;color:var(--text);font-weight:600;letter-spacing:-0.01em}
+  .code-stat-v.teal{color:var(--teal)}
+
+  /* ═══════════ PRICING ═══════════ */
+  .pricing{background:linear-gradient(180deg, var(--bg-2) 0%, var(--bg-3) 50%, var(--bg-2) 100%);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .price-head{text-align:center;margin-bottom:56px}
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1100px;margin:0 auto}
+  .plan{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:38px;display:flex;flex-direction:column;position:relative;transition:all 0.3s}
+  .plan:hover{border-color:var(--border-hi);transform:translateY(-2px)}
+  .plan.featured{border-color:rgba(233,69,96,0.5);background:linear-gradient(180deg, rgba(233,69,96,0.05) 0%, var(--bg) 50%);box-shadow:0 0 0 1px rgba(233,69,96,0.15),0 24px 60px -20px rgba(233,69,96,0.18)}
+  .plan-flag{position:absolute;top:-12px;left:38px;background:var(--teal);color:#fff;font-size:11px;font-weight:600;padding:6px 14px;border-radius:99px;letter-spacing:0.05em;text-transform:uppercase;font-family:var(--mono);box-shadow:0 6px 18px -4px rgba(233,69,96,0.5)}
+  .plan-name{font-size:13px;color:var(--text-2);font-family:var(--mono);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:18px;font-weight:500}
+  .plan-price{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}
+  .price-n{font-size:56px;font-weight:700;letter-spacing:-0.03em;line-height:1}
+  .price-per{font-size:15px;color:var(--text-2)}
+  .plan-sub{font-size:14px;color:var(--text-2);margin-bottom:32px;min-height:22px}
+  .plan-features{list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:36px;flex:1}
+  .plan-features li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text);line-height:1.5}
+  .check{width:18px;height:18px;flex-shrink:0;color:var(--teal);margin-top:2px}
+  .plan-cta{display:flex;align-items:center;justify-content:center;gap:8px;padding:15px;border-radius:99px;font-weight:600;font-size:15px;transition:all 0.2s}
+  .plan-cta.primary{background:var(--teal);color:#fff;border:1px solid var(--teal)}
+  .plan-cta.primary:hover{background:var(--teal-hi);color:#fff;transform:translateY(-1px);box-shadow:0 12px 32px -10px rgba(233,69,96,0.5)}
+  .plan-cta.outline{background:transparent;color:var(--text);border:1px solid var(--border-hi)}
+  .plan-cta.outline:hover{background:var(--panel);border-color:var(--text-2)}
+  .pricing-note{text-align:center;color:var(--text-dim);font-size:13px;margin-top:36px;font-family:var(--mono)}
+  .pricing-note strong{color:var(--text-2);font-weight:500}
+
+  /* ═══════════ FAQ ═══════════ */
+  .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .faq{background:linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);border:1px solid var(--border);border-radius:14px;padding:26px 30px;transition:all 0.2s}
+  .faq:hover{border-color:var(--border-hi);background:linear-gradient(180deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 100%)}
+  .faq h4{font-size:16px;font-weight:600;margin-bottom:10px;color:var(--text);display:flex;align-items:center;gap:10px}
+  .faq h4::before{content:'';width:5px;height:5px;background:var(--teal);border-radius:50%;flex-shrink:0;box-shadow:0 0 0 3px rgba(233,69,96,0.18)}
+  .faq p{font-size:14px;color:var(--text-2);line-height:1.6}
+  .faq p code{font-family:var(--mono);font-size:12px;background:rgba(233,69,96,0.1);color:var(--teal);padding:1px 6px;border-radius:5px}
+
+  /* ═══════════ FINAL CTA ═══════════ */
+  .final{padding:140px 0;text-align:center;position:relative;overflow:hidden}
+  .final::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%, rgba(233,69,96,0.08) 0%, transparent 70%);pointer-events:none}
+  .final h2{font-size:clamp(36px,5vw,58px);max-width:none;margin:0 auto 24px;position:relative}
+  .final p{font-size:18px;color:var(--text-2);max-width:560px;margin:0 auto 36px;position:relative}
+  .final-ctas{position:relative;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+  /* ═══════════ FAMILY FOOTER ═══════════ */
+  .rb-footer{border-top:1px solid var(--border);background:var(--bg-2);margin-top:0;padding:56px 20px 42px}
+  .rb-footer-inner{max-width:1080px;margin:0 auto;display:grid;gap:30px}
+  .rb-foot-kicker{display:block;font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-dim);margin-bottom:11px}
+  .rb-foot-family .rb-foot-copy{font-size:15px;line-height:1.75;color:var(--text-2);max-width:70ch;margin:0}
+  .rb-footer a{color:var(--text);border-bottom:1px solid transparent;transition:color .18s, border-color .18s}
+  .rb-footer a:hover{color:var(--teal-hi);border-bottom-color:var(--teal)}
+  .rb-foot-more{color:var(--teal) !important;white-space:nowrap}
+  .rb-foot-icons{display:flex;flex-wrap:wrap;gap:18px 24px;align-items:center;font-family:var(--mono);font-size:13px}
+  .rb-foot-icons a{display:inline-flex;align-items:center;gap:8px;color:var(--text-2);border:none}
+  .rb-foot-icons a:hover{color:var(--teal-hi)}
+  .rb-foot-icons svg{width:18px;height:18px;fill:currentColor}
+  .rb-foot-base{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center;padding-top:24px;border-top:1px solid var(--border);font-size:12.5px;color:var(--text-dim);font-family:var(--mono)}
+  .rb-foot-base img{width:15px;height:15px;vertical-align:-3px;margin-right:6px;image-rendering:pixelated;filter:hue-rotate(180deg) saturate(1.25)}
+  .rb-foot-base a{color:var(--text-dim)}
+
+  /* ═══════════ RESPONSIVE ═══════════ */
+  @media (max-width:1080px){.price-grid{grid-template-columns:1fr;gap:18px;max-width:520px}}
+  @media (max-width:900px){
+    .hero-grid,.cb-grid,.faq-grid{grid-template-columns:1fr;gap:48px}
+    .strip-inner{grid-template-columns:repeat(2,1fr);gap:28px}
+    .steps{grid-template-columns:1fr;gap:16px}
+    .cb-step{grid-template-columns:1fr;gap:12px}
+    .nav{display:none}
+    .top-inner{justify-content:space-between;gap:12px}
+    section{padding:80px 0}
+    .hero{padding:64px 24px 56px}
+  }
 </style>
 </head>
 <body>
 
-  <nav class="top-nav" aria-label="Primary">
-    <div class="top-nav-inner">
-      <a class="brand-lockup" href="index.html">
-        <img src="../../assets/rhobear-logo.png?v=1782900000" alt="" class="pixelated">
-        <span>RHOBEAR</span>
-      </a>
-      <div class="nav-tabs"><a href="index.html" class="nav-tab ">HOME</a><a href="crew.html" class="nav-tab ">CREW</a><a href="hub.html" class="nav-tab ">HUB</a><a href="workbench.html" class="nav-tab ">WORKBENCH</a><a href="try.html" class="nav-tab ">TRY THE DEMO</a><a href="learn.html" class="nav-tab ">LEARN</a><div class="nav-dropdown"><a href="substrate.html" class="nav-tab " aria-haspopup="true">SUBSTRATE ▾</a><div class="nav-dropdown-panel"><a href="goal-autoloop.html" class="">Goal Autoloop</a><a href="judgment-loop.html" class="">Judgment Loop</a><a href="substrate.html" class="">Substrate Overview</a><a href="compass.html" class="">Compass</a><a href="worker-sessions.html" class="">Worker Sessions</a><a href="handoff-bus.html" class="">Handoff Bus</a><a href="safety-registry.html" class="">Safety Registry</a><a href="hub-contract.html" class="">Hub Contract</a><a href="openclaw.html" class="">OpenClaw</a></div></div><a href="built-with.html" class="nav-tab ">BUILT WITH</a></div>
-      <span class="nav-spacer"></span>
-      <a href="https://github.com/deariencampbell1-sys/rhobear-designs" class="btn-amber nav-cta">Read the source →</a>
-    </div>
-  </nav>
-<main>
+<!-- ═══════════ DOT-CANVAS BACKGROUND ═══════════ -->
+<div class="bg-layer">
+  <div class="grid-bg"></div>
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+</div>
 
-<section class="wrap-md" style="padding-top:48px;">
-  <img src="../../assets/rhobear-logo.png?v=1782940000" alt="" class="pixelated" style="float:right; height:132px; margin:0 0 14px 26px; image-rendering:auto; filter:hue-rotate(180deg) saturate(1.25) drop-shadow(0 0 26px rgba(233,69,96,0.5));">
-  <div class="eyebrow-row">PRODUCT · DESIGNS · STOP 2 · SHAPE IT</div>
-  <h1 class="h1-page">Finish the last ten percent <em class="ai-glow">by hand.</em></h1>
-  <p class="lead">You build ninety percent with your crew, same as always. The last ten is where the tokens bleed out, nudging one pixel at a time. Designs opens the near-done HTML on an infinite canvas so you finish it directly: drag it where you want it, swap a font, fix the one color that's off. No round-trip to the model.</p>
-  <div class="cta-row">
-    <a href="https://github.com/deariencampbell1-sys/rhobear-designs" class="btn-amber">Read the source →</a>
-    <a href="index.html#workflow" class="btn-ghost">See the whole family →</a>
+<!-- ═══════════ TOPBAR ═══════════ -->
+<header class="top">
+  <div class="top-inner">
+    <a href="index.html" class="brand" aria-label="RHOBEAR — back to the Hub">
+      <img src="../../assets/rhobear-logo.png?v=1782940000" alt="">
+      <span class="brand-name"><b>RHOBEAR</b><span>Designs</span></span>
+    </a>
+    <nav class="nav">
+      <a href="#how" data-nav>How it works</a>
+      <a href="#canvas" data-nav>The canvas</a>
+      <a href="#pricing" data-nav>Pricing</a>
+      <a href="#faq" data-nav>FAQ</a>
+    </nav>
+    <a href="https://github.com/deariencampbell1-sys/rhobear-designs" class="cta-pill">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      Read the source
+    </a>
   </div>
-  <div class="quant-line">finish the last 10% &middot; infinite canvas &middot; won't break your embeds &middot; local stub or your key &middot; MIT</div>
-</section>
+</header>
 
-<!-- WHERE THE TOKENS GO -->
-<section class="wrap">
-  <div class="eyebrow-row">WHY THE LAST TEN HURTS</div>
-  <h2 style="font-size:clamp(1.8rem,3vw,2.5rem); margin:0 0 14px;">The build is cheap. The <em>fiddling</em> is where it bleeds.</h2>
-  <p class="lead" style="max-width:64ch;">A crew gets you a working site fast. Then you spend a fortune in tokens asking a model to move a button four pixels, undo it, try a warmer red. Designs takes that part off the model and puts it back in your hands, where a nudge is just a nudge.</p>
-  <div class="terminal" style="max-width:880px;"><span class="dim"># the old way · one nudge, one round-trip</span>
-<span class="role">you &gt;</span> move the CTA up a little, warmer red, tighter gap
-<span class="role">model &gt;</span> regenerating section &middot; 3.2k tokens &middot; <span class="ok">guesses</span>
-<span class="dim"># designs · you just move it</span>
-<span class="role">canvas &gt;</span> drag &middot; recolor &middot; snap &middot; <span class="ok">0 tokens</span></div>
-</section>
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero" id="top">
+  <div class="hero-grid">
+    <div class="reveal">
+      <div class="live-tag"><span class="live-dot"></span> Open source · MIT · bring your own model</div>
+      <h1>Finish the last ten percent <span class="accent">by hand.</span></h1>
+      <p class="lede"><strong>Your crew builds the ninety.</strong> The last ten is the part that bleeds tokens, nudging one button four pixels, undoing it, trying a warmer red. Designs opens your real HTML on an infinite canvas so you finish it directly. Drag it. Swap a font. Fix the one color that's off. No round-trip to a model, and the file you started with is the file you ship.</p>
+      <div class="hero-ctas">
+        <a href="https://github.com/deariencampbell1-sys/rhobear-designs" class="btn-primary">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          Read the source
+        </a>
+        <a href="#how" class="btn-secondary">See how it works →</a>
+      </div>
+      <div class="hero-stamp">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,11 8,16 17,5"/></svg>
+        MIT · no account · runs on your machine
+      </div>
+    </div>
 
-<!-- WHAT IT TOUCHES -->
-<section class="wrap" style="padding-top:8px;">
-  <div class="eyebrow-row">IT EDITS THE REAL FILE</div>
-  <h2 style="font-size:clamp(1.7rem,2.8vw,2.3rem); margin:0 0 8px;">Real code in, real code out.</h2>
-  <p class="lead" style="max-width:66ch;">Designs is smart enough to touch real JS, CSS, and HTML with hidden embeds, and leave what the agent already got right alone. You shape the page, and the file stays a file you can ship.</p>
-  <div class="card-grid cols-2" style="margin-top:24px; row-gap:26px;">
-    <div class="card-paper stitched feature-card">
-      <div class="num">A · INFINITE CANVAS</div>
-      <h3>The whole page, room to work.</h3>
-      <p>Open the near-done HTML and pan across it like a drafting table. One thing reads red at a time: the element your hand is on. Everything else rests.</p>
-    </div>
-    <div class="card-paper stitched feature-card">
-      <div class="num">B · WON'T BREAK YOUR EMBEDS</div>
-      <h3>It knows what not to touch.</h3>
-      <p>Hidden embeds, scripts, the markup the agent got right. Designs edits around them so a font swap doesn't take your analytics or your forms down with it.</p>
-    </div>
-    <div class="card-paper stitched feature-card">
-      <div class="num">C · LOCAL STUB OR YOUR KEY</div>
-      <h3>It works the moment you download it.</h3>
-      <p>Ships with a local-LLM stub that runs on day one. Want more reach? Pipe in your own key through OpenRouter. Your choice, your spend.</p>
-    </div>
-    <div class="card-paper stitched feature-card">
-      <div class="num">D · MIT, FOREVER</div>
-      <h3>The file stays yours.</h3>
-      <p>MIT. Read the source, fork it, ship what you make. No seat tax, no lock-in, nothing that expires when you stop paying.</p>
-    </div>
-  </div>
-</section>
-
-<!-- WHAT IT COSTS -->
-<section class="wrap" style="padding-top:8px;">
-  <div class="eyebrow-row">WHAT IT COSTS TO RUN</div>
-  <h2 style="font-size:clamp(1.7rem,2.8vw,2.3rem); margin:0 0 8px;">Free on your machine. <em class="ai-glow">Your key only if you want more.</em></h2>
-  <div class="card-grid cols-2" style="margin-top:24px; row-gap:26px;">
-    <div class="card-paper stitched feature-card">
-      <div class="num">FREE · MIT</div>
-      <h3>The local stub runs on download.</h3>
-      <p>Designs is MIT and ships with a local-LLM stub that works the moment you pull it. No key, no account, no meter. The canvas and the file stay free forever.</p>
-    </div>
-    <div class="card-paper stitched feature-card">
-      <div class="num">YOUR KEY · OPENROUTER</div>
-      <h3>Pay your provider, not us.</h3>
-      <p>Want a stronger model behind the edits? Pipe in your own key through OpenRouter. You pay the provider directly at their rate. We never sit in the middle of that bill.</p>
-    </div>
-  </div>
-</section>
-
-<!-- RELAY HANDOFF -->
-<section class="band-dark install-band">
-  <div class="wrap" style="position:relative;">
-    <div style="max-width:780px;">
-      <div class="eyebrow-row">WHERE DESIGNS SITS</div>
-      <h2 style="font-size:clamp(1.8rem,3vw,2.5rem); margin:0 0 18px;">Built work comes in. <em>A finished site goes out.</em></h2>
-      <p style="color:var(--c-dark-ink-2); font-size:1.05rem; line-height:1.65;">Got something built? Hand it to Designs to make it yours. You shape the last ten by hand, and when it looks the way you want, you rest the finished site in SunSponge. One hand passes to the next.</p>
-      <div class="relay-next">
-        <a href="app.html"><span class="arw">←</span> The Hub</a>
-        <span class="now">Designs</span>
-        <a href="sunsponge.html">SunSponge <span class="arw">→</span></a>
+    <div class="reveal" style="transition-delay:0.18s">
+      <div class="canvas-card">
+        <div class="cc-bar">
+          <span class="cc-dot r"></span><span class="cc-dot y"></span><span class="cc-dot g"></span>
+          <span class="cc-url">designs · your-page.html · canvas</span>
+        </div>
+        <div class="cc-stage">
+          <span class="cc-el">Ship it.<span class="hnd tl"></span><span class="hnd tr"></span><span class="hnd bl"></span><span class="hnd br"></span></span>
+          <div class="cc-chip"><span class="k">color</span> <span class="v">#e94560</span><br><span class="k">nudged</span> <span class="v">+4px</span><br><span class="ok">✓ applied · 0 tokens</span></div>
+        </div>
+        <div class="cc-meta">
+          <div>round-trips<b>0</b></div>
+          <div>embeds<b>intact</b></div>
+          <div>output<b>your HTML</b></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
-</main>
 
-<div class="prevnext"><div class="prevnext-inner"><a href="app.html" class="pn-link "><span class="pn-mini">← Previous</span><span class="pn-name">The Hub</span></a><a href="sunsponge.html" class="pn-link "><span class="pn-mini">Next →</span><span class="pn-name">SunSponge Captures</span></a></div></div>
-<footer class="site-footer"><div class="site-footer-inner"><div class="footer-row"><div class="footer-copy">© 2026 Sun Sponge LLC · <a href="https://github.com/rhobear-ai">GitHub</a> · <a href="https://github.com/deariencampbell1-sys/rhobear/blob/main/PRIVACY.md" target="_blank" rel="noopener">privacy</a> · <a href="faq.html">FAQ</a></div><div class="footer-tag">Lean. Local. Private. Yours.</div></div><div class="footer-disclaimer">All third-party trademarks and logos are property of their respective owners and shown here for integration identification purposes only. No partnership, sponsorship, or endorsement is implied.</div></div></footer>
-<script src="shell.js?v=1782980000" defer></script>
+<!-- ═══════════ STAT STRIP ═══════════ -->
+<div class="strip">
+  <div class="strip-inner reveal-stagger">
+    <div class="stat-cell">
+      <div class="stat-n">0</div>
+      <div class="stat-l">Tokens per nudge</div>
+      <div class="stat-s">Your hand, not the model's</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-n">MIT</div>
+      <div class="stat-l">License, forever</div>
+      <div class="stat-s">Fork it, ship it, keep it</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-n">BYO</div>
+      <div class="stat-l">Bring your own model</div>
+      <div class="stat-s">Optional · your key, your spend</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-n">100%</div>
+      <div class="stat-l">Of the file stays yours</div>
+      <div class="stat-s">Clean HTML + CSS out</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ HOW IT WORKS ═══════════ -->
+<section id="how">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">How it works</span>
+      <h2>Open it. Move it. <span class="accent">Own it.</span></h2>
+      <p class="section-lede">No new format, no project lock-in, no export tax. Designs opens the HTML you already have, edits the actual document, and writes it back out clean. The code stays yours from the first click.</p>
+    </div>
+
+    <div class="steps reveal-stagger">
+      <div class="step">
+        <span class="step-n">01</span>
+        <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 4v5"/></svg></div>
+        <h3>Open your HTML</h3>
+        <p>Drop in the near-done page your crew built. Designs renders the real DOM on an infinite canvas, not a preview of it.</p>
+      </div>
+      <div class="step">
+        <span class="step-n">02</span>
+        <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16l6-6 4 4 6-8"/><circle cx="10" cy="10" r="1.5" fill="currentColor"/></svg></div>
+        <h3>Edit on a real canvas</h3>
+        <p>Click to select, drag blocks where you want them, resize with handles, double-click to type. You move the document itself.</p>
+      </div>
+      <div class="step">
+        <span class="step-n">03</span>
+        <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a4 4 0 014 4c0 2-2 3-2 5h-4c0-2-2-3-2-5a4 4 0 014-4z"/><path d="M9 18h6M10 21h4"/></svg></div>
+        <h3>Ask a model — if you want</h3>
+        <p>Wire any provider with <code>your own key</code>. The AI applies clean edits to the canvas instead of reloading, so nothing flickers. Skip it entirely and the editor still works.</p>
+      </div>
+      <div class="step">
+        <span class="step-n">04</span>
+        <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3m0 12l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg></div>
+        <h3>Export clean code</h3>
+        <p>Take the document with inlined styles, or a ZIP of <code>index.html</code> + <code>styles.css</code> + assets. Host it anywhere. No renderer to escape.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SIGNATURE: IT EDITS THE REAL FILE ═══════════ -->
+<section id="canvas">
+  <div class="wrap">
+    <div class="cb-grid">
+      <div class="reveal">
+        <span class="eyebrow">It edits the real file</span>
+        <h2>Real code in. <span class="accent">Real code out.</span></h2>
+        <p class="section-lede" style="margin-bottom:0">Most page builders trap your work behind their renderer: you can design, but you can never really leave with what you made. Designs touches the actual JS, CSS, and HTML, leaves the parts your agent already got right alone, and writes back a file you can ship. A font swap doesn't take your analytics, your forms, or your 3D embeds down with it.</p>
+
+        <div class="cb-steps">
+          <div class="cb-step">
+            <div class="cb-step-tag">SELECT</div>
+            <div>
+              <h4>One element reads hot at a time</h4>
+              <p>The thing your hand is on lights up; everything else rests. Pan across the whole page like a drafting table.</p>
+            </div>
+          </div>
+          <div class="cb-step">
+            <div class="cb-step-tag">EDIT</div>
+            <div>
+              <h4>It knows what not to touch</h4>
+              <p>Hidden embeds, scripts, the markup the agent nailed. Designs edits around them instead of through them.</p>
+            </div>
+          </div>
+          <div class="cb-step">
+            <div class="cb-step-tag">EXPORT</div>
+            <div>
+              <h4>The diff is small and readable</h4>
+              <p>You changed a color and a margin, so that's what the export shows. No reformatted file, no surprise rewrite.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cb-callout"><strong>The result:</strong> the page you finish by hand is still a plain HTML file the next tool in the line can read.</div>
+      </div>
+
+      <div class="reveal" style="transition-delay:0.18s">
+        <div class="code-card">
+          <div class="code-head">
+            <span>your-page.html · saved</span>
+            <span class="pulse"><span class="pulse-dot"></span> clean</span>
+          </div>
+          <div class="code-body">
+<span class="ln keep"><span class="at">&lt;</span><span class="tag">section</span> <span class="at">class=</span>"hero"<span class="at">&gt;</span></span>
+<span class="ln keep">  <span class="at">&lt;</span><span class="tag">h1</span><span class="at">&gt;</span>Ship it.<span class="at">&lt;/</span><span class="tag">h1</span><span class="at">&gt;</span></span>
+<span class="ln add">  &lt;style&gt; .hero h1{ color:#e94560; }</span>
+<span class="ln add">  .hero{ padding-top:28px; } &lt;/style&gt;</span>
+<span class="ln keep">  <span class="at">&lt;</span><span class="tag">div</span> <span class="at">class=</span>"rb-3d-embed"<span class="at">&gt;</span> …kept… <span class="at">&lt;/</span><span class="tag">div</span><span class="at">&gt;</span></span>
+<span class="ln keep"><span class="at">&lt;/</span><span class="tag">section</span><span class="at">&gt;</span></span>
+          </div>
+          <div class="code-stats">
+            <div class="code-stat"><div class="code-stat-k">Lines rewritten</div><div class="code-stat-v">2</div></div>
+            <div class="code-stat"><div class="code-stat-k">Embeds preserved</div><div class="code-stat-v">all</div></div>
+            <div class="code-stat"><div class="code-stat-k">Model round-trips</div><div class="code-stat-v">0</div></div>
+            <div class="code-stat"><div class="code-stat-k">Output</div><div class="code-stat-v teal">your file</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PRICING ═══════════ -->
+<section id="pricing" class="pricing">
+  <div class="wrap">
+    <div class="price-head reveal">
+      <span class="eyebrow">Pricing</span>
+      <h2 style="margin:0 auto 18px">Free. <span class="accent">That's the price.</span></h2>
+      <p class="section-lede" style="margin:0 auto">It's MIT and it runs on your machine. There's no seat to buy, no export tax, no account. The only thing you might ever pay for is a model, and you pay that to your provider, never to us.</p>
+    </div>
+
+    <div class="price-grid reveal-stagger">
+      <!-- Free / featured -->
+      <div class="plan featured">
+        <div class="plan-flag">★ The whole thing</div>
+        <div class="plan-name">Free · forever</div>
+        <div class="plan-price"><span class="price-n">$0</span><span class="price-per">/ MIT</span></div>
+        <div class="plan-sub">The full editor, no asterisk.</div>
+        <ul class="plan-features">
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Infinite canvas, real-DOM editing</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Clean HTML + CSS export, or a ZIP you own</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Won't break your embeds, scripts, or 3D</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Local-LLM stub works on download</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>No account, no card, no telemetry</li>
+        </ul>
+        <a href="https://github.com/deariencampbell1-sys/rhobear-designs" class="plan-cta primary">Read the source →</a>
+      </div>
+
+      <!-- BYO key -->
+      <div class="plan">
+        <div class="plan-name">Bring your own key</div>
+        <div class="plan-price"><span class="price-n">$0</span><span class="price-per">/ to us</span></div>
+        <div class="plan-sub">Stronger AI edits, billed by your provider.</div>
+        <ul class="plan-features">
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Everything in Free</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Pipe in any OpenRouter / OpenAI-compatible key</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>You pay the model maker directly, at their rate</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>We never sit in the middle of that bill</li>
+        </ul>
+        <a href="https://github.com/deariencampbell1-sys/rhobear-designs#ai" class="plan-cta outline">How BYOK works →</a>
+      </div>
+
+      <!-- Self-host / fork -->
+      <div class="plan">
+        <div class="plan-name">Fork it</div>
+        <div class="plan-price"><span class="price-n">$0</span><span class="price-per">/ MIT</span></div>
+        <div class="plan-sub">It's yours to change and ship.</div>
+        <ul class="plan-features">
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Clone, modify, rebrand under MIT</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Self-host the editor on your own box</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Ship it inside your own product</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>No seat tax, ever, by design</li>
+        </ul>
+        <a href="https://github.com/deariencampbell1-sys/rhobear-designs/fork" class="plan-cta outline">Fork on GitHub →</a>
+      </div>
+    </div>
+
+    <p class="pricing-note"><strong>No seats. No export tax. No account.</strong> The price is zero because the code is yours.</p>
+  </div>
+</section>
+
+<!-- ═══════════ FAQ ═══════════ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">FAQ</span>
+      <h2>Honest answers to the obvious questions.</h2>
+      <p class="section-lede">Anything not here, the source is right there to read. Ping us if it's still unclear.</p>
+    </div>
+
+    <div class="faq-grid reveal-stagger">
+      <div class="faq">
+        <h4>Is it really free?</h4>
+        <p>Yes. MIT, no account, no card, no telemetry. The editor runs on your machine. The only thing you'd ever pay for is a model, and you pay that to your own provider.</p>
+      </div>
+      <div class="faq">
+        <h4>Does it ship with an AI model?</h4>
+        <p>It ships with a small local-LLM stub that works the moment you download it. Want more reach? Wire in <code>your own key</code> through any OpenRouter or OpenAI-compatible provider. The AI is optional, not the point.</p>
+      </div>
+      <div class="faq">
+        <h4>Will it break my scripts and embeds?</h4>
+        <p>No. Designs edits around hidden embeds, analytics, forms, and 3D objects instead of through them. A font swap won't take your working markup down with it.</p>
+      </div>
+      <div class="faq">
+        <h4>Do I own what I export?</h4>
+        <p>Completely. You get plain HTML and CSS, or a ZIP of <code>index.html</code> + <code>styles.css</code> + assets. Host it anywhere. There's no renderer to escape and no lock-in.</p>
+      </div>
+      <div class="faq">
+        <h4>How is this different from a page builder?</h4>
+        <p>A builder traps your work behind its own renderer. Designs opens the HTML you already have, edits the real document, and writes it back clean. You move the file, not a copy of it.</p>
+      </div>
+      <div class="faq">
+        <h4>Where does it sit in the workflow?</h4>
+        <p>Your crew builds in the Hub, you shape the last ten percent in Designs, then you rest the finished site in SunSponge for capture. One hand passes to the next.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FINAL CTA ═══════════ -->
+<section id="install" class="final">
+  <div class="wrap reveal">
+    <h2>Stop renting your own work back.<br><span class="accent">Own the last ten percent.</span></h2>
+    <p>Pull it, open your page, finish it by hand. MIT, free forever, the file stays yours.</p>
+    <div class="final-ctas">
+      <a href="https://github.com/deariencampbell1-sys/rhobear-designs" class="btn-primary">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        Read the source
+      </a>
+      <a href="#pricing" class="btn-secondary">See what's free →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FAMILY FOOTER (global tie) ═══════════ -->
+<footer class="rb-footer">
+  <div class="rb-footer-inner">
+    <div class="rb-foot-family">
+      <span class="rb-foot-kicker">Stop 2 of the RHOBEAR family</span>
+      <p class="rb-foot-copy">
+        Designs is where built work gets shaped by hand. The crew that builds it lives in
+        <a href="https://rhobear.ai/app.html">the Hub</a>; once a page looks the way you want, you rest it in
+        <a href="https://rhobear.ai/sunsponge.html">SunSponge</a> for capture, keep it clean through
+        <a href="https://reviews.rhobear.ai/">Reviews</a>, run the business in
+        <a href="https://rhobear.ai/plans.html">Plans</a>, and let
+        <a href="https://rhobear.ai/sales.html">Sales</a> close the lead.
+        <a href="https://rhobear.ai/" class="rb-foot-more">See the whole workflow →</a>
+      </p>
+    </div>
+
+    <div class="rb-foot-social">
+      <span class="rb-foot-kicker">Find us elsewhere</span>
+      <div class="rb-foot-icons">
+        <a href="https://x.com/rhobearai" target="_blank" rel="noopener" aria-label="RHOBEAR on X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-6.9l-5.4-7-6.2 7H1.7l8.1-9.3L1 2h7l4.9 6.5L18.9 2Zm-1.2 18h1.9L7.4 4H5.4l12.3 16Z"/></svg>X</a>
+        <a href="https://instagram.com/rhobear.ai" target="_blank" rel="noopener" aria-label="RHOBEAR on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>Instagram</a>
+        <a href="https://github.com/deariencampbell1-sys/rhobear-designs" target="_blank" rel="noopener" aria-label="RHOBEAR Designs on GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.2.8-.5v-1.8c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.3 11.3 0 0 1 6 0C17 5 18 5.3 18 5.3c.6 1.6.2 2.9.1 3.2.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.3v3.4c0 .3.2.6.8.5A11.5 11.5 0 0 0 12 .5Z"/></svg>GitHub</a>
+      </div>
+    </div>
+
+    <div class="rb-foot-base">
+      <span><img src="../../assets/rhobear-logo.png?v=1782940000" alt="">© 2026 RHOBEAR · A SunSponge LLC product · MIT licensed · bring your own model.</span>
+      <span><a href="https://rhobear.ai/">The family</a> · <a href="https://github.com/deariencampbell1-sys/rhobear/blob/main/PRIVACY.md">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -80px 0px' });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => io.observe(el));
+
+  // active nav state
+  const sections = ['how','canvas','pricing','faq'].map(id => document.getElementById(id));
+  const navLinks = document.querySelectorAll('a[data-nav]');
+  const navIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) {
+      const id = e.target.id;
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+    }});
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => s && navIO.observe(s));
+</script>
+
 </body>
 </html>

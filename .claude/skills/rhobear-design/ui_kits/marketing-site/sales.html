@@ -1,138 +1,434 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RHOBEAR · Sales</title>
-  <meta name="description" content="Sales, by RHOBEAR is the done-for-you sales chatbot: hand-built and run for you, white-glove, and this page is it. The greeting bot runs on a tiny Qwen-3B with no rented server and no hosting bill, just a domain. $47 one-time. Stop 6 of the RHOBEAR ecosystem, and it loops back to the Hub.">
-  <link rel="stylesheet" href="../../colors_and_type.css">
-  <link rel="stylesheet" href="shell.css?v=1782970000">
-  <link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782900000">
-<style id="rho-tweaks-style">
-/* ===== SALES PAGE LOCK-IN — blue accent (its real product color) ===== */
-:root{
-  --c-amber:#60a5fa !important;       --c-amber-deep:#93c5fd !important;
-  --c-amber-soft:rgba(96,165,250,0.16) !important;  --c-amber-tint:rgba(96,165,250,0.10) !important;
-}
-.btn-amber{ color:#04140f !important; box-shadow:0 0 0 1px rgba(96,165,250,0.40),0 10px 26px -10px rgba(96,165,250,0.55) !important; }
-.btn-amber:hover{ color:#04140f !important; background:var(--c-amber-deep) !important; }
-.eyebrow-row::before{ background:var(--c-amber) !important; }
-/* hand-to-hand relay strip (mirrors the front-page connective wording) */
-.relay-next{ display:flex; flex-wrap:wrap; align-items:center; gap:9px 10px; margin-top:22px; font-family:var(--font-display); font-size:.96rem; }
-.relay-next .now{ color:var(--c-amber-deep); border:1px solid rgba(96,165,250,0.5); border-radius:999px; padding:6px 13px; background:rgba(96,165,250,0.12); }
-.relay-next a{ color:var(--c-ink-2); text-decoration:none; border:1px solid var(--c-line); border-radius:999px; padding:6px 13px; transition:color .18s,border-color .18s,background .18s; }
-.relay-next a:hover{ color:var(--c-amber-deep); border-color:rgba(96,165,250,0.5); background:rgba(96,165,250,0.07); }
-.relay-next .arw{ color:var(--c-ink-3); }
-/* A/B/C/D cards link nowhere, but should still feel alive under the cursor */
-.feature-card{ transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
-.feature-card:hover{ transform:translateY(-3px); border-color:rgba(96,165,250,0.45); box-shadow:0 14px 30px -16px rgba(96,165,250,0.55); }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sales, by RHOBEAR — the done-for-you chatbot that sells itself</title>
+<meta name="description" content="You like the tools but don't want to set them up, so I do it for you. I hand-build and run your sales page and greeting bot, white-glove. The bot on this page is the one you'd get. Runs on a tiny Qwen-3B, no server, no hosting bill. $47 one-time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782940000">
+<style>
+  :root{
+    --bg:#060c16; --bg-2:#0a1322; --bg-3:#0d1930; --panel:rgba(255,255,255,0.03);
+    --border:rgba(255,255,255,0.07); --border-hi:rgba(96,165,250,0.22);
+    --text:#e8eef9; --text-2:#9aabc4; --text-dim:#5e7193;
+    --blue:#60a5fa; --blue-hi:#93c5fd; --blue-glow:rgba(96,165,250,0.18);
+    --sky:#7dd3fc; --green:#4ade80; --red:#f87171;
+    --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+    --sans:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  section[id],#top{scroll-margin-top:84px}
+  a{color:inherit;text-decoration:none}a:hover{color:var(--blue-hi)}
+  ::selection{background:var(--blue);color:#04140f}
+
+  .bg-layer{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+  .grid-bg{position:absolute;inset:-100px;
+    background-image:linear-gradient(rgba(96,165,250,0.05) 1px, transparent 1px),linear-gradient(90deg, rgba(96,165,250,0.05) 1px, transparent 1px);
+    background-size:60px 60px;mask-image:radial-gradient(ellipse 92% 72% at 50% 26%, #000 26%, transparent 80%);
+    -webkit-mask-image:radial-gradient(ellipse 92% 72% at 50% 26%, #000 26%, transparent 80%);animation:gridDrift 90s linear infinite}
+  @keyframes gridDrift{0%{transform:translate(0,0)}100%{transform:translate(60px,60px)}}
+  .glow-orb{position:absolute;border-radius:50%;filter:blur(82px);opacity:0.5;animation:orbDrift 26s ease-in-out infinite alternate}
+  .orb-1{width:540px;height:540px;background:radial-gradient(circle, rgba(96,165,250,0.30) 0%, transparent 70%);top:-90px;right:-110px;animation-duration:32s}
+  .orb-2{width:460px;height:460px;background:radial-gradient(circle, rgba(125,211,252,0.16) 0%, transparent 70%);top:42vh;left:-130px;animation-duration:40s;animation-delay:-8s}
+  .orb-3{width:380px;height:380px;background:radial-gradient(circle, rgba(96,165,250,0.16) 0%, transparent 70%);top:122vh;right:10vw;animation-duration:48s;animation-delay:-15s}
+  @keyframes orbDrift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-30px) scale(1.08)}100%{transform:translate(-30px,40px) scale(0.94)}}
+
+  .reveal{opacity:0;transform:translateY(36px);filter:blur(6px);transition:opacity 1.0s cubic-bezier(0.16,1,0.3,1), transform 1.0s cubic-bezier(0.16,1,0.3,1), filter 1.0s ease}
+  .reveal.in{opacity:1;transform:translateY(0);filter:blur(0)}
+  .reveal-stagger > *{opacity:0;transform:translateY(28px) scale(0.98);filter:blur(4px);transition:opacity 0.8s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s ease}
+  .reveal-stagger.in > *{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
+  .reveal-stagger.in > *:nth-child(1){transition-delay:0.04s}.reveal-stagger.in > *:nth-child(2){transition-delay:0.14s}
+  .reveal-stagger.in > *:nth-child(3){transition-delay:0.24s}.reveal-stagger.in > *:nth-child(4){transition-delay:0.34s}
+  .reveal-stagger.in > *:nth-child(5){transition-delay:0.44s}.reveal-stagger.in > *:nth-child(6){transition-delay:0.54s}
+  @media (prefers-reduced-motion: reduce){.reveal,.reveal-stagger > *{opacity:1;transform:none;filter:none;transition:none}}
+
+  .top{position:sticky;top:0;z-index:50;background:rgba(6,12,22,0.7);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+  .top-inner{max-width:1240px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:24px}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:600;font-size:15px}
+  .brand img{width:34px;height:34px;display:block;image-rendering:pixelated;filter:hue-rotate(55deg) saturate(1.5) drop-shadow(0 0 7px rgba(96,165,250,0.65))}
+  .brand-name{display:flex;align-items:baseline;gap:8px}
+  .brand-name b{font-weight:700;color:var(--text)}.brand-name span{color:var(--text-2);font-weight:400}
+  .nav{display:flex;gap:4px;margin-left:auto;font-size:13px;font-weight:500}
+  .nav a{padding:8px 14px;border-radius:8px;color:var(--text-2);transition:all 0.15s}
+  .nav a:hover{background:var(--panel);color:var(--text)}.nav a.active{color:var(--blue)}
+  .cta-pill{background:var(--blue);color:#04140f;padding:10px 18px;border-radius:99px;font-weight:600;font-size:13px;border:1px solid var(--blue);transition:all 0.2s;display:inline-flex;align-items:center;gap:8px}
+  .cta-pill:hover{background:var(--blue-hi);color:#04140f;transform:translateY(-1px);box-shadow:0 8px 24px -6px rgba(96,165,250,0.45)}
+
+  .hero{max-width:1240px;margin:0 auto;padding:96px 24px 80px;position:relative}
+  .hero-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:center}
+  .live-tag{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11px;color:var(--blue);padding:6px 12px;background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.22);border-radius:99px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:26px}
+  .live-dot{width:6px;height:6px;background:var(--green);border-radius:50%;box-shadow:0 0 10px var(--green);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.45}}
+  h1{font-size:clamp(40px,5.5vw,64px);line-height:1.06;letter-spacing:-0.025em;font-weight:700;margin-bottom:24px}
+  h1 .accent{background:linear-gradient(110deg, var(--blue) 30%, var(--blue-hi) 50%, var(--blue) 70%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 5s linear infinite}
+  @keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+  .lede{font-size:19px;color:var(--text-2);line-height:1.55;max-width:580px;margin-bottom:34px}
+  .lede strong{color:var(--text);font-weight:500}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .btn-primary{background:var(--blue);color:#04140f;padding:15px 28px;border-radius:99px;font-weight:600;font-size:15px;border:1px solid var(--blue);transition:all 0.2s;display:inline-flex;align-items:center;gap:10px;box-shadow:0 8px 28px -8px rgba(96,165,250,0.4)}
+  .btn-primary:hover{background:var(--blue-hi);color:#04140f;transform:translateY(-2px);box-shadow:0 14px 38px -10px rgba(96,165,250,0.55)}
+  .btn-secondary{background:rgba(255,255,255,0.04);color:var(--text);padding:15px 28px;border-radius:99px;font-weight:500;font-size:15px;border:1px solid var(--border-hi);transition:all 0.2s;display:inline-flex;align-items:center;gap:10px}
+  .btn-secondary:hover{background:rgba(255,255,255,0.08);border-color:var(--text-2);transform:translateY(-2px)}
+  .hero-stamp{margin-top:22px;display:inline-flex;align-items:center;gap:10px;color:var(--text-dim);font-size:13px;font-family:var(--mono)}
+  .hero-stamp svg{width:14px;height:14px;color:var(--green)}
+
+  /* hero chat card */
+  .chat-card{background:linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 24px 64px -20px rgba(0,0,0,0.6),0 0 0 1px rgba(96,165,250,0.05)}
+  .chat-bar{display:flex;align-items:center;gap:9px;padding:14px 18px;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.25);font-family:var(--mono);font-size:11px;color:var(--text-2)}
+  .chat-bar .pd{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2s ease-in-out infinite}
+  .chat-body{padding:20px 18px;display:flex;flex-direction:column;gap:12px}
+  .msg{max-width:82%;padding:11px 15px;border-radius:14px;font-size:13.5px;line-height:1.45}
+  .msg.them{align-self:flex-start;background:var(--bg-2);border:1px solid var(--border);border-bottom-left-radius:5px;color:var(--text)}
+  .msg.bot{align-self:flex-end;background:linear-gradient(180deg,rgba(96,165,250,0.22),rgba(96,165,250,0.1));border:1px solid rgba(96,165,250,0.3);border-bottom-right-radius:5px;color:var(--text)}
+  .msg .who{display:block;font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px;color:var(--text-dim)}
+  .msg.bot .who{color:var(--blue-hi)}
+  .chat-meta{display:flex;border-top:1px solid var(--border);font-family:var(--mono)}
+  .chat-meta div{flex:1;padding:13px 16px;border-right:1px solid var(--border);font-size:11px;color:var(--text-dim)}
+  .chat-meta div:last-child{border-right:none}
+  .chat-meta b{display:block;font-size:15px;color:var(--blue-hi);font-weight:600;margin-top:3px}
+
+  .strip{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:linear-gradient(180deg,var(--bg-2),var(--bg-3));position:relative;overflow:hidden}
+  .strip-inner{max-width:1240px;margin:0 auto;padding:38px 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+  .stat-cell{display:flex;flex-direction:column;gap:6px}
+  .stat-n{font-family:var(--mono);font-size:32px;font-weight:600;color:var(--blue);line-height:1;letter-spacing:-0.02em}
+  .stat-l{font-size:12px;color:var(--text-2);text-transform:uppercase;letter-spacing:0.09em;font-weight:500}
+  .stat-s{font-size:11px;color:var(--text-dim);font-family:var(--mono)}
+
+  section{padding:120px 0;position:relative}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 24px;position:relative}
+  .eyebrow{display:inline-block;font-family:var(--mono);font-size:11px;color:var(--blue);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:14px;padding:5px 12px;background:var(--blue-glow);border:1px solid rgba(96,165,250,0.22);border-radius:99px}
+  h2{font-size:clamp(32px,4vw,46px);line-height:1.1;letter-spacing:-0.02em;font-weight:700;margin-bottom:18px;max-width:780px}
+  h2 .accent{color:var(--blue)}
+  .section-lede{font-size:17px;color:var(--text-2);max-width:680px;margin-bottom:56px;line-height:1.55}
+
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .step{background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01));border:1px solid var(--border);border-radius:16px;padding:30px 24px;position:relative;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);overflow:hidden}
+  .step::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%, rgba(96,165,250,0.08), transparent 60%);opacity:0;transition:opacity 0.3s}
+  .step:hover{border-color:var(--border-hi);transform:translateY(-4px);box-shadow:0 18px 40px -16px rgba(0,0,0,0.5)}.step:hover::before{opacity:1}
+  .step-n{position:absolute;top:22px;right:24px;font-family:var(--mono);font-size:11px;color:var(--text-dim)}
+  .step-icon{width:48px;height:48px;background:linear-gradient(135deg, rgba(96,165,250,0.18), rgba(96,165,250,0.06));border:1px solid rgba(96,165,250,0.28);border-radius:12px;display:grid;place-items:center;margin-bottom:22px;color:var(--blue);position:relative;z-index:1}
+  .step-icon svg{width:24px;height:24px}
+  .step h3{font-size:17px;font-weight:600;margin-bottom:8px;position:relative;z-index:1}
+  .step p{font-size:14px;color:var(--text-2);line-height:1.55;position:relative;z-index:1}
+  .step code{font-family:var(--mono);font-size:12px;background:rgba(96,165,250,0.12);color:var(--blue-hi);padding:2px 7px;border-radius:5px}
+
+  .cb-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center}
+  .cb-steps{display:flex;flex-direction:column;gap:24px;margin-top:40px}
+  .cb-step{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:flex-start;padding:22px 26px;background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01));border:1px solid var(--border);border-radius:14px;transition:all 0.2s}
+  .cb-step:hover{border-color:var(--border-hi);transform:translateX(4px)}
+  .cb-step-tag{font-family:var(--mono);font-size:10px;font-weight:600;color:var(--blue);background:var(--blue-glow);border:1px solid rgba(96,165,250,0.22);border-radius:6px;padding:6px 10px;letter-spacing:0.1em;white-space:nowrap;align-self:flex-start;margin-top:2px}
+  .cb-step h4{font-size:16px;font-weight:600;margin-bottom:6px}.cb-step p{font-size:14px;color:var(--text-2);line-height:1.55}
+  .cb-callout{margin-top:32px;padding:18px 22px;background:linear-gradient(90deg, rgba(96,165,250,0.08), transparent);border-left:3px solid var(--blue);border-radius:0 12px 12px 0;font-size:15px;font-style:italic;color:var(--text);line-height:1.5}
+  .cb-callout strong{color:var(--blue);font-style:normal;font-weight:600}
+  .code-card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.005));border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 24px 64px -24px rgba(0,0,0,0.6)}
+  .code-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.25);font-family:var(--mono);font-size:11px;color:var(--text-2)}
+  .code-head .pulse{display:inline-flex;align-items:center;gap:7px;color:var(--green)}
+  .code-head .pulse-dot{width:5px;height:5px;background:var(--green);border-radius:50%;box-shadow:0 0 8px var(--green);animation:pulse 2s ease-in-out infinite}
+  .code-body{padding:20px 22px;font-family:var(--mono);font-size:12.5px;line-height:1.7;color:var(--text-2)}
+  .code-body .ln{display:block;white-space:pre}
+  .code-body .k{color:var(--blue-hi)}.code-body .ok{color:var(--green)}.code-body .dim{color:var(--text-dim)}
+  .code-stats{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--border)}
+  .code-stat{padding:16px 20px;border-right:1px solid var(--border)}
+  .code-stat:nth-child(2n){border-right:none}.code-stat:nth-child(n+3){border-top:1px solid var(--border)}
+  .code-stat-k{font-family:var(--mono);font-size:10px;color:var(--text-2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px}
+  .code-stat-v{font-family:var(--mono);font-size:18px;color:var(--text);font-weight:600}.code-stat-v.blue{color:var(--blue-hi)}
+
+  .pricing{background:linear-gradient(180deg, var(--bg-2), var(--bg-3) 50%, var(--bg-2));border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .price-head{text-align:center;margin-bottom:56px}
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1100px;margin:0 auto}
+  .plan{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:38px;display:flex;flex-direction:column;position:relative;transition:all 0.3s}
+  .plan:hover{border-color:var(--border-hi);transform:translateY(-2px)}
+  .plan.featured{border-color:rgba(96,165,250,0.5);background:linear-gradient(180deg, rgba(96,165,250,0.05), var(--bg) 50%);box-shadow:0 0 0 1px rgba(96,165,250,0.15),0 24px 60px -20px rgba(96,165,250,0.18)}
+  .plan-flag{position:absolute;top:-12px;left:38px;background:var(--blue);color:#04140f;font-size:11px;font-weight:600;padding:6px 14px;border-radius:99px;letter-spacing:0.05em;text-transform:uppercase;font-family:var(--mono);box-shadow:0 6px 18px -4px rgba(96,165,250,0.5)}
+  .plan-name{font-size:13px;color:var(--text-2);font-family:var(--mono);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:18px}
+  .plan-price{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}
+  .price-n{font-size:56px;font-weight:700;letter-spacing:-0.03em;line-height:1}
+  .price-per{font-size:15px;color:var(--text-2)}
+  .plan-sub{font-size:14px;color:var(--text-2);margin-bottom:32px;min-height:22px}
+  .plan-features{list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:36px;flex:1}
+  .plan-features li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text);line-height:1.5}
+  .check{width:18px;height:18px;flex-shrink:0;color:var(--blue);margin-top:2px}
+  .plan-cta{display:flex;align-items:center;justify-content:center;gap:8px;padding:15px;border-radius:99px;font-weight:600;font-size:15px;transition:all 0.2s}
+  .plan-cta.primary{background:var(--blue);color:#04140f;border:1px solid var(--blue)}
+  .plan-cta.primary:hover{background:var(--blue-hi);transform:translateY(-1px);box-shadow:0 12px 32px -10px rgba(96,165,250,0.5)}
+  .plan-cta.outline{background:transparent;color:var(--text);border:1px solid var(--border-hi)}
+  .plan-cta.outline:hover{background:var(--panel);border-color:var(--text-2)}
+  .pricing-note{text-align:center;color:var(--text-dim);font-size:13px;margin-top:36px;font-family:var(--mono)}
+  .pricing-note strong{color:var(--text-2);font-weight:500}
+
+  .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .faq{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));border:1px solid var(--border);border-radius:14px;padding:26px 30px;transition:all 0.2s}
+  .faq:hover{border-color:var(--border-hi)}
+  .faq h4{font-size:16px;font-weight:600;margin-bottom:10px;color:var(--text);display:flex;align-items:center;gap:10px}
+  .faq h4::before{content:'';width:5px;height:5px;background:var(--blue);border-radius:50%;flex-shrink:0;box-shadow:0 0 0 3px rgba(96,165,250,0.18)}
+  .faq p{font-size:14px;color:var(--text-2);line-height:1.6}
+  .faq p code{font-family:var(--mono);font-size:12px;background:rgba(96,165,250,0.12);color:var(--blue-hi);padding:1px 6px;border-radius:5px}
+
+  .final{padding:140px 0;text-align:center;position:relative;overflow:hidden}
+  .final::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%, rgba(96,165,250,0.09), transparent 70%);pointer-events:none}
+  .final h2{font-size:clamp(36px,5vw,58px);max-width:none;margin:0 auto 24px;position:relative}
+  .final p{font-size:18px;color:var(--text-2);max-width:560px;margin:0 auto 36px;position:relative}
+  .final-ctas{position:relative;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+  .rb-footer{border-top:1px solid var(--border);background:var(--bg-2);padding:56px 20px 42px}
+  .rb-footer-inner{max-width:1080px;margin:0 auto;display:grid;gap:30px}
+  .rb-foot-kicker{display:block;font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-dim);margin-bottom:11px}
+  .rb-foot-family .rb-foot-copy{font-size:15px;line-height:1.75;color:var(--text-2);max-width:70ch;margin:0}
+  .rb-footer a{color:var(--text);border-bottom:1px solid transparent;transition:color .18s, border-color .18s}
+  .rb-footer a:hover{color:var(--blue-hi);border-bottom-color:var(--blue)}
+  .rb-foot-more{color:var(--blue-hi) !important;white-space:nowrap}
+  .rb-foot-icons{display:flex;flex-wrap:wrap;gap:18px 24px;align-items:center;font-family:var(--mono);font-size:13px}
+  .rb-foot-icons a{display:inline-flex;align-items:center;gap:8px;color:var(--text-2);border:none}
+  .rb-foot-icons a:hover{color:var(--blue-hi)}.rb-foot-icons svg{width:18px;height:18px;fill:currentColor}
+  .rb-foot-base{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center;padding-top:24px;border-top:1px solid var(--border);font-size:12.5px;color:var(--text-dim);font-family:var(--mono)}
+  .rb-foot-base img{width:15px;height:15px;vertical-align:-3px;margin-right:6px;image-rendering:pixelated;filter:hue-rotate(55deg) saturate(1.4)}
+  .rb-foot-base a{color:var(--text-dim)}
+
+  @media (max-width:1080px){.price-grid{grid-template-columns:1fr;gap:18px;max-width:520px}}
+  @media (max-width:900px){
+    .hero-grid,.cb-grid,.faq-grid{grid-template-columns:1fr;gap:48px}
+    .strip-inner{grid-template-columns:repeat(2,1fr);gap:28px}
+    .steps{grid-template-columns:1fr;gap:16px}.cb-step{grid-template-columns:1fr;gap:12px}
+    .nav{display:none}.top-inner{justify-content:space-between;gap:12px}
+    section{padding:80px 0}.hero{padding:64px 24px 56px}
+  }
 </style>
 </head>
 <body>
 
-  <nav class="top-nav" aria-label="Primary">
-    <div class="top-nav-inner">
-      <a class="brand-lockup" href="index.html">
-        <img src="../../assets/rhobear-logo.png?v=1782900000" alt="" class="pixelated">
-        <span>RHOBEAR</span>
-      </a>
-      <div class="nav-tabs"><a href="index.html" class="nav-tab ">HOME</a><a href="crew.html" class="nav-tab ">CREW</a><a href="hub.html" class="nav-tab ">HUB</a><a href="workbench.html" class="nav-tab ">WORKBENCH</a><a href="try.html" class="nav-tab ">TRY THE DEMO</a><a href="learn.html" class="nav-tab ">LEARN</a><div class="nav-dropdown"><a href="substrate.html" class="nav-tab " aria-haspopup="true">SUBSTRATE ▾</a><div class="nav-dropdown-panel"><a href="goal-autoloop.html" class="">Goal Autoloop</a><a href="judgment-loop.html" class="">Judgment Loop</a><a href="substrate.html" class="">Substrate Overview</a><a href="compass.html" class="">Compass</a><a href="worker-sessions.html" class="">Worker Sessions</a><a href="handoff-bus.html" class="">Handoff Bus</a><a href="safety-registry.html" class="">Safety Registry</a><a href="hub-contract.html" class="">Hub Contract</a><a href="openclaw.html" class="">OpenClaw</a></div></div><a href="built-with.html" class="nav-tab ">BUILT WITH</a></div>
-      <span class="nav-spacer"></span>
-      <a href="https://sales.rhobear.ai" class="btn-amber nav-cta">Get your chatbot →</a>
-    </div>
-  </nav>
-<main>
+<div class="bg-layer"><div class="grid-bg"></div><div class="glow-orb orb-1"></div><div class="glow-orb orb-2"></div><div class="glow-orb orb-3"></div></div>
 
-<section class="wrap-md" style="padding-top:48px;">
-  <img src="../../assets/rhobear-logo.png?v=1782940000" alt="" class="pixelated" style="float:right; height:132px; margin:0 0 14px 26px; image-rendering:auto; filter:hue-rotate(55deg) saturate(1.25) drop-shadow(0 0 26px rgba(96,165,250,0.5));">
-  <div class="eyebrow-row">PRODUCT · SALES · STOP 6 · IT SELLS ITSELF</div>
-  <h1 class="h1-page">This page is <em class="ai-glow">me doing it.</em></h1>
-  <p class="lead">You like these tools, but you don't want to set them up. So I do it for you. I hand-build and run your sales page for you, the white-glove version, and the bot greeting you right now is that work, live. Like what it's doing here? I'll build you one.</p>
-  <div class="cta-row">
-    <a href="https://sales.rhobear.ai" class="btn-amber">Get your chatbot →</a>
-    <a href="index.html#workflow" class="btn-ghost">See the whole family →</a>
+<header class="top">
+  <div class="top-inner">
+    <a href="index.html" class="brand" aria-label="RHOBEAR — back to the Hub">
+      <img src="../../assets/rhobear-logo.png?v=1782940000" alt="">
+      <span class="brand-name"><b>RHOBEAR</b><span>Sales</span></span>
+    </a>
+    <nav class="nav">
+      <a href="#how" data-nav>How it works</a>
+      <a href="#demo" data-nav>The demo</a>
+      <a href="#pricing" data-nav>Pricing</a>
+      <a href="#faq" data-nav>FAQ</a>
+    </nav>
+    <a href="https://sales.rhobear.ai" class="cta-pill">Get your chatbot →</a>
   </div>
-  <div class="quant-line">done-for-you &middot; no server, no hosting &middot; tiny Qwen-3B &middot; answers every lead &middot; $47 one-time</div>
-</section>
+</header>
 
-<!-- IT IS THE DEMO -->
-<section class="wrap">
-  <div class="eyebrow-row">THE DEMO IS THE PRODUCT</div>
-  <h2 style="font-size:clamp(1.8rem,3vw,2.5rem); margin:0 0 14px;">The bot on this page is the one <em>you'd get.</em></h2>
-  <p class="lead" style="max-width:64ch;">I don't show you a mockup and quote you for the real thing later. The greeting bot you're talking to is the exact setup I stand up for a client. Watch how it answers, then decide. The proof runs in front of you.</p>
-  <div class="terminal" style="max-width:880px;"><span class="dim"># the greeting bot · running on this page now</span>
-<span class="role">visitor &gt;</span> do you do booking too, or just the chat?
-<span class="role">sales-bot &gt;</span> both &middot; I answer here and hand the lead to your calendar
-<span class="role">visitor &gt;</span> what does it cost to run?
-<span class="role">sales-bot &gt;</span> a domain &middot; the model is local &middot; <span class="ok">no server bill</span></div>
-</section>
+<section class="hero" id="top">
+  <div class="hero-grid">
+    <div class="reveal">
+      <div class="live-tag"><span class="live-dot"></span> The bot greeting you is the product</div>
+      <h1>This page is <span class="accent">me doing it.</span></h1>
+      <p class="lede"><strong>You like these tools, but you don't want to set them up.</strong> So I do it for you. I hand-build and run your sales page and greeting bot, white-glove, and the bot answering you right now is that work, live. Like what it's doing here? I'll build you one.</p>
+      <div class="hero-ctas">
+        <a href="https://sales.rhobear.ai" class="btn-primary">Get your chatbot →</a>
+        <a href="#how" class="btn-secondary">See how it works →</a>
+      </div>
+      <div class="hero-stamp">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,11 8,16 17,5"/></svg>
+        Done-for-you · tiny Qwen-3B · no server · $47 one-time
+      </div>
+    </div>
 
-<!-- HOW IT RUNS -->
-<section class="wrap" style="padding-top:8px;">
-  <div class="eyebrow-row">HOW IT RUNS</div>
-  <h2 style="font-size:clamp(1.7rem,2.8vw,2.3rem); margin:0 0 8px;">A tiny model, a domain, and nothing else.</h2>
-  <p class="lead" style="max-width:66ch;">The bot runs on a tiny Qwen-3B with no rented server and no hosting bill behind it. Just a domain. It's the same setup I stood up for clients like Saguaro, so it answers your leads without a monthly meter running in the background.</p>
-  <div class="card-grid cols-2" style="margin-top:24px; row-gap:26px;">
-    <div class="card-paper stitched feature-card">
-      <div class="num">A · DONE FOR YOU</div>
-      <h3>White-glove, start to finish.</h3>
-      <p>I build the page, wire the bot, and hand it over running. You don't set anything up. The version on this page is the version you get.</p>
-    </div>
-    <div class="card-paper stitched feature-card">
-      <div class="num">B · NO SERVER, NO HOSTING</div>
-      <h3>Just a domain to point at it.</h3>
-      <p>The model is local and small, so there's no rented box and no hosting invoice. The only standing cost is the domain your page lives on.</p>
-    </div>
-    <div class="card-paper stitched feature-card">
-      <div class="num">C · TINY QWEN-3B</div>
-      <h3>Small enough to run for nothing.</h3>
-      <p>A Qwen-3B is plenty to greet a visitor, answer the common questions, and pass a warm lead along. Light to run, quick to reply.</p>
-    </div>
-    <div class="card-paper stitched feature-card">
-      <div class="num">D · $47 ONE-TIME</div>
-      <h3>One price, stated flat.</h3>
-      <p>Forty-seven dollars, once. No subscription, no countdown, no upsell waiting on the next screen. You get the chatbot and the page it lives on.</p>
-    </div>
-  </div>
-</section>
-
-<!-- WHAT IT COSTS -->
-<section class="wrap" style="padding-top:8px;">
-  <div class="eyebrow-row">WHAT IT COSTS TO RUN</div>
-  <h2 style="font-size:clamp(1.7rem,2.8vw,2.3rem); margin:0 0 8px;">One build, once. <em class="ai-glow">Then a domain to keep it up.</em></h2>
-  <div class="card-grid cols-2" style="margin-top:24px; row-gap:26px;">
-    <div class="card-paper stitched feature-card">
-      <div class="num">ONE-TIME · $47</div>
-      <h3>I build it, you own it.</h3>
-      <p>Forty-seven dollars, once. I hand-build the page and the bot and hand it over running. No subscription, no seat tax, nothing that expires when you stop paying.</p>
-    </div>
-    <div class="card-paper stitched feature-card">
-      <div class="num">TO RUN · A DOMAIN</div>
-      <h3>No server, no hosting bill.</h3>
-      <p>The greeting bot runs on a tiny Qwen-3B on your own box, so there's no rented server behind it. The only standing cost is the domain it answers on.</p>
-    </div>
-  </div>
-</section>
-
-<!-- RELAY HANDOFF -->
-<section class="band-dark install-band">
-  <div class="wrap" style="position:relative;">
-    <div style="max-width:780px;">
-      <div class="eyebrow-row">WHERE SALES SITS</div>
-      <h2 style="font-size:clamp(1.8rem,3vw,2.5rem); margin:0 0 18px;">It closes the lead. <em>Then it points you home.</em></h2>
-      <p style="color:var(--c-dark-ink-2); font-size:1.05rem; line-height:1.65;">And the rep that answers your leads? Sales proves it closes. It's the last stop in the family, so once it has your lead answered, it loops you back to the Hub to build the next product. One hand passes to the next, and the next one starts the loop again.</p>
-      <div class="relay-next">
-        <a href="plans.html"><span class="arw">←</span> Plans</a>
-        <span class="now">Sales</span>
-        <a href="index.html">↺ Back to the Hub <span class="arw">→</span></a>
+    <div class="reveal" style="transition-delay:0.18s">
+      <div class="chat-card">
+        <div class="chat-bar"><span class="pd"></span> sales-bot · live on this page</div>
+        <div class="chat-body">
+          <div class="msg them"><span class="who">visitor</span>do you do booking too, or just the chat?</div>
+          <div class="msg bot"><span class="who">sales-bot</span>Both. I answer here and hand the lead straight to your calendar.</div>
+          <div class="msg them"><span class="who">visitor</span>what does it cost to run?</div>
+          <div class="msg bot"><span class="who">sales-bot</span>A domain. The model is local, so there's no server bill.</div>
+        </div>
+        <div class="chat-meta">
+          <div>answers<b>every lead</b></div>
+          <div>runs on<b>Qwen-3B</b></div>
+          <div>server<b>none</b></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
-</main>
 
-<div class="prevnext"><div class="prevnext-inner"><a href="plans.html" class="pn-link "><span class="pn-mini">← Previous</span><span class="pn-name">Plans</span></a><a href="index.html" class="pn-link "><span class="pn-mini">Next →</span><span class="pn-name">↺ Back to the Hub</span></a></div></div>
-<footer class="site-footer"><div class="site-footer-inner"><div class="footer-row"><div class="footer-copy">© 2026 Sun Sponge LLC · <a href="https://github.com/rhobear-ai">GitHub</a> · <a href="https://github.com/deariencampbell1-sys/rhobear/blob/main/PRIVACY.md" target="_blank" rel="noopener">privacy</a> · <a href="faq.html">FAQ</a></div><div class="footer-tag">Lean. Local. Private. Yours.</div></div><div class="footer-disclaimer">All third-party trademarks and logos are property of their respective owners and shown here for integration identification purposes only. No partnership, sponsorship, or endorsement is implied.</div></div></footer>
-<script src="shell.js?v=1782980000" defer></script>
+<div class="strip">
+  <div class="strip-inner reveal-stagger">
+    <div class="stat-cell"><div class="stat-n">$47</div><div class="stat-l">One-time, flat</div><div class="stat-s">No subscription, no upsell</div></div>
+    <div class="stat-cell"><div class="stat-n">Done-for-you</div><div class="stat-l">I build and run it</div><div class="stat-s">White-glove, start to finish</div></div>
+    <div class="stat-cell"><div class="stat-n">Qwen-3B</div><div class="stat-l">Tiny local model</div><div class="stat-s">No rented box behind it</div></div>
+    <div class="stat-cell"><div class="stat-n">$0</div><div class="stat-l">Server + hosting bill</div><div class="stat-s">Just a domain to run on</div></div>
+  </div>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">How it works</span>
+      <h2>You don't set anything up. <span class="accent">I do.</span></h2>
+      <p class="section-lede">The version on this page is the version you get. I hand-build the page, wire the bot, and hand it over running. White-glove, start to finish.</p>
+    </div>
+    <div class="steps reveal-stagger">
+      <div class="step"><span class="step-n">01</span><div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/></svg></div><h3>I build it for you</h3><p>You tell me about the business. I hand-build the page and wire the greeting bot to match it. No setup on your end.</p></div>
+      <div class="step"><span class="step-n">02</span><div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><h3>The bot greets every visitor</h3><p>It answers the common questions in plain language, the moment someone lands. No lead waits for you to be awake.</p></div>
+      <div class="step"><span class="step-n">03</span><div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v5H4z"/><path d="M4 13l8 5 8-5"/></svg></div><h3>It routes the warm lead</h3><p>When someone's ready, the bot hands the lead to your calendar or inbox, so a hot prospect never falls through.</p></div>
+      <div class="step"><span class="step-n">04</span><div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v6m0 0l-3-3m3 3l3-3M5 13v6a2 2 0 002 2h10a2 2 0 002-2v-6"/></svg></div><h3>You own it, running</h3><p>I hand it over live on a domain you point at it. One price, paid once. It's yours from then on.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="demo">
+  <div class="wrap">
+    <div class="cb-grid">
+      <div class="reveal">
+        <span class="eyebrow">The demo is the product</span>
+        <h2>The bot on this page is <span class="accent">the one you'd get.</span></h2>
+        <p class="section-lede" style="margin-bottom:0">I don't show you a mockup and quote you for the real thing later. The greeting bot you're talking to is the exact setup I stand up for a client. Watch how it answers, then decide. The proof runs in front of you, not in a slide deck.</p>
+        <div class="cb-steps">
+          <div class="cb-step"><div class="cb-step-tag">LIVE</div><div><h4>No mockup, no bait-and-switch</h4><p>What you poke at here is what gets shipped. Same bot, same answers, same routing.</p></div></div>
+          <div class="cb-step"><div class="cb-step-tag">CHEAP TO RUN</div><div><h4>A tiny model, a domain, nothing else</h4><p>It runs on a small Qwen-3B with no rented server and no hosting bill. The only standing cost is the domain.</p></div></div>
+          <div class="cb-step"><div class="cb-step-tag">PROVEN</div><div><h4>The same setup I ran for clients</h4><p>This is the work I stood up for real businesses, answering leads without a monthly meter running behind it.</p></div></div>
+        </div>
+        <div class="cb-callout"><strong>Like what it's doing here?</strong> That's the pitch. I'll build you the same one.</div>
+      </div>
+      <div class="reveal" style="transition-delay:0.18s">
+        <div class="code-card">
+          <div class="code-head"><span>receipt · your chatbot</span><span class="pulse"><span class="pulse-dot"></span> running</span></div>
+          <div class="code-body">
+<span class="ln"><span class="dim"># one build, handed over running</span></span>
+<span class="ln"><span class="k">build</span> page + greeting bot · <span class="ok">done</span></span>
+<span class="ln"><span class="k">model</span> Qwen-3B · local · <span class="ok">no server</span></span>
+<span class="ln"><span class="k">leads</span> answered + routed to calendar</span>
+<span class="ln"><span class="k">runs on</span> a domain you point at it</span>
+<span class="ln"><span class="k">price</span> $47 · <span class="ok">one-time</span> · yours</span>
+          </div>
+          <div class="code-stats">
+            <div class="code-stat"><div class="code-stat-k">One-time build</div><div class="code-stat-v">$47</div></div>
+            <div class="code-stat"><div class="code-stat-k">To run</div><div class="code-stat-v">a domain</div></div>
+            <div class="code-stat"><div class="code-stat-k">Server bill</div><div class="code-stat-v">$0</div></div>
+            <div class="code-stat"><div class="code-stat-k">Subscription</div><div class="code-stat-v blue">none</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="pricing">
+  <div class="wrap">
+    <div class="price-head reveal">
+      <span class="eyebrow">Pricing</span>
+      <h2 style="margin:0 auto 18px">One build, once. <span class="accent">Then a domain to keep it up.</span></h2>
+      <p class="section-lede" style="margin:0 auto">Forty-seven dollars, one time. No subscription, no seat tax, nothing that expires when you stop paying. The only standing cost is the domain it answers on.</p>
+    </div>
+    <div class="price-grid reveal-stagger">
+      <div class="plan featured">
+        <div class="plan-flag">★ The build</div>
+        <div class="plan-name">Done-for-you</div>
+        <div class="plan-price"><span class="price-n">$47</span><span class="price-per">/ one-time</span></div>
+        <div class="plan-sub">I build it, you own it.</div>
+        <ul class="plan-features">
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Hand-built sales page, matched to your business</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Greeting bot wired and handed over running</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Answers leads and routes them to your calendar</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>No subscription, no seat tax, ever</li>
+        </ul>
+        <a href="https://sales.rhobear.ai" class="plan-cta primary">Get your chatbot →</a>
+      </div>
+      <div class="plan">
+        <div class="plan-name">To run it</div>
+        <div class="plan-price"><span class="price-n">$0</span><span class="price-per">+ a domain</span></div>
+        <div class="plan-sub">No server, no hosting bill.</div>
+        <ul class="plan-features">
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Runs on a tiny local Qwen-3B</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>No rented box, no monthly meter</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>The only standing cost is your domain</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Answers leads around the clock</li>
+        </ul>
+        <a href="https://sales.rhobear.ai" class="plan-cta outline">See what runs it →</a>
+      </div>
+      <div class="plan">
+        <div class="plan-name">Need more</div>
+        <div class="plan-price"><span class="price-n">Let's talk</span></div>
+        <div class="plan-sub">Extra pages, bots, or routing.</div>
+        <ul class="plan-features">
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>More pages or a multi-step funnel</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Custom routing into your tools</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Tie it to Plans for calendar + payments</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Still one flat quote, no surprises</li>
+        </ul>
+        <a href="https://sales.rhobear.ai" class="plan-cta outline">Tell me what you need →</a>
+      </div>
+    </div>
+    <p class="pricing-note"><strong>$47 once, then a domain.</strong> No subscription, no countdown, no upsell waiting on the next screen.</p>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">FAQ</span>
+      <h2>Honest answers to the obvious questions.</h2>
+      <p class="section-lede">I answer real emails. Anything not here, just ask the bot.</p>
+    </div>
+    <div class="faq-grid reveal-stagger">
+      <div class="faq"><h4>What do I actually pay?</h4><p><code>$47</code>, one time. I build the page and the bot and hand it over running. After that, the only cost is the domain it lives on.</p></div>
+      <div class="faq"><h4>Is the bot here really the one I'd get?</h4><p>Yes. The greeting bot on this page is the exact setup I stand up for a client. No mockup, no bait-and-switch.</p></div>
+      <div class="faq"><h4>What does it cost to run?</h4><p>A domain. The bot runs on a tiny local <code>Qwen-3B</code> with no rented server and no hosting bill, so there's no monthly meter.</p></div>
+      <div class="faq"><h4>Do I have to set anything up?</h4><p>No. It's done-for-you, white-glove. You tell me about the business; I build it and hand it over live.</p></div>
+      <div class="faq"><h4>What happens to a lead?</h4><p>The bot answers the common questions, then hands a warm lead to your calendar or inbox, so a hot prospect never falls through.</p></div>
+      <div class="faq"><h4>Can it do more than chat?</h4><p>Yes. Tie it to <a href="https://rhobear.ai/plans.html">Plans</a> for booking and payments, or ask for extra pages and custom routing. Still one flat quote.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="install" class="final">
+  <div class="wrap reveal">
+    <h2>Like what this bot is doing?<br><span class="accent">I'll build you one.</span></h2>
+    <p>Done-for-you, running on a tiny model and a domain. $47, one time.</p>
+    <div class="final-ctas">
+      <a href="https://sales.rhobear.ai" class="btn-primary">Get your chatbot →</a>
+      <a href="#pricing" class="btn-secondary">See pricing →</a>
+    </div>
+  </div>
+</section>
+
+<footer class="rb-footer">
+  <div class="rb-footer-inner">
+    <div class="rb-foot-family">
+      <span class="rb-foot-kicker">Stop 6 of the RHOBEAR family · it loops back to the Hub</span>
+      <p class="rb-foot-copy">
+        Sales is the rep that answers your leads. It's the last stop in the family:
+        <a href="https://rhobear.ai/plans.html">Plans</a> hands it a closing rep, and once Sales has the lead answered it loops you back to
+        <a href="https://rhobear.ai/app.html">the Hub</a> to build the next product. The crew shapes work in
+        <a href="https://rhobear.ai/designs.html">Designs</a>, captures it with <a href="https://rhobear.ai/sunsponge.html">SunSponge</a>, and keeps it clean through <a href="https://reviews.rhobear.ai/">Reviews</a>.
+        <a href="https://rhobear.ai/" class="rb-foot-more">See the whole workflow →</a>
+      </p>
+    </div>
+    <div class="rb-foot-social">
+      <span class="rb-foot-kicker">Find us elsewhere</span>
+      <div class="rb-foot-icons">
+        <a href="https://x.com/rhobearai" target="_blank" rel="noopener" aria-label="RHOBEAR on X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-6.9l-5.4-7-6.2 7H1.7l8.1-9.3L1 2h7l4.9 6.5L18.9 2Zm-1.2 18h1.9L7.4 4H5.4l12.3 16Z"/></svg>X</a>
+        <a href="https://instagram.com/rhobear.ai" target="_blank" rel="noopener" aria-label="RHOBEAR on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>Instagram</a>
+        <a href="https://www.fiverr.com/rhobear_ai" target="_blank" rel="noopener" aria-label="RHOBEAR on Fiverr"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" stroke="currentColor" stroke-width="2"/><text x="12" y="16" text-anchor="middle" font-size="9" font-weight="700" fill="currentColor" font-family="sans-serif">fi</text></svg>Fiverr</a>
+      </div>
+    </div>
+    <div class="rb-foot-base">
+      <span><img src="../../assets/rhobear-logo.png?v=1782940000" alt="">© 2026 RHOBEAR · A SunSponge LLC product · Done-for-you · it sells itself.</span>
+      <span><a href="https://rhobear.ai/">The family</a> · <a href="https://github.com/deariencampbell1-sys/rhobear/blob/main/PRIVACY.md">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -80px 0px'});
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(el=>io.observe(el));
+  const sections=['how','demo','pricing','faq'].map(id=>document.getElementById(id));
+  const navLinks=document.querySelectorAll('a[data-nav]');
+  const navIO=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){const id=e.target.id;navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));}});},{rootMargin:'-30% 0px -60% 0px'});
+  sections.forEach(s=>s&&navIO.observe(s));
+</script>
 </body>
 </html>

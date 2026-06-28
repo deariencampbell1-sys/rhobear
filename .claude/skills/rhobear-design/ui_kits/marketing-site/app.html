@@ -13,6 +13,15 @@
   --c-amber:#7dffd5 !important;       --c-amber-deep:#a9ffe6 !important;
   --c-amber-soft:rgba(125,255,213,0.16) !important;  --c-amber-tint:rgba(125,255,213,0.12) !important;
 }
+/* ===== AMBIENT TONE — this page's own accent, washed behind the shared
+   starfield so it reads as itself, not the home page. ===== */
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(58% 44% at 15% 3%,  var(--c-amber-soft), transparent 60%),
+    radial-gradient(50% 40% at 88% 13%, var(--c-amber-tint), transparent 62%),
+    radial-gradient(74% 56% at 66% 106%, var(--c-amber-soft), transparent 66%);
+}
 .btn-amber{ color:#04140f !important; box-shadow:0 0 0 1px rgba(125,255,213,0.40),0 10px 26px -10px rgba(125,255,213,0.55) !important; }
 .btn-amber:hover{ color:#04140f !important; background:var(--c-amber-deep) !important; }
 .chip-amber,.pillar-ribbon .chip-amber{ background:rgba(125,255,213,0.13) !important; border-color:rgba(125,255,213,0.45) !important; color:#bff6e8 !important; }
@@ -35,7 +44,7 @@
         <img src="../../assets/rhobear-logo.png?v=1782900000" alt="" class="pixelated">
         <span>RHOBEAR</span>
       </a>
-      <div class="nav-tabs"><a href="index.html" class="nav-tab active">HOME</a><a href="crew.html" class="nav-tab ">CREW</a><a href="hub.html" class="nav-tab ">HUB</a><a href="workbench.html" class="nav-tab ">WORKBENCH</a><a href="try.html" class="nav-tab ">TRY THE DEMO</a><a href="learn.html" class="nav-tab ">LEARN</a><div class="nav-dropdown"><a href="substrate.html" class="nav-tab " aria-haspopup="true">SUBSTRATE ▾</a><div class="nav-dropdown-panel"><a href="goal-autoloop.html" class="">Goal Autoloop</a><a href="judgment-loop.html" class="">Judgment Loop</a><a href="substrate.html" class="">Substrate Overview</a><a href="compass.html" class="">Compass</a><a href="worker-sessions.html" class="">Worker Sessions</a><a href="handoff-bus.html" class="">Handoff Bus</a><a href="safety-registry.html" class="">Safety Registry</a><a href="hub-contract.html" class="">Hub Contract</a><a href="openclaw.html" class="">OpenClaw</a></div></div><a href="built-with.html" class="nav-tab ">BUILT WITH</a></div>
+      <div class="nav-tabs"><a href="index.html" class="nav-tab active">HOME</a><a href="crew.html" class="nav-tab ">CREW</a><a href="hub.html" class="nav-tab ">HUB</a><a href="workbench.html" class="nav-tab ">WORKBENCH</a><a href="learn.html" class="nav-tab ">LEARN</a><div class="nav-dropdown"><a href="substrate.html" class="nav-tab " aria-haspopup="true">SUBSTRATE ▾</a><div class="nav-dropdown-panel"><a href="goal-autoloop.html" class="">Goal Autoloop</a><a href="judgment-loop.html" class="">Judgment Loop</a><a href="substrate.html" class="">Substrate Overview</a><a href="compass.html" class="">Compass</a><a href="worker-sessions.html" class="">Worker Sessions</a><a href="handoff-bus.html" class="">Handoff Bus</a><a href="safety-registry.html" class="">Safety Registry</a><a href="hub-contract.html" class="">Hub Contract</a><a href="openclaw.html" class="">OpenClaw</a></div></div><a href="built-with.html" class="nav-tab ">BUILT WITH</a></div>
       <span class="nav-spacer"></span>
       <a href="spin-it-up.html" class="btn-amber nav-cta">Spin it up →</a>
     </div>
@@ -316,7 +325,7 @@
     <p class="lead" style="max-width:60ch;">The skills catalog ships with vetted-safe modules across design, content, lead-gen, and developer work, with more verticals being added. Hire the crew once. Use them for every department.</p>
 
     <div class="screenshot-frame stitched" style="margin-top:24px;">
-      <img src="../../assets/addition-06-skills-catalog.png?v=1782900000" alt="Skills tab: vetted, ready-to-run skill modules" >
+      <div class="shot-pending" aria-hidden="true"></div>
     </div>
     <div class="chip-mono" style="display:block; padding:12px 18px; margin:14px 0 22px; text-transform:none; letter-spacing:0; font-size:0.88rem; color:var(--c-ink-2); max-width:760px; line-height:1.5;">
       The Skills tab: a growing catalog of vetted, ready-to-run modules, every one a <code>/command</code> Pops can run.
@@ -490,7 +499,7 @@
     <span class="now">Build it · Hub</span>
     <span class="arw">→</span><a href="designs.html">Shape it · Designs</a>
     <span class="arw">→</span><a href="sunsponge.html">Capture it · SunSponge</a>
-    <span class="arw">→</span><a href="reviews.html">Keep it clean · Reviews</a>
+    <span class="arw">→</span><a href="https://reviews.rhobear.ai/">Keep it clean · Reviews</a>
     <span class="arw">→</span><a href="plans.html">Take it to market · Plans</a>
     <span class="arw">→</span><a href="sales.html">It sells itself · Sales</a>
   </div>

@@ -1,159 +1,734 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RHOBEAR · Plans</title>
-  <meta name="description" content="RHOBEAR Plans is the local-first cockpit your crew works from and you talk to: calendar, booking, payments, and a Telegram bot per calendar. A local Qwen-4B reads your email on-device. Stop 5 of the RHOBEAR ecosystem: take it to market.">
-  <link rel="stylesheet" href="../../colors_and_type.css">
-  <link rel="stylesheet" href="shell.css?v=1782970000">
-  <link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782900000">
-<style id="rho-tweaks-style">
-/* ===== PLANS PAGE LOCK-IN — purple accent (its relay color) ===== */
-:root{
-  --c-amber:#7c5cff !important;       --c-amber-deep:#b3a0ff !important;
-  --c-amber-soft:rgba(124,92,255,0.16) !important;  --c-amber-tint:rgba(124,92,255,0.10) !important;
-}
-.btn-amber{ color:#fff !important; box-shadow:0 0 0 1px rgba(124,92,255,0.40),0 10px 26px -10px rgba(124,92,255,0.55) !important; }
-.btn-amber:hover{ color:#fff !important; background:var(--c-amber-deep) !important; }
-.eyebrow-row::before{ background:var(--c-amber) !important; }
-/* calendar category dots — muted; the active note stays the loudest purple */
-.cal-legend{ display:flex; flex-wrap:wrap; gap:10px 18px; margin:18px 0 4px; font-family:var(--font-display); font-size:.9rem; color:var(--c-ink-2); }
-.cal-legend span{ display:inline-flex; align-items:center; }
-.cal-dot{ width:11px; height:11px; border-radius:3px; margin-right:8px; }
-/* hand-to-hand relay strip (mirrors the front-page connective wording) */
-.relay-next{ display:flex; flex-wrap:wrap; align-items:center; gap:9px 10px; margin-top:22px; font-family:var(--font-display); font-size:.96rem; }
-.relay-next .now{ color:var(--c-amber-deep); border:1px solid rgba(124,92,255,0.5); border-radius:999px; padding:6px 13px; background:rgba(124,92,255,0.12); }
-.relay-next a{ color:var(--c-ink-2); text-decoration:none; border:1px solid var(--c-line); border-radius:999px; padding:6px 13px; transition:color .18s,border-color .18s,background .18s; }
-.relay-next a:hover{ color:var(--c-amber-deep); border-color:rgba(124,92,255,0.5); background:rgba(124,92,255,0.07); }
-.relay-next .arw{ color:var(--c-ink-3); }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RHOBEAR Plans — hire a team of AI agents for your business</title>
+<meta name="description" content="Plans is a personal assistant that takes action — a team of specialized agents that run real work for your business. Per-business workspaces, connected accounts, and a growing catalog of agents that book the inspection, send the follow-up, and reconcile the payment. Always gated by your Yes. Free to walk through; paid turns your agents on.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782940000">
+<style>
+  :root{
+    --bg:#0b0814; --bg-2:#120d20; --bg-3:#171029; --panel:rgba(255,255,255,0.03);
+    --border:rgba(255,255,255,0.07); --border-hi:rgba(124,92,255,0.22);
+    --text:#ece9f7; --text-2:#a59fc0; --text-dim:#6c6490;
+    --purple:#7c5cff; --purple-hi:#b3a0ff; --purple-glow:rgba(124,92,255,0.18);
+    --teal:#48d8b0; --amber:#f5a524; --green:#4ade80; --red:#f87171;
+    --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+    --sans:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  section[id],#top{scroll-margin-top:84px}
+  a{color:inherit;text-decoration:none}a:hover{color:var(--purple-hi)}
+  ::selection{background:var(--purple);color:#fff}
+
+  /* background */
+  .bg-layer{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+  .grid-bg{position:absolute;inset:-100px;
+    background-image:linear-gradient(rgba(124,92,255,0.05) 1px, transparent 1px),linear-gradient(90deg, rgba(124,92,255,0.05) 1px, transparent 1px);
+    background-size:54px 54px;
+    mask-image:radial-gradient(ellipse 92% 72% at 50% 26%, #000 26%, transparent 80%);
+    -webkit-mask-image:radial-gradient(ellipse 92% 72% at 50% 26%, #000 26%, transparent 80%);
+    animation:gridDrift 90s linear infinite}
+  @keyframes gridDrift{0%{transform:translate(0,0)}100%{transform:translate(54px,54px)}}
+  .glow-orb{position:absolute;border-radius:50%;filter:blur(82px);opacity:0.5;animation:orbDrift 26s ease-in-out infinite alternate}
+  .orb-1{width:540px;height:540px;background:radial-gradient(circle, rgba(124,92,255,0.32) 0%, transparent 70%);top:-90px;right:-110px;animation-duration:32s}
+  .orb-2{width:460px;height:460px;background:radial-gradient(circle, rgba(72,216,176,0.16) 0%, transparent 70%);top:42vh;left:-130px;animation-duration:40s;animation-delay:-8s}
+  .orb-3{width:380px;height:380px;background:radial-gradient(circle, rgba(124,92,255,0.16) 0%, transparent 70%);top:122vh;right:10vw;animation-duration:48s;animation-delay:-15s}
+  @keyframes orbDrift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-30px) scale(1.08)}100%{transform:translate(-30px,40px) scale(0.94)}}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(36px);filter:blur(6px);transition:opacity 1.0s cubic-bezier(0.16,1,0.3,1), transform 1.0s cubic-bezier(0.16,1,0.3,1), filter 1.0s ease}
+  .reveal.in{opacity:1;transform:translateY(0);filter:blur(0)}
+  .reveal-stagger > *{opacity:0;transform:translateY(28px) scale(0.98);filter:blur(4px);transition:opacity 0.8s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s ease}
+  .reveal-stagger.in > *{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
+  .reveal-stagger.in > *:nth-child(1){transition-delay:0.04s}.reveal-stagger.in > *:nth-child(2){transition-delay:0.14s}
+  .reveal-stagger.in > *:nth-child(3){transition-delay:0.24s}.reveal-stagger.in > *:nth-child(4){transition-delay:0.34s}
+  .reveal-stagger.in > *:nth-child(5){transition-delay:0.44s}.reveal-stagger.in > *:nth-child(6){transition-delay:0.54s}
+  @media (prefers-reduced-motion: reduce){.reveal,.reveal-stagger > *{opacity:1;transform:none;filter:none;transition:none}}
+
+  /* topbar */
+  .top{position:sticky;top:0;z-index:50;background:rgba(11,8,20,0.7);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+  .top-inner{max-width:1240px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:24px}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:600;font-size:15px}
+  .brand img{width:34px;height:34px;display:block;image-rendering:pixelated;filter:hue-rotate(90deg) saturate(1.4) drop-shadow(0 0 7px rgba(124,92,255,0.65))}
+  .brand-name{display:flex;align-items:baseline;gap:8px}
+  .brand-name b{font-weight:700;color:var(--text)}.brand-name span{color:var(--text-2);font-weight:400}
+  .nav{display:flex;gap:4px;margin-left:auto;font-size:13px;font-weight:500}
+  .nav a{padding:8px 14px;border-radius:8px;color:var(--text-2);transition:all 0.15s}
+  .nav a:hover{background:var(--panel);color:var(--text)}.nav a.active{color:var(--purple-hi)}
+  .cta-pill{background:var(--purple);color:#fff;padding:10px 18px;border-radius:99px;font-weight:600;font-size:13px;border:1px solid var(--purple);transition:all 0.2s;display:inline-flex;align-items:center;gap:8px}
+  .cta-pill:hover{background:var(--purple-hi);color:#1a1030;transform:translateY(-1px);box-shadow:0 8px 24px -6px rgba(124,92,255,0.45)}
+  .cta-pill svg{width:14px;height:14px}
+
+  /* hero */
+  .hero{max-width:1240px;margin:0 auto;padding:96px 24px 80px;position:relative}
+  .hero-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:center}
+  .live-tag{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11px;color:var(--purple-hi);padding:6px 12px;background:rgba(124,92,255,0.08);border:1px solid rgba(124,92,255,0.22);border-radius:99px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:26px}
+  .live-dot{width:6px;height:6px;background:var(--purple);border-radius:50%;box-shadow:0 0 10px var(--purple);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.45}}
+  h1{font-size:clamp(40px,5.5vw,64px);line-height:1.06;letter-spacing:-0.025em;font-weight:700;margin-bottom:24px}
+  h1 .accent{background:linear-gradient(110deg, var(--purple) 30%, var(--purple-hi) 50%, var(--purple) 70%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 5s linear infinite}
+  @keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+  .lede{font-size:19px;color:var(--text-2);line-height:1.55;max-width:580px;margin-bottom:34px}
+  .lede strong{color:var(--text);font-weight:500}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .btn-primary{background:var(--purple);color:#fff;padding:15px 28px;border-radius:99px;font-weight:600;font-size:15px;border:1px solid var(--purple);transition:all 0.2s;display:inline-flex;align-items:center;gap:10px;box-shadow:0 8px 28px -8px rgba(124,92,255,0.45)}
+  .btn-primary:hover{background:var(--purple-hi);color:#1a1030;transform:translateY(-2px);box-shadow:0 14px 38px -10px rgba(124,92,255,0.6)}
+  .btn-primary svg{width:18px;height:18px}
+  .btn-secondary{background:rgba(255,255,255,0.04);color:var(--text);padding:15px 28px;border-radius:99px;font-weight:500;font-size:15px;border:1px solid var(--border-hi);transition:all 0.2s;display:inline-flex;align-items:center;gap:10px}
+  .btn-secondary:hover{background:rgba(255,255,255,0.08);border-color:var(--text-2);transform:translateY(-2px)}
+  .hero-stamp{margin-top:22px;display:inline-flex;align-items:center;gap:10px;color:var(--text-dim);font-size:13px;font-family:var(--mono)}
+  .hero-stamp svg{width:14px;height:14px;color:var(--purple-hi)}
+
+  /* hero agents card */
+  .ck-card{background:linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 24px 64px -20px rgba(0,0,0,0.6),0 0 0 1px rgba(124,92,255,0.05)}
+  .ck-bar{display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.25);font-family:var(--mono);font-size:11px;color:var(--text-2)}
+  .ck-bar .pd{width:5px;height:5px;border-radius:50%;background:var(--purple);box-shadow:0 0 8px var(--purple);animation:pulse 1.8s ease-in-out infinite}
+  .ck-bar .ws{margin-left:auto;color:var(--purple-hi)}
+  .ck-body{padding:18px}
+  .ck-row{display:flex;align-items:center;gap:11px;padding:11px 12px;border:1px solid var(--border);border-radius:9px;background:var(--bg-2);font-size:12.5px;margin-bottom:8px}
+  .ck-row .agent{font-family:var(--mono);color:var(--purple-hi);font-size:10.5px;background:rgba(124,92,255,0.12);border:1px solid rgba(124,92,255,0.22);border-radius:6px;padding:4px 8px;white-space:nowrap}
+  .ck-row .lbl{color:var(--text)}
+  .ck-row .done{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--green);white-space:nowrap}
+  .ck-confirm{display:flex;gap:10px;align-items:flex-start;padding:13px 13px 12px;border-radius:9px;background:linear-gradient(90deg,rgba(124,92,255,0.14),transparent);border:1px solid rgba(124,92,255,0.28);font-size:12.5px;color:var(--text-2);margin-top:4px}
+  .ck-confirm b{color:var(--purple-hi);font-family:var(--mono);font-size:10px}
+  .ck-ask{display:flex;flex-direction:column;gap:7px}
+  .ck-ask .q{color:var(--text)}
+  .ck-btns{display:flex;gap:7px}
+  .ck-btns span{font-family:var(--mono);font-size:10.5px;padding:5px 12px;border-radius:7px;border:1px solid var(--border)}
+  .ck-btns .yes{background:var(--purple);color:#fff;border-color:var(--purple)}
+  .ck-btns .no{color:var(--text-2)}
+  .ck-btns .edit{color:var(--purple-hi);border-color:var(--border-hi)}
+  .ck-meta{display:flex;border-top:1px solid var(--border);font-family:var(--mono)}
+  .ck-meta div{flex:1;padding:13px 16px;border-right:1px solid var(--border);font-size:11px;color:var(--text-dim)}
+  .ck-meta div:last-child{border-right:none}
+  .ck-meta b{display:block;font-size:15px;color:var(--purple-hi);font-weight:600;margin-top:3px}
+
+  /* stat strip */
+  .strip{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:linear-gradient(180deg,var(--bg-2),var(--bg-3));position:relative;overflow:hidden}
+  .strip-inner{max-width:1240px;margin:0 auto;padding:38px 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+  .stat-cell{display:flex;flex-direction:column;gap:6px}
+  .stat-n{font-family:var(--mono);font-size:30px;font-weight:600;color:var(--purple-hi);line-height:1.05;letter-spacing:-0.02em}
+  .stat-l{font-size:12px;color:var(--text-2);text-transform:uppercase;letter-spacing:0.09em;font-weight:500}
+  .stat-s{font-size:11px;color:var(--text-dim);font-family:var(--mono)}
+
+  /* section base */
+  section{padding:120px 0;position:relative}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 24px;position:relative}
+  .eyebrow{display:inline-block;font-family:var(--mono);font-size:11px;color:var(--purple-hi);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:14px;padding:5px 12px;background:var(--purple-glow);border:1px solid rgba(124,92,255,0.22);border-radius:99px}
+  h2{font-size:clamp(32px,4vw,46px);line-height:1.1;letter-spacing:-0.02em;font-weight:700;margin-bottom:18px;max-width:780px}
+  h2 .accent{color:var(--purple-hi)}
+  .section-lede{font-size:17px;color:var(--text-2);max-width:680px;margin-bottom:56px;line-height:1.55}
+
+  /* agents catalog */
+  .ag-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:48px}
+  .ag-head .section-lede{margin-bottom:0}
+  .ag-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:32px}
+  .ag-card{background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01));border:1px solid var(--border);border-radius:16px;padding:26px 24px;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);position:relative;overflow:hidden}
+  .ag-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%, rgba(124,92,255,0.08), transparent 60%);opacity:0;transition:opacity 0.3s}
+  .ag-card:hover{border-color:var(--border-hi);transform:translateY(-4px);box-shadow:0 18px 40px -16px rgba(0,0,0,0.5)}.ag-card:hover::before{opacity:1}
+  .ag-tag{font-family:var(--mono);font-size:10px;color:var(--purple-hi);letter-spacing:0.12em;text-transform:uppercase;position:relative;z-index:1}
+  .ag-card h3{font-size:17px;font-weight:600;margin:10px 0 8px;position:relative;z-index:1}
+  .ag-card p{font-size:13.5px;color:var(--text-2);line-height:1.55;position:relative;z-index:1}
+  .niche{background:linear-gradient(120deg, rgba(124,92,255,0.07), rgba(124,92,255,0.02));border:1px solid var(--border-hi);border-radius:16px;padding:28px 30px;display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+  .niche-copy{flex:1;min-width:240px}
+  .niche-copy h4{font-size:16px;font-weight:600;margin-bottom:6px}
+  .niche-copy p{font-size:14px;color:var(--text-2);line-height:1.55}
+  .niche-chips{display:flex;flex-wrap:wrap;gap:9px;max-width:560px}
+  .chip{font-family:var(--mono);font-size:12px;color:var(--text);padding:8px 14px;border-radius:99px;background:var(--bg-2);border:1px solid var(--border)}
+  .chip.more{color:var(--purple-hi);border-color:var(--border-hi);background:var(--purple-glow)}
+
+  /* how */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .step{background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01));border:1px solid var(--border);border-radius:16px;padding:30px 26px;position:relative;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);overflow:hidden}
+  .step::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%, rgba(124,92,255,0.08), transparent 60%);opacity:0;transition:opacity 0.3s}
+  .step:hover{border-color:var(--border-hi);transform:translateY(-4px);box-shadow:0 18px 40px -16px rgba(0,0,0,0.5)}.step:hover::before{opacity:1}
+  .step-n{position:absolute;top:22px;right:24px;font-family:var(--mono);font-size:11px;color:var(--text-dim)}
+  .step-icon{width:48px;height:48px;background:linear-gradient(135deg, rgba(124,92,255,0.18), rgba(124,92,255,0.06));border:1px solid rgba(124,92,255,0.28);border-radius:12px;display:grid;place-items:center;margin-bottom:22px;color:var(--purple-hi);position:relative;z-index:1}
+  .step-icon svg{width:24px;height:24px}
+  .step h3{font-size:18px;font-weight:600;margin-bottom:9px;position:relative;z-index:1}
+  .step p{font-size:14px;color:var(--text-2);line-height:1.55;position:relative;z-index:1}
+  .step code{font-family:var(--mono);font-size:12px;background:rgba(124,92,255,0.12);color:var(--purple-hi);padding:2px 7px;border-radius:5px}
+  .how-callout{margin-top:28px;padding:20px 24px;background:linear-gradient(90deg, rgba(124,92,255,0.08), transparent);border-left:3px solid var(--purple);border-radius:0 12px 12px 0;font-size:15.5px;color:var(--text);line-height:1.55;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .how-callout strong{color:var(--purple-hi);font-weight:600}
+  .how-callout .ynx{display:flex;gap:8px;margin-left:auto}
+  .how-callout .ynx span{font-family:var(--mono);font-size:11px;padding:6px 14px;border-radius:8px;border:1px solid var(--border)}
+  .how-callout .ynx .yes{background:var(--purple);color:#fff;border-color:var(--purple)}
+  .how-callout .ynx .edit{color:var(--purple-hi);border-color:var(--border-hi)}
+
+  /* sharper / cross-product */
+  .cb-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center}
+  .cb-steps{display:flex;flex-direction:column;gap:20px;margin-top:36px}
+  .cb-step{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:flex-start;padding:22px 26px;background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01));border:1px solid var(--border);border-radius:14px;transition:all 0.2s}
+  .cb-step:hover{border-color:var(--border-hi);transform:translateX(4px)}
+  .cb-step-tag{font-family:var(--mono);font-size:10px;font-weight:600;color:var(--purple-hi);background:var(--purple-glow);border:1px solid rgba(124,92,255,0.22);border-radius:6px;padding:6px 10px;letter-spacing:0.1em;white-space:nowrap;align-self:flex-start;margin-top:2px}
+  .cb-step h4{font-size:16px;font-weight:600;margin-bottom:6px}.cb-step p{font-size:14px;color:var(--text-2);line-height:1.55}
+  .cb-step p a{color:var(--purple-hi);border-bottom:1px solid rgba(124,92,255,0.4)}
+  .code-card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.005));border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 24px 64px -24px rgba(0,0,0,0.6)}
+  .code-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.25);font-family:var(--mono);font-size:11px;color:var(--text-2)}
+  .code-head .pulse{display:inline-flex;align-items:center;gap:7px;color:var(--purple-hi)}
+  .code-head .pulse-dot{width:5px;height:5px;background:var(--purple);border-radius:50%;box-shadow:0 0 8px var(--purple);animation:pulse 2s ease-in-out infinite}
+  .code-body{padding:20px 22px;font-family:var(--mono);font-size:12.5px;line-height:1.7;color:var(--text-2)}
+  .code-body .ln{display:block;white-space:pre-wrap}
+  .code-body .k{color:var(--purple-hi)}.code-body .ok{color:var(--green)}.code-body .dim{color:var(--text-dim)}
+  .code-stats{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--border)}
+  .code-stat{padding:16px 20px;border-right:1px solid var(--border)}
+  .code-stat:nth-child(2n){border-right:none}.code-stat:nth-child(n+3){border-top:1px solid var(--border)}
+  .code-stat-k{font-family:var(--mono);font-size:10px;color:var(--text-2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px}
+  .code-stat-v{font-family:var(--mono);font-size:18px;color:var(--text);font-weight:600}.code-stat-v.purple{color:var(--purple-hi)}
+
+  /* pricing */
+  .pricing{background:linear-gradient(180deg, var(--bg-2), var(--bg-3) 50%, var(--bg-2));border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .price-head{text-align:center;margin-bottom:40px}
+  .conv-line{font-size:16px;color:var(--text-2);max-width:620px;margin:0 auto}
+  .conv-line strong{color:var(--purple-hi);font-weight:600}
+  .unlimited-banner{max-width:1180px;margin:0 auto 36px;padding:22px 26px;background:linear-gradient(100deg, rgba(124,92,255,0.12), rgba(124,92,255,0.03));border:1px solid var(--border-hi);border-radius:16px;display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+  .unlimited-banner .ub-tag{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--purple-hi);white-space:nowrap}
+  .unlimited-banner .ub-list{display:flex;flex-wrap:wrap;gap:8px 10px;flex:1}
+  .unlimited-banner .ub-list span{font-size:13.5px;color:var(--text);display:inline-flex;align-items:center;gap:8px}
+  .unlimited-banner .ub-list svg{width:15px;height:15px;color:var(--purple-hi);flex-shrink:0}
+  .price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:1180px;margin:0 auto}
+  .plan{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:30px 26px;display:flex;flex-direction:column;position:relative;transition:all 0.3s}
+  .plan:hover{border-color:var(--border-hi);transform:translateY(-2px)}
+  .plan.featured{border-color:rgba(124,92,255,0.5);background:linear-gradient(180deg, rgba(124,92,255,0.06), var(--bg) 55%);box-shadow:0 0 0 1px rgba(124,92,255,0.15),0 24px 60px -20px rgba(124,92,255,0.2)}
+  .plan-flag{position:absolute;top:-12px;left:26px;background:var(--purple);color:#fff;font-size:11px;font-weight:600;padding:6px 14px;border-radius:99px;letter-spacing:0.05em;text-transform:uppercase;font-family:var(--mono);box-shadow:0 6px 18px -4px rgba(124,92,255,0.5)}
+  .plan-name{font-size:13px;color:var(--text-2);font-family:var(--mono);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:14px}
+  .plan-price{display:flex;align-items:baseline;gap:7px;margin-bottom:8px}
+  .price-n{font-size:46px;font-weight:700;letter-spacing:-0.03em;line-height:1}
+  .price-per{font-size:14px;color:var(--text-2)}
+  .plan-sub{font-size:13px;color:var(--text-2);margin-bottom:24px;min-height:38px;line-height:1.45}
+  .plan-feat-head{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px}
+  .plan-features{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:30px;flex:1}
+  .plan-features li{display:flex;align-items:flex-start;gap:11px;font-size:13.5px;color:var(--text);line-height:1.45}
+  .plan-features li.metered{color:var(--text-2)}
+  .plan-features li.metered .check{color:var(--text-dim)}
+  .plan-features b{color:var(--purple-hi);font-weight:600}
+  .check{width:17px;height:17px;flex-shrink:0;color:var(--purple-hi);margin-top:2px}
+  .plan-cta{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;border-radius:99px;font-weight:600;font-size:14.5px;transition:all 0.2s}
+  .plan-cta.primary{background:var(--purple);color:#fff;border:1px solid var(--purple)}
+  .plan-cta.primary:hover{background:var(--purple-hi);color:#1a1030;transform:translateY(-1px);box-shadow:0 12px 32px -10px rgba(124,92,255,0.5)}
+  .plan-cta.outline{background:transparent;color:var(--text);border:1px solid var(--border-hi)}
+  .plan-cta.outline:hover{background:var(--panel);border-color:var(--text-2)}
+
+  .metered-note{max-width:1180px;margin:30px auto 0;padding:18px 24px;border:1px dashed var(--border-hi);border-radius:14px;font-size:14px;color:var(--text-2);line-height:1.55;text-align:center}
+  .metered-note strong{color:var(--text);font-weight:600}
+  .metered-note .b{font-family:var(--mono);font-size:12px;color:var(--purple-hi);background:rgba(124,92,255,0.1);padding:2px 8px;border-radius:6px;white-space:nowrap}
+
+  .price-addons{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:1180px;margin:22px auto 0}
+  .addon{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:24px 26px;display:flex;align-items:flex-start;gap:18px;transition:all 0.2s}
+  .addon:hover{border-color:var(--border-hi)}
+  .addon-price{font-size:28px;font-weight:700;letter-spacing:-0.02em;line-height:1;white-space:nowrap}
+  .addon-price small{display:block;font-size:11px;font-weight:500;color:var(--text-dim);font-family:var(--mono);margin-top:5px;letter-spacing:0.06em}
+  .addon h4{font-size:15px;font-weight:600;margin-bottom:5px}
+  .addon p{font-size:13px;color:var(--text-2);line-height:1.5}
+  .pricing-note{text-align:center;color:var(--text-dim);font-size:13px;margin-top:30px;font-family:var(--mono)}
+  .pricing-note strong{color:var(--text-2);font-weight:500}
+
+  /* card feature groups + glyphs */
+  .feat-div{font-family:var(--mono);font-size:9.5px;letter-spacing:0.13em;text-transform:uppercase;color:var(--text-dim);margin:6px 0 -2px;padding-top:6px;border-top:1px dashed var(--border)}
+  .plan-features li .inf{flex-shrink:0;color:var(--purple-hi);font-weight:700;font-size:15px;line-height:1;width:17px;text-align:center;margin-top:1px}
+  .plan-features li.unl b{color:var(--purple-hi)}
+
+  /* comparison matrix */
+  .cmp-head{max-width:1180px;margin:72px auto 22px;text-align:center}
+  .cmp-head h3{font-size:24px;font-weight:700;letter-spacing:-0.01em;margin-bottom:8px}
+  .cmp-head p{font-size:14px;color:var(--text-2)}
+  .cmp-wrap{max-width:1180px;margin:0 auto;overflow-x:auto;border:1px solid var(--border);border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,0.022),rgba(255,255,255,0.005))}
+  .cmp{width:100%;border-collapse:collapse;min-width:780px;font-size:13.5px}
+  .cmp thead th{text-align:center;padding:24px 18px 18px;border-bottom:1px solid var(--border);vertical-align:bottom}
+  .cmp thead th.feat{text-align:left;width:32%}
+  .cmp .tier-nm{font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-2);display:block;margin-bottom:7px}
+  .cmp .tier-pr{font-size:22px;font-weight:700;letter-spacing:-0.02em;color:var(--text)}
+  .cmp .tier-pr small{font-size:12px;font-weight:500;color:var(--text-2)}
+  .cmp th.col-pro,.cmp td.col-pro{background:linear-gradient(180deg,rgba(124,92,255,0.08),rgba(124,92,255,0.02))}
+  .cmp th.col-pro .tier-nm{color:var(--purple-hi)}
+  .cmp tbody td,.cmp tbody th{padding:13px 18px;border-bottom:1px solid var(--border);text-align:center;color:var(--text)}
+  .cmp tbody th{text-align:left;font-weight:500;color:var(--text-2)}
+  .cmp tr.grp td{padding:18px 18px 8px;font-family:var(--mono);font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--purple-hi);text-align:left;border-bottom:none;background:rgba(124,92,255,0.045)}
+  .cmp .yes{color:var(--purple-hi);font-size:15px}
+  .cmp .no{color:var(--text-dim)}
+  .cmp .val{font-family:var(--mono);font-weight:600;color:var(--text);font-size:13px}
+  .cmp .val.inf{color:var(--purple-hi);font-size:16px}
+  .cmp tbody tr:last-child td,.cmp tbody tr:last-child th{border-bottom:none}
+
+  /* billing fine print */
+  .billing{max-width:1180px;margin:30px auto 0;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .bill{padding:18px 20px;border:1px solid var(--border);border-radius:13px;background:var(--panel);font-size:12.5px;color:var(--text-2);line-height:1.55}
+  .bill b{display:block;color:var(--text);font-size:12.5px;margin-bottom:5px;font-weight:600;font-family:var(--mono);letter-spacing:0.04em}
+
+  /* trust / own your data */
+  .trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .trust-card{background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01));border:1px solid var(--border);border-radius:16px;padding:30px 28px;transition:all 0.3s}
+  .trust-card:hover{border-color:var(--border-hi);transform:translateY(-3px)}
+  .trust-card .tk{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--purple-hi);margin-bottom:14px}
+  .trust-card h3{font-size:18px;font-weight:600;margin-bottom:9px}
+  .trust-card p{font-size:14px;color:var(--text-2);line-height:1.6}
+  .trust-card p code{font-family:var(--mono);font-size:12px;background:rgba(124,92,255,0.12);color:var(--purple-hi);padding:1px 6px;border-radius:5px}
+
+  /* faq */
+  .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .faq{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));border:1px solid var(--border);border-radius:14px;padding:26px 30px;transition:all 0.2s}
+  .faq:hover{border-color:var(--border-hi)}
+  .faq h4{font-size:16px;font-weight:600;margin-bottom:10px;color:var(--text);display:flex;align-items:center;gap:10px}
+  .faq h4::before{content:'';width:5px;height:5px;background:var(--purple);border-radius:50%;flex-shrink:0;box-shadow:0 0 0 3px rgba(124,92,255,0.18)}
+  .faq p{font-size:14px;color:var(--text-2);line-height:1.6}
+  .faq p code{font-family:var(--mono);font-size:12px;background:rgba(124,92,255,0.12);color:var(--purple-hi);padding:1px 6px;border-radius:5px}
+
+  /* final */
+  .final{padding:140px 0;text-align:center;position:relative;overflow:hidden}
+  .final::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%, rgba(124,92,255,0.09), transparent 70%);pointer-events:none}
+  .final h2{font-size:clamp(36px,5vw,58px);max-width:none;margin:0 auto 24px;position:relative}
+  .final p{font-size:18px;color:var(--text-2);max-width:580px;margin:0 auto 36px;position:relative}
+  .final-ctas{position:relative;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+  /* footer */
+  .rb-footer{border-top:1px solid var(--border);background:var(--bg-2);padding:56px 20px 42px}
+  .rb-footer-inner{max-width:1080px;margin:0 auto;display:grid;gap:30px}
+  .rb-foot-kicker{display:block;font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-dim);margin-bottom:11px}
+  .rb-foot-family .rb-foot-copy{font-size:15px;line-height:1.75;color:var(--text-2);max-width:70ch;margin:0}
+  .rb-footer a{color:var(--text);border-bottom:1px solid transparent;transition:color .18s, border-color .18s}
+  .rb-footer a:hover{color:var(--purple-hi);border-bottom-color:var(--purple)}
+  .rb-foot-more{color:var(--purple-hi) !important;white-space:nowrap}
+  .rb-foot-icons{display:flex;flex-wrap:wrap;gap:18px 24px;align-items:center;font-family:var(--mono);font-size:13px}
+  .rb-foot-icons a{display:inline-flex;align-items:center;gap:8px;color:var(--text-2);border:none}
+  .rb-foot-icons a:hover{color:var(--purple-hi)}.rb-foot-icons svg{width:18px;height:18px;fill:currentColor}
+  .rb-foot-base{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center;padding-top:24px;border-top:1px solid var(--border);font-size:12.5px;color:var(--text-dim);font-family:var(--mono)}
+  .rb-foot-base img{width:15px;height:15px;vertical-align:-3px;margin-right:6px;image-rendering:pixelated;filter:hue-rotate(90deg) saturate(1.4)}
+  .rb-foot-base a{color:var(--text-dim)}
+
+  @media (max-width:1180px){
+    .price-grid{grid-template-columns:repeat(2,1fr);max-width:640px}
+    .ag-grid{grid-template-columns:repeat(2,1fr)}
+    .billing{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:900px){
+    .hero-grid,.cb-grid,.faq-grid{grid-template-columns:1fr;gap:48px}
+    .strip-inner{grid-template-columns:repeat(2,1fr);gap:28px}
+    .steps,.trust-grid{grid-template-columns:1fr;gap:16px}.cb-step{grid-template-columns:1fr;gap:12px}
+    .price-grid,.price-addons{grid-template-columns:1fr;gap:16px;max-width:520px}
+    .ag-grid{grid-template-columns:1fr}
+    .billing{grid-template-columns:1fr;gap:12px}
+    .cmp-wrap{border-radius:14px}
+    .how-callout .ynx{margin-left:0}
+    .nav{display:none}.top-inner{justify-content:space-between;gap:12px}
+    section{padding:80px 0}.hero{padding:64px 24px 56px}
+  }
 </style>
 </head>
 <body>
 
-  <nav class="top-nav" aria-label="Primary">
-    <div class="top-nav-inner">
-      <a class="brand-lockup" href="index.html">
-        <img src="../../assets/rhobear-logo.png?v=1782900000" alt="" class="pixelated">
-        <span>RHOBEAR</span>
-      </a>
-      <div class="nav-tabs"><a href="index.html" class="nav-tab ">HOME</a><a href="crew.html" class="nav-tab ">CREW</a><a href="hub.html" class="nav-tab ">HUB</a><a href="workbench.html" class="nav-tab ">WORKBENCH</a><a href="try.html" class="nav-tab ">TRY THE DEMO</a><a href="learn.html" class="nav-tab ">LEARN</a><div class="nav-dropdown"><a href="substrate.html" class="nav-tab " aria-haspopup="true">SUBSTRATE ▾</a><div class="nav-dropdown-panel"><a href="goal-autoloop.html" class="">Goal Autoloop</a><a href="judgment-loop.html" class="">Judgment Loop</a><a href="substrate.html" class="">Substrate Overview</a><a href="compass.html" class="">Compass</a><a href="worker-sessions.html" class="">Worker Sessions</a><a href="handoff-bus.html" class="">Handoff Bus</a><a href="safety-registry.html" class="">Safety Registry</a><a href="hub-contract.html" class="">Hub Contract</a><a href="openclaw.html" class="">OpenClaw</a></div></div><a href="built-with.html" class="nav-tab ">BUILT WITH</a></div>
-      <span class="nav-spacer"></span>
-      <a href="https://plans.rhobear.ai" class="btn-amber nav-cta">Open Plans →</a>
-    </div>
-  </nav>
-<main>
+<div class="bg-layer"><div class="grid-bg"></div><div class="glow-orb orb-1"></div><div class="glow-orb orb-2"></div><div class="glow-orb orb-3"></div></div>
 
-<section class="wrap-md" style="padding-top:48px;">
-  <img src="../../assets/rhobear-logo.png?v=1782940000" alt="" class="pixelated" style="float:right; height:132px; margin:0 0 14px 26px; image-rendering:auto; filter:hue-rotate(90deg) saturate(1.2) drop-shadow(0 0 26px rgba(124,92,255,0.5));">
-  <div class="eyebrow-row">PRODUCT · PLANS · STOP 5 · TAKE IT TO MARKET</div>
-  <h1 class="h1-page">Run your business where <em class="ai-glow">your agents read it.</em></h1>
-  <p class="lead">Plans is the cockpit your crew works from and you talk to. Calendar, booking, payments, and the bots that answer for you, all in one local-first place. It reads your day the same way your agents do, so the business and the build never drift apart.</p>
-  <div class="cta-row">
-    <a href="https://plans.rhobear.ai" class="btn-amber">Open in your browser →</a>
-    <a href="https://github.com/apps/rhobear-plans" class="btn-ghost">Install the GitHub App →</a>
-    <a href="index.html#workflow" class="btn-ghost">See the whole family →</a>
+<header class="top">
+  <div class="top-inner">
+    <a href="index.html" class="brand" aria-label="RHOBEAR — back to the Hub">
+      <img src="../../assets/rhobear-logo.png?v=1782940000" alt="">
+      <span class="brand-name"><b>RHOBEAR</b><span>Plans</span></span>
+    </a>
+    <nav class="nav">
+      <a href="#agents" data-nav>Agents</a>
+      <a href="#how" data-nav>How it works</a>
+      <a href="#pricing" data-nav>Pricing</a>
+      <a href="#data" data-nav>Own your data</a>
+    </nav>
+    <a href="https://plans.rhobear.ai" class="cta-pill">Start free →</a>
   </div>
-  <div class="quant-line">calendar + booking &middot; PayPal + Stripe &middot; a bot per calendar &middot; Qwen-4B private &middot; Ursa for big moves</div>
-</section>
+</header>
 
-<!-- ORIGIN -->
-<section class="wrap">
-  <div class="eyebrow-row">WHERE IT STARTED</div>
-  <h2 style="font-size:clamp(1.8rem,3vw,2.5rem); margin:0 0 14px;">It began as a <em>handoff dock.</em></h2>
-  <p class="lead" style="max-width:64ch;">I built Plans so the crew could write each build's path in Mermaid and I could spot drift at a glance, instead of pinging anyone. Then I kept adding until it ran the whole back office.</p>
-  <div class="terminal" style="max-width:880px;"><span class="dim"># the dock the crew writes to</span>
-<span class="role">builder &gt;</span> path drawn &middot; checkout &rarr; review &rarr; deploy
-<span class="role">plans &gt;</span> rendered to board &middot; drift check: <span class="ok">none</span>
-<span class="role">foreman &gt;</span> slot booked &middot; Zoom + email fired
-<span class="role">plans &gt;</span> sale logged &middot; calendar and ledger agree</div>
-</section>
+<section class="hero" id="top">
+  <div class="hero-grid">
+    <div class="reveal">
+      <div class="live-tag"><span class="live-dot"></span> A personal assistant that takes action</div>
+      <h1>Hire a team of <span class="accent">AI agents</span> for your business.</h1>
+      <p class="lede"><strong>Plans isn't a whiteboard or a calendar — it's a crew that does the work.</strong> Specialized agents book the inspection, send the follow-up, reconcile the payment, and draft the doc. You give one workspace per business; they run it. Nothing leaves without your <strong>Yes</strong>.</p>
+      <div class="hero-ctas">
+        <a href="https://plans.rhobear.ai" class="btn-primary">Start free →</a>
+        <a href="#how" class="btn-secondary">See how it works →</a>
+      </div>
+      <div class="hero-stamp">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,11 8,16 17,5"/></svg>
+        Always-on in the cloud · your files stay in your GitHub or Drive · we never train on them
+      </div>
+    </div>
 
-<!-- THE BACK OFFICE -->
-<section class="wrap" style="padding-top:8px;">
-  <div class="eyebrow-row">THE BACK OFFICE</div>
-  <h2 style="font-size:clamp(1.7rem,2.8vw,2.3rem); margin:0 0 8px;">One place runs the parts that used to need five.</h2>
-  <div class="cal-legend">
-    <span><i class="cal-dot" style="background:#7c5cff;"></i>Personal</span>
-    <span><i class="cal-dot" style="background:#48d8b0;"></i>Site</span>
-    <span><i class="cal-dot" style="background:#f5a524;"></i>Support</span>
-    <span><i class="cal-dot" style="background:#4ade80;"></i>Billing</span>
-  </div>
-  <div class="card-grid cols-2" style="margin-top:24px; row-gap:26px;">
-    <div class="card-paper stitched feature-card">
-      <div class="num">A · CALENDAR + APPOINTMENTS</div>
-      <h3>Real calendars, not a to-do list.</h3>
-      <p>Personal, site, support, and billing each get their own muted accent, so a glance tells you which part of the business a day belongs to. The live thread is the only thing lit purple.</p>
-    </div>
-    <div class="card-paper stitched feature-card">
-      <div class="num">B · PAYMENTS THAT TRACK</div>
-      <h3>The money and the calendar agree.</h3>
-      <p>PayPal and Stripe forms log every sale inline. You see the booking and the payment as one row, not two systems you reconcile by hand later.</p>
-    </div>
-    <div class="card-paper stitched feature-card">
-      <div class="num">C · BOOKING THAT MATCHES YOUR SITE</div>
-      <h3>A slot books and the rest fires itself.</h3>
-      <p>Booking templates themed to your site. The moment a slot is taken, Zoom and email go out, so the lead never waits on you to push a button.</p>
-    </div>
-    <div class="card-paper stitched feature-card">
-      <div class="num">D · EMAIL, READ ON YOUR MACHINE</div>
-      <h3>Your inbox, surfaced by a local model.</h3>
-      <p>A local model reads your email on-device and brings up what needs you. The reading never leaves your machine, so the convenience costs you no privacy.</p>
+    <div class="reveal" style="transition-delay:0.18s">
+      <div class="ck-card">
+        <div class="ck-bar"><span class="pd"></span> plans · your agents <span class="ws">workspace: Acme Roofing</span></div>
+        <div class="ck-body">
+          <div class="ck-row"><span class="agent">calendar</span><span class="lbl">Booked the roof inspection · Tue 9:00</span><span class="done">invite sent ✓</span></div>
+          <div class="ck-row"><span class="agent">email</span><span class="lbl">Followed up the Henderson quote</span><span class="done">sent ✓</span></div>
+          <div class="ck-row"><span class="agent">payments</span><span class="lbl">Matched PayPal deposit to invoice #214</span><span class="done">reconciled ✓</span></div>
+          <div class="ck-confirm">
+            <b>ask ›</b>
+            <div class="ck-ask">
+              <span class="q">Draft is ready: refund the duplicate $480 charge to the Ortiz job?</span>
+              <div class="ck-btns"><span class="yes">Yes</span><span class="no">No</span><span class="edit">Edit</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="ck-meta">
+          <div>agents on<b>5</b></div>
+          <div>did today<b>23 actions</b></div>
+          <div>waits for you<b>always</b></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- A BOT PER CALENDAR -->
-<section class="wrap" style="padding-top:8px;">
-  <div class="eyebrow-row">TALK TO IT</div>
-  <h2 style="font-size:clamp(1.7rem,2.8vw,2.3rem); margin:0 0 12px;">One Telegram bot <em>per calendar.</em></h2>
-  <p class="lead" style="max-width:66ch;">One bot for personal, one for work, one for business. Each handles its own invites and email, keeps its own settings log, and answers in plain language. You do not open the app to run your day. You just talk to the bot that owns that part of it.</p>
-</section>
-
-<!-- PRIVATE BY DEFAULT -->
-<section class="band-dark install-band">
-  <div class="wrap" style="position:relative;">
-    <div style="max-width:760px;">
-      <div class="eyebrow-row">PRIVATE BY DEFAULT</div>
-      <h2 style="font-size:clamp(1.8rem,3vw,2.5rem); margin:0 0 18px;">Your data stays <em>on your machine.</em></h2>
-      <p style="color:var(--c-dark-ink-2); font-size:1.05rem; line-height:1.65;">A local <strong>Qwen-4B</strong> keeps tokens cheap and reads your email on-device, so nothing leaves your machine. For the big moves, sharp diagrams or always-on crons wired to your own cloud, switch to <strong>Ursa</strong>, our onboard LLM, on credits or a monthly sub. We do not train on your data.</p>
+<div class="strip">
+  <div class="strip-inner reveal-stagger">
+    <div class="stat-cell"><div class="stat-n">1 / business</div><div class="stat-l">Workspaces</div><div class="stat-s">Own agents, accounts & memory</div></div>
+    <div class="stat-cell"><div class="stat-n">Growing</div><div class="stat-l">Agent catalog</div><div class="stat-s">New agents pushed to you</div></div>
+    <div class="stat-cell"><div class="stat-n">Yes / No / Edit</div><div class="stat-l">Always asks first</div><div class="stat-s">Nothing fires on its own</div></div>
+    <div class="stat-cell"><div class="stat-n">Always-on</div><div class="stat-l">Runs in the cloud</div><div class="stat-s">Working while your machine's off</div></div>
   </div>
-  </div>
-</section>
+</div>
 
-<!-- WHAT IT COSTS -->
-<section class="wrap" style="padding-top:8px;">
-  <div class="eyebrow-row">WHAT IT COSTS TO RUN</div>
-  <h2 style="font-size:clamp(1.7rem,2.8vw,2.3rem); margin:0 0 8px;">Free on your machine. <em class="ai-glow">Cloud only when you ask.</em></h2>
-  <div class="card-grid cols-2" style="margin-top:24px; row-gap:26px;">
-    <div class="card-paper stitched feature-card">
-      <div class="num">LOCAL · QWEN-4B</div>
-      <h3>Zero tokens, zero meter.</h3>
-      <p>The on-device Qwen-4B reads your email and runs the day for nothing. It lives on your machine, so the calendar, the bots, and the inbox cost you no per-token bill.</p>
+<section id="agents">
+  <div class="wrap">
+    <div class="ag-head reveal">
+      <div>
+        <span class="eyebrow">The catalog</span>
+        <h2>A team you assemble, <span class="accent">not software you learn.</span></h2>
+        <p class="section-lede">Pick the agents your business needs. Each one is built for a job and takes real action — and we push new ones to you as the catalog grows.</p>
+      </div>
     </div>
-    <div class="card-paper stitched feature-card">
-      <div class="num">CLOUD · URSA</div>
-      <h3>Pay only for the big moves.</h3>
-      <p>Sharp diagrams and always-on crons wired to your own cloud run on Ursa, our onboard LLM, on credits or a monthly sub. You reach for it when a job earns it, not by default.</p>
+    <div class="ag-grid reveal-stagger">
+      <div class="ag-card"><div class="ag-tag">Calendar</div><h3>Books and protects your time</h3><p>Schedules jobs, sends invites, and clears conflicts before they reach you. The slot fills, the invite goes out.</p></div>
+      <div class="ag-card"><div class="ag-tag">Email</div><h3>Reads, finds, and follows up</h3><p>Watches the inbox, surfaces what needs you, and drafts the reply. Search and answers are unlimited — never metered.</p></div>
+      <div class="ag-card"><div class="ag-tag">Payments</div><h3>Reconciles the money</h3><p>Matches PayPal and Stripe to invoices, flags duplicates, and answers your PayPal questions on demand.</p></div>
+      <div class="ag-card"><div class="ag-tag">Research</div><h3>Finds it and brings it back</h3><p>Pulls the document, the lead, the number you asked for — and hands it over in plain language, not a link dump.</p></div>
+    </div>
+    <div class="niche reveal">
+      <div class="niche-copy">
+        <h4>Plus agents built for your trade</h4>
+        <p>Niche agents that already know how your industry runs — more land in the catalog every week.</p>
+      </div>
+      <div class="niche-chips">
+        <span class="chip">Roofing</span>
+        <span class="chip">Dental</span>
+        <span class="chip">Law</span>
+        <span class="chip">Solar</span>
+        <span class="chip">HVAC</span>
+        <span class="chip">Real estate</span>
+        <span class="chip more">+ new every week →</span>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- RELAY HANDOFF -->
-<section class="wrap">
-  <div class="eyebrow-row">WHERE PLANS SITS</div>
-  <h2 style="font-size:clamp(1.7rem,2.8vw,2.3rem); margin:0 0 12px;">Clean and built comes in. <em>A closing rep goes out.</em></h2>
-  <p style="max-width:66ch; color:var(--c-ink-2); line-height:1.65;">Reviews hands Plans work that already passed the gate. Plans turns it into a running business, then hands the part that answers your leads to Sales. One hand passes to the next.</p>
-  <div class="relay-next">
-    <a href="reviews.html"><span class="arw">←</span> Reviews</a>
-    <span class="now">Plans</span>
-    <a href="sales.html">Sales <span class="arw">→</span></a>
+<section id="how">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">How it works</span>
+      <h2>A use-case comes in. Your agents <span class="accent">take it from there.</span></h2>
+      <p class="section-lede">You set up a workspace once. From then on the agents read the situation, draft the move, and act the moment you say yes.</p>
+    </div>
+    <div class="steps reveal-stagger">
+      <div class="step"><span class="step-n">01</span><div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div><h3>Set up a workspace</h3><p>One per business. Connect <code>PayPal</code>, <code>Gmail</code>, <code>Calendar</code>, and <code>GitHub</code>, then choose the agents you want on the team.</p></div>
+      <div class="step"><span class="step-n">02</span><div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div><h3>Your agents read it</h3><p>They watch the inbox, the calendar, and the payments, work out the next move, and write the draft — leaning on what they remember about your business.</p></div>
+      <div class="step"><span class="step-n">03</span><div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div><h3>They take action</h3><p>Book the inspection, send the follow-up, reconcile the payment, draft the doc. Real work done, not a chat about it.</p></div>
+    </div>
+    <div class="how-callout">
+      <span><strong>Always asks first.</strong> Every action that touches the outside world stops for your call — approve it, kill it, or rewrite it.</span>
+      <span class="ynx"><span class="yes">Yes</span><span>No</span><span class="edit">Edit</span></span>
+    </div>
   </div>
 </section>
-</main>
 
-<div class="prevnext"><div class="prevnext-inner"><a href="reviews.html" class="pn-link "><span class="pn-mini">← Previous</span><span class="pn-name">Reviews &amp; Verifies</span></a><a href="sales.html" class="pn-link "><span class="pn-mini">Next →</span><span class="pn-name">Sales, by RHOBEAR</span></a></div></div>
-<footer class="site-footer"><div class="site-footer-inner"><div class="footer-row"><div class="footer-copy">© 2026 Sun Sponge LLC · <a href="https://github.com/rhobear-ai">GitHub</a> · <a href="https://github.com/deariencampbell1-sys/rhobear/blob/main/PRIVACY.md" target="_blank" rel="noopener">privacy</a> · <a href="faq.html">FAQ</a></div><div class="footer-tag">Lean. Local. Private. Yours.</div></div><div class="footer-disclaimer">All third-party trademarks and logos are property of their respective owners and shown here for integration identification purposes only. No partnership, sponsorship, or endorsement is implied.</div></div></footer>
-<script src="shell.js?v=1782980000" defer></script>
+<section id="sharper">
+  <div class="wrap">
+    <div class="cb-grid">
+      <div class="reveal">
+        <span class="eyebrow">It compounds</span>
+        <h2>Sharper every day — and it <span class="accent">reaches across the family.</span></h2>
+        <p class="section-lede" style="margin-bottom:0">Your agents write their own memory of how you run things: your prices, your clients, the way you word a quote. Less hand-holding each week. And they don't stop at Plans — from inside the app they can pull in the rest of the RHOBEAR crew.</p>
+        <div class="cb-steps">
+          <div class="cb-step"><div class="cb-step-tag">MEMORY</div><div><h4>It learns your business</h4><p>Every approval teaches it. Names, rates, tone, the steps you skip — it remembers, so tomorrow it asks you less and gets more right.</p></div></div>
+          <div class="cb-step"><div class="cb-step-tag">BUILD</div><div><h4>Stand up a website</h4><p>Need a landing page for the new service? Your agent hands the brief to <a href="https://rhobear.ai/designs.html">Designs</a> and brings back a real page.</p></div></div>
+          <div class="cb-step"><div class="cb-step-tag">CAPTURE</div><div><h4>Grab a live site</h4><p>Point at a competitor or your own old site and your agent has <a href="https://rhobear.ai/sunsponge.html">SunSponge</a> capture it for reference, clean and faithful.</p></div></div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.18s">
+        <div class="code-card">
+          <div class="code-head"><span>plans · workspace memory</span><span class="pulse"><span class="pulse-dot"></span> learning</span></div>
+          <div class="code-body">
+<span class="ln"><span class="dim"># what your agents know about Acme Roofing</span></span>
+<span class="ln"><span class="k">price</span> standard inspection · $0 · rebooks to quote</span>
+<span class="ln"><span class="k">tone</span> quotes signed "— the Acme crew"</span>
+<span class="ln"><span class="k">rule</span> deposits via PayPal · balance on completion</span>
+<span class="ln"><span class="k">build</span> handed "spring gutter promo" → <span class="ok">Designs page live</span></span>
+<span class="ln"><span class="k">today</span> 23 actions · <span class="ok">0 fired without a Yes</span></span>
+          </div>
+          <div class="code-stats">
+            <div class="code-stat"><div class="code-stat-k">Asks per task</div><div class="code-stat-v">↓ weekly</div></div>
+            <div class="code-stat"><div class="code-stat-k">Memory lives in</div><div class="code-stat-v">your repo</div></div>
+            <div class="code-stat"><div class="code-stat-k">Cross-product</div><div class="code-stat-v">Designs · SunSponge</div></div>
+            <div class="code-stat"><div class="code-stat-k">Trained on your data</div><div class="code-stat-v purple">never</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="pricing">
+  <div class="wrap">
+    <div class="price-head reveal">
+      <span class="eyebrow">Pricing</span>
+      <h2 style="margin:0 auto 16px">More comes online as you <span class="accent">move up.</span></h2>
+      <p class="conv-line"><strong>Free shows you everything; paid turns your agents on.</strong> The walkthrough is your trial — see every agent work before a card is on the team.</p>
+    </div>
+
+    <div class="unlimited-banner reveal">
+      <span class="ub-tag">Free on every paid<br>plan · never metered</span>
+      <div class="ub-list">
+        <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg> Chat with your agent</span>
+        <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg> Read &amp; search your email</span>
+        <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg> Find &amp; bring back content</span>
+        <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg> Answer questions</span>
+        <span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg> Even PayPal questions</span>
+      </div>
+    </div>
+
+    <div class="price-grid reveal-stagger">
+      <div class="plan">
+        <div class="plan-name">Free</div>
+        <div class="plan-price"><span class="price-n">$0</span></div>
+        <div class="plan-sub">The full guided walkthrough — see every agent work. This is the trial; agents switch on when you upgrade.</div>
+        <div class="plan-feat-head">What you'll see</div>
+        <ul class="plan-features">
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>1</b> workspace to set up</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Guided tour of every agent in action</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Connect PayPal, Gmail, Calendar &amp; GitHub</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Agents <b>off</b> until you upgrade</li>
+        </ul>
+        <a href="https://plans.rhobear.ai" class="plan-cta outline">Start the walkthrough →</a>
+      </div>
+
+      <div class="plan">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price"><span class="price-n">$20</span><span class="price-per">/ month</span></div>
+        <div class="plan-sub">Everything to run one business with a real team switched on.</div>
+        <div class="plan-feat-head">Agents on — here's the team</div>
+        <ul class="plan-features">
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>1</b> workspace</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>5</b> agents on your roster</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>+1 bonus agent</b>, free for a year</li>
+          <li class="unl"><span class="inf">∞</span>Unlimited <b>chat</b> with your agent</li>
+          <li class="unl"><span class="inf">∞</span>Unlimited <b>read &amp; search</b> your email</li>
+          <li class="unl"><span class="inf">∞</span>Unlimited <b>find &amp; bring back</b> content</li>
+          <li class="unl"><span class="inf">∞</span>Unlimited <b>answers</b> — even PayPal</li>
+          <li class="metered"><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>100</b> actions / day</li>
+          <li class="metered"><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>5</b> website generations / day</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>Arcturus</b> model · everyday</li>
+        </ul>
+        <a href="https://plans.rhobear.ai" class="plan-cta primary">Turn agents on →</a>
+      </div>
+
+      <div class="plan featured">
+        <div class="plan-flag">★ Most popular</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-price"><span class="price-n">$49</span><span class="price-per">/ month</span></div>
+        <div class="plan-sub">More businesses, bigger allowances, the premium model on every agent.</div>
+        <div class="plan-feat-head">Everything in Starter, scaled up</div>
+        <ul class="plan-features">
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>3</b> workspaces</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>20</b> agents on your roster</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>+1 bonus agent</b>, free for a year</li>
+          <li class="unl"><span class="inf">∞</span>Unlimited <b>chat</b> with your agent</li>
+          <li class="unl"><span class="inf">∞</span>Unlimited <b>read &amp; search</b> your email</li>
+          <li class="unl"><span class="inf">∞</span>Unlimited <b>find &amp; bring back</b> content</li>
+          <li class="unl"><span class="inf">∞</span>Unlimited <b>answers</b> — even PayPal</li>
+          <li class="metered"><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>400</b> actions / day</li>
+          <li class="metered"><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>20</b> website generations / day</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>Ursa</b> · premium model on every agent</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>Priority</b> support</li>
+        </ul>
+        <a href="https://plans.rhobear.ai" class="plan-cta primary">Go Pro →</a>
+      </div>
+
+      <div class="plan">
+        <div class="plan-name">Business</div>
+        <div class="plan-price"><span class="price-n">$99</span><span class="price-per">/ month</span></div>
+        <div class="plan-sub">Run a whole portfolio with an unlimited bench and dedicated help.</div>
+        <div class="plan-feat-head">Everything in Pro, maxed out</div>
+        <ul class="plan-features">
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>10</b> workspaces</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>Unlimited</b> agents</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>+1 bonus agent</b>, free for a year</li>
+          <li class="unl"><span class="inf">∞</span>Unlimited <b>chat</b> with your agent</li>
+          <li class="unl"><span class="inf">∞</span>Unlimited <b>read &amp; search</b> your email</li>
+          <li class="unl"><span class="inf">∞</span>Unlimited <b>find &amp; bring back</b> content</li>
+          <li class="unl"><span class="inf">∞</span>Unlimited <b>answers</b> — even PayPal</li>
+          <li class="metered"><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>1,500</b> actions / day</li>
+          <li class="metered"><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>60</b> website generations / day</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>Ursa</b> · premium model on every agent</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>Dedicated</b> support</li>
+        </ul>
+        <a href="https://plans.rhobear.ai" class="plan-cta outline">Get Business →</a>
+      </div>
+    </div>
+
+    <div class="metered-note reveal">
+      Only two things draw down a daily bucket, and they're <strong>separate</strong>: <span class="b">actions</span> — generating a draft or sending an email — and <span class="b">website generations</span> — full pages your agent builds with Designs. Editing a page you already made is <strong>free</strong>. Everything else — chatting, reading, searching, answering — is never metered.
+    </div>
+
+    <div class="cmp-head reveal">
+      <h3>Compare every plan</h3>
+      <p>The included list grows with every tier — the limits stay few, the value keeps stacking.</p>
+    </div>
+    <div class="cmp-wrap reveal">
+      <table class="cmp">
+        <thead>
+          <tr>
+            <th class="feat"></th>
+            <th><span class="tier-nm">Free</span><span class="tier-pr">$0</span></th>
+            <th><span class="tier-nm">Starter</span><span class="tier-pr">$20<small>/mo</small></span></th>
+            <th class="col-pro"><span class="tier-nm">Pro</span><span class="tier-pr">$49<small>/mo</small></span></th>
+            <th><span class="tier-nm">Business</span><span class="tier-pr">$99<small>/mo</small></span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="grp"><td colspan="5">Run your business</td></tr>
+          <tr><th>Workspaces</th><td class="val">1</td><td class="val">1</td><td class="val col-pro">3</td><td class="val">10</td></tr>
+          <tr><th>Agents on your roster</th><td class="no">—</td><td class="val">5</td><td class="val col-pro">20</td><td class="val inf">∞</td></tr>
+          <tr><th>Bonus agent, free for a year</th><td class="no">—</td><td class="yes">✓</td><td class="yes col-pro">✓</td><td class="yes">✓</td></tr>
+
+          <tr class="grp"><td colspan="5">Unlimited — we never meter these</td></tr>
+          <tr><th>Chat with your agent</th><td class="no">—</td><td class="yes">✓</td><td class="yes col-pro">✓</td><td class="yes">✓</td></tr>
+          <tr><th>Read &amp; search your email</th><td class="no">—</td><td class="yes">✓</td><td class="yes col-pro">✓</td><td class="yes">✓</td></tr>
+          <tr><th>Find &amp; bring back content</th><td class="no">—</td><td class="yes">✓</td><td class="yes col-pro">✓</td><td class="yes">✓</td></tr>
+          <tr><th>Answer questions</th><td class="no">—</td><td class="yes">✓</td><td class="yes col-pro">✓</td><td class="yes">✓</td></tr>
+          <tr><th>Answer PayPal questions</th><td class="no">—</td><td class="yes">✓</td><td class="yes col-pro">✓</td><td class="yes">✓</td></tr>
+
+          <tr class="grp"><td colspan="5">Daily allowances — two separate buckets</td></tr>
+          <tr><th>Actions / day · generate + send</th><td class="no">—</td><td class="val">100</td><td class="val col-pro">400</td><td class="val">1,500</td></tr>
+          <tr><th>Website generations / day</th><td class="no">—</td><td class="val">5</td><td class="val col-pro">20</td><td class="val">60</td></tr>
+          <tr><th>Edit existing pages</th><td class="no">—</td><td class="val inf">∞</td><td class="val inf col-pro">∞</td><td class="val inf">∞</td></tr>
+
+          <tr class="grp"><td colspan="5">Model &amp; support</td></tr>
+          <tr><th>Model</th><td class="no">—</td><td class="val">Arcturus</td><td class="val col-pro">Ursa</td><td class="val">Ursa</td></tr>
+          <tr><th>Support</th><td class="val">Walkthrough</td><td class="val">Standard</td><td class="val col-pro">Priority</td><td class="val">Dedicated</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="price-addons reveal-stagger">
+      <div class="addon">
+        <div class="addon-price">$20<small>ONE-TIME</small></div>
+        <div>
+          <h4>Local — own it outright</h4>
+          <p>Run Plans on your own machine. Fully private, yours forever, and it <strong style="color:var(--text)">never</strong> trains on your data. No subscription, no cloud.</p>
+        </div>
+      </div>
+      <div class="addon">
+        <div class="addon-price">$10<small>URSA PACK</small></div>
+        <div>
+          <h4>Ursa credits — top up either bucket</h4>
+          <p>One pack adds runs to your actions <em>or</em> website-generation bucket. Unused runs roll over; the pack expires 90 days after your <strong style="color:var(--text)">first use</strong> — not the day you buy it.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="billing reveal-stagger">
+      <div class="bill"><b>NO PLAN REFUNDS</b>Paid access runs for what you've paid. There's no upgrade-then-cancel for a refund — when payment ends, paid access simply ends.</div>
+      <div class="bill"><b>NO CREDIT REFUNDS</b>Ursa packs aren't refundable. Unused runs roll over and expire 90 days after first use.</div>
+      <div class="bill"><b>THE TRIAL IS FREE</b>The walkthrough <em>is</em> the trial. Spend real time there — there's no separate money-back window on a paid plan.</div>
+      <div class="bill"><b>+1 AGENT ON US</b>Sign up and we add a bonus agent to your roster, free for your first year.</div>
+    </div>
+
+    <p class="pricing-note"><strong>Free shows you everything; paid turns your agents on.</strong> See it all in the walkthrough, then switch your team on when you're ready.</p>
+  </div>
+</section>
+
+<section id="data">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Own your data</span>
+      <h2>Your business lives in <span class="accent">your accounts, not ours.</span></h2>
+      <p class="section-lede">Plans runs always-on in the cloud so the work never stops — but the files, the memory, and the money stay where they belong: with you.</p>
+    </div>
+    <div class="trust-grid reveal-stagger">
+      <div class="trust-card"><div class="tk">Your storage</div><h3>Files in your GitHub or Drive</h3><p>Documents, memory, and records write to <code>your</code> GitHub or Google Drive. We don't hold your data hostage — disconnect and it's all still yours, where it always was.</p></div>
+      <div class="trust-card"><div class="tk">Always-on</div><h3>Works while you sleep</h3><p>Agents run in the cloud, so the follow-up still goes out and the deposit still reconciles even when your computer is off. Pick up where they left it.</p></div>
+      <div class="trust-card"><div class="tk">Never trained on</div><h3>Your business stays private</h3><p>We never train on your calendar, your clients, or your mail. Want it fully off the cloud? <strong style="color:var(--text)">Local</strong> runs the whole thing on your own machine for a one-time $20.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">FAQ</span>
+      <h2>Straight answers to the obvious questions.</h2>
+      <p class="section-lede">Anything not here, ping us.</p>
+    </div>
+    <div class="faq-grid reveal-stagger">
+      <div class="faq"><h4>What does a Plans agent actually do?</h4><p>Real work, not chat. It books the inspection, sends the follow-up, reconciles the payment, and drafts the doc. Anything that touches the outside world stops for your <code>Yes / No / Edit</code> first.</p></div>
+      <div class="faq"><h4>What's a workspace?</h4><p>One business, with its own agents, connected accounts (<code>PayPal</code>, <code>Gmail</code>, <code>Calendar</code>, <code>GitHub</code>), and memory. Run several side by side — Starter gives you one, Pro three, Business ten.</p></div>
+      <div class="faq"><h4>Is the free plan really free?</h4><p>Yes — it's the full walkthrough so you can see every agent work. Agents stay <strong>off</strong> until you upgrade. Free shows you everything; paid turns your agents on.</p></div>
+      <div class="faq"><h4>What counts against my daily limits?</h4><p>Only two things, each its own <strong>separate</strong> bucket: <strong>actions</strong> (generating a draft or sending an email) and <strong>website generations</strong> (full pages your agent builds). Editing a page you already made is free. Chat, reading, searching, and answers are never metered.</p></div>
+      <div class="faq"><h4>What are Ursa credits?</h4><p>A <code>$10</code> pack that adds runs to either bucket — actions or website generations — when you have a busy day. Unused runs roll over, and the pack expires <strong>90 days after your first use of it</strong>, not the day you buy it.</p></div>
+      <div class="faq"><h4>What's Arcturus vs Ursa?</h4><p>They're our two models. Starter runs <strong>Arcturus</strong>, our everyday model — plenty for day-to-day work. Pro and Business put <strong>Ursa</strong>, our premium model, on every agent for sharper drafts and tougher reasoning. Ursa credits top up usage when you need more.</p></div>
+      <div class="faq"><h4>Can I run it privately?</h4><p>Yes. <strong>Local</strong> is a one-time <code>$20</code> — Plans on your own machine, fully private, and it never trains on your data. The hosted plans keep your files in your own GitHub or Drive either way.</p></div>
+      <div class="faq"><h4>Do new agents cost extra?</h4><p>No. As the catalog grows we push new agents to you — calendar, email, payments, research, plus niche trades like roofing, dental, and solar. They count against your plan's agent slots, not a new bill.</p></div>
+      <div class="faq"><h4>Can I get a refund?</h4><p>No. There are no refunds on the cloud plan or on credits, and no upgrade-then-cancel for money back — when payment ends, paid access simply ends. That's why the walkthrough is free: spend real time there, then turn your agents on only when you're sure.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="install" class="final">
+  <div class="wrap reveal">
+    <h2>Stop doing the work<br><span class="accent">your agents can do.</span></h2>
+    <p>Walk through the whole thing free. When you're ready, turn your team on and let them run the business.</p>
+    <div class="final-ctas">
+      <a href="https://plans.rhobear.ai" class="btn-primary">Start free →</a>
+      <a href="#pricing" class="btn-secondary">See pricing →</a>
+    </div>
+  </div>
+</section>
+
+<footer class="rb-footer">
+  <div class="rb-footer-inner">
+    <div class="rb-foot-family">
+      <span class="rb-foot-kicker">Stop 5 of the RHOBEAR family</span>
+      <p class="rb-foot-copy">
+        Plans is the team of agents that runs your business.
+        <a href="https://reviews.rhobear.ai/">Reviews</a> hands it work that already passed the gate; Plans turns it into bookings, follow-ups, and money, and stands up whatever it needs along the way — a page from
+        <a href="https://rhobear.ai/designs.html">Designs</a>, a capture from <a href="https://rhobear.ai/sunsponge.html">SunSponge</a> — then hands the part that answers your leads to
+        <a href="https://rhobear.ai/sales.html">Sales</a>. The crew that builds it all lives in <a href="https://rhobear.ai/app.html">the Hub</a>.
+        <a href="https://rhobear.ai/" class="rb-foot-more">See the whole workflow →</a>
+      </p>
+    </div>
+    <div class="rb-foot-social">
+      <span class="rb-foot-kicker">Find us elsewhere</span>
+      <div class="rb-foot-icons">
+        <a href="https://x.com/rhobearai" target="_blank" rel="noopener" aria-label="RHOBEAR on X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-6.9l-5.4-7-6.2 7H1.7l8.1-9.3L1 2h7l4.9 6.5L18.9 2Zm-1.2 18h1.9L7.4 4H5.4l12.3 16Z"/></svg>X</a>
+        <a href="https://instagram.com/rhobear.ai" target="_blank" rel="noopener" aria-label="RHOBEAR on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>Instagram</a>
+        <a href="https://github.com/rhobear-ai" target="_blank" rel="noopener" aria-label="RHOBEAR on GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.2.8-.5v-1.8c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.3 11.3 0 0 1 6 0C17 5 18 5.3 18 5.3c.6 1.6.2 2.9.1 3.2.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.3v3.4c0 .3.2.6.8.5A11.5 11.5 0 0 0 12 .5Z"/></svg>GitHub</a>
+      </div>
+    </div>
+    <div class="rb-foot-base">
+      <span><img src="../../assets/rhobear-logo.png?v=1782940000" alt="">© 2026 RHOBEAR · A SunSponge LLC product · Your agents, your data, your business.</span>
+      <span><a href="https://rhobear.ai/">The family</a> · <a href="https://github.com/deariencampbell1-sys/rhobear/blob/main/PRIVACY.md">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -80px 0px'});
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(el=>io.observe(el));
+  const sections=['agents','how','pricing','data'].map(id=>document.getElementById(id));
+  const navLinks=document.querySelectorAll('a[data-nav]');
+  const navIO=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){const id=e.target.id;navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));}});},{rootMargin:'-30% 0px -60% 0px'});
+  sections.forEach(s=>s&&navIO.observe(s));
+</script>
 </body>
 </html>
