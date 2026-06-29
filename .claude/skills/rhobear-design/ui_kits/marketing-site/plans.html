@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782940000">
+<link rel="icon" type="image/png" href="assets/rhobear-logo.png?v=1782940000">
 <style>
   :root{
     --bg:#0b0814; --bg-2:#120d20; --bg-3:#171029; --panel:rgba(255,255,255,0.03);
@@ -371,6 +371,39 @@
   @keyframes marquee-r{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
   @media(prefers-reduced-motion:reduce){.marquee-strip .marquee-track{animation:none}}
 </style>
+<style id="crew-deck">
+  /* ===== THE CREW — self-rolling agent belt (replaces the niche chips) ===== */
+  .cr-intro{max-width:760px;margin:6px auto 24px;text-align:center}
+  .cr-intro h4{font-size:20px;font-weight:600;margin-bottom:8px}
+  .cr-intro p{font-size:15px;color:var(--text-2);line-height:1.55}
+  .cr-intro strong{color:var(--text)}
+  .cr-filters{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin:0 auto 26px}
+  .cr-f{font-family:var(--mono);font-size:12px;color:var(--text-2);padding:9px 15px;border-radius:99px;border:1px solid var(--border);background:var(--panel);cursor:pointer;transition:border-color .18s,color .18s,background .18s}
+  .cr-f:hover{border-color:var(--border-hi);color:var(--text)}
+  .cr-f i{font-style:normal;font-size:10px;opacity:.55;margin-left:6px}
+  .cr-f.on{color:#fff;border-color:var(--purple);background:var(--purple)}
+  .cr-belt{position:relative;overflow:hidden;padding:16px 0;
+    -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%);
+    mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%)}
+  .cr-track{display:flex;gap:18px;width:max-content;will-change:transform}
+  .cr-card{position:relative;flex:0 0 auto;width:230px;height:320px;border-radius:18px;overflow:hidden;border:1px solid var(--border);cursor:pointer;
+    background:linear-gradient(160deg,color-mix(in srgb,var(--cc) 34%,#120d20),#0b0814);
+    transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s,border-color .25s}
+  .cr-card:hover{transform:translateY(-8px) scale(1.035);border-color:color-mix(in srgb,var(--cc) 55%,transparent);box-shadow:0 30px 60px -26px var(--cc),0 0 0 1px color-mix(in srgb,var(--cc) 26%,transparent);z-index:3}
+  .cr-photo{position:absolute;inset:0;background-size:cover;background-position:center;mix-blend-mode:luminosity;opacity:.9;filter:contrast(1.05) saturate(.55);transition:opacity .35s,filter .35s}
+  .cr-card:hover .cr-photo{opacity:1;filter:contrast(1.05) saturate(.72)}
+  .cr-tint{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,8,20,.05) 26%,rgba(11,8,20,.6) 62%,rgba(11,8,20,.95) 100%),radial-gradient(130% 70% at 50% 0%,color-mix(in srgb,var(--cc) 30%,transparent),transparent 56%)}
+  .cr-body{position:absolute;left:0;right:0;bottom:0;padding:16px 16px 17px;z-index:2}
+  .cr-tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--cc);display:inline-flex;align-items:center;gap:6px}
+  .cr-tag::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--cc);box-shadow:0 0 8px var(--cc)}
+  .cr-card h3{font-size:18px;font-weight:700;letter-spacing:-0.01em;margin:8px 0 0;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.55)}
+  .cr-line{font-size:12.4px;color:#dcd6ee;line-height:1.45;margin-top:7px;max-height:0;opacity:0;overflow:hidden;transition:max-height .35s,opacity .3s}
+  .cr-dive{display:inline-flex;align-items:center;gap:6px;margin-top:11px;font-family:var(--mono);font-size:10.5px;color:#fff;background:color-mix(in srgb,var(--cc) 26%,transparent);border:1px solid color-mix(in srgb,var(--cc) 55%,transparent);padding:6px 11px;border-radius:99px;opacity:0;transform:translateY(5px);transition:opacity .3s,transform .3s}
+  .cr-card:hover .cr-line{max-height:72px;opacity:1}
+  .cr-card:hover .cr-dive{opacity:1;transform:none}
+  @media(max-width:680px){.cr-card{width:196px;height:282px}}
+  @media (prefers-reduced-motion: reduce){.cr-belt{overflow-x:auto}.cr-card .cr-line{max-height:72px;opacity:1}.cr-card .cr-dive{opacity:1;transform:none}}
+</style>
 </head>
 <body>
 
@@ -379,7 +412,7 @@
 <header class="top">
   <div class="top-inner">
     <a href="index.html" class="brand" aria-label="RHOBEAR — back to the Hub">
-      <img src="../../assets/rhobear-logo.png?v=1782940000" alt="">
+      <img src="assets/rhobear-logo.png?v=1782940000" alt="">
       <span class="brand-name"><b>RHOBEAR</b><span>Plans</span></span>
     </a>
     <nav class="nav">
@@ -444,7 +477,7 @@
 
 <p class="intg-label">Your agents log in and do the work <b>inside the tools you already run on</b> — email, calendar, payments, docs, chat and more.</p>
 <div class="marquee-strip marquee-strip-top" aria-label="Tools your agents work in">
-  <div class="marquee-row" style="overflow:hidden;"><div class="marquee-track" style="--marquee-row1:46s;--marquee-row2:46s;"><img src="../../assets/googledrive.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/stripe.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/slack.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/notion.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/github.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/figma.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/linear.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/jira.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/dropbox.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/telegram.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/whatsapp.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/discord.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/amazon.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/obsidian.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/googledrive.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/stripe.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/slack.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/notion.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/github.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/figma.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/linear.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/jira.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/dropbox.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/telegram.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/whatsapp.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/discord.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/amazon.svg?v=1782900000" alt="" loading="lazy"><img src="../../assets/obsidian.svg?v=1782900000" alt="" loading="lazy"></div></div>
+  <div class="marquee-row" style="overflow:hidden;"><div class="marquee-track" style="--marquee-row1:46s;--marquee-row2:46s;"><img src="assets/googledrive.svg?v=1782900000" alt="" loading="lazy"><img src="assets/stripe.svg?v=1782900000" alt="" loading="lazy"><img src="assets/slack.svg?v=1782900000" alt="" loading="lazy"><img src="assets/notion.svg?v=1782900000" alt="" loading="lazy"><img src="assets/github.svg?v=1782900000" alt="" loading="lazy"><img src="assets/figma.svg?v=1782900000" alt="" loading="lazy"><img src="assets/linear.svg?v=1782900000" alt="" loading="lazy"><img src="assets/jira.svg?v=1782900000" alt="" loading="lazy"><img src="assets/dropbox.svg?v=1782900000" alt="" loading="lazy"><img src="assets/telegram.svg?v=1782900000" alt="" loading="lazy"><img src="assets/whatsapp.svg?v=1782900000" alt="" loading="lazy"><img src="assets/discord.svg?v=1782900000" alt="" loading="lazy"><img src="assets/amazon.svg?v=1782900000" alt="" loading="lazy"><img src="assets/obsidian.svg?v=1782900000" alt="" loading="lazy"><img src="assets/googledrive.svg?v=1782900000" alt="" loading="lazy"><img src="assets/stripe.svg?v=1782900000" alt="" loading="lazy"><img src="assets/slack.svg?v=1782900000" alt="" loading="lazy"><img src="assets/notion.svg?v=1782900000" alt="" loading="lazy"><img src="assets/github.svg?v=1782900000" alt="" loading="lazy"><img src="assets/figma.svg?v=1782900000" alt="" loading="lazy"><img src="assets/linear.svg?v=1782900000" alt="" loading="lazy"><img src="assets/jira.svg?v=1782900000" alt="" loading="lazy"><img src="assets/dropbox.svg?v=1782900000" alt="" loading="lazy"><img src="assets/telegram.svg?v=1782900000" alt="" loading="lazy"><img src="assets/whatsapp.svg?v=1782900000" alt="" loading="lazy"><img src="assets/discord.svg?v=1782900000" alt="" loading="lazy"><img src="assets/amazon.svg?v=1782900000" alt="" loading="lazy"><img src="assets/obsidian.svg?v=1782900000" alt="" loading="lazy"></div></div>
 </div>
 
 <section id="agents">
@@ -462,22 +495,18 @@
       <div class="ag-card"><div class="ag-tag">Payments</div><h3>Reconciles the money</h3><p>Matches PayPal and Stripe to invoices, flags duplicates, and answers your PayPal questions on demand.</p></div>
       <div class="ag-card"><div class="ag-tag">Research</div><h3>Finds it and brings it back</h3><p>Pulls the document, the lead, the number you asked for — and hands it over in plain language, not a link dump.</p></div>
     </div>
-    <div class="niche reveal">
-      <div class="niche-copy">
-        <h4>Plus agents built for your trade</h4>
-        <p>Niche agents that already know how your industry runs. <strong>Tap one</strong> to dive into the exact problems it solves, the workflows it runs daily, and the work it does in the background — more land in the catalog every week.</p>
-      </div>
-      <div class="niche-chips">
-        <a class="chip glow" href="plans-use.html?n=roofing"    style="--cg:var(--amber);animation-delay:0s">Roofing</a>
-        <a class="chip glow" href="plans-use.html?n=dental"     style="--cg:var(--teal);animation-delay:.35s">Dental</a>
-        <a class="chip glow" href="plans-use.html?n=law"        style="--cg:var(--purple);animation-delay:.7s">Law</a>
-        <a class="chip glow" href="plans-use.html?n=solar"      style="--cg:var(--green);animation-delay:1.05s">Solar</a>
-        <a class="chip glow" href="plans-use.html?n=hvac"       style="--cg:var(--blue,#5b9dff);animation-delay:1.4s">HVAC</a>
-        <a class="chip glow" href="plans-use.html?n=realestate" style="--cg:var(--rose,#fb7185);animation-delay:1.75s">Real estate</a>
-        <a class="chip glow" href="plans-use.html?n=home"       style="--cg:var(--amber);animation-delay:2.1s">Home &amp; family</a>
-        <span class="chip more">+ new every week →</span>
-      </div>
+    <div class="cr-intro reveal">
+      <h4>Plus agents built for your trade</h4>
+      <p>Niche agents that already know how your industry runs. <strong>Tap one</strong> to dive into the exact problems it solves, the workflows it runs daily, and the work it does in the background — more land in the catalog every week.</p>
     </div>
+    <div class="cr-filters reveal" id="cr-filters">
+      <button class="cr-f on" data-cat="all">All <i>24</i></button>
+      <button class="cr-f" data-cat="pro">Professional <i>6</i></button>
+      <button class="cr-f" data-cat="create">Creative &amp; education <i>4</i></button>
+      <button class="cr-f" data-cat="trades">Trades &amp; home <i>8</i></button>
+      <button class="cr-f" data-cat="health">Health &amp; wellness <i>6</i></button>
+    </div>
+    <div class="cr-belt reveal" id="cr-belt" aria-label="Trade agents"><div class="cr-track" id="cr-track"></div></div>
   </div>
 </section>
 
@@ -846,7 +875,7 @@
       </div>
     </div>
     <div class="rb-foot-base">
-      <span><img src="../../assets/rhobear-logo.png?v=1782940000" alt="">© 2026 RHOBEAR · A SunSponge LLC product · Your agents, your data, your business.</span>
+      <span><img src="assets/rhobear-logo.png?v=1782940000" alt="">© 2026 RHOBEAR · A SunSponge LLC product · Your agents, your data, your business.</span>
       <span><a href="https://rhobear.ai/">The family</a> · <a href="https://github.com/deariencampbell1-sys/rhobear/blob/main/PRIVACY.md">Privacy</a></span>
     </div>
   </div>
@@ -859,6 +888,89 @@
   const navLinks=document.querySelectorAll('a[data-nav]');
   const navIO=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){const id=e.target.id;navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));}});},{rootMargin:'-30% 0px -60% 0px'});
   sections.forEach(s=>s&&navIO.observe(s));
+</script>
+<script>
+/* ===== THE CREW belt — self-rolling, real photos, opens on purple ===== */
+(function(){
+  const ACC={trades:'#f5a524',health:'#48d8b0',pro:'#7c5cff',create:'#fb7185'};
+  const IMGDIR='assets/niche/';
+  const TAGLBL={trades:'Trades',health:'Health',pro:'Professional',create:'Creative'};
+  const CATORDER={pro:0,create:1,trades:2,health:3};   // belt opens on purple, then sweeps the spectrum
+  const CREW=[
+    {slug:'roofing',name:'Roofing',cat:'trades',img:'roofing-roofer-on-01.jpg',line:'Books inspections, chases estimates and insurance claims, sends milestone updates.'},
+    {slug:'plumbing',name:'Plumbing',cat:'trades',img:'plumbing-plumber-fixing-01.jpg',line:'Triages urgency, books jobs with confirmed windows, follows up on estimates.'},
+    {slug:'hvac-home-services',name:'HVAC & home',cat:'trades',use:'hvac',img:'hvac-home-services-air-conditioner-01.jpg',line:'Follows up on estimates, renews maintenance agreements, schedules across time zones.'},
+    {slug:'electrician',name:'Electrician',cat:'trades',img:'electrician-electrician-electrical-01.jpg',line:'Triages safety urgency first, books jobs with confirmed windows, chases estimates.'},
+    {slug:'solar',name:'Solar',cat:'trades',img:'solar-solar-panel-01.jpg',line:'Schedules consults, follows up on proposals, tracks permit and install milestones.'},
+    {slug:'landscaping-lawn-care',name:'Landscaping',cat:'trades',img:'landscaping-lawn-care-gardener-planting-01.jpg',line:'Schedules around the weather, renews seasonal contracts, chases project quotes.'},
+    {slug:'cleaning-services',name:'Cleaning',cat:'trades',img:'cleaning-services-cleaning-person-01.jpg',line:'Runs recurring schedules, chases quotes, renews and upsells standing clients.'},
+    {slug:'auto-repair',name:'Auto repair',cat:'trades',img:'auto-repair-car-repair-01.jpg',line:'Follows up on estimate approvals, recalls cars for due service, books the bay.'},
+    {slug:'dental-medical-front-office',name:'Dental & medical',cat:'health',use:'dental',img:'dental-medical-front-office-dental-hygienist-01.jpg',line:'Confirms appointments, recovers no-shows, reactivates overdue patients. HIPAA-safe.'},
+    {slug:'chiropractic-wellness',name:'Chiropractic',cat:'health',img:'chiropractic-wellness-chiropractic-treatment-01.jpg',line:'Confirms visits, recovers no-shows, reactivates lapsed patients. HIPAA-safe.'},
+    {slug:'med-spa-aesthetics',name:'Med spa',cat:'health',img:'med-spa-aesthetics-aesthetics-treatment-01.jpg',line:'Books consults, sends pre and post-care reminders, retains packages. HIPAA-safe.'},
+    {slug:'veterinary-pet-grooming',name:'Veterinary',cat:'health',img:'veterinary-pet-grooming-pet-grooming-01.jpg',line:'Confirms appointments, sends vaccine and recare reminders, rebooks grooming.'},
+    {slug:'salon-barber-spa',name:'Salon & barber',cat:'health',img:'salon-barber-spa-barber-cutting-01.jpg',line:'Books and fills cancellations, rebooks by service cadence, handles deposits.'},
+    {slug:'fitness-personal-training',name:'Fitness & PT',cat:'health',img:'fitness-personal-training-fitness-coach-01.jpg',line:'Books sessions with a cancel policy, renews packages, checks in on attendance.'},
+    {slug:'law-firm',name:'Law firm',cat:'pro',use:'law',img:'law-firm-attorney-consultation-01.jpg',line:'Qualifies intake, runs conflict checks, never lets a deadline or filing slip.'},
+    {slug:'accounting-bookkeeping',name:'Accounting',cat:'pro',img:'accounting-bookkeeping-accountant-at-01.jpg',line:'Chases missing documents, tracks every filing and quarterly deadline, onboards clients.'},
+    {slug:'insurance-agent',name:'Insurance',cat:'pro',img:'insurance-agent-agent-handshake-01.jpg',line:'Runs the renewal calendar, watches life-event triggers, follows up on quotes.'},
+    {slug:'mortgage-broker',name:'Mortgage',cat:'pro',img:'mortgage-broker-loan-officer-01.jpg',line:'Moves leads to application, chases borrower docs, posts milestones to close.'},
+    {slug:'real-estate',name:'Real estate',cat:'pro',use:'realestate',img:'real-estate-agent-for-01.jpg',line:'Schedules showings, tracks every contract date so no contingency lapses.'},
+    {slug:'property-management',name:'Property mgmt',cat:'pro',img:'property-management-landlord-tenant-01.jpg',line:'Dispatches maintenance, runs the rent late-ladder, handles lease renewals.'},
+    {slug:'photography',name:'Photography',cat:'create',img:'photography-camera-lens-01.jpg',line:'Runs inquiry-to-booking, handles shoot-day logistics, delivers galleries and reorders.'},
+    {slug:'restaurant-cafe',name:'Restaurant & café',cat:'create',img:'restaurant-cafe-barista-making-01.jpg',line:'Runs reservations and waitlist, captures catering, drafts review responses.'},
+    {slug:'tutoring-education',name:'Tutoring',cat:'create',img:'tutoring-education-online-tutoring-01.jpg',line:'Books sessions with a cancel policy, renews packages, updates families on progress.'},
+    {slug:'college-student',name:'College student',cat:'create',img:'college-student-college-student-01.jpg',line:'Tracks every assignment, exam, and application date, builds a realistic study plan.'}
+  ];
+  const track=document.getElementById('cr-track');
+  const belt=document.getElementById('cr-belt');
+  if(!track) return;
+
+  function cardHTML(a){
+    return '<a class="cr-card" href="plans-use.html?n='+(a.use||a.slug)+'" style="--cc:'+ACC[a.cat]+'">'+
+      '<div class="cr-photo" style="background-image:url('+IMGDIR+a.slug+'/'+a.img+')"></div>'+
+      '<div class="cr-tint"></div>'+
+      '<div class="cr-body"><span class="cr-tag">'+TAGLBL[a.cat]+'</span>'+
+      '<h3>'+a.name+'</h3><p class="cr-line">'+a.line+'</p>'+
+      '<span class="cr-dive">See the workflows it runs &#8594;</span></div></a>';
+  }
+
+  let half=0,pos=0,paused=false;
+  function build(cat){
+    let list=CREW.filter(function(a){return cat==='all'||a.cat===cat;});
+    if(cat==='all') list=list.slice().sort(function(x,y){return CATORDER[x.cat]-CATORDER[y.cat];});
+    const html=list.map(cardHTML).join('');
+    track.innerHTML=html+html;                 // duplicate set => seamless loop at half width
+    pos=0; track.style.transform='translateX(0)';
+    half=track.scrollWidth/2;
+  }
+  build('all');
+
+  if(belt){
+    belt.addEventListener('pointerenter',function(){paused=true;});
+    belt.addEventListener('pointerleave',function(){paused=false;});
+  }
+  document.getElementById('cr-filters').addEventListener('click',function(e){
+    const b=e.target.closest('.cr-f'); if(!b) return;
+    document.querySelectorAll('.cr-f').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on'); build(b.dataset.cat);
+  });
+  window.addEventListener('resize',function(){ half=track.scrollWidth/2; });
+
+  // self-rolling engine — JS-driven so OS "reduced motion" can't freeze it
+  var SPEED=0.055, last=null;                 // ~55px / second
+  function tick(t){
+    if(last===null) last=t;
+    var dt=t-last; last=t;
+    if(!paused && half>0){
+      pos+=SPEED*dt;
+      if(pos>=half) pos-=half;
+      track.style.transform='translateX(-'+pos+'px)';
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
 </script>
 </body>
 </html>
