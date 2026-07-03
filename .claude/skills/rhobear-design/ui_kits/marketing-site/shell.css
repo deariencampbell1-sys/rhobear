@@ -5,17 +5,61 @@
 
 /* ===== MARKETING-SITE TOKEN OVERRIDE — scoped to this shell only =====
    Loads after colors_and_type.css (same :root specificity → this wins), so it
-   flips every legacy-amber var to the deep-space teal/gold palette site-wide
-   in one place. A page's own inline <style> still wins over this (intended:
-   per-page accents keep working). Does NOT touch the shared root file, so the
-   `app` UI kit is unaffected. — rhobear-app design Iron Man, 2026-06-24 */
+   is the ONE place any page's color reads get mapped. A page's own inline
+   <style> still wins over this (intended: per-page layout accents keep
+   working) — see the gap list in the marketing-web PR for the handful of
+   pages whose local <style> also redeclares these NAMES and therefore
+   shadows this layer. Does NOT touch the shared root file, so the `app` UI
+   kit is unaffected. — marketing-web design worker, 2026-07-02
+
+   2026-07-02: converged onto Starlight (family design system) instead of the
+   2026-06-24 legacy teal/gold flip. Starlight source values first, then every
+   legacy var name this site's 31 pages actually read is ALIASED onto them —
+   token convergence, not invention (rhobear-family-design skill). */
 :root{
-  --c-amber:      #7dffd5;            /* was #f59e2c — now teal */
-  --c-amber-deep: #ffd76a;            /* was #d97a1a — now gold */
-  --c-amber-soft: rgba(125,255,213,0.14);
-  --c-amber-tint: rgba(125,255,213,0.07);
-  --teal:#7dffd5; --teal-dim:#48d8b0; --gold:#ffd76a;
-  --void:#04060c; --void-2:#070b16;
+  /* ---- Starlight canon (rhobear-family-design skill) ---- */
+  --accent:       #3bd6c3;   /* THE one accent */
+  --accent-press: #2fbfae;   /* hover/pressed shade of the SAME hue */
+  --accent-soft:  rgba(59,214,195,0.13);
+  --accent-ink:   #06251f;   /* text on a solid accent fill */
+  --warn:         #e8a33d;   /* heart-star amber — a highlight glint, never a 2nd accent */
+  --warn-soft:    rgba(232,163,61,0.14);
+  --bg0:          #0a0e13;   /* Starlight canonical dark floor */
+  --bg1:          #0f151c;
+
+  /* ---- legacy names the 31 pages actually read — aliased, not reinvented ----
+     --c-amber/--c-amber-deep were the base/hover pair behind buttons, links,
+     nav-active text and chips. --c-amber-deep and --gold were the "gold"
+     half of the 06-24 flip; per the convergence brief that gold usage
+     collapses into --warn (no longer an independently-invented hex, and no
+     longer a co-equal second accent) — see PR gap notes for where that
+     still reads broader than the "glint" the brief scopes it to. */
+  --c-amber:      var(--accent);
+  --c-amber-deep: var(--warn);
+  --c-amber-soft: var(--accent-soft);
+  --c-amber-tint: rgba(59,214,195,0.07);
+
+  --teal:     var(--accent);
+  --teal-dim: var(--accent-press);
+
+  /* !important on JUST these three (not --teal/--c-amber*): index.html is
+     the ONLY page with a local <style> :root that redeclares --gold/--void/
+     --void-2, and its copy is a stale, value-identical duplicate of the pre-
+     Starlight flip (not an intentional divergence) — safe to force through.
+     --teal is also shadowed by designs.html/plans.html/plans-use.html, but
+     THEIR redeclare is a genuinely different, deliberate per-page palette
+     (crimson / purple accent schemes) reusing the same var name; forcing
+     that one !important would repaint those pages' own accent, so it's
+     left alone here (see PR gap notes). */
+  --gold:     var(--warn) !important;
+  --void:     var(--bg0) !important;
+  --void-2:   var(--bg1) !important;
+
+  /* dark-band "cyan" was a second, near-duplicate teal (#7dffd5) — unify
+     with the one accent instead of carrying two similar-but-different hues */
+  --c-cyan:      var(--accent);
+  --c-cyan-deep: var(--accent-press);
+  --c-cyan-soft: var(--accent-soft);
 }
 
 * { box-sizing: border-box; }
@@ -868,8 +912,8 @@ section.tight { padding: clamp(36px, 5vw, 64px) 0; }
 }
 .cd-cell {
   display: flex; flex-direction: column; align-items: center;
-  background: rgba(125,255,213,0.06);
-  border: 1.5px solid rgba(125,255,213,0.28);
+  background: rgba(59,214,195,0.06);
+  border: 1.5px solid rgba(59,214,195,0.28);
   border-radius: 14px;
   padding: 14px 14px 10px;
   min-width: 92px;
@@ -899,8 +943,8 @@ section.tight { padding: clamp(36px, 5vw, 64px) 0; }
 .countdown.zero .cd-cell { opacity: 0.5; }
 
 .beta-cta-side {
-  background: rgba(125,255,213,0.04);
-  border: 1.5px dashed rgba(125,255,213,0.28);
+  background: rgba(59,214,195,0.04);
+  border: 1.5px dashed rgba(59,214,195,0.28);
   border-radius: 18px;
   padding: 24px 22px;
   text-align: center;
@@ -964,7 +1008,7 @@ section.tight { padding: clamp(36px, 5vw, 64px) 0; }
   color: var(--c-dark-ink);
 }
 .ivr-card.right h3, .ivr-card.right p { color: var(--c-dark-ink); }
-.ivr-card.right::after { border-color: rgba(125,255,213,0.35); }
+.ivr-card.right::after { border-color: rgba(59,214,195,0.35); }
 .ivr-tag {
   display: inline-block;
   font-family: var(--font-display); font-size: 10px; letter-spacing: 0.16em;
@@ -973,7 +1017,7 @@ section.tight { padding: clamp(36px, 5vw, 64px) 0; }
   margin-bottom: 14px;
 }
 .ivr-card.left .ivr-tag  { background: var(--c-amber-soft); color: var(--c-amber-deep); }
-.ivr-card.right .ivr-tag { background: rgba(125,255,213,0.16); color: var(--c-cyan); }
+.ivr-card.right .ivr-tag { background: rgba(59,214,195,0.16); color: var(--c-cyan); }
 
 .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
 .chip-row .chip-mono { font-size: 10px; padding: 5px 10px; }
@@ -1681,7 +1725,7 @@ section.tight { padding: clamp(36px, 5vw, 64px) 0; }
 /* Promoted handoff: transcript + plain-language beat fill the dark panel */
 .crew-handoff-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 24px; align-items: start; margin-top: 10px; }
 @media (max-width: 900px) { .crew-handoff-grid { grid-template-columns: 1fr; } }
-.handoff-beat { background: rgba(255,255,255,0.03); border: 1px solid rgba(125,255,213,0.18); border-radius: var(--r-3); padding: 22px 24px; }
+.handoff-beat { background: rgba(255,255,255,0.03); border: 1px solid rgba(59,214,195,0.18); border-radius: var(--r-3); padding: 22px 24px; }
 .handoff-beat .beat-kicker { font-family: var(--font-display); font-size: 11px; letter-spacing: 0.14em; color: var(--c-cyan); margin-bottom: 16px; }
 .handoff-beat ol { margin: 0; padding: 0; list-style: none; counter-reset: beat; }
 .handoff-beat li { counter-increment: beat; position: relative; padding: 0 0 14px 34px; color: var(--c-dark-ink-2); line-height: 1.5; font-size: 0.97rem; }
@@ -1755,10 +1799,10 @@ a.live-tag:hover {
 /* Coming-soon band — dashed border + blueprint hatch so it never reads as shipped. */
 .coming-band {
   position: relative; overflow: hidden;
-  border: 2px dashed rgba(125,255,213,0.45);
+  border: 2px dashed rgba(59,214,195,0.45);
   border-radius: var(--r-4, 18px);
   background:
-    repeating-linear-gradient(45deg, rgba(125,255,213,0.05) 0 14px, transparent 14px 28px),
+    repeating-linear-gradient(45deg, rgba(59,214,195,0.05) 0 14px, transparent 14px 28px),
     var(--c-dark-bg);
   margin: 30px 0;
 }
@@ -1793,9 +1837,9 @@ body {
 .band-dark {
   background-color: var(--c-dark-bg);
   background-image:
-    linear-gradient(rgba(125,255,213,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(125,255,213,0.05) 1px, transparent 1px),
-    radial-gradient(120% 85% at 50% -15%, rgba(125,255,213,0.10), transparent 60%);
+    linear-gradient(rgba(59,214,195,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,214,195,0.05) 1px, transparent 1px),
+    radial-gradient(120% 85% at 50% -15%, rgba(59,214,195,0.10), transparent 60%);
   background-size: 30px 30px, 30px 30px, 100% 100%;
   box-shadow:
     0 24px 60px -30px rgba(8,12,22,0.55),
@@ -1843,12 +1887,14 @@ body {
   /* light ink on space */
   --c-ink:#eaf0fb !important;  --c-ink-2:#c3cde0 !important;  --c-ink-3:#94a0b8 !important;  --c-ink-4:#6b7589 !important;
 
-  /* amber survives as the one warm note; brighter on dark for links */
-  --c-amber:#7dffd5 !important;  --c-amber-deep:#a9ffe6 !important;
-  --c-amber-soft:rgba(125,255,213,0.16) !important;  --c-amber-tint:rgba(125,255,213,0.10) !important;
+  /* the ONE accent, on dark (this block wins the cascade — 2026-07-02:
+     was its own hand-picked #7dffd5/#a9ffe6 pair; aliased onto the shared
+     Starlight accent/accent-press so dark-mode and light-mode agree) */
+  --c-amber:var(--accent) !important;  --c-amber-deep:var(--accent-press) !important;
+  --c-amber-soft:rgba(59,214,195,0.16) !important;  --c-amber-tint:rgba(59,214,195,0.10) !important;
 
   /* cyan structure + hairlines replace the dark paper stitch */
-  --c-stitch:rgba(125,255,213,0.22) !important;
+  --c-stitch:rgba(59,214,195,0.22) !important;
   --c-line:rgba(170,200,255,0.12) !important;
   --c-line-strong:rgba(170,200,255,0.22) !important;
 
@@ -1911,9 +1957,9 @@ h1,h2,h3,h4,h5,.h1-hero,.h-display{
   background:rgba(170,200,255,0.08) !important; color:var(--c-ink) !important; }
 /* amber pills must stay READABLE — faint translucent fill, bright warm text
    (explicit rgba, not a var, so nothing can flip them back to solid-bright). */
-.nav-tab.active{ background:rgba(125,255,213,0.15) !important; color:#bff6e8 !important; }
-.chip-amber,.pillar-ribbon .chip-amber{ background:rgba(125,255,213,0.13) !important;
-  color:#bff6e8 !important; border:1px solid rgba(125,255,213,0.45) !important; }
+.nav-tab.active{ background:rgba(59,214,195,0.15) !important; color:#bff6e8 !important; }
+.chip-amber,.pillar-ribbon .chip-amber{ background:rgba(59,214,195,0.13) !important;
+  color:#bff6e8 !important; border:1px solid rgba(59,214,195,0.45) !important; }
 .nav-dropdown-panel{ background:rgba(12,18,32,0.98) !important;
   border:1px solid var(--c-line-strong) !important; box-shadow:var(--shadow-card);
   z-index:200 !important; }
@@ -1942,7 +1988,7 @@ h1,h2,h3,h4,h5,.h1-hero,.h-display{
   background-image:none !important; }
 
 /* buttons — amber glows on dark; ghost gains a cool outline */
-.btn-amber{ box-shadow:0 0 0 1px rgba(125,255,213,0.35),0 10px 26px -10px rgba(125,255,213,0.55) !important; }
+.btn-amber{ box-shadow:0 0 0 1px rgba(59,214,195,0.35),0 10px 26px -10px rgba(59,214,195,0.55) !important; }
 .btn-ghost{ color:var(--c-ink) !important;
   border:1px solid var(--c-line-strong) !important; background:rgba(170,200,255,0.04) !important; }
 .btn-ghost:hover{ background:rgba(170,200,255,0.10) !important; }
@@ -2018,7 +2064,7 @@ a{ color:var(--c-amber-deep); }  a:hover{ color:var(--c-amber); }
    text already capped at max-width:680px so they don't collide. Stacks on mobile. */
 .hubs-link-img{ position:absolute; right:22px; top:50%; transform:translateY(-50%);
   width:min(40%,320px); height:auto; pointer-events:none;
-  filter:drop-shadow(0 0 40px rgba(125,255,213,0.18)); }
+  filter:drop-shadow(0 0 40px rgba(59,214,195,0.18)); }
 @media (max-width:880px){
   .hubs-link-img{ position:static; transform:none; width:220px; margin:18px auto 0; align-self:center; }
 }
@@ -2033,7 +2079,7 @@ section.wrap[style*="text-align:center"] .chip-mono{
 
 /* the crew-on-deck hero frame → cosmic edge + glow instead of warm paper */
 .scene-frame{ border:1px solid var(--c-line-strong) !important;
-  box-shadow:var(--shadow-lift), 0 0 70px -22px rgba(125,255,213,0.28) !important; }
+  box-shadow:var(--shadow-lift), 0 0 70px -22px rgba(59,214,195,0.28) !important; }
 
 /* ---- stragglers that hardcode warm-paper values ---- */
 /* sticky prev/next bar */
@@ -2046,13 +2092,13 @@ section.wrap[style*="text-align:center"] .chip-mono{
 /* chips: give a dark-appropriate surface + border, but DON'T force the text color —
    semantic chips carry their own (now-brightened) hue inline, and the block info-bubble
    variants carry light ink inline. Forcing color is what flattened them. */
-.chip-mono{ background:rgba(125,255,213,0.05) !important; border-color:var(--c-line-strong) !important; }
+.chip-mono{ background:rgba(59,214,195,0.05) !important; border-color:var(--c-line-strong) !important; }
 .chip-mono[style*="block"]{ background:var(--c-surface) !important; color:var(--c-ink) !important;
   margin-left:auto !important; margin-right:auto !important; text-align:center; }
 .chip-mono code{ color:var(--c-cyan) !important; }
 
 /* model chips were pastel-on-paper → translucent tints on space (ollama already dark) */
-.model-card.claude{ background:rgba(125,255,213,0.16) !important; color:#ffcf8f !important; }
+.model-card.claude{ background:rgba(59,214,195,0.16) !important; color:#ffcf8f !important; }
 .model-card.codex { background:rgba(79,214,169,0.16) !important; color:#8ff0c8 !important; }
 .model-card.pi    { background:rgba(180,114,240,0.18) !important; color:#d9b6ff !important; }
 
@@ -2098,7 +2144,7 @@ section.wrap-md > .card-paper.stitched{ margin-top:18px; }
     drop-shadow(0 0 1px  rgba(255,255,255,0.95))
     drop-shadow(0 0 2.5px rgba(255,255,255,0.85))
     drop-shadow(0 0 11px rgba(170,205,255,0.50))
-    drop-shadow(0 0 26px rgba(125,255,213,0.32));
+    drop-shadow(0 0 26px rgba(59,214,195,0.32));
   transition:filter .18s ease;
 }
 .bw-card[open] > summary .bw-summary-inner img.logo,
@@ -2107,7 +2153,7 @@ section.wrap-md > .card-paper.stitched{ margin-top:18px; }
     drop-shadow(0 0 1.5px rgba(255,255,255,1))
     drop-shadow(0 0 3px  rgba(255,255,255,0.95))
     drop-shadow(0 0 14px rgba(170,205,255,0.62))
-    drop-shadow(0 0 32px rgba(125,255,213,0.42));
+    drop-shadow(0 0 32px rgba(59,214,195,0.42));
 }
 
 /* ----------------------- CURIOUS SALES GREETER ------------------------ */
@@ -2313,7 +2359,7 @@ section.wrap-md > .card-paper.stitched{ margin-top:18px; }
 .chat-panel-kicker{margin:0 0 6px;font-family:var(--font-display);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-amber-deep)}
 .chat-panel h2{margin:0;font-family:var(--font-display);font-size:clamp(1.35rem,2.4vw,1.9rem);line-height:1.15;color:var(--c-ink)}
 .chat-panel-note{margin:8px 0 0;color:var(--c-ink-2);line-height:1.5}
-.chat-panel-badge{flex:0 0 auto;border:1px solid rgba(125,255,213,.45);background:var(--c-amber-soft);color:var(--c-amber-deep);border-radius:999px;padding:7px 10px;font-family:var(--font-display);font-size:10px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+.chat-panel-badge{flex:0 0 auto;border:1px solid rgba(59,214,195,.45);background:var(--c-amber-soft);color:var(--c-amber-deep);border-radius:999px;padding:7px 10px;font-family:var(--font-display);font-size:10px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
 .chat-panel-log{min-height:156px;max-height:360px;overflow:auto;padding:14px;border:1px dashed var(--c-stitch);border-radius:14px;background:rgba(255,255,255,.58);display:flex;flex-direction:column;gap:10px}
 .chat-panel-msg{max-width:82%;padding:10px 12px;border-radius:14px;font-size:.98rem;line-height:1.45;border:1px solid var(--c-line);white-space:pre-wrap;overflow-wrap:break-word}
 .chat-panel-msg.bot{align-self:flex-start;background:var(--c-surface);color:var(--c-ink-2);border-top-left-radius:4px}
@@ -2330,7 +2376,7 @@ section.wrap-md > .card-paper.stitched{ margin-top:18px; }
 
 /* greeter constellation skin override */
 .rho-greeter{color:var(--c-ink);font-family:var(--font-body)}
-.rho-greeter-launcher{border:1px solid var(--c-line-strong);border-radius:16px;background:var(--c-amber);color:var(--c-ink);box-shadow:0 0 0 1px rgba(125,255,213,0.35),0 10px 26px -10px rgba(125,255,213,0.55);font-family:var(--font-display)}
+.rho-greeter-launcher{border:1px solid var(--c-line-strong);border-radius:16px;background:var(--c-amber);color:var(--c-ink);box-shadow:0 0 0 1px rgba(59,214,195,0.35),0 10px 26px -10px rgba(59,214,195,0.55);font-family:var(--font-display)}
 .rho-greeter-launcher:hover{background:var(--c-amber-deep)}
 .rho-greeter-launcher span{border-radius:12px;background:rgba(17,25,43,0.90);border:1px solid var(--c-line-strong);color:var(--c-cyan);font-family:var(--font-display)}
 .rho-greeter-nudge-text,.rho-greeter-nudge-close{border:1px solid var(--c-line-strong);background:rgba(17,25,43,0.90);color:var(--c-ink);box-shadow:var(--shadow-card)}
@@ -2345,18 +2391,18 @@ section.wrap-md > .card-paper.stitched{ margin-top:18px; }
 .rho-greeter-transcript,.rho-greeter-typing{background:rgba(8,13,24,0.42)}
 .rho-greeter-msg{border:1px solid var(--c-line-strong);font-family:var(--font-body)}
 .rho-greeter-msg.bot{background:rgba(17,25,43,0.90);color:var(--c-ink-2)}
-.rho-greeter-msg.bot::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:8px;vertical-align:1px;background:var(--c-cyan);box-shadow:0 0 10px rgba(125,255,213,0.85)}
-.rho-greeter-msg.user{background:rgba(125,255,213,0.18);color:var(--c-ink);border-color:rgba(125,255,213,0.35)}
+.rho-greeter-msg.bot::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:8px;vertical-align:1px;background:var(--c-cyan);box-shadow:0 0 10px rgba(59,214,195,0.85)}
+.rho-greeter-msg.user{background:rgba(59,214,195,0.18);color:var(--c-ink);border-color:rgba(59,214,195,0.35)}
 .rho-greeter-typing{color:var(--c-ink-3)}
-.rho-greeter-typing span{background:var(--c-cyan);box-shadow:0 0 8px rgba(125,255,213,0.85)}
+.rho-greeter-typing span{background:var(--c-cyan);box-shadow:0 0 8px rgba(59,214,195,0.85)}
 .rho-greeter-form{background:rgba(17,25,43,0.90);border-top:1px solid var(--c-line-strong)}
 .rho-greeter-label{color:var(--c-ink-3);font-family:var(--font-display)}
 .rho-greeter-inputrow textarea,.rho-greeter-lead input{border:1px solid var(--c-line-strong);background:rgba(8,13,24,0.62);color:var(--c-ink);font:0.95rem/1.35 var(--font-body)}
 .rho-greeter-inputrow textarea::placeholder,.rho-greeter-lead input::placeholder{color:var(--c-ink-3)}
-.rho-greeter-inputrow textarea:focus,.rho-greeter-lead input:focus{border-color:var(--c-amber-deep);box-shadow:0 0 0 3px rgba(125,255,213,0.18)}
-.rho-greeter-inputrow button,.rho-greeter-lead button{border:1px solid rgba(125,255,213,0.35);background:var(--c-amber);color:var(--c-ink);box-shadow:0 0 0 1px rgba(125,255,213,0.35),0 10px 26px -10px rgba(125,255,213,0.55);font-family:var(--font-display)}
+.rho-greeter-inputrow textarea:focus,.rho-greeter-lead input:focus{border-color:var(--c-amber-deep);box-shadow:0 0 0 3px rgba(59,214,195,0.18)}
+.rho-greeter-inputrow button,.rho-greeter-lead button{border:1px solid rgba(59,214,195,0.35);background:var(--c-amber);color:var(--c-ink);box-shadow:0 0 0 1px rgba(59,214,195,0.35),0 10px 26px -10px rgba(59,214,195,0.55);font-family:var(--font-display)}
 .rho-greeter-inputrow button:hover,.rho-greeter-lead button:hover{background:var(--c-amber-deep)}
-.rho-greeter-cta{border-top:1px solid var(--c-line-strong);background:var(--c-amber);color:var(--c-ink);box-shadow:0 0 0 1px rgba(125,255,213,0.35),0 10px 26px -10px rgba(125,255,213,0.55);font-family:var(--font-display)}
+.rho-greeter-cta{border-top:1px solid var(--c-line-strong);background:var(--c-amber);color:var(--c-ink);box-shadow:0 0 0 1px rgba(59,214,195,0.35),0 10px 26px -10px rgba(59,214,195,0.55);font-family:var(--font-display)}
 .rho-greeter-cta:hover{background:var(--c-amber-deep)}
 .rho-greeter-lead{border:1px dashed var(--c-line-strong);background:rgba(17,25,43,0.90)}
 .rho-greeter-lead label{color:var(--c-ink-2)}
@@ -2366,9 +2412,9 @@ section.wrap-md > .card-paper.stitched{ margin-top:18px; }
 .relay-band{ max-width:1120px; margin:0 auto; padding:26px 26px 30px; border-top:1px solid var(--c-line); }
 .relay-band .rb-label{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--c-ink-3); margin-bottom:12px; }
 .relay-next{ display:flex; flex-wrap:wrap; align-items:center; gap:9px 10px; font-family:var(--font-display); font-size:.92rem; }
-.relay-next .now{ color:var(--c-amber-deep); border:1px solid rgba(125,255,213,0.45); border-radius:999px; padding:6px 13px; background:rgba(125,255,213,0.10); }
+.relay-next .now{ color:var(--c-amber-deep); border:1px solid rgba(59,214,195,0.45); border-radius:999px; padding:6px 13px; background:rgba(59,214,195,0.10); }
 .relay-next a{ color:var(--c-ink-2); text-decoration:none; border:1px solid var(--c-line); border-radius:999px; padding:6px 13px; transition:color .18s,border-color .18s,background .18s; }
-.relay-next a:hover{ color:var(--c-amber-deep); border-color:rgba(125,255,213,0.5); background:rgba(125,255,213,0.07); }
+.relay-next a:hover{ color:var(--c-amber-deep); border-color:rgba(59,214,195,0.5); background:rgba(59,214,195,0.07); }
 .relay-next .arw{ color:var(--c-ink-3); }
 
 /* stale UI screenshots pulled 2026-06-26 - fresh captures pending; frame holds layout */
