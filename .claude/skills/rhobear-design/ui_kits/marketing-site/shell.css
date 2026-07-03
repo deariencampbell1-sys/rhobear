@@ -1878,14 +1878,15 @@ body {
    The copy is untouched; only the skin changes.
    ===================================================================== */
 :root{
-  /* jet-black base — matches the product UI (rhobear-plans rhobear-dark.css /
-     app hub). !important so index.html's inline TWEAKS style block (a light-theme
-     live-editor that loads after shell.css) can't override them. */
-  --c-bg:#08080a !important;  --c-bg-2:#111114 !important;  --c-bg-3:#16161a !important;
-  --c-surface:rgba(17,25,43,0.55) !important;  --c-surface-2:rgba(22,31,52,0.62) !important;
+  /* Starlight graphite base — matches the product UI (the family tokens in
+     rhobear-app tokens.css / rhobear-plans starlight-tokens.css). !important so
+     index.html's inline TWEAKS style block (a light-theme live-editor that
+     loads after shell.css) can't override them. */
+  --c-bg:#0a0e13 !important;  --c-bg-2:#0f151c !important;  --c-bg-3:#151d26 !important;
+  --c-surface:rgba(21,29,38,0.62) !important;  --c-surface-2:rgba(28,38,49,0.66) !important;
 
   /* light ink on space */
-  --c-ink:#eaf0fb !important;  --c-ink-2:#c3cde0 !important;  --c-ink-3:#94a0b8 !important;  --c-ink-4:#6b7589 !important;
+  --c-ink:#e8eef2 !important;  --c-ink-2:#9db0bb !important;  --c-ink-3:#5f7280 !important;  --c-ink-4:#4d5d68 !important;
 
   /* the ONE accent, on dark (this block wins the cascade — 2026-07-02:
      was its own hand-picked #7dffd5/#a9ffe6 pair; aliased onto the shared
@@ -1895,14 +1896,14 @@ body {
 
   /* cyan structure + hairlines replace the dark paper stitch */
   --c-stitch:rgba(59,214,195,0.22) !important;
-  --c-line:rgba(170,200,255,0.12) !important;
-  --c-line-strong:rgba(170,200,255,0.22) !important;
+  --c-line:rgba(151,183,196,0.12) !important;
+  --c-line-strong:rgba(151,183,196,0.24) !important;
 
   /* warm shadows → soft cosmic depth */
-  --shadow-soft:0 1px 0 rgba(255,255,255,0.03), 0 10px 30px -14px rgba(0,0,0,0.70);
-  --shadow-card:0 1px 0 rgba(255,255,255,0.04), 0 18px 44px -18px rgba(0,0,0,0.75);
-  --shadow-lift:0 2px 0 rgba(255,255,255,0.05), 0 30px 60px -22px rgba(0,0,0,0.80);
-  --shadow-inner:inset 0 1px 0 rgba(255,255,255,0.06);
+  --shadow-soft:none;
+  --shadow-card:none;
+  --shadow-lift:none;
+  --shadow-inner:none;
 
   /* "our type" — self-hosted Inter (bundled .woff2, no runtime CDN), consistent on every
      machine; falls back to the system stack if the font fails to load. */
@@ -1921,7 +1922,7 @@ html{ color-scheme:dark; }
 /* jet-black sky — flat, so the pixel-dust specks read crisp. No suns, no
    planets, no nebula glow (the product dropped that look). */
 body{
-  background:#08080a !important;
+  background:#0a0e13 !important;
   background-attachment:fixed;
   -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
 }
