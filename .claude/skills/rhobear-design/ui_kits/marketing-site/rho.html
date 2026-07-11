@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rho — the RHOBEAR family voice</title>
+  <meta name="description" content="Rho is the chatbot that rides every RHOBEAR surface: a living orb you talk to, that keeps talking while it dispatches real agents, sees through your camera and uploads, and answers for free on every product. Now landing on the Windows desktop as a movable talking orb.">
+  <link rel="stylesheet" href="../../colors_and_type.css">
+  <link rel="stylesheet" href="shell.css?v=1782970000">
+  <link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782900000">
+  <style>
+    :root{ --rho:#8f5cff; --rho-2:#3bd6c3; }
+    .rho-hero{ display:grid; grid-template-columns:1.2fr .8fr; gap:44px; align-items:center; }
+    .orb-stage{ display:grid; place-items:center; }
+    .orb-stage img{ width:min(300px,70vw); filter:drop-shadow(0 24px 60px rgba(143,92,255,.45)); border-radius:24px; }
+    .vid{ width:100%; border-radius:14px; display:block; background:#05030c; }
+    .rho-k{ font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--rho); }
+    @media(max-width:880px){ .rho-hero{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+  <nav class="top-nav" aria-label="Primary">
+    <div class="top-nav-inner">
+      <a class="brand-lockup" href="index.html">
+        <img src="../../assets/rhobear-logo.png?v=1782900000" alt="" class="pixelated">
+        <span>RHOBEAR</span>
+      </a>
+      <div class="nav-tabs"><a href="index.html" class="nav-tab">HOME</a><a href="app.html" class="nav-tab">HUB</a><a href="workbench.html" class="nav-tab">WORKBENCH</a><a href="plans.html" class="nav-tab">PLANS</a><a href="rho.html" class="nav-tab active">RHO</a><div class="nav-dropdown"><a href="index.html#workflow" class="nav-tab" aria-haspopup="true">MORE &#9662;</a><div class="nav-dropdown-panel"><a href="designs.html">RHOBEAR Designs</a><a href="capturd.html">RHOBEAR Captur&#39;d</a><a href="https://reviews.rhobear.ai">RHOBEAR Reviews</a><a href="https://sales.rhobear.ai">Sales by RHOBEAR</a></div></div></div>
+      <span class="nav-spacer"></span>
+      <a href="https://workbench.rhobear.ai/companion" class="btn-amber nav-cta">Talk to Rho →</a>
+    </div>
+  </nav>
+<main>
+
+<!-- ===================== HERO ===================== -->
+<section class="wrap">
+  <div class="rho-hero">
+    <div>
+      <div class="eyebrow-row">RHO · THE FAMILY VOICE · FREE ON EVERY SURFACE</div>
+      <h1 class="h1-page">The chatbot that <em>keeps talking while it works.</em></h1>
+      <p class="lead">Other voice assistants go quiet the moment you give them a job. Rho stays in the conversation — it talks to you while it dispatches real agents behind the scenes, then tells you what came back. A living orb, a glass bar, a voice you'll recognize on every RHOBEAR product.</p>
+      <div style="display:flex; gap:14px; flex-wrap:wrap; margin-top:22px;">
+        <a href="https://workbench.rhobear.ai/companion" class="btn-amber">Talk to Rho free →</a>
+        <a href="#desktop" class="live-tag" style="margin:0;">New: Rho on your desktop ↓</a>
+      </div>
+    </div>
+    <div class="orb-stage">
+      <img src="../../assets/shots/rho/rho-orb.png" alt="Rho — the living orb">
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHAT MAKES IT DIFFERENT ===================== -->
+<section class="wrap" style="padding-top:20px;">
+  <div class="card-grid cols-3" style="row-gap:18px;">
+    <div class="card-paper stitched feature-card">
+      <div class="rho-k">TALKS WHILE IT WORKS</div>
+      <p>The voice never blocks on the task. Rho keeps the conversation going while crew agents run the job, then speaks the result on the same open stream.</p>
+    </div>
+    <div class="card-paper stitched feature-card">
+      <div class="rho-k">IT CAN SEE</div>
+      <p>Turn on the camera and Rho watches what you're showing it. Attach an image and it reads that too — same eyes, either way.</p>
+    </div>
+    <div class="card-paper stitched feature-card">
+      <div class="rho-k">TWO VOICES</div>
+      <p>A free on-device voice that ships in the page, and an HD cloud voice when you want the good speakers. Sentence-by-sentence, so it starts talking fast.</p>
+    </div>
+    <div class="card-paper stitched feature-card">
+      <div class="rho-k">RIDES EVERY SURFACE</div>
+      <p>Plans purple on Plans, teal on the Workbench — one brain, dressed for whatever page it's on. It calls that product's own APIs; it never carries its own copy of your data.</p>
+    </div>
+    <div class="card-paper stitched feature-card">
+      <div class="rho-k">DICTATION ≠ CALL</div>
+      <p>Dictate into the box without sending, or open a real voice call. Two buttons, two behaviors, no surprises.</p>
+    </div>
+    <div class="card-paper stitched feature-card">
+      <div class="rho-k">FREE</div>
+      <p>Rho answers free on every RHOBEAR surface. It's the family voice, not a paywall.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== THE COMMERCIAL ===================== -->
+<section class="wrap" style="padding-top:0;">
+  <div class="eyebrow-row">SEE IT WORK</div>
+  <h2 style="font-size:clamp(1.8rem,3vw,2.5rem); margin:0 0 14px;">Thirty seconds of Rho <em>closing the loop.</em></h2>
+  <video class="vid" src="../../assets/video/rho-commercial.mp4" controls preload="metadata"></video>
+</section>
+
+<!-- ===================== DESKTOP ===================== -->
+<section class="band-dark install-band" id="desktop" style="margin-top:8px; padding:64px 0;">
+  <div class="wrap">
+    <div class="eyebrow-row">NEW · RHO ON THE DESKTOP</div>
+    <h2 style="font-size:clamp(1.9rem,3.2vw,2.7rem); margin:0 0 18px; max-width:760px;">A talking orb that <em>lives on your taskbar.</em></h2>
+    <p style="color:var(--c-dark-ink-2); font-size:1.08rem; line-height:1.6; max-width:700px;">The desktop companion puts Rho on your Windows machine: a living orb you can drag anywhere, click to expand into the full surface — type, talk, upload, camera — and it attaches to the RHOBEAR Hub when one is running. With the Hub, Rho can drive your RHOBEAR apps. Without it, Rho is your research companion: it talks, digs the web, and reads your files and docs — and it never writes without the harness. The orb's little dot tells you which mode you're in.</p>
+    <p style="color:var(--c-dark-ink-2); font-size:1.02rem; line-height:1.6; max-width:700px; margin-top:12px;">Shipping alongside the Hub. Until then, Rho is one click away on every cloud surface.</p>
+    <div style="margin-top:22px; display:flex; gap:14px; flex-wrap:wrap;">
+      <a href="https://workbench.rhobear.ai/companion" class="btn-amber">Talk to Rho now →</a>
+      <a href="app.html" class="live-tag" style="margin:0;">See the Hub →</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+  <div class="prevnext">
+    <div class="prevnext-inner">
+      <a href="plans.html" class="pn-link ">
+        <span class="pn-mini">← Previous</span>
+        <span class="pn-name">RHOBEAR Plans</span>
+      </a>
+      <a href="index.html" class="pn-link ">
+        <span class="pn-mini">Next →</span>
+        <span class="pn-name">The ecosystem</span>
+      </a>
+    </div>
+  </div>
+
+<footer class="site-footer"><div class="site-footer-inner"><div class="footer-row"><div class="footer-copy">© 2026 Sun Sponge LLC · <a href="https://github.com/rhobear-ai">GitHub</a> · <a href="privacy.html">privacy</a> · <a href="faq.html">FAQ</a></div><div class="footer-tag">Lean. Local. Private. Yours.</div></div><div class="footer-disclaimer">All third-party trademarks and logos are property of their respective owners and shown here for integration identification purposes only. No partnership, sponsorship, or endorsement is implied.</div></div></footer>
+<script src="shell.js?v=1782980000" defer></script>
+</body>
+</html>
