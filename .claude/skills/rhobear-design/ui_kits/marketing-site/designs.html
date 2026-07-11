@@ -229,6 +229,17 @@
   .rb-foot-base a{color:var(--text-dim)}
 
   /* ═══════════ RESPONSIVE ═══════════ */
+  /* model rungs + bench */
+  .bench-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,0.025),rgba(255,255,255,0.005))}
+  .bench{width:100%;border-collapse:collapse;font-size:14.5px;min-width:560px}
+  .bench th,.bench td{text-align:left;padding:15px 20px;border-bottom:1px solid var(--border)}
+  .bench thead th{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);background:rgba(233,69,96,0.05)}
+  .bench tbody tr:last-child td{border-bottom:none}
+  .bench tbody td:first-child b{font-size:15px}
+  .bench .rung{color:var(--teal);font-weight:700}
+  .bench .num{font-family:var(--mono);color:var(--text)}
+  .bench-note{color:var(--text-dim);font-size:12.5px;margin-top:14px;font-family:var(--mono)}
+
   @media (max-width:1080px){.price-grid{grid-template-columns:1fr;gap:18px;max-width:520px}}
   @media (max-width:900px){
     .hero-grid,.cb-grid,.faq-grid{grid-template-columns:1fr;gap:48px}
@@ -262,6 +273,7 @@
     <nav class="nav">
       <a href="#how" data-nav>How it works</a>
       <a href="#canvas" data-nav>The canvas</a>
+      <a href="#rungs" data-nav>The models</a>
       <a href="#pricing" data-nav>Pricing</a>
       <a href="#faq" data-nav>FAQ</a>
     </nav>
@@ -438,6 +450,28 @@
   </div>
 </section>
 
+<!-- ═══════════ MODEL RUNGS + BENCH ═══════════ -->
+<section id="rungs">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">The model rungs</span>
+      <h2>Free is bring-your-own. <span class="accent">Pro rides frontier.</span></h2>
+      <p class="section-lede">The editor is free forever with your own key — you pay your provider, never us. Pro adds our managed house models so there's nothing to wire: three white-labeled rungs on enterprise rails that never train on your data. These are the published benchmark scores of the models each rung rides today — not our numbers, theirs.</p>
+    </div>
+    <div class="reveal bench-wrap">
+      <table class="bench">
+        <thead><tr><th>Rung</th><th>Built for</th><th>GPQA Diamond</th><th>AIME 2025</th><th>Global-MMLU-Lite</th></tr></thead>
+        <tbody>
+          <tr><td><b class="rung">Core</b></td><td>Everyday edits — fast, cheap, always on</td><td class="num">47.4%</td><td class="num">50.0%</td><td class="num">72.4%</td></tr>
+          <tr><td><b class="rung">Summit</b></td><td>Real reasoning — layouts &amp; generation styles</td><td class="num">82.8%</td><td class="num">72.0%</td><td class="num">88.4%</td></tr>
+          <tr><td><b class="rung">Peak</b></td><td>The heavyweight — the deep-thinking pass</td><td class="num">86.4%</td><td class="num">88.0%</td><td class="num">88.6%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="bench-note">Published scores of the underlying frontier models as served on our rails; higher is better. Free stays BYO-key — the rungs are the paid upsell, never the default.</p>
+  </div>
+</section>
+
 <!-- ═══════════ PRICING ═══════════ -->
 <section id="pricing" class="pricing">
   <div class="wrap">
@@ -478,16 +512,17 @@
         <a href="https://github.com/rhobear-ai/rhobear-designs#ai" class="plan-cta outline">How BYOK works →</a>
       </div>
 
-      <!-- Self-host / fork -->
-            <div class="plan">
+      <!-- Pro -->
+      <div class="plan">
         <div class="plan-name">Pro</div>
         <div class="plan-price"><span class="price-n">$19</span><span class="price-per">/ mo</span></div>
-        <div class="plan-sub">Voice control + managed models.</div>
+        <div class="plan-sub">Voice control + managed models, nothing to wire.</div>
         <ul class="plan-features">
           <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg> Everything in Free</li>
           <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg> Voice-controlled edits — no key to wire</li>
           <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg> Generation styles + deep-thinking pass</li>
-          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg> Managed house models, metered</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg> Managed house models — Summit + Peak</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg> Rho on the canvas · device-explicit studios</li>
         </ul>
         <a href="https://buy.stripe.com/cNi00c94He31gHN718g7e02" class="plan-cta primary">Get Pro — $19/mo →</a>
       </div>
@@ -558,7 +593,7 @@
       <p class="rb-foot-copy">
         Designs is where built work gets shaped by hand. The crew that builds it lives in
         <a href="https://rhobear.ai/app.html">the Hub</a>; once a page looks the way you want, you rest it in
-        <a href="https://rhobear.ai/sunsponge.html">SunSponge</a> for capture, keep it clean through
+        <a href="https://rhobear.ai/capturd.html">Captur'd</a> for capture, keep it clean through
         <a href="https://reviews.rhobear.ai/">Reviews</a>, run the business in
         <a href="https://rhobear.ai/plans.html">Plans</a>, and let
         <a href="https://rhobear.ai/sales.html">Sales</a> close the lead.
@@ -590,7 +625,7 @@
   document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => io.observe(el));
 
   // active nav state
-  const sections = ['how','canvas','pricing','faq'].map(id => document.getElementById(id));
+  const sections = ['how','canvas','rungs','pricing','faq'].map(id => document.getElementById(id));
   const navLinks = document.querySelectorAll('a[data-nav]');
   const navIO = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) {
@@ -600,6 +635,7 @@
   }, { rootMargin: '-30% 0px -60% 0px' });
   sections.forEach(s => s && navIO.observe(s));
 </script>
-
+<script>window.RHO_SELL={accent:'#e94560',product:'designs',greet:"Hey — I'm Rho. Building a site? I can walk you through Designs, or bring a custom build straight to the team. What are you working on?"};</script>
+<script src="../../assets/rho-sell.js" defer></script>
 </body>
 </html>
