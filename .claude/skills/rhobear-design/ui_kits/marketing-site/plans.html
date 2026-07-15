@@ -530,6 +530,40 @@
   </div>
 </section>
 
+<style>
+  #see{padding:clamp(60px,8vw,110px) 0;border-top:1px solid rgba(255,255,255,0.06)}
+  #see .shot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}
+  @media(max-width:860px){#see .shot-grid{grid-template-columns:1fr;max-width:520px;margin-left:auto;margin-right:auto}}
+  #see .shot{margin:0}
+  #see .shot img{width:100%;display:block;border-radius:14px;border:1px solid rgba(124,92,255,0.28);background:#0b0716;box-shadow:0 18px 50px -20px rgba(124,92,255,0.5);transition:transform .25s ease,box-shadow .25s ease}
+  #see .shot img:hover{transform:translateY(-4px);box-shadow:0 26px 64px -22px rgba(124,92,255,0.65)}
+  #see .shot figcaption{margin-top:14px;font-size:14px;line-height:1.5;color:var(--text-2,#b9b3d0)}
+  #see .shot figcaption b{color:var(--text,#fff);font-weight:600}
+</style>
+<section id="see">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">See it</span>
+      <h2>The real thing — <span class="accent">cloud and desktop.</span></h2>
+      <p class="section-lede">Same crew wherever you work. Sign in on the web and your workspace is ready, or run it on your own machine with the local dock a click away.</p>
+    </div>
+    <div class="shot-grid reveal-stagger">
+      <figure class="shot">
+        <img src="../../assets/shots/plans/cloud-welcome.png" alt="RHOBEAR Plans in the cloud — sign in and your workspace is ready" loading="lazy">
+        <figcaption>Cloud — open <b>cloud.rhobear.ai</b> and your workspace is already waiting.</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="../../assets/shots/plans/desktop-onboarding.png" alt="RHOBEAR Plans desktop onboarding — choose your crew" loading="lazy">
+        <figcaption>Desktop — <b>pick the agents</b> for the job in a couple of clicks.</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="../../assets/shots/plans/desktop-local-dock.png" alt="RHOBEAR Plans desktop — the local dock" loading="lazy">
+        <figcaption>Desktop — the <b>local dock</b> keeps your crew one click away, all day.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <section id="sharper">
   <div class="wrap">
     <div class="cb-grid">
