@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RHOBEAR Lab — benchmark every LLM across real harnesses</title>
+<meta name="description" content="Fire one prompt at GPT-5, Claude, Gemini, GLM, DeepSeek, Llama, Qwen and more — and race them across FOUR harnesses (OpenRouter, Claude SDK, Hermes, Pi). First-token, tokens/sec, cost, tool use, side by side. Paste any key, run a benchmark, export the results. Free on the web.">
+<meta property="og:title" content="RHOBEAR Lab — benchmark every LLM across real harnesses">
+<meta property="og:description" content="One prompt, many models, four harnesses. Paste any key, run the battery, export a benchmark with the reasoning. Free.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782940000">
+<style>
+  :root{
+    --bg:#080810; --bg-2:#0d0d18; --panel:rgba(255,255,255,0.03); --panel-hi:rgba(255,255,255,0.05);
+    --border:rgba(255,255,255,0.08); --text:#eafcf8; --text-2:#8fb0aa; --text-dim:#5a7a73;
+    --teal:#00e5cc; --teal-hi:#5cffe8; --teal-dim:#00b8a3; --teal-glow:rgba(0,229,204,0.20);
+    --blue:#4a9eff; --green:#00ff88; --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+    --sans:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;
+    --glass-body:linear-gradient(168deg,rgba(255,255,255,.058),rgba(255,255,255,.022) 52%,rgba(255,255,255,.04));
+    --glass-rim:inset 0 1px 0 rgba(255,255,255,.16),inset 0 -1px 0 rgba(255,255,255,.04);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none} a:hover{color:var(--teal-hi)}
+  ::selection{background:var(--teal);color:#052a26}
+  .bg-layer{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+  .grid-bg{position:absolute;inset:-100px;background-image:radial-gradient(rgba(0,229,204,0.12) 1.1px,transparent 1.4px);
+    background-size:26px 26px;mask-image:radial-gradient(ellipse 92% 72% at 50% 24%,#000 28%,transparent 80%);
+    -webkit-mask-image:radial-gradient(ellipse 92% 72% at 50% 24%,#000 28%,transparent 80%)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+  /* nav */
+  nav{position:sticky;top:0;z-index:50;background:rgba(8,8,16,.72);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border-bottom:1px solid var(--border)}
+  nav .wrap{display:flex;align-items:center;gap:14px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:-.01em}
+  nav .brand img{width:26px;height:26px;filter:drop-shadow(0 0 8px var(--teal-glow))}
+  nav .brand span{color:var(--teal)}
+  nav .sp{flex:1}
+  nav a.nl{font-size:14px;color:var(--text-2)} nav a.nl:hover{color:var(--text)}
+  .cta{display:inline-flex;align-items:center;gap:7px;background:var(--teal);color:#052a26;font-weight:700;
+    padding:10px 18px;border-radius:11px;box-shadow:0 6px 20px -8px var(--teal-glow);font-size:14px}
+  .cta:hover{background:var(--teal-hi);color:#052a26}
+  .cta.lg{padding:15px 26px;font-size:17px;border-radius:13px}
+  /* hero */
+  header{padding:76px 0 44px;text-align:center}
+  .eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:18px}
+  h1{font-size:clamp(2.2rem,6vw,4rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;margin-bottom:20px}
+  h1 em{font-style:normal;color:var(--teal)}
+  .lede{font-size:clamp(1rem,2.4vw,1.35rem);color:var(--text-2);max-width:640px;margin:0 auto 30px}
+  .hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .ghost{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border);color:var(--text);padding:15px 24px;border-radius:13px;font-size:17px;font-weight:600}
+  .ghost:hover{border-color:var(--teal);color:var(--teal)}
+  /* harness strip */
+  .harness{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:52px 0}
+  .hcard{background:var(--glass-body),rgba(9,10,12,.45);backdrop-filter:blur(20px) saturate(1.35);-webkit-backdrop-filter:blur(20px) saturate(1.35);
+    box-shadow:var(--glass-rim),0 10px 30px rgba(0,0,0,.4);border-radius:14px;padding:18px}
+  .hcard b{display:block;color:var(--teal);font-size:15px;margin-bottom:6px}
+  .hcard p{font-size:13px;color:var(--text-2)}
+  h2{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;letter-spacing:-.02em;text-align:center;margin:64px 0 10px}
+  .sub{text-align:center;color:var(--text-2);max-width:600px;margin:0 auto 30px;font-size:15px}
+  /* model grid — the SEO payload: every model name, linking into the Lab */
+  .models{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+  .m{display:block;background:var(--glass-body),rgba(9,10,12,.4);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    box-shadow:var(--glass-rim);border-radius:12px;padding:14px 15px;transition:transform .12s,box-shadow .12s}
+  .m:hover{transform:translateY(-2px);box-shadow:var(--glass-rim),0 0 22px -6px var(--teal-glow)}
+  .m .mn{font-weight:700;font-size:15px;color:var(--text)}
+  .m .ms{font-family:var(--mono);font-size:11.5px;color:var(--text-dim);margin-top:2px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .m .mt{display:inline-block;margin-top:8px;font-size:11px;color:var(--teal);font-weight:600}
+  .bench-note{background:var(--glass-body),rgba(9,10,12,.45);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    box-shadow:var(--glass-rim),0 10px 30px rgba(0,0,0,.4);border-radius:16px;padding:26px;margin:56px 0;text-align:center}
+  .bench-note h3{font-size:1.3rem;margin-bottom:8px}
+  .bench-note p{color:var(--text-2);max-width:600px;margin:0 auto}
+  .final{text-align:center;padding:70px 0 90px}
+  footer{border-top:1px solid var(--border);padding:26px 0;color:var(--text-dim);font-size:13px;text-align:center}
+  footer a{color:var(--text-2)}
+  @media(max-width:720px){ .harness{grid-template-columns:1fr 1fr} nav a.nl{display:none} }
+  @media(max-width:440px){ .harness{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="bg-layer"><div class="grid-bg"></div></div>
+
+<nav><div class="wrap">
+  <a class="brand" href="index.html"><img src="../../assets/rhobear-logo.png?v=1782940000" alt="RHOBEAR"><span>RHOBEAR</span>&nbsp;Lab</a>
+  <span class="sp"></span>
+  <a class="nl" href="#models">Models</a>
+  <a class="nl" href="#harnesses">Harnesses</a>
+  <a class="cta" href="https://workbench.rhobear.ai/lab.html">Open the Lab &rarr;</a>
+</div></nav>
+
+<header class="wrap">
+  <div class="eyebrow">The model lab</div>
+  <h1>Benchmark every LLM,<br>across <em>real harnesses</em>.</h1>
+  <p class="lede">Fire one prompt at many models and watch them race — first token, tokens/sec, cost, side by side. Then do what no other lab does: run the same test through <strong>four different harnesses</strong> and see which one gets the most out of the model.</p>
+  <div class="hero-cta">
+    <a class="cta lg" href="https://workbench.rhobear.ai/lab.html">Open the Lab — free &rarr;</a>
+    <a class="ghost" href="#harnesses">See how it works</a>
+  </div>
+</header>
+
+<section id="harnesses" class="wrap">
+  <h2>One prompt. Four harnesses.</h2>
+  <p class="sub">Everyone else tests the raw API call. We test the harness — system-prompt handling, tool use, efficiency, speed. Paste any key; OpenRouter opens every door.</p>
+  <div class="harness">
+    <div class="hcard"><b>OpenRouter</b><p>Every model behind one key. The raw baseline, straight from your browser.</p></div>
+    <div class="hcard"><b>Claude SDK</b><p>The Anthropic Messages shape. Claude keys native — GLM & other compatible keys route through too.</p></div>
+    <div class="hcard"><b>Hermes</b><p>RHOBEAR's own gateway — how a model behaves behind a real production harness.</p></div>
+    <div class="hcard"><b>Pi.dev</b><p>The Pi agent harness — same model, a different driver.</p></div>
+  </div>
+</section>
+
+<section id="models" class="wrap">
+  <h2>Race any model</h2>
+  <p class="sub">Search the live catalog inside the Lab, or jump straight in with a favorite. Bring your own key — nothing is stored.</p>
+  <div class="models" id="modelGrid"></div>
+</section>
+
+<section class="wrap">
+  <div class="bench-note">
+    <h3>Run the battery. Export the benchmark.</h3>
+    <p>Fire the premade test suite — reasoning, strict-JSON, needle-in-haystack, tool use, math, code — across your models on any harness. Get a scored benchmark with the reasoning behind it, exportable as JSON or Markdown. Something you can actually cite.</p>
+  </div>
+</section>
+
+<section class="final wrap">
+  <h2 style="margin-top:0">Paste a key. Run a test. See where you're at.</h2>
+  <p class="sub">Free on the web. Coming to your phone as a $3 one-time app.</p>
+  <a class="cta lg" href="https://workbench.rhobear.ai/lab.html">Open RHOBEAR Lab &rarr;</a>
+</section>
+
+<footer><div class="wrap">RHOBEAR Lab · <a href="index.html">rhobear.ai</a> · bring your own key, nothing stored. <a href="faq.html">FAQ</a></div></footer>
+
+<script>
+  // The SEO payload: model names → each links into the Lab preselected.
+  var MODELS = [
+    ["GPT-5","openai/gpt-5"],["GPT-5 mini","openai/gpt-5-mini"],
+    ["Claude Opus 4.8","anthropic/claude-opus-4.8"],["Claude Sonnet 5","anthropic/claude-sonnet-5"],
+    ["Gemini 2.5 Pro","google/gemini-2.5-pro"],["Gemini 2.5 Flash","google/gemini-2.5-flash"],
+    ["GLM-5.2","z-ai/glm-5.2"],["DeepSeek V4","deepseek/deepseek-v4"],
+    ["Llama 3.3 70B","meta-llama/llama-3.3-70b-instruct"],["Qwen 2.5 72B","qwen/qwen-2.5-72b-instruct"],
+    ["Mistral Large","mistralai/mistral-large"],["Grok 4","x-ai/grok-4"],
+    ["Kimi K2","moonshotai/kimi-k2"],["MiniMax M2","minimax/minimax-m2"],
+    ["Command R+","cohere/command-r-plus"],["Nova Pro","amazon/nova-pro"]
+  ];
+  var g = document.getElementById("modelGrid");
+  g.innerHTML = MODELS.map(function(m){
+    return '<a class="m" href="https://workbench.rhobear.ai/lab.html?model='+encodeURIComponent(m[1])+'">'+
+      '<span class="mn">'+m[0]+'</span><span class="ms">'+m[1]+'</span><span class="mt">Benchmark it &rarr;</span></a>';
+  }).join("");
+</script>
+</body>
+</html>
