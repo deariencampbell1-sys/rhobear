@@ -1905,17 +1905,24 @@ body {
   --shadow-lift:none;
   --shadow-inner:none;
 
-  /* "our type" — self-hosted Inter (bundled .woff2, no runtime CDN), consistent on every
-     machine; falls back to the system stack if the font fails to load. */
-  --font-display:"InterRHO",system-ui,-apple-system,"Segoe UI","Helvetica Neue",Arial,sans-serif !important;
-  --font-body:"InterRHO",system-ui,-apple-system,"Segoe UI","Helvetica Neue",Arial,sans-serif !important;
+  /* "our type" — NACELLE is the RHOBEAR brand typeface (self-hosted .woff2, no CDN).
+     Company font weight = Nacelle on everything; display + body both Nacelle.
+     NO pixel/Inter/system default — those read as cheap. (Owner 2026-07-16.) */
+  --font-display:"Nacelle",system-ui,-apple-system,"Segoe UI","Helvetica Neue",Arial,sans-serif !important;
+  --font-body:"Nacelle",system-ui,-apple-system,"Segoe UI","Helvetica Neue",Arial,sans-serif !important;
+  --font-sans:"Nacelle",system-ui,-apple-system,"Segoe UI","Helvetica Neue",Arial,sans-serif !important;
 }
-/* self-hosted brand typeface */
-@font-face{
-  font-family:"InterRHO";
-  src:url("../../assets/fonts/inter.woff2") format("woff2");
-  font-weight:100 900; font-style:normal; font-display:swap;
-}
+/* self-hosted brand typeface — Nacelle, the company font (5 weights) */
+@font-face{ font-family:"Nacelle"; src:url("../../assets/fonts/Nacelle-Light.woff2") format("woff2");
+  font-weight:300; font-style:normal; font-display:swap; }
+@font-face{ font-family:"Nacelle"; src:url("../../assets/fonts/Nacelle-Regular.woff2") format("woff2");
+  font-weight:400; font-style:normal; font-display:swap; }
+@font-face{ font-family:"Nacelle"; src:url("../../assets/fonts/Nacelle-SemiBold.woff2") format("woff2");
+  font-weight:600; font-style:normal; font-display:swap; }
+@font-face{ font-family:"Nacelle"; src:url("../../assets/fonts/Nacelle-Bold.woff2") format("woff2");
+  font-weight:700; font-style:normal; font-display:swap; }
+@font-face{ font-family:"Nacelle"; src:url("../../assets/fonts/Nacelle-Black.woff2") format("woff2");
+  font-weight:900; font-style:normal; font-display:swap; }
 
 html{ color-scheme:dark; }
 
@@ -2420,3 +2427,32 @@ section.wrap-md > .card-paper.stitched{ margin-top:18px; }
 
 /* stale UI screenshots pulled 2026-06-26 - fresh captures pending; frame holds layout */
 .shot-pending{width:100%;min-height:220px;height:100%;border-radius:inherit;background:repeating-linear-gradient(45deg,rgba(255,255,255,.015) 0 12px,transparent 12px 24px),rgba(255,255,255,.02);}
+
+
+/* ============================================================================
+   PREMIUM CHIPS — neon-glass, NO flat/default pills (owner directive 2026-07-16).
+   Every chip becomes a glass body + semi-transparent border + subtle outer glow
+   in ITS OWN accent (currentColor), igniting brighter on hover. Nacelle type.
+   Kills the leftover warm-brown pill fills. Never shadcn-flat, never mono-grey.
+   ============================================================================ */
+.chip-mono,.stars-pill,.license-pill,.cta-pill,.live-tag,.save-tag,.voice-chip,
+.try-chip,.try-world-pill,.bw-proxy-pill,.ws-legend-chip,.cb-step-tag,
+.try-panel-chip,.chip-amber{
+  font-family:var(--font-display) !important;
+  border:1px solid color-mix(in srgb, currentColor 40%, transparent) !important;
+  background:rgba(17,25,43,0.72) !important;
+  box-shadow:0 0 14px -3px color-mix(in srgb, currentColor 42%, transparent),
+             inset 0 1px 0 rgba(255,255,255,0.06) !important;
+  backdrop-filter:blur(8px) saturate(1.12); -webkit-backdrop-filter:blur(8px) saturate(1.12);
+  text-shadow:0 0 9px color-mix(in srgb, currentColor 30%, transparent);
+  transition:box-shadow .2s ease,border-color .2s ease,transform .2s ease;
+}
+.chip-mono:hover,.stars-pill:hover,.cta-pill:hover,.live-tag:hover,.try-chip:hover,
+.voice-chip:hover,.try-world-pill:hover,.chip-amber:hover{
+  border-color:color-mix(in srgb, currentColor 72%, transparent) !important;
+  box-shadow:0 0 22px -3px color-mix(in srgb, currentColor 68%, transparent),
+             inset 0 1px 0 rgba(255,255,255,0.08) !important;
+  transform:translateY(-1px);
+}
+.stars-pill{ color:var(--c-amber) !important; }
+.license-pill,.cb-step-tag{ border-radius:8px !important; }

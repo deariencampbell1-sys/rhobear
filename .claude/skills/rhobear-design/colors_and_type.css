@@ -14,11 +14,13 @@
   /* =====================================================================
      TYPE STACKS
      ===================================================================== */
-  --font-display:  "Silkscreen", "Press Start 2P", "VT323", "ChicagoFLF",
-                   ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-display:  "Nacelle", system-ui, -apple-system, "Segoe UI", "Helvetica Neue",
+                   Arial, sans-serif;
   --font-pixel:    "VT323", "Silkscreen", "Press Start 2P",
                    ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  --font-body:     -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+  --font-body:     "Nacelle", system-ui, -apple-system, "Segoe UI", "Helvetica Neue",
+                   Arial, sans-serif;
+  --font-sans:     "Nacelle", system-ui, -apple-system, "Segoe UI", "Helvetica Neue",
                    Arial, sans-serif;
   --font-mono:     ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas,
                    "Liberation Mono", monospace;
