@@ -2,124 +2,478 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Rho — the RHOBEAR family voice</title>
-  <meta name="description" content="Rho is the chatbot that rides every RHOBEAR surface: a living orb you talk to, that keeps talking while it dispatches real agents, sees through your camera and uploads, and answers for free on every product. Now landing on the Windows desktop as a movable talking orb.">
-  <link rel="stylesheet" href="../../colors_and_type.css?v=1784300000">
-  <link rel="stylesheet" href="shell.css?v=1784300000">
-  <link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782900000">
+  <meta name="description" content="Rho is the family voice that rides free on every RHOBEAR surface: a living voice you talk to that keeps talking while it dispatches real agents, sees through your camera and uploads, and now lands on the Windows desktop as a movable talking orb.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M2 28 L12 9 L19 20 L23 13 L30 28 Z' fill='%232A8FA8'/%3E%3Ccircle cx='24' cy='7' r='2.4' fill='%23D4A843'/%3E%3C/svg%3E">
+  <link rel="preload" href="../../assets/pages/rho/hero-orbit-desktop.webp" as="image" type="image/webp" media="(min-width:769px)">
+  <link rel="preload" href="../../assets/pages/rho/mobile-portrait.webp" as="image" type="image/webp" media="(max-width:768px)">
+  <link rel="stylesheet" href="https://use.typekit.net/sbv5bcv.css">
   <style>
-    :root{ --rho:#8f5cff; --rho-2:#3bd6c3; }
-    .rho-hero{ display:grid; grid-template-columns:1.2fr .8fr; gap:44px; align-items:center; }
-    .orb-stage{ display:grid; place-items:center; }
-    .orb-stage img{ width:min(300px,70vw); filter:drop-shadow(0 24px 60px rgba(143,92,255,.45)); border-radius:24px; }
-    .vid{ width:100%; border-radius:14px; display:block; background:#05030c; }
-    .rho-k{ font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--rho); }
-    @media(max-width:880px){ .rho-hero{ grid-template-columns:1fr; } }
+    /* ── tokens (delta off D:\rhobear-3d-test\tokens.css; teal accent lane) ── */
+    :root{
+      --rb-summit-blue:#1A2435; --rb-teal-accent:#2A8FA8; --rb-amber-warm:#C8860A;
+      --rb-frost-white:#E8F0F7; --rb-valley-gold:#D4A843; --rb-deep-shadow:#0D1520;
+      --rb-card-frost:rgba(16,22,34,0.42); --rb-card-border:rgba(255,255,255,0.14);
+      --rb-glow-teal:rgba(42,143,168,0.6);
+      --rb-card-radius:24px; --rb-pill-radius:99px; --rb-blur:12px;
+      --rb-ease:cubic-bezier(0.16,1,0.3,1);
+      /* scene delta: valley clearing */
+      --rho-sky:#0D0D05; --rho-fog:#1A1A0D; --rho-sun:#FFD060;
+      --font-display:"rokkitt",Georgia,"Times New Roman",serif;
+      --font-body:"lato",-apple-system,system-ui,sans-serif;
+      --font-mono:"droid-sans-mono",ui-monospace,"SFMono-Regular",monospace;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      background:var(--rb-summit-blue); color:var(--rb-frost-white);
+      font-family:var(--font-body); overflow-x:hidden; -webkit-font-smoothing:antialiased;
+      line-height:1.6;
+    }
+    /* ambient wash — the product's teal, behind everything */
+    body::before{
+      content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
+      background:
+        radial-gradient(60% 45% at 12% 2%, rgba(42,143,168,0.16), transparent 60%),
+        radial-gradient(52% 42% at 90% 8%, rgba(255,208,96,0.08), transparent 62%),
+        linear-gradient(var(--rb-summit-blue), var(--rho-sky) 55%, #0A0E16);
+    }
+    a{color:inherit; text-decoration:none}
+    img{max-width:100%; display:block}
+    em{font-style:normal; color:var(--rb-teal-accent)}
+    .wrap{max-width:1200px; margin:0 auto; padding:0 clamp(20px,5vw,48px)}
+
+    /* ── NAV (homepage #nav chrome, frosted) ─────────────────────────────── */
+    #nav{
+      position:fixed; top:0; left:0; right:0; z-index:30;
+      display:flex; align-items:center; justify-content:space-between; gap:18px;
+      padding:14px clamp(18px,4vw,40px);
+      background:linear-gradient(rgba(10,14,22,0.72), rgba(10,14,22,0.28));
+      -webkit-backdrop-filter:blur(12px) saturate(1.2); backdrop-filter:blur(12px) saturate(1.2);
+      border-bottom:1px solid rgba(255,255,255,0.06);
+    }
+    #nav .wordmark{font-family:var(--font-display); font-size:1.15rem; font-weight:900; letter-spacing:0.12em}
+    #nav .links{display:flex; gap:24px; font-size:0.74rem; font-weight:700; letter-spacing:0.1em; color:rgba(232,240,247,0.68)}
+    #nav .links a{transition:color .2s}
+    #nav .links a:hover{color:var(--rb-frost-white)}
+    #nav .links a.active{color:var(--rb-teal-accent)}
+    #nav .nav-more{position:relative}
+    #nav .nav-more-panel{
+      position:absolute; top:calc(100% + 14px); left:50%; transform:translateX(-50%) translateY(-6px);
+      display:flex; flex-direction:column; gap:2px; min-width:200px; padding:8px;
+      background:var(--rb-card-frost);
+      -webkit-backdrop-filter:blur(var(--rb-blur)) saturate(1.25); backdrop-filter:blur(var(--rb-blur)) saturate(1.25);
+      border:1px solid var(--rb-card-border); border-radius:14px;
+      box-shadow:0 24px 60px rgba(0,0,0,0.5);
+      opacity:0; visibility:hidden; pointer-events:none;
+      transition:opacity .2s var(--rb-ease), transform .2s var(--rb-ease), visibility .2s;
+    }
+    #nav .nav-more:hover .nav-more-panel, #nav .nav-more:focus-within .nav-more-panel{
+      opacity:1; visibility:visible; pointer-events:auto; transform:translateX(-50%) translateY(0);
+    }
+    #nav .nav-more-panel a{padding:9px 12px; border-radius:9px; white-space:nowrap; font-size:0.76rem; letter-spacing:0.03em; color:rgba(232,240,247,0.85)}
+    #nav .nav-more-panel a:hover{background:rgba(255,255,255,0.07); color:var(--rb-frost-white)}
+    .cta-pill{
+      display:inline-block; background:var(--rb-teal-accent); color:#fff; cursor:pointer; border:0;
+      padding:10px 20px; border-radius:var(--rb-pill-radius); font-family:var(--font-body);
+      font-size:0.8rem; font-weight:700; letter-spacing:0.01em; white-space:nowrap;
+      box-shadow:0 0 22px var(--rb-glow-teal); transition:transform .2s var(--rb-ease), box-shadow .2s;
+    }
+    .cta-pill:hover{transform:translateY(-1px); box-shadow:0 0 36px var(--rb-glow-teal)}
+
+    /* ── HERO ─────────────────────────────────────────────────────────────── */
+    #hero{position:relative; min-height:100svh; display:flex; align-items:flex-end; overflow:hidden}
+    #hero .scene{position:absolute; inset:0; z-index:-1}
+    #hero .scene img{width:100%; height:100%; object-fit:cover; object-position:60% 50%}
+    /* readability scrim — heavier bottom-left where the copy lives */
+    #hero .scene::after{
+      content:""; position:absolute; inset:0;
+      background:
+        linear-gradient(90deg, rgba(8,11,18,0.82) 0%, rgba(8,11,18,0.40) 34%, transparent 58%),
+        linear-gradient(0deg, rgba(8,11,18,0.85) 0%, rgba(8,11,18,0.10) 42%, transparent 70%);
+    }
+    .hero-inner{position:relative; z-index:2; width:100%; padding-bottom:clamp(48px,8vh,96px); padding-top:120px}
+    .eyebrow{font-family:var(--font-mono); font-size:0.7rem; font-weight:400; letter-spacing:0.22em; text-transform:uppercase; color:var(--rb-valley-gold); margin-bottom:18px; text-shadow:0 1px 8px rgba(0,0,0,0.75), 0 0 2px rgba(0,0,0,0.9)}
+    #hero h1{font-family:var(--font-display); font-size:clamp(3.2rem,8vw,6rem); font-weight:900; line-height:0.94; letter-spacing:-0.015em; text-shadow:0 8px 60px rgba(0,0,0,0.6); margin-bottom:20px}
+    #hero .lead{font-size:clamp(1rem,1.4vw,1.18rem); line-height:1.66; color:rgba(232,240,247,0.9); max-width:52ch; text-shadow:0 2px 22px rgba(0,0,0,0.6); margin-bottom:26px}
+    .hero-ctas{display:flex; gap:14px; flex-wrap:wrap; align-items:center}
+    .btn-primary{
+      display:inline-block; background:var(--rb-teal-accent); color:#fff; cursor:pointer; border:0;
+      padding:15px 28px; border-radius:var(--rb-pill-radius); font-family:var(--font-body);
+      font-size:0.98rem; font-weight:700; box-shadow:0 0 34px var(--rb-glow-teal);
+      transition:transform .2s var(--rb-ease), box-shadow .2s;
+    }
+    .btn-primary:hover{transform:translateY(-2px); box-shadow:0 0 50px var(--rb-glow-teal)}
+    .btn-ghost{
+      display:inline-block; background:rgba(16,22,34,0.42); color:var(--rb-frost-white); cursor:pointer;
+      border:1px solid var(--rb-card-border); padding:15px 26px; border-radius:var(--rb-pill-radius);
+      font-family:var(--font-body); font-size:0.98rem; font-weight:600;
+      -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+      transition:border-color .2s, transform .2s var(--rb-ease);
+    }
+    .btn-ghost:hover{border-color:rgba(255,255,255,0.4); transform:translateY(-2px)}
+    .scroll-hint{margin-top:30px; font-family:var(--font-mono); font-size:0.66rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(232,240,247,0.55); animation:hintFloat 2.6s ease-in-out infinite}
+    @keyframes hintFloat{0%,100%{transform:translateY(0); opacity:.55}50%{transform:translateY(6px); opacity:.95}}
+
+    /* sound-ring motif emanating from the bear's mouth (upper hero) */
+    .hero-rings{position:absolute; top:32%; left:47%; z-index:1; pointer-events:none; width:0; height:0}
+    .hero-rings span{
+      position:absolute; top:50%; left:50%; border:1.5px solid rgba(42,143,168,0.55);
+      border-radius:50%; transform:translate(-50%,-50%); opacity:0;
+      animation:ringPulse 4.4s var(--rb-ease) infinite;
+    }
+    .hero-rings span:nth-child(1){width:120px; height:120px; animation-delay:0s}
+    .hero-rings span:nth-child(2){width:120px; height:120px; animation-delay:0.9s}
+    .hero-rings span:nth-child(3){width:120px; height:120px; animation-delay:1.8s}
+    .hero-rings span:nth-child(4){width:120px; height:120px; animation-delay:2.7s}
+    .hero-rings span:nth-child(5){width:120px; height:120px; animation-delay:3.6s}
+    @keyframes ringPulse{0%{opacity:.7; transform:translate(-50%,-50%) scale(0.3)}70%{opacity:.18}100%{opacity:0; transform:translate(-50%,-50%) scale(4.6)}}
+
+    /* ── section shell ────────────────────────────────────────────────────── */
+    section.band{padding:clamp(72px,10vh,120px) 0; position:relative}
+    .sec-eyebrow{font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--rb-teal-accent); margin-bottom:16px}
+    h2.sec{font-family:var(--font-display); font-size:clamp(2rem,4vw,3.1rem); font-weight:900; line-height:1.04; letter-spacing:-0.01em; margin-bottom:16px}
+    .sec-lead{font-size:1.05rem; line-height:1.7; color:rgba(232,240,247,0.78); max-width:60ch}
+    .reveal{opacity:0; transform:translateY(20px); transition:opacity .6s var(--rb-ease), transform .6s var(--rb-ease)}
+    .reveal.seen{opacity:1; transform:none}
+
+    /* glass card grid */
+    .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:36px}
+    .glass{
+      background:var(--rb-card-frost);
+      -webkit-backdrop-filter:blur(var(--rb-blur)) saturate(1.25); backdrop-filter:blur(var(--rb-blur)) saturate(1.25);
+      border:1px solid var(--rb-card-border); border-radius:var(--rb-card-radius);
+      padding:28px 26px; box-shadow:0 0 40px rgba(42,143,168,0.14), inset 0 1px 0 rgba(255,255,255,0.08);
+      transition:transform .25s var(--rb-ease), box-shadow .25s;
+    }
+    .glass:hover{transform:translateY(-4px); box-shadow:0 0 52px var(--rb-glow-teal), inset 0 1px 0 rgba(255,255,255,0.12)}
+    .glass .k{font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--rb-teal-accent); margin-bottom:10px}
+    .glass h3{font-family:var(--font-display); font-size:1.24rem; font-weight:700; line-height:1.15; margin-bottom:8px}
+    .glass p{font-size:0.92rem; line-height:1.6; color:rgba(232,240,247,0.76)}
+
+    /* voice band — prominent sound rings */
+    #voice{text-align:center}
+    #voice .ring-stage{position:relative; height:220px; display:grid; place-items:center; margin-bottom:8px}
+    #voice .ring-stage .core{width:16px; height:16px; border-radius:50%; background:var(--rb-teal-accent); box-shadow:0 0 30px var(--rb-glow-teal); position:relative; z-index:2}
+    #voice .ring-stage span.r{position:absolute; top:50%; left:50%; border:1.5px solid rgba(42,143,168,0.5); border-radius:50%; transform:translate(-50%,-50%); opacity:0; animation:ringPulse 4s var(--rb-ease) infinite}
+    #voice .ring-stage span.r:nth-child(2){width:60px;height:60px;animation-delay:0s}
+    #voice .ring-stage span.r:nth-child(3){width:60px;height:60px;animation-delay:.8s}
+    #voice .ring-stage span.r:nth-child(4){width:60px;height:60px;animation-delay:1.6s}
+    #voice .ring-stage span.r:nth-child(5){width:60px;height:60px;animation-delay:2.4s}
+    #voice .ring-stage span.r:nth-child(6){width:60px;height:60px;animation-delay:3.2s}
+    #voice h2.sec{margin-left:auto; margin-right:auto}
+    #voice .sec-lead{margin:0 auto}
+
+    /* proof / commercial */
+    .proof-frame{
+      margin-top:36px; border:1px solid var(--rb-card-border); border-radius:var(--rb-card-radius);
+      overflow:hidden; box-shadow:0 30px 90px rgba(0,0,0,0.5), 0 0 60px rgba(42,143,168,0.12);
+      background:#05070c;
+    }
+    .proof-frame video{width:100%; display:block; background:#05070c}
+
+    /* desktop companion split */
+    .split{display:grid; grid-template-columns:1.05fr 0.95fr; gap:clamp(30px,5vw,64px); align-items:center; margin-top:36px}
+    .split .art{border-radius:var(--rb-card-radius); overflow:hidden; border:1px solid var(--rb-card-border); box-shadow:0 30px 90px rgba(0,0,0,0.5)}
+    .split .art img{width:100%; display:block}
+    .split ul{list-style:none; margin-top:18px; display:grid; gap:12px}
+    .split li{position:relative; padding-left:24px; font-size:0.98rem; line-height:1.55; color:rgba(232,240,247,0.82)}
+    .split li::before{content:""; position:absolute; left:0; top:9px; width:9px; height:9px; border-radius:50%; background:var(--rb-teal-accent); box-shadow:0 0 12px var(--rb-glow-teal)}
+
+    /* pricing / free door */
+    .free-door{
+      margin-top:36px; display:grid; grid-template-columns:1fr auto; gap:28px; align-items:center;
+      background:var(--rb-card-frost); border:1px solid var(--rb-card-border); border-radius:var(--rb-card-radius);
+      -webkit-backdrop-filter:blur(var(--rb-blur)); backdrop-filter:blur(var(--rb-blur));
+      padding:34px 32px; box-shadow:0 0 40px rgba(42,143,168,0.14);
+    }
+    .free-door .price{font-family:var(--font-display); font-size:clamp(2.2rem,4vw,3rem); font-weight:900; line-height:1; color:var(--rb-frost-white)}
+    .free-door .price small{display:block; font-family:var(--font-mono); font-size:0.72rem; font-weight:400; letter-spacing:0.14em; text-transform:uppercase; color:var(--rb-valley-gold); margin-top:8px}
+    .free-door p{font-size:0.98rem; line-height:1.6; color:rgba(232,240,247,0.8); max-width:52ch}
+    .free-pills{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px}
+    .pill{font-family:var(--font-body); font-size:0.72rem; font-weight:600; padding:6px 13px; border-radius:var(--rb-pill-radius); border:1px solid var(--rb-card-border); background:rgba(255,255,255,0.06); color:rgba(232,240,247,0.9)}
+
+    /* next-handoff strip */
+    #handoff{position:relative; overflow:hidden; padding:clamp(56px,8vh,88px) 0}
+    #handoff::before{content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg, rgba(42,143,168,0.10), transparent 70%)}
+    #handoff .row{display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap}
+    #handoff .mini{font-family:var(--font-mono); font-size:0.66rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(232,240,247,0.55); margin-bottom:8px}
+    #handoff .to{font-family:var(--font-display); font-size:clamp(1.8rem,3.4vw,2.7rem); font-weight:900; line-height:1.04}
+    #handoff .to em{color:var(--rb-teal-accent)}
+
+    /* ── footer (homepage #footer chrome) ────────────────────────────────── */
+    #footer{position:relative; z-index:2; background:#070A10; border-top:1px solid rgba(255,255,255,0.07); padding:70px clamp(20px,8vw,8vw) 46px}
+    #footer .cols{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:48px; max-width:1200px; margin:0 auto 40px}
+    #footer .wordmark{font-family:var(--font-display); font-size:1.1rem; font-weight:900; letter-spacing:0.12em; margin-bottom:12px}
+    #footer p{font-size:0.82rem; line-height:1.65; color:rgba(232,240,247,0.55); max-width:40ch}
+    #footer h4{font-family:var(--font-mono); font-size:0.64rem; font-weight:400; letter-spacing:0.18em; text-transform:uppercase; color:rgba(232,240,247,0.45); margin-bottom:14px}
+    #footer ul{list-style:none}
+    #footer li{font-size:0.82rem; color:rgba(232,240,247,0.72); margin-bottom:9px}
+    #footer li small{color:rgba(232,240,247,0.4)}
+    #footer li a:hover, #footer .fine a:hover{color:var(--rb-frost-white); text-decoration:underline}
+    #footer .fine{text-align:center; font-size:0.72rem; color:rgba(232,240,247,0.35); border-top:1px solid rgba(255,255,255,0.06); padding-top:24px; max-width:1200px; margin:0 auto}
+    #footer .fine a{color:var(--rb-teal-accent)}
+
+    /* ── responsive ───────────────────────────────────────────────────────── */
+    @media(max-width:900px){
+      .cards{grid-template-columns:1fr 1fr}
+      .split{grid-template-columns:1fr}
+      #footer .cols{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:768px){
+      #nav .links{display:none}
+      #hero .scene img{object-position:50% 50%}
+      #hero .scene::after{background:linear-gradient(0deg, rgba(8,11,18,0.92) 0%, rgba(8,11,18,0.2) 46%, rgba(8,11,18,0.35) 100%)}
+      .hero-rings{display:none}
+      .cards{grid-template-columns:1fr}
+      .free-door{grid-template-columns:1fr; text-align:left}
+      #footer .cols{grid-template-columns:1fr}
+    }
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      .reveal{transition:opacity .2s linear; transform:none}
+      .scroll-hint{animation:none}
+      .hero-rings span, #voice .ring-stage span.r{animation:none; opacity:0.2}
+    }
   </style>
 </head>
 <body>
 
-  <nav class="top-nav" aria-label="Primary">
-    <div class="top-nav-inner">
-      <a class="brand-lockup" href="index.html">
-        <img src="../../assets/rhobear-logo.png?v=1782900000" alt="" class="pixelated">
-        <span>RHOBEAR</span>
-      </a>
-      <div class="nav-tabs"><a href="index.html" class="nav-tab">HOME</a><a href="app.html" class="nav-tab">HUB</a><a href="workbench.html" class="nav-tab">WORKBENCH</a><a href="plans.html" class="nav-tab">PLANS</a><a href="rho.html" class="nav-tab active">RHO</a><div class="nav-dropdown"><a href="index.html#workflow" class="nav-tab" aria-haspopup="true">MORE &#9662;</a><div class="nav-dropdown-panel"><a href="designs.html">RHOBEAR Designs</a><a href="capturd.html">RHOBEAR Captur&#39;d</a><a href="https://reviews.rhobear.ai">RHOBEAR Reviews</a><a href="https://sales.rhobear.ai">Sales by RHOBEAR</a></div></div></div>
-      <span class="nav-spacer"></span>
-      <a href="https://workbench.rhobear.ai/companion" class="btn-amber nav-cta">Talk to Rho →</a>
-    </div>
-  </nav>
-<main>
-
-<!-- ===================== HERO ===================== -->
-<section class="wrap">
-  <div class="rho-hero">
-    <div>
-      <div class="eyebrow-row">RHO · THE FAMILY VOICE · FREE ON EVERY SURFACE</div>
-      <h1 class="h1-page">The chatbot that <em>keeps talking while it works.</em></h1>
-      <p class="lead">Other voice assistants go quiet the moment you give them a job. Rho stays in the conversation — it talks to you while it dispatches real agents behind the scenes, then tells you what came back. A living orb, a glass bar, a voice you'll recognize on every RHOBEAR product.</p>
-      <div style="display:flex; gap:14px; flex-wrap:wrap; margin-top:22px;">
-        <a href="https://workbench.rhobear.ai/companion" class="btn-amber">Talk to Rho free →</a>
-        <a href="#desktop" class="live-tag" style="margin:0;">New: Rho on your desktop ↓</a>
+  <!-- ── NAV ─────────────────────────────────────────────────────────────── -->
+  <nav id="nav">
+    <div class="wordmark">RHOBEAR</div>
+    <div class="links">
+      <a href="index.html">HOME</a><a href="app.html">HUB</a><a href="workbench.html">WORKBENCH</a><a href="plans.html">PLANS</a><a href="rho.html" class="active">RHO</a>
+      <div class="nav-more">
+        <a href="designs.html">MORE ▾</a>
+        <div class="nav-more-panel">
+          <a href="designs.html">RHOBEAR Designs</a>
+          <a href="capturd.html">RHOBEAR Captur'd</a>
+          <a href="https://reviews.rhobear.ai">RHOBEAR Reviews</a>
+          <a href="sales.html">Sales by RHOBEAR</a>
+        </div>
       </div>
     </div>
-    <div class="orb-stage">
-      <img src="../../assets/shots/rho/rho-orb.png" alt="Rho — the living orb">
-    </div>
-  </div>
-</section>
+    <a class="cta-pill" href="https://workbench.rhobear.ai/companion">Talk to Rho →</a>
+  </nav>
 
-<!-- ===================== WHAT MAKES IT DIFFERENT ===================== -->
-<section class="wrap" style="padding-top:20px;">
-  <div class="card-grid cols-3" style="row-gap:18px;">
-    <div class="card-paper stitched feature-card">
-      <div class="rho-k">TALKS WHILE IT WORKS</div>
-      <p>The voice never blocks on the task. Rho keeps the conversation going while crew agents run the job, then speaks the result on the same open stream.</p>
+  <!-- ── HERO ────────────────────────────────────────────────────────────── -->
+  <header id="hero">
+    <div class="scene">
+      <picture>
+        <source media="(max-width:768px)" srcset="../../assets/pages/rho/mobile-portrait.webp">
+        <img src="../../assets/pages/rho/hero-orbit-desktop.webp" alt="Rho — a grizzly roaring in a summer valley, teal sound rings rippling out past glass pills for every RHOBEAR product" fetchpriority="high">
+      </picture>
     </div>
-    <div class="card-paper stitched feature-card">
-      <div class="rho-k">IT CAN SEE</div>
-      <p>Turn on the camera and Rho watches what you're showing it. Attach an image and it reads that too — same eyes, either way.</p>
+    <div class="hero-rings" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="wrap hero-inner">
+      <div class="eyebrow">Rho · the family voice · free on every surface</div>
+      <h1>One voice.<br>Every&nbsp;surface.</h1>
+      <p class="lead">Rho is the voice of the whole RHOBEAR family — one brain that rides free on every product. It keeps talking to you while it dispatches real agents behind the scenes, sees through your camera and your uploads, and now lands on the Windows desktop as a movable talking orb.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="https://workbench.rhobear.ai/companion">Talk to Rho free →</a>
+        <a class="btn-ghost" href="#see">See it work ↓</a>
+      </div>
+      <div class="scroll-hint">scroll to hear it ↓</div>
     </div>
-    <div class="card-paper stitched feature-card">
-      <div class="rho-k">TWO VOICES</div>
-      <p>A free on-device voice that ships in the page, and an HD cloud voice when you want the good speakers. Sentence-by-sentence, so it starts talking fast.</p>
-    </div>
-    <div class="card-paper stitched feature-card">
-      <div class="rho-k">RIDES EVERY SURFACE</div>
-      <p>Plans purple on Plans, teal on the Workbench — one brain, dressed for whatever page it's on. It calls that product's own APIs; it never carries its own copy of your data.</p>
-    </div>
-    <div class="card-paper stitched feature-card">
-      <div class="rho-k">DICTATION ≠ CALL</div>
-      <p>Dictate into the box without sending, or open a real voice call. Two buttons, two behaviors, no surprises.</p>
-    </div>
-    <div class="card-paper stitched feature-card">
-      <div class="rho-k">FREE</div>
-      <p>Rho answers free on every RHOBEAR surface. It's the family voice, not a paywall.</p>
-    </div>
-  </div>
-</section>
+  </header>
 
-<!-- ===================== THE COMMERCIAL ===================== -->
-<section class="wrap" style="padding-top:0;">
-  <div class="eyebrow-row">SEE IT WORK</div>
-  <h2 style="font-size:clamp(1.8rem,3vw,2.5rem); margin:0 0 14px;">Thirty seconds of Rho <em>closing the loop.</em></h2>
-  <video class="vid" src="../../assets/video/rho-commercial.mp4" controls preload="metadata"></video>
-</section>
+  <main>
 
-<!-- ===================== DESKTOP ===================== -->
-<section class="band-dark install-band" id="desktop" style="margin-top:8px; padding:64px 0;">
-  <div class="wrap">
-    <div class="eyebrow-row">NEW · RHO ON THE DESKTOP</div>
-    <h2 style="font-size:clamp(1.9rem,3.2vw,2.7rem); margin:0 0 18px; max-width:760px;">A talking orb that <em>lives on your taskbar.</em></h2>
-    <p style="color:var(--c-dark-ink-2); font-size:1.08rem; line-height:1.6; max-width:700px;">The desktop companion puts Rho on your Windows machine: a living orb you can drag anywhere, click to expand into the full surface — type, talk, upload, camera — and it attaches to the RHOBEAR Hub when one is running. With the Hub, Rho can drive your RHOBEAR apps. Without it, Rho is your research companion: it talks, digs the web, and reads your files and docs — and it never writes without the harness. The orb's little dot tells you which mode you're in.</p>
-    <p style="color:var(--c-dark-ink-2); font-size:1.02rem; line-height:1.6; max-width:700px; margin-top:12px;">Shipping alongside the Hub. Until then, Rho is one click away on every cloud surface.</p>
-    <div style="margin-top:22px; display:flex; gap:14px; flex-wrap:wrap;">
-      <a href="https://workbench.rhobear.ai/companion" class="btn-amber">Talk to Rho now →</a>
-      <a href="app.html" class="live-tag" style="margin:0;">See the Hub →</a>
+  <!-- ── WHAT IT DOES ────────────────────────────────────────────────────── -->
+  <section class="band">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="sec-eyebrow">What makes it different</div>
+        <h2 class="sec">The chatbot that <em>keeps talking while it works.</em></h2>
+        <p class="sec-lead">Other voice assistants go quiet the moment you give them a job. Rho stays in the conversation — one brain, dressed for whatever page it's on.</p>
+      </div>
+      <div class="cards">
+        <div class="glass reveal">
+          <div class="k">Talks while it works</div>
+          <h3>Never goes silent</h3>
+          <p>The voice never blocks on the task. Rho keeps the conversation going while crew agents run the job, then speaks the result on the same open stream.</p>
+        </div>
+        <div class="glass reveal">
+          <div class="k">It can see</div>
+          <h3>Same eyes, either way</h3>
+          <p>Turn on the camera and Rho watches what you're showing it. Attach an image and it reads that too — one set of eyes, live or uploaded.</p>
+        </div>
+        <div class="glass reveal">
+          <div class="k">Two voices</div>
+          <h3>On-device or HD cloud</h3>
+          <p>A free on-device voice that ships right in the page, and an HD cloud voice when you want the good speakers. Sentence by sentence, so it starts talking fast.</p>
+        </div>
+        <div class="glass reveal">
+          <div class="k">Rides every surface</div>
+          <h3>One brain, dressed for the page</h3>
+          <p>Teal on the Workbench, its product's color everywhere else — one voice on every RHOBEAR product. It calls that product's own APIs; it never carries its own copy of your data.</p>
+        </div>
+        <div class="glass reveal">
+          <div class="k">Dictation ≠ call</div>
+          <h3>Two buttons, no surprises</h3>
+          <p>Dictate into the box without sending, or open a real voice call. Two buttons, two behaviors — you always know which one you're in.</p>
+        </div>
+        <div class="glass reveal">
+          <div class="k">Free</div>
+          <h3>The family voice, not a paywall</h3>
+          <p>Rho answers free on every RHOBEAR surface. No price, no meter, no card — it's the family voice that comes with the family.</p>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-</main>
-
-  <div class="prevnext">
-    <div class="prevnext-inner">
-      <a href="plans.html" class="pn-link ">
-        <span class="pn-mini">← Previous</span>
-        <span class="pn-name">RHOBEAR Plans</span>
-      </a>
-      <a href="index.html" class="pn-link ">
-        <span class="pn-mini">Next →</span>
-        <span class="pn-name">The ecosystem</span>
-      </a>
+  <!-- ── VOICE BAND (sound-ring motif) ───────────────────────────────────── -->
+  <section class="band" id="voice">
+    <div class="wrap reveal">
+      <div class="ring-stage" aria-hidden="true">
+        <span class="core"></span>
+        <span class="r"></span><span class="r"></span><span class="r"></span><span class="r"></span><span class="r"></span>
+      </div>
+      <div class="sec-eyebrow" style="text-align:center">One voice, every surface</div>
+      <h2 class="sec">It carries your context <em>from one tool to the next.</em></h2>
+      <p class="sec-lead">Ask it anything, hand it anything, and Rho keeps the thread as the workflow moves — the Hub, the Workbench, Designs, Captur'd, Reviews, Plans, Sales. The same voice you'll recognize on every product.</p>
     </div>
-  </div>
+  </section>
 
-<footer class="site-footer"><div class="site-footer-inner"><div class="footer-row"><div class="footer-copy">© 2026 Sun Sponge LLC · <a href="https://github.com/rhobear-ai">GitHub</a> · <a href="privacy.html">privacy</a> · <a href="faq.html">FAQ</a></div><div class="footer-tag">Lean. Local. Private. Yours.</div></div><div class="footer-disclaimer">All third-party trademarks and logos are property of their respective owners and shown here for integration identification purposes only. No partnership, sponsorship, or endorsement is implied.</div></div></footer>
-<script src="shell.js?v=1782980000" defer></script>
-<script>window.RHO_SELL={accent:'#ff7d1f',product:'rho',greet:"Hey — I'm Rho, the RHOBEAR companion. Ask me about any product, pricing, or a custom build — I'll bring it to the team."};</script>
-<script src="../../assets/rho-sell.js" defer></script>
+  <!-- ── PROOF / COMMERCIAL ──────────────────────────────────────────────── -->
+  <section class="band" id="see">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="sec-eyebrow">See it work</div>
+        <h2 class="sec">Thirty seconds of Rho <em>closing the loop.</em></h2>
+        <p class="sec-lead">It talks, it dispatches, the crew works, and it comes back to tell you what came back — start to finish, on one open stream.</p>
+      </div>
+      <div class="proof-frame reveal">
+        <video src="../../assets/video/rho-commercial.mp4" controls preload="metadata" poster="../../assets/shots/rho/rho-orb.png"></video>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DESKTOP COMPANION ───────────────────────────────────────────────── -->
+  <section class="band" id="desktop">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="sec-eyebrow">New · Rho on the desktop</div>
+        <h2 class="sec">A talking orb that <em>lives on your taskbar.</em></h2>
+        <p class="sec-lead">The desktop companion puts Rho on your Windows machine: a living orb you can drag anywhere, click to expand into the full surface — type, talk, upload, camera.</p>
+      </div>
+      <div class="split">
+        <div class="reveal">
+          <ul>
+            <li><strong>Drag it anywhere.</strong> A living orb that floats on top of everything, one click from the full surface.</li>
+            <li><strong>Attaches to the Hub.</strong> With a RHOBEAR Hub running, Rho can drive your RHOBEAR apps. The orb's little dot tells you which mode you're in.</li>
+            <li><strong>Research companion without it.</strong> No Hub? Rho still talks, digs the web, and reads your files and docs — and it never writes without the harness.</li>
+            <li><strong>Shipping alongside the Hub.</strong> Until then, Rho is one click away on every cloud surface.</li>
+          </ul>
+          <div class="hero-ctas" style="margin-top:24px">
+            <a class="btn-primary" href="https://workbench.rhobear.ai/companion">Talk to Rho now →</a>
+            <a class="btn-ghost" href="app.html">See the Hub →</a>
+          </div>
+        </div>
+        <div class="art reveal">
+          <img src="../../assets/pages/rho/mobile-portrait.webp" alt="Rho the roaring grizzly ringed by teal sound waves in a wildflower valley" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRICING / FREE DOOR ─────────────────────────────────────────────── -->
+  <section class="band" id="pricing">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="sec-eyebrow">What it costs</div>
+        <h2 class="sec">Free is the whole story.</h2>
+        <p class="sec-lead">Rho isn't a product you buy — it's the family voice that comes with the family. It rides free on every RHOBEAR surface, no price, no card, no meter.</p>
+      </div>
+      <div class="free-door reveal">
+        <div>
+          <p>Every RHOBEAR product carries Rho at no extra cost. Start on the Workbench free in the cloud, or meet it on any surface you already use.</p>
+          <div class="free-pills">
+            <span class="pill">Free on every surface</span>
+            <span class="pill">No card</span>
+            <span class="pill">On-device voice included</span>
+            <span class="pill">HD cloud voice</span>
+          </div>
+        </div>
+        <div class="price">Free<small>rides every surface</small></div>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ── NEXT HANDOFF → HUB ──────────────────────────────────────────────── -->
+  <section id="handoff">
+    <div class="wrap row">
+      <div>
+        <div class="mini">Next in the workflow →</div>
+        <div class="to">Start the workflow <em>in the Hub.</em></div>
+      </div>
+      <a class="btn-primary" href="app.html">Start the workflow →</a>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ──────────────────────────────────────────────────────────── -->
+  <footer id="footer">
+    <div class="cols">
+      <div class="reveal">
+        <div class="wordmark">RHOBEAR</div>
+        <p>One workflow that hands off to itself. Build it, ship it, sell it. Own your data, bring your own AI, run it for the price of a domain.</p>
+      </div>
+      <div class="reveal">
+        <h4>The workflow</h4>
+        <ul>
+          <li><a href="app.html">RHOBEAR Hub · build</a></li>
+          <li><a href="workbench.html">RHOBEAR Workbench · the free taste</a></li>
+          <li><a href="designs.html">RHOBEAR Designs · shape</a></li>
+          <li><a href="capturd.html">RHOBEAR Captur'd · capture</a></li>
+          <li><a href="https://reviews.rhobear.ai">RHOBEAR Reviews · keep clean</a></li>
+          <li><small>includes Verifies · dead-path maps</small></li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <h4>Go to market</h4>
+        <ul>
+          <li><a href="plans.html">RHOBEAR Plans · booking &amp; billing</a></li>
+          <li><a href="sales.html">Sales by RHOBEAR · done for you</a></li>
+          <li><a href="rho.html">Rho · the family voice</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fine">RHOBEAR — <a href="story.html">the story</a> · meet us on the mountain</div>
+  </footer>
+
+  <script>
+    // scroll-triggered reveals at ~20% viewport
+    (function(){
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('seen')}); return; }
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('seen'); io.unobserve(en.target); } });
+      }, {threshold:0.2});
+      els.forEach(function(e){ io.observe(e); });
+    })();
+    // hero background parallax (~0.3x), disabled for reduced-motion
+    (function(){
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var scene = document.querySelector('#hero .scene');
+      if (!scene) return;
+      var ticking = false;
+      window.addEventListener('scroll', function(){
+        if (ticking) return; ticking = true;
+        requestAnimationFrame(function(){
+          var y = window.scrollY;
+          if (y < window.innerHeight) scene.style.transform = 'translateY(' + (y * 0.3) + 'px)';
+          ticking = false;
+        });
+      }, {passive:true});
+    })();
+  </script>
+
+  <!-- HANDS-OFF live companion sell orb (self-styling; teal accent for this lane) -->
+  <script>window.RHO_SELL={accent:'#2A8FA8',product:'rho',greet:"Hey — I'm Rho, the RHOBEAR family voice. Ask me about any product, pricing, or a custom build — I'll bring it to the team."};</script>
+  <script src="../../assets/rho-sell.js" defer></script>
 </body>
 </html>
