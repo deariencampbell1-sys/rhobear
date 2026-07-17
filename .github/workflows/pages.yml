@@ -42,6 +42,11 @@ jobs:
           cp "$SRC"/colors_and_type.css _site/
           cp -r "$SRC"/assets _site/assets
 
+          # Homepage's own bundled JS/CSS + photo plates (Three.js mountain build).
+          for d in beats mobile rho fonts home-bundle; do
+            cp -r "$MKT/$d" "_site/$d"
+          done
+
           # Custom apex domain — keeps rhobear.ai bound across every redeploy.
           echo "rhobear.ai" > _site/CNAME
 

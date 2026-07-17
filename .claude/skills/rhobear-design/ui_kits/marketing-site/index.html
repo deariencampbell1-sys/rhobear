@@ -1,477 +1,291 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" data-beat="hero">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RHOBEAR · build it, ship it, sell it. One connected workflow.</title>
-  <meta name="description" content="One workflow that hands off to itself: build in the Hub, shape in Designs, capture with RHOBEAR Captur'd, keep it clean with Reviews, take it to market with Plans — and Rho rides along everywhere. Free to start on every product; own your data; bring your own AI.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://rhobear.ai/">
-  <meta property="og:title" content="RHOBEAR · build it, ship it, sell it.">
-  <meta property="og:description" content="One workflow that hands off to itself: build in the Hub, shape in Designs, capture with RHOBEAR Captur'd, keep it clean with Reviews, take it to market with Plans. Free to start on every product.">
-  <meta property="og:image" content="https://rhobear.ai/assets/rhobear-logo.png">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:site" content="@rhobearai">
-  <meta name="twitter:title" content="RHOBEAR · build it, ship it, sell it.">
-  <meta name="twitter:description" content="One workflow that hands off to itself: build, shape, capture, review, sell. Free to start. Own your data. Bring your own AI.">
-  <meta name="twitter:image" content="https://rhobear.ai/assets/rhobear-logo.png">
-  <link rel="stylesheet" href="../../colors_and_type.css?v=1784300000">
-  <link rel="stylesheet" href="shell.css?v=1784300000">
-  <link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782940000">
-  <style>
-    /* ============================================================
-       RHOBEAR ecosystem front door — one connected workflow.
-       The products are a relay: each hands off to the next.
-       Deep space, teal + gold, never orange.
-       ============================================================ */
-    :root{
-      --teal:#3bd6c3; --teal-dim:#2fbfae; --gold:#e8a33d;
-      --void:#04060c; --void-2:#070b16;
-      --glass:rgba(255,255,255,0.035); --glass-line:rgba(125,255,213,0.16);
-    }
-    html,body{ background:var(--void); }
-    #sky{ position:fixed; inset:0; width:100%; height:100%; z-index:0; display:block;
-      background:radial-gradient(120% 90% at 50% -10%, #0b1424 0%, var(--void-2)42%, var(--void) 78%); }
-    .aurora{ position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.5;
-      background:
-        radial-gradient(60% 40% at 22% 12%, rgba(125,255,213,0.10), transparent 60%),
-        radial-gradient(50% 38% at 84% 22%, rgba(59,214,195,0.10), transparent 62%),
-        radial-gradient(45% 35% at 60% 96%, rgba(255,215,106,0.06), transparent 60%);
-      animation:auroraDrift 24s ease-in-out infinite alternate; }
-    @keyframes auroraDrift{ from{ transform:translate3d(-1.5%,-1%,0) scale(1.02);} to{ transform:translate3d(2%,1.5%,0) scale(1.06);} }
-    body > nav, main, footer{ position:relative; z-index:2; }
-    .wrap{ max-width:1120px; margin:0 auto; padding:0 26px; }
-
-    /* ---------- hero ---------- */
-    .hero{ padding:104px 0 32px; max-width:940px; }
-    .hero .eyebrow{ display:inline-flex; align-items:center; gap:10px;
-      font-family:var(--font-mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase;
-      color:var(--teal); border:1px solid var(--glass-line); border-radius:999px; padding:7px 14px; background:rgba(125,255,213,0.05); }
-    .hero .eyebrow .spark{ width:6px; height:6px; border-radius:50%; background:var(--gold); box-shadow:0 0 12px var(--gold); }
-    .hero h1{ font-family:var(--font-display); font-weight:800; font-size:clamp(2.7rem,6.3vw,4.8rem);
-      line-height:1.0; letter-spacing:-0.025em; margin:22px 0 0; color:#f3f7fb; }
-    .hero h1 em{ font-style:normal; background:linear-gradient(120deg,var(--teal),var(--gold),var(--teal));
-      background-size:220% 100%; -webkit-background-clip:text; background-clip:text; color:transparent;
-      animation:sellPulse 3.4s ease-in-out infinite; will-change:filter,background-position; }
-    @keyframes sellPulse{
-      0%,100%{ background-position:0% 50%; filter:drop-shadow(0 0 10px rgba(125,255,213,.30)) drop-shadow(0 0 22px rgba(255,215,106,.12)); }
-      50%{ background-position:100% 50%; filter:drop-shadow(0 0 22px rgba(125,255,213,.65)) drop-shadow(0 0 40px rgba(255,215,106,.40)); }
-    }
-    .hero .lead{ font-size:clamp(1.06rem,2vw,1.32rem); color:#aeb9c8; margin:24px 0 0; max-width:64ch; line-height:1.58; }
-    .hero .lead b{ color:#e7eef6; font-weight:600; }
-    .cta-row{ margin-top:30px; display:flex; gap:14px; flex-wrap:wrap; }
-    .btn{ font-family:var(--font-display); font-weight:650; font-size:1rem; padding:13px 22px; border-radius:12px;
-      text-decoration:none; transition:transform .18s, box-shadow .18s, border-color .18s; display:inline-flex; align-items:center; gap:8px; }
-    .btn-primary{ color:#04140f; background:linear-gradient(120deg,var(--teal),var(--teal-dim)); box-shadow:0 10px 34px -12px rgba(125,255,213,.6); }
-    .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 16px 40px -12px rgba(125,255,213,.8); }
-    .btn-ghost{ color:#dfe7f0; border:1px solid var(--glass-line); background:var(--glass); }
-    .btn-ghost:hover{ transform:translateY(-2px); border-color:var(--teal); }
-
-    /* ---------- honest band ---------- */
-    .truth{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:52px; }
-    .truth .cell{ border:1px solid var(--glass-line); border-radius:16px; padding:22px 20px;
-      background:linear-gradient(180deg, var(--glass), rgba(125,255,213,0.01)); }
-    .truth .k{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--teal-dim); }
-    .truth h3{ font-family:var(--font-display); font-size:1.05rem; margin:9px 0 5px; color:#eef3f8; }
-    .truth p{ font-size:.9rem; color:#94a1b2; margin:0; line-height:1.45; }
-
-    /* ---------- the relay ---------- */
-    .relay-head{ text-align:center; max-width:62ch; margin:96px auto 0; }
-    .relay-head .eyebrow{ font-family:var(--font-mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--teal-dim); }
-    .relay-head h2{ font-family:var(--font-display); font-weight:750; font-size:clamp(2rem,4vw,2.9rem); letter-spacing:-.02em; margin:14px 0 0; color:#f1f6fb; }
-    .relay-head p{ color:#9fabbb; font-size:1.08rem; margin:14px auto 0; max-width:54ch; line-height:1.55; }
-
-    .relay{ margin:40px auto 0; max-width:860px; }
-    .stop{ display:grid; grid-template-columns:64px 1fr; gap:20px; }
-    .spine{ display:flex; flex-direction:column; align-items:center; }
-    .spine .num{ width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-      font-family:var(--font-mono); font-size:14px; font-weight:600; color:#04140f; background:var(--acc);
-      box-shadow:0 0 22px -2px var(--acc); flex:none; }
-    .spine .line{ width:2px; flex:1; min-height:38px; margin:6px 0;
-      background:linear-gradient(var(--acc), color-mix(in srgb, var(--acc) 25%, transparent)); opacity:.5; }
-    .stop:last-child .spine .line{ display:none; }
-
-    /* browser-window card = "the web page" */
-    .win{ border:1px solid color-mix(in srgb, var(--acc) 34%, var(--glass-line)); border-radius:16px; overflow:hidden;
-      background:linear-gradient(180deg, var(--glass), rgba(255,255,255,0.008)); margin-bottom:14px;
-      text-decoration:none; transition:transform .2s, box-shadow .2s; }
-    .win:hover{ transform:translateY(-3px); box-shadow:0 24px 54px -28px var(--acc); }
-    .chrome{ display:flex; align-items:center; gap:7px; padding:10px 14px; border-bottom:1px solid rgba(255,255,255,0.06);
-      background:rgba(255,255,255,0.02); }
-    .chrome i{ width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,0.16); }
-    .chrome i:first-child{ background:color-mix(in srgb, var(--acc) 70%, #888); }
-    .chrome .url{ margin-left:10px; font-family:var(--font-mono); font-size:11px; color:#8a98aa; letter-spacing:.02em; }
-    .screen{ position:relative; padding:24px 26px 24px; text-decoration:none; display:flex; gap:18px; align-items:flex-start;
-      background:radial-gradient(120% 130% at 0% 0%, color-mix(in srgb, var(--acc) 14%, transparent), transparent 58%); }
-    .screen .bear{ flex:none; width:56px; height:56px; border-radius:50%; object-fit:cover; padding:7px;
-      background:radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--acc) 30%, transparent), rgba(8,12,22,.7) 72%);
-      border:1.5px solid color-mix(in srgb, var(--acc) 55%, transparent);
-      box-shadow:0 0 20px -4px var(--acc); filter:var(--bear-tint) drop-shadow(0 1px 3px rgba(0,0,0,.5)); }
-    .screen .body2{ flex:1; min-width:0; }
-    .screen .verb{ font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--acc); }
-    .screen .name{ font-family:var(--font-display); font-weight:700; font-size:1.5rem; color:#f1f6fb; margin:7px 0 0; letter-spacing:-.01em; }
-    .screen .name .meta{ font-family:var(--font-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:#7d8aa0; margin-left:10px; vertical-align:middle; }
-    .screen .desc{ color:#aab6c6; font-size:1rem; line-height:1.56; margin:10px 0 0; max-width:60ch; }
-    .screen .desc b{ color:#e7eef6; font-weight:600; }
-    .screen .desc em{ font-style:normal; color:var(--acc); }
-    .chips{ display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
-    .chips span{ font-family:var(--font-mono); font-size:11px; color:#cdd6e2; border:1px solid color-mix(in srgb, var(--acc) 26%, var(--glass-line));
-      border-radius:999px; padding:4px 11px; background:color-mix(in srgb, var(--acc) 8%, transparent); }
-    .screen .go{ display:inline-block; margin-top:16px; font-family:var(--font-mono); font-size:.82rem; letter-spacing:.03em; color:var(--acc); }
-    /* the hand-off line between stops */
-    .handoff{ font-family:var(--font-mono); font-size:.84rem; color:#8da; color:#8aa0b6; padding:0 0 18px 4px; display:flex; align-items:center; gap:9px; }
-    .handoff::before{ content:"↳"; color:var(--acc); font-size:1.05rem; }
-    .handoff b{ color:#dfe7f0; font-weight:600; }
-    .loop{ text-align:center; margin-top:8px; font-family:var(--font-mono); font-size:.86rem; color:#9fb; color:#86d8b8; }
-
-    /* greeter (chat bubble) — give it room + match the deep-space teal (never amber) */
-    .rho-greeter-launcher{ min-width:118px !important; height:54px !important; padding:0 22px 0 12px !important;
-      gap:11px !important; white-space:nowrap !important; letter-spacing:.13em !important;
-      background:linear-gradient(120deg,var(--teal),var(--teal-dim)) !important; color:#04140f !important;
-      border:1.5px solid rgba(125,255,213,.55) !important; box-shadow:0 12px 30px -10px rgba(125,255,213,.6) !important; }
-    .rho-greeter-launcher:hover{ background:linear-gradient(120deg,#9affe0,var(--teal)) !important; transform:translateY(-2px) !important; }
-    .rho-greeter-launcher span{ background:rgba(4,16,12,.92) !important; color:var(--teal) !important; border-color:rgba(125,255,213,.5) !important; }
-    .rho-greeter-nudge-text{ min-width:260px !important; max-width:460px !important; width:max-content !important;
-      white-space:normal !important; text-wrap:pretty !important; line-height:1.5 !important; font-size:12.5px !important;
-      padding:14px 18px !important; }
-
-    /* ---------- closing ---------- */
-    .closer{ text-align:center; padding:92px 0 30px; }
-    .closer h2{ font-family:var(--font-display); font-weight:800; font-size:clamp(2rem,4.4vw,3.1rem); letter-spacing:-.02em; margin:0; color:#f1f6fb; }
-    .closer p{ color:#9fabbb; font-size:1.12rem; margin:16px auto 0; max-width:52ch; line-height:1.55; }
-
-    .foot{ border-top:1px solid var(--glass-line); margin-top:70px; padding:40px 0 60px; }
-    .foot .cols{ display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:30px; }
-    .foot h4{ font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#7d8aa0; margin:0 0 12px; }
-    .foot a{ display:block; color:#9fabbb; font-size:.95rem; padding:4px 0; text-decoration:none; }
-    .foot a:hover{ color:var(--teal); }
-    .foot .sub{ display:block; color:#6f7d8e; font-size:.82rem; padding:0 0 4px 14px; }
-    .foot .blurb{ color:#7d8aa0; font-size:.92rem; max-width:36ch; line-height:1.55; }
-    .foot .lock{ display:flex; align-items:center; gap:10px; margin-bottom:14px; text-decoration:none; }
-    .foot .lock img{ width:30px; height:30px; }
-    .foot .lock span{ font-family:var(--font-display); font-weight:800; letter-spacing:.04em; color:#eef3f8; }
-    .foot .social{ display:flex; align-items:center; flex-wrap:wrap; gap:11px; margin-top:34px; padding-top:22px; border-top:1px solid var(--glass-line); }
-    .foot .social .lbl{ font-family:var(--font-mono); font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:#7d8aa0; margin-right:3px; }
-    .foot .social a{ display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:10px;
-      border:1px solid var(--glass-line); background:rgba(255,255,255,0.02); color:#9fb6c9;
-      transition:transform .18s, color .18s, border-color .18s, background .18s; }
-    .foot .social a:hover{ transform:translateY(-2px); color:var(--teal); border-color:var(--teal); background:rgba(125,255,213,0.06); }
-    .foot .social a svg{ width:18px; height:18px; display:block; }
-    .foot .social a.fiverr:hover{ color:#9fb6c9; border-color:#1dbf73; background:rgba(29,191,115,0.08); }
-
-    @media(max-width:920px){ .truth{ grid-template-columns:1fr 1fr; } .foot .cols{ grid-template-columns:1fr 1fr; } }
-    @media(max-width:560px){
-      .hero{ padding-top:82px; } .truth, .foot .cols{ grid-template-columns:1fr; }
-      .stop{ grid-template-columns:40px 1fr; gap:12px; } .spine .num{ width:34px; height:34px; font-size:12px; }
-      .screen .name{ font-size:1.28rem; }
-    }
-    @media(prefers-reduced-motion:reduce){ .aurora{ animation:none; } }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>RHOBEAR — Build it. Ship it. Sell it.</title>
+  <meta name="description" content="One workflow that hands off to itself. Build it, ship it, sell it. Own your data, bring your own AI." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M2 28 L12 9 L19 20 L23 13 L30 28 Z' fill='%232A8FA8'/%3E%3Ccircle cx='24' cy='7' r='2.4' fill='%23D4A843'/%3E%3C/svg%3E" />
+  <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/beats/00-hero.webp?v=1" as="image" type="image/webp" media="(min-width: 769px)" />
+  <link rel="preload" href="/mobile/mobile-hub.webp" as="image" type="image/webp" media="(max-width: 768px)" />
+  <script type="module" crossorigin src="/home-bundle/index-BuNiHukX.js"></script>
+  <link rel="stylesheet" crossorigin href="/home-bundle/index-D8GLRVsR.css">
 </head>
 <body>
 
-  <canvas id="sky" aria-hidden="true"></canvas>
-  <div class="aurora" aria-hidden="true"></div>
-
-  <nav class="top-nav" aria-label="Primary">
-    <div class="top-nav-inner">
-      <a class="brand-lockup" href="index.html"><img src="../../assets/rhobear-logo.png?v=1782940000" alt=""><span>RHOBEAR</span></a>
-      <div class="nav-tabs">
-        <a href="index.html" class="nav-tab active">HOME</a>
-        <a href="app.html" class="nav-tab">HUB</a>
-        <a href="workbench.html" class="nav-tab">WORKBENCH</a>
-        <a href="plans.html" class="nav-tab">PLANS</a>
-        <a href="rho.html" class="nav-tab">RHO</a>
-<a href="lab.html" class="nav-tab">LAB</a>
-        <div class="nav-dropdown">
-          <a href="#workflow" class="nav-tab" aria-haspopup="true">MORE &#9662;</a>
-          <div class="nav-dropdown-panel">
-            <a href="designs.html">RHOBEAR Designs</a>
-            <a href="capturd.html">RHOBEAR Captur'd</a>
-            <a href="https://reviews.rhobear.ai">RHOBEAR Reviews</a>
-            <a href="sales.html">Sales by RHOBEAR</a>
-          </div>
+  <!-- top nav -->
+  <nav id="nav">
+    <div class="wordmark">RHOBEAR</div>
+    <div class="links">
+      <a href="index.html">HOME</a><a href="app.html">HUB</a><a href="workbench.html">WORKBENCH</a><a href="plans.html">PLANS</a><a href="rho.html">RHO</a>
+      <div class="nav-more">
+        <a href="designs.html">MORE ▾</a>
+        <div class="nav-more-panel">
+          <a href="designs.html">RHOBEAR Designs</a>
+          <a href="capturd.html">RHOBEAR Captur'd</a>
+          <a href="https://reviews.rhobear.ai">RHOBEAR Reviews</a>
+          <a href="sales.html">Sales by RHOBEAR</a>
         </div>
       </div>
-      <span class="nav-spacer"></span>
-      <a href="https://workbench.rhobear.ai" class="btn-primary nav-cta" style="padding:9px 16px; font-size:.92rem;">Try it free &rarr;</a>
     </div>
+    <a class="cta-pill" href="https://workbench.rhobear.ai">Try it free →</a>
   </nav>
 
-<main>
+  <!-- elevation rail -->
+  <aside id="rail" aria-hidden="true">
+    <div class="rail-dot" data-beat="hero"><span>Summit</span></div>
+    <div class="rail-dot" data-beat="hub"><span>Hub</span></div>
+    <div class="rail-dot" data-beat="workbench"><span>Workbench</span></div>
+    <div class="rail-dot" data-beat="designs"><span>Designs</span></div>
+    <div class="rail-dot" data-beat="capturd"><span>Captur'd</span></div>
+    <div class="rail-dot" data-beat="reviews"><span>Reviews</span></div>
+    <div class="rail-dot" data-beat="plans"><span>Plans</span></div>
+    <div class="rail-dot" data-beat="sales"><span>Sales</span></div>
+    <div class="rail-dot" data-beat="pricing"><span>Pricing</span></div>
+    <div class="rail-dot" data-beat="cta"><span>Valley</span></div>
+  </aside>
 
-  <section class="wrap hero">
-    <span class="eyebrow"><span class="spark"></span>ONE WORKFLOW &middot; OWN YOUR DATA &middot; BRING YOUR OWN AI</span>
-    <h1>Build it. Ship it. <em>Sell it.</em></h1>
-    <p class="lead">RHOBEAR isn't a pile of apps. It's <b>one workflow that hands off to itself</b>. Build a product in the Hub, shape it in Designs, rest it in Captur'd, keep it clean with Reviews, then take it to market with Plans — with Rho, the family voice, riding every surface. <b>Every product is free to start</b>: free cloud tiers, free open-source tools. The paid versions are priced up front, no games.</p>
-    <div class="cta-row">
-      <a href="https://workbench.rhobear.ai" class="btn btn-primary">Try it free &rarr;</a>
-      <a href="#workflow" class="btn btn-ghost">Follow the workflow &rarr;</a>
-    </div>
+  <!-- fixed beat cards -->
+  <div id="cards" aria-live="polite">
 
-    <div class="truth">
-      <div class="cell"><div class="k">Free to start</div><h3>Every door is open</h3><p>Free cloud tiers with real credits, and fully open-source tools. Pay only when you want the whole meal.</p></div>
-      <div class="cell"><div class="k">Own your data</div><h3>It lives on your disk</h3><p>The local apps are local-first. Export the file and leave whenever you want.</p></div>
-      <div class="cell"><div class="k">Bring your own AI</div><h3>Your key, your subs</h3><p>Local models through Ollama, sign into your existing AI subscriptions, or ride our metered rungs.</p></div>
-      <div class="cell"><div class="k">One workflow</div><h3>They hand off</h3><p>Build, shape, capture, review, sell. Each tool feeds the next one.</p></div>
-    </div>
-  </section>
-
-  <section class="wrap" id="workflow">
-    <div class="relay-head">
-      <div class="eyebrow">THE WORKFLOW</div>
-      <h2>One hand passes to the next.</h2>
-      <p>Follow a product from an idea to its first paying customer, without ever leaving the family.</p>
-    </div>
-
-    <div class="relay">
-
-      <!-- 1 HUB -->
-      <div class="stop" style="--acc:#3bd6c3; --bear-tint:hue-rotate(0deg) saturate(1.1)">
-        <div class="spine"><div class="num">1</div><div class="line"></div></div>
-        <div>
-          <a class="win" href="app.html">
-            <div class="chrome"><i></i><i></i><i></i><span class="url">rhobear.ai/hub</span></div>
-            <div class="screen">
-              <img class="bear" src="../../assets/rhobear-logo.png?v=1782940000" alt="">
-              <div class="body2">
-              <div class="verb">Build it</div>
-              <div class="name">RHOBEAR Hub<span class="meta">Desktop &middot; paid up front</span></div>
-              <p class="desc">One hub for every model you use. Your AI crew lives right on the desktop, no terminal required: <b>a 24-agent crew, 645 skills, and 148 lessons baked in</b>, with live tool anatomy so you watch every agent actually work. Sign into the AI subscriptions you already pay for — <em>your Claude, ChatGPT, or Grok account does the thinking</em> — or pull a local model through Ollama with one click (nothing heavy comes bundled; the model downloads only if you want it). Want a taste first? The <b>Workbench</b> is the same brain, free in the cloud.</p>
-              <div class="chips"><span>$47 one-time &middot; lifetime</span><span>free taste on Workbench</span><span>use your own AI subs</span><span>24-agent crew</span><span>645 skills &middot; 148 lessons</span><span>local model &middot; one-click pull</span></div>
-              <span class="go">Open the Hub &rarr;</span>
-              </div>
-            </div>
-          </a>
-          <div class="handoff">Got something built? <b>Hand it to Designs to make it yours.</b></div>
-        </div>
+    <!-- 0 · HERO -->
+    <section class="beat-card card-hero active" data-card="hero">
+      <div class="eyebrow">ONE WORKFLOW · OWN YOUR DATA · BRING YOUR OWN AI</div>
+      <h1>Build it.<br/>Ship it.<br/>Sell it.</h1>
+      <p class="lead">RHOBEAR isn't a pile of apps. It's one workflow that hands off to itself. Build a product in the Hub, shape it in Designs, rest it in Captur'd, keep it clean with Reviews, then take it to market with Plans — with Rho, the family voice, riding every surface. Every product is free to start: free cloud tiers, free open-source tools. The paid versions are priced up front, no games.</p>
+      <div class="hero-ctas">
+        <button class="btn-primary" data-jump="workbench">Try it free →</button>
+        <button class="btn-ghost" data-jump="hub">Follow the workflow →</button>
       </div>
-
-      <!-- 2 DESIGNS -->
-      <div class="stop" style="--acc:#e94560; --bear-tint:hue-rotate(180deg) saturate(1.25)">
-        <div class="spine"><div class="num">2</div><div class="line"></div></div>
-        <div>
-          <a class="win" href="designs.html">
-            <div class="chrome"><i></i><i></i><i></i><span class="url">github.com/&hellip;/rhobear-designs</span></div>
-            <div class="screen">
-              <img class="bear" src="../../assets/rhobear-logo.png?v=1782940000" alt="">
-              <div class="body2">
-              <div class="verb">Shape it</div>
-              <div class="name">RHOBEAR Designs<span class="meta">Open source &middot; MIT</span></div>
-              <p class="desc">You build ninety percent with your crew, same as always. The last ten is where the tokens bleed out, nudging one pixel at a time. So open the near-done HTML on an infinite canvas and <em>finish that last ten by hand</em>: drag it where you want it, swap a font, fix the one color that's off, with no round-trip to the model. It's smart enough to touch real <b>JS, CSS, and HTML with hidden embeds</b> without wrecking what the agent already got right. Ships with a local-LLM stub that works the moment you download it, or pipe in your own key through OpenRouter. The file stays yours, MIT, forever.</p>
-              <div class="chips"><span>finish the last 10%</span><span>infinite canvas</span><span>won't break your embeds</span><span>local stub or your key</span><span>MIT</span></div>
-              <span class="go">See Designs &rarr;</span>
-              </div>
-            </div>
-          </a>
-          <div class="handoff">Looks the way you want? <b>Rest the finished site in Captur'd.</b></div>
-        </div>
+      <div class="pills">
+        <span class="pill">Free to start</span>
+        <span class="pill">Own your data</span>
+        <span class="pill">Bring your own AI</span>
+        <span class="pill">One workflow</span>
       </div>
+      <div class="scroll-hint">scroll to descend ↓</div>
+    </section>
 
-      <!-- 3 RHOBEAR CAPTUR'D -->
-      <div class="stop" style="--acc:#ff7d1f; --bear-tint:hue-rotate(205deg) saturate(1.4)">
-        <div class="spine"><div class="num">3</div><div class="line"></div></div>
-        <div>
-          <a class="win" href="capturd.html">
-            <div class="chrome"><i></i><i></i><i></i><span class="url">rhobear.ai/capturd</span></div>
-            <div class="screen">
-              <img class="bear" src="../../assets/rhobear-logo.png?v=1782940000" alt="">
-              <div class="body2">
-              <div class="verb">Capture it</div>
-              <div class="name">RHOBEAR Captur'd<span class="meta">Open source &middot; free</span></div>
-              <p class="desc">Letting a frontier model take your screenshots costs a fortune, and you don't feel it until the bill lands. Captur'd does the same job for <em>almost nothing</em>. Feed it a map and it soaks a finished site into clean, rested screenshots in one pass, every page and every state, while you move on to the next build. Think of it as the picture-taker for whatever <b>Designs</b> just made: point a swarm of captors at your apps, then pour the results into Remotion and cut hundreds of videos for next to nothing.</p>
-              <div class="chips"><span>free &amp; open source</span><span>whole-site capture</span><span>map-driven</span><span>feeds Remotion</span></div>
-              <span class="go">See Captur'd &rarr;</span>
-              </div>
-            </div>
-          </a>
-          <div class="handoff">All the while, every PR runs through&nbsp;<b>Reviews.</b></div>
-        </div>
+    <!-- 1 · HUB -->
+    <section class="beat-card" data-card="hub">
+      <div class="card-top"><span class="step">01</span><span class="label">RHOBEAR Hub · Desktop · paid up front</span></div>
+      <h2>Build it</h2>
+      <p>One hub for every model you use. Your AI crew lives right on the desktop, no terminal required: a 24-agent crew, 645 skills, and 148 lessons baked in, with live tool anatomy so you watch every agent actually work. Sign into the AI subscriptions you already pay for — your Claude, ChatGPT, or Grok account does the thinking — or pull a local model through Ollama with one click. Want a taste first? The Workbench is the same brain, free in the cloud.</p>
+      <div class="price">$47 one-time · lifetime</div>
+      <div class="pills">
+        <span class="pill">free taste on Workbench</span>
+        <span class="pill">use your own AI subs</span>
+        <span class="pill">24-agent crew</span>
+        <span class="pill">645 skills · 148 lessons</span>
+        <span class="pill">local model · one-click pull</span>
       </div>
+      <a class="card-cta" href="app.html">Open the Hub →</a>
+      <div class="handoff">Got something built? Hand it to Designs to make it yours.</div>
+    </section>
 
-      <!-- 4 REVIEWS (+ Verifies feature) — real site palette: black + gold #ffb800 -->
-      <div class="stop" style="--acc:#ffb800; --bear-tint:hue-rotate(250deg) saturate(1.35) brightness(1.05)">
-        <div class="spine"><div class="num">4</div><div class="line"></div></div>
-        <div>
-          <a class="win" href="https://reviews.rhobear.ai/">
-            <div class="chrome"><i></i><i></i><i></i><span class="url">reviews.rhobear.ai</span></div>
-            <div class="screen">
-              <img class="bear" src="../../assets/rhobear-logo.png?v=1782940000" alt="">
-              <div class="body2">
-              <div class="verb">Keep it clean</div>
-              <div class="name">RHOBEAR Reviews<span class="meta">GitHub App</span></div>
-              <p class="desc">You're paying for hundreds of reviews a month, and your own agents are no help: drop one into a live thread and it drags last week's context into this week's PR. Reviews fixes both. It spins up a <em>fresh reviewer on every pull request</em> and throws it away after, so old context never carries over, but it still knows your code, reading the whole repo as a graph with a second model grading it over its shoulder. You get an honest verdict that's <b>more than a diff</b> before anything merges. Built in, <b>Verifies</b> maps your app's pathways and flags dead code, dead routes, and the tokens you waste on them, three full app-maps a month, so you stop rebasing through a graveyard or shipping the old UI again.</p>
-              <div class="chips"><span>fresh reviewer every PR</span><span>knows your codebase &middot; whole-repo graph</span><span>Verifies: dead-path maps</span><span>3 app-maps / mo</span></div>
-              <span class="go">See Reviews &rarr;</span>
-              </div>
-            </div>
-          </a>
-          <div class="handoff">Clean and built? <b>Take it to market with Plans.</b></div>
-        </div>
+    <!-- 2 · WORKBENCH -->
+    <section class="beat-card" data-card="workbench">
+      <div class="card-top"><span class="step">02</span><span class="label">RHOBEAR Workbench · cloud</span></div>
+      <h2>Taste it free</h2>
+      <p>The same brain as the Hub, free in the cloud. Sign in with Google, credits included, no card. Run the whole crew before you ever pay a dime — the Workbench is the free taste before the whole meal.</p>
+      <div class="price">Free · 1,500 credits</div>
+      <div class="pills">
+        <span class="pill">no card</span>
+        <span class="pill">paid tiers $17 / $47 / $87</span>
+        <span class="pill">same brain as the Hub</span>
       </div>
+      <a class="card-cta" href="workbench.html">Try Workbench →</a>
+    </section>
 
-      <!-- 5 PLANS -->
-      <div class="stop" style="--acc:#3bd6c3; --bear-tint:hue-rotate(90deg) saturate(1.2)">
-        <div class="spine"><div class="num">5</div><div class="line"></div></div>
-        <div>
-          <a class="win" href="plans.html">
-            <div class="chrome"><i></i><i></i><i></i><span class="url">cloud.rhobear.ai</span></div>
-            <div class="screen">
-              <img class="bear" src="../../assets/rhobear-logo.png?v=1782940000" alt="">
-              <div class="body2">
-              <div class="verb">Take it to market</div>
-              <div class="name">RHOBEAR Plans<span class="meta">Web &middot; local-first</span></div>
-              <p class="desc">Run your business in the same place <em>your agents read it</em>. Calendar and appointments. PayPal and Stripe forms that track every sale. Booking templates that match your site. Zoom and email that fire the second a slot is booked. <b>One Telegram bot per calendar</b>, one each for personal, work, and business, handling your invites and email. You just talk to it. <b>Free to start in the cloud</b>, credit packs from $5 when you're ready. On the desktop version, a local <b>qwen3:4b</b> reads your email on-device, so nothing leaves your machine — and for the big moves, switch up our rungs: <b>Core, Summit, or Peak</b>. We don't train on your data.</p>
-              <div class="chips"><span>free to start</span><span>packs from $5</span><span>calendar + booking</span><span>PayPal + Stripe</span><span>a bot per calendar</span><span>qwen3:4b on-device</span></div>
-              <span class="go">See Plans &rarr;</span>
-              </div>
-            </div>
-          </a>
-          <div class="handoff">And the rep that answers your leads? <b>Sales proves it closes.</b></div>
-        </div>
+    <!-- 3 · DESIGNS -->
+    <section class="beat-card" data-card="designs">
+      <div class="card-top"><span class="step">03</span><span class="label">RHOBEAR Designs · Open source · MIT</span></div>
+      <h2>Shape it</h2>
+      <p>You build ninety percent with your crew. The last ten is where the tokens bleed out, nudging one pixel at a time. So open the near-done HTML on an infinite canvas and finish that last ten by hand: drag it where you want it, swap a font, fix the one color that's off — no round-trip to the model. It's smart enough to touch real JS, CSS, and HTML with hidden embeds without wrecking what the agent already got right. The file stays yours, MIT, forever.</p>
+      <div class="pills">
+        <span class="pill">finish the last 10%</span>
+        <span class="pill">infinite canvas</span>
+        <span class="pill">won't break your embeds</span>
+        <span class="pill">local stub or your key</span>
+        <span class="pill">MIT</span>
       </div>
+      <a class="card-cta" href="designs.html">See Designs →</a>
+      <div class="handoff">Looks the way you want? Rest the finished site in Captur'd.</div>
+    </section>
 
-      <!-- 6 SALES — real site palette: blue #60a5fa (token-confirmed; was crossed with Reviews' gold) -->
-      <div class="stop" style="--acc:#60a5fa; --bear-tint:hue-rotate(55deg) saturate(1.25)">
-        <div class="spine"><div class="num">6</div></div>
-        <div>
-          <a class="win" href="sales.html">
-            <div class="chrome"><i></i><i></i><i></i><span class="url">sales.rhobear.ai</span></div>
-            <div class="screen">
-              <img class="bear" src="../../assets/rhobear-logo.png?v=1782940000" alt="">
-              <div class="body2">
-              <div class="verb">And it sells itself</div>
-              <div class="name">Sales, by RHOBEAR<span class="meta">our sales chatbot</span></div>
-              <p class="desc">You like these tools but you don't want to set them up. So I do it for you. I hand-build and run your sales page <b>for</b> you, the white-glove version, and <em>this page is me doing it</em>. The bot greeting you runs on a tiny <b>Qwen-3B</b> with no rented server and no hosting bill behind it, just a domain. It's the same setup I'll stand up for you, the way I did for clients like Saguaro. Like what it's doing here? <b>I'll build you one.</b></p>
-              <div class="chips"><span>done-for-you</span><span>no server, no hosting</span><span>tiny Qwen-3B</span><span>answers every lead</span></div>
-              <span class="go">See Sales &rarr;</span>
-              </div>
-            </div>
-          </a>
-          <div class="loop">&#8635;&nbsp; &hellip; and back to the Hub for the next product.</div>
-        </div>
+    <!-- 4 · CAPTUR'D -->
+    <section class="beat-card" data-card="capturd">
+      <div class="card-top"><span class="step">04</span><span class="label">RHOBEAR Captur'd · Open source · free</span></div>
+      <h2>Capture it</h2>
+      <p>Letting a frontier model take your screenshots costs a fortune, and you don't feel it until the bill lands. Captur'd does the same job for almost nothing. Feed it a map and it soaks a finished site into clean, rested screenshots in one pass — every page and every state — while you move on to the next build. Point a swarm of captors at your apps, then pour the results into Remotion and cut hundreds of videos for next to nothing.</p>
+      <div class="pills">
+        <span class="pill">free &amp; open source</span>
+        <span class="pill">whole-site capture</span>
+        <span class="pill">map-driven</span>
+        <span class="pill">feeds Remotion</span>
       </div>
+      <a class="card-cta" href="capturd.html">See Captur'd →</a>
+      <div class="handoff">All the while, every PR runs through Reviews.</div>
+    </section>
 
-    </div>
-  </section>
+    <!-- 5 · REVIEWS (breath-zoom beat) -->
+    <section class="beat-card" data-card="reviews">
+      <div class="card-top"><span class="step">05</span><span class="label">RHOBEAR Reviews · GitHub App</span></div>
+      <h2>Keep it clean</h2>
+      <p>It spins up a fresh reviewer on every pull request and throws it away after, so old context never carries over — but it still knows your code, reading the whole repo as a graph with a second model grading over its shoulder. You get an honest verdict that's more than a diff before anything merges. Built in, Verifies maps your app's pathways and flags dead code, dead routes, and wasted tokens — three app-maps a month.</p>
+      <div class="pills">
+        <span class="pill">fresh reviewer every PR</span>
+        <span class="pill">whole-repo graph</span>
+        <span class="pill">Verifies: dead-path maps</span>
+        <span class="pill">3 app-maps / mo</span>
+      </div>
+      <a class="card-cta" href="https://reviews.rhobear.ai">See Reviews →</a>
+      <div class="handoff">Clean and built? Take it to market with Plans.</div>
+    </section>
 
-  <section class="wrap" id="pricing" style="margin-top:96px;">
-    <div class="relay-head" style="margin-top:0;">
-      <div class="eyebrow">MONEY FIRST — NO GAMES</div>
-      <h2>Free is real. Paid is up front.</h2>
+    <!-- 6 · PLANS -->
+    <section class="beat-card" data-card="plans">
+      <div class="card-top"><span class="step">06</span><span class="label">RHOBEAR Plans · Web · local-first</span></div>
+      <h2>Take it to market</h2>
+      <p>Run your business where your agents read it. Calendar and appointments. PayPal and Stripe forms that track every sale. Booking templates that match your site. Zoom and email that fire the second a slot is booked. One Telegram bot per calendar — personal, work, and business — you just talk to it. On desktop a local qwen3:4b reads your email on-device, so nothing leaves your machine. Rungs: Core, Summit, Peak. We don't train on your data.</p>
+      <div class="pills">
+        <span class="pill">free to start</span>
+        <span class="pill">packs from $5</span>
+        <span class="pill">calendar + booking</span>
+        <span class="pill">PayPal + Stripe</span>
+        <span class="pill">a bot per calendar</span>
+        <span class="pill">qwen3:4b on-device</span>
+      </div>
+      <a class="card-cta" href="plans.html">See Plans →</a>
+      <div class="handoff">And the rep that answers your leads? Sales proves it closes.</div>
+    </section>
+
+    <!-- 7 · SALES -->
+    <section class="beat-card" data-card="sales">
+      <div class="card-top"><span class="step">07</span><span class="label">Sales, by RHOBEAR · done-for-you</span></div>
+      <h2>It sells itself</h2>
+      <p>You like these tools but you don't want to set them up. So I do it for you — hand-build and run your sales page, the white-glove version. The bot greeting you runs on a tiny Qwen-3B with no rented server and no hosting bill, just a domain. Same setup I'll stand up for you, the way I did for clients like Saguaro.</p>
+      <div class="pills">
+        <span class="pill">done-for-you</span>
+        <span class="pill">no server, no hosting</span>
+        <span class="pill">tiny Qwen-3B</span>
+        <span class="pill">answers every lead</span>
+      </div>
+      <a class="card-cta" href="sales.html">See Sales →</a>
+    </section>
+
+    <!-- 8 · PRICING — glass covers the plate's baked card -->
+    <section class="beat-card card-pricing" data-card="pricing">
+      <div class="card-top"><span class="step">08</span><span class="label">MONEY FIRST — NO GAMES</span></div>
+      <h2>Free is real.<br/>Paid is up front.</h2>
       <p>Every product has a free door: a free cloud tier with real credits, or a fully open-source download. The paid versions are the whole meal, priced in plain sight.</p>
+      <div class="tiers">
+        <div class="tier"><b>Workbench · cloud</b><i>Free · 1,500 credits</i><s>Sign in with Google, no card. $17 / $47 / $87 when you want more of the crew.</s></div>
+        <div class="tier"><b>Hub · desktop</b><i>Paid up front</i><s>One-time purchase, the whole meal. Taste it free on the Workbench first.</s></div>
+        <div class="tier"><b>Plans · cloud</b><i>Free to start</i><s>Credit packs from $5 / $10 / $25. Desktop is a one-time buy that runs offline.</s></div>
+        <div class="tier"><b>Designs</b><i>Free · open source</i><s>MIT. The file is yours forever. Local stub or bring your own key.</s></div>
+        <div class="tier"><b>Captur'd</b><i>Free · open source</i><s>The deterministic picture-taker. No AI bill, no server, no catch.</s></div>
+        <div class="tier"><b>Reviews · Sales · Rho</b><i>Free doors too</i><s>Reviews rides your GitHub. Sales runs for the cost of a domain. Rho rides free.</s></div>
+      </div>
+    </section>
+
+    <!-- 9 · CTA -->
+    <section class="beat-card card-final" data-card="cta">
+      <div class="eyebrow">START ANYWHERE</div>
+      <h2>Grab one hand.<br/>The rest are right there.</h2>
+      <p class="lead">Every tool stands on its own, and hands off to the next when you're ready.</p>
+      <div class="hero-ctas">
+        <button class="btn-primary" data-jump="workbench">Try the Workbench free →</button>
+        <button class="btn-ghost" data-jump="plans">Jump to market with Plans →</button>
+      </div>
+      <div class="chain">
+        <span>Build it · Hub</span><i>→</i>
+        <span>Shape it · Designs</span><i>→</i>
+        <span>Capture it · Captur'd</span><i>→</i>
+        <span>Keep it clean · Reviews</span><i>→</i>
+        <span>Take it to market · Plans</span><i>→</i>
+        <span>It sells itself · Sales</span>
+      </div>
+      <div class="loop">↻ … and back to the Hub for the next product.</div>
+    </section>
+  </div>
+
+  <!-- the mountain: 1000vh driver, sticky WebGL stage -->
+  <main id="journey" aria-label="The RHOBEAR workflow, told as a descent">
+    <div id="pin">
+      <canvas id="stage"></canvas>
     </div>
-    <div class="truth" style="margin-top:36px; grid-template-columns:repeat(3,1fr);">
-      <div class="cell"><div class="k">Workbench &middot; cloud</div><h3>Free &middot; 1,500 credits</h3><p>Sign in with Google, credits included, no card. Paid tiers $17 / $47 / $87 a month when you want more of the crew.</p></div>
-      <div class="cell"><div class="k">Hub &middot; desktop</div><h3>Paid up front</h3><p>One-time purchase, the whole meal: your own AI subs, local models, chain mode. Taste it free on the Workbench first.</p></div>
-      <div class="cell"><div class="k">Plans &middot; cloud</div><h3>Free to start</h3><p>Sign in free; credit packs from $5 / $10 / $25 as you grow. The desktop version is a one-time purchase that runs offline.</p></div>
-      <div class="cell"><div class="k">Designs</div><h3>Free &middot; open source</h3><p>MIT. The file is yours forever. A local model stub works out of the box, or bring your own key.</p></div>
-      <div class="cell"><div class="k">Captur'd</div><h3>Free &middot; open source</h3><p>The deterministic picture-taker. No AI bill, no server, no catch.</p></div>
-      <div class="cell"><div class="k">Reviews &middot; Sales &middot; Rho</div><h3>Free doors too</h3><p>Reviews rides your GitHub. Sales runs on a tiny local model for about the cost of a domain. Rho rides free on every surface.</p></div>
+  </main>
+
+  <!-- mobile: spec static portrait carousel, no WebGL -->
+  <div id="mobile-journey">
+    <section class="m-slide">
+      <img src="/mobile/mobile-hub.webp" alt="RHOBEAR Hub — Build it" fetchpriority="high" />
+      <div class="m-tag">01 · Build it · $47 one-time</div>
+      <div class="m-hint">swipe to descend ↓</div>
+    </section>
+    <section class="m-slide">
+      <img src="/mobile/mobile-reviews.webp" alt="RHOBEAR Reviews — Keep it clean" loading="lazy" />
+      <div class="m-tag">02 · Keep it clean · every PR</div>
+    </section>
+    <section class="m-slide m-slide-cta">
+      <img src="/mobile/mobile-cta.webp" alt="Grab one hand. The rest are right there." loading="lazy" />
+      <div class="m-tag">03 · Start anywhere · free</div>
+      <div class="m-cta-panel">
+        <h2>Grab one hand.<br/>The rest are right there.</h2>
+        <div class="m-ctas">
+          <a class="btn-primary" href="workbench.html">Try the Workbench free →</a>
+          <a class="btn-ghost" href="plans.html">Jump to market with Plans →</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Rho — the family voice -->
+  <section id="rho">
+    <div class="rho-grid">
+      <div class="reveal">
+        <div class="eyebrow">RHO · THE FAMILY VOICE</div>
+        <h2>One voice,<br/>riding every surface.</h2>
+        <p>Rho rides free on every RHOBEAR surface — the Hub, the Workbench, Designs, Captur'd, Reviews, Plans, Sales. Ask it anything, hand it anything, and it carries your context from one tool to the next so the workflow never drops the thread.</p>
+        <img class="voice-img" src="/rho/rho-voice.webp" alt="Rho — the RHOBEAR voice" loading="lazy" />
+      </div>
+      <div class="reveal">
+        <img class="orbit-img" src="/rho/rho-orbit.webp" alt="Every RHOBEAR app orbiting one voice" loading="lazy" />
+      </div>
     </div>
   </section>
 
-  <section class="wrap closer">
-    <div class="eyebrow" style="font-family:var(--font-mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--teal-dim);">START ANYWHERE</div>
-    <h2 style="margin-top:14px;">Grab one hand. The rest are right there.</h2>
-    <p>Every tool stands on its own, and hands off to the next when you're ready.</p>
-    <div class="cta-row" style="justify-content:center; margin-top:26px;">
-      <a href="https://workbench.rhobear.ai" class="btn btn-primary">Try the Workbench free &rarr;</a>
-      <a href="plans.html" class="btn btn-ghost">Jump to market with Plans &rarr;</a>
+  <!-- footer -->
+  <footer id="footer">
+    <div class="cols">
+      <div class="reveal">
+        <div class="wordmark">RHOBEAR</div>
+        <p>One workflow that hands off to itself. Build it, ship it, sell it. Own your data, bring your own AI, run it for the price of a domain.</p>
+      </div>
+      <div class="reveal">
+        <h4>The workflow</h4>
+        <ul>
+          <li><a href="app.html">RHOBEAR Hub · build</a></li>
+          <li><a href="workbench.html">RHOBEAR Workbench · the free taste</a></li>
+          <li><a href="designs.html">RHOBEAR Designs · shape</a></li>
+          <li><a href="capturd.html">RHOBEAR Captur'd · capture</a></li>
+          <li><a href="https://reviews.rhobear.ai">RHOBEAR Reviews · keep clean</a></li>
+          <li><small>includes Verifies · dead-path maps</small></li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <h4>Go to market</h4>
+        <ul>
+          <li><a href="plans.html">RHOBEAR Plans · booking &amp; billing</a></li>
+          <li><a href="sales.html">Sales by RHOBEAR · done for you</a></li>
+          <li><a href="rho.html">Rho · the family voice</a></li>
+        </ul>
+      </div>
     </div>
-  </section>
+    <div class="fine">RHOBEAR — <a href="story.html">the story</a> · meet us on the mountain</div>
+  </footer>
 
-</main>
-
-<footer class="wrap foot">
-  <div class="cols">
-    <div>
-      <a class="lock" href="index.html"><img src="../../assets/rhobear-logo.png?v=1782940000" alt=""><span>RHOBEAR</span></a>
-      <p class="blurb">One workflow that hands off to itself. Build it, ship it, sell it. Own your data, bring your own AI, run it for the price of a domain.</p>
-    </div>
-    <div>
-      <h4>The workflow</h4>
-      <a href="app.html">RHOBEAR Hub &middot; build</a>
-      <a href="workbench.html">RHOBEAR Workbench &middot; the free taste</a>
-      <a href="designs.html">RHOBEAR Designs &middot; shape</a>
-      <a href="capturd.html">RHOBEAR Captur'd &middot; capture</a>
-      <a href="https://reviews.rhobear.ai">RHOBEAR Reviews &middot; keep clean</a>
-      <span class="sub">includes Verifies &middot; dead-path maps</span>
-    </div>
-    <div>
-      <h4>Go to market</h4>
-      <a href="plans.html">RHOBEAR Plans &middot; booking & billing</a>
-      <a href="sales.html">Sales by RHOBEAR &middot; done for you</a>
-      <a href="rho.html">Rho &middot; the family voice</a>
-      <a href="story.html">The story</a>
-    </div>
-  </div>
-
-  <!-- social — parked profiles (destinations not content-ready yet); real brand marks only -->
-  <div class="social">
-    <span class="lbl">Meet us on</span>
-    <a href="https://x.com/rhobearai" target="_blank" rel="noopener" aria-label="RHOBEAR on X" title="X">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg>
-    </a>
-    <a href="https://www.instagram.com/rhobear.ai/" target="_blank" rel="noopener" aria-label="RHOBEAR on Instagram" title="Instagram">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="2.2" y="2.2" width="19.6" height="19.6" rx="5.4"/><circle cx="12" cy="12" r="4.3"/><circle cx="17.6" cy="6.4" r="1.15" fill="currentColor" stroke="none"/></svg>
-    </a>
-    <a href="https://www.facebook.com/profile.php?id=61590645300097" target="_blank" rel="noopener" aria-label="RHOBEAR on Facebook" title="Facebook">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.971h-1.514c-1.491 0-1.956.93-1.956 1.886v2.264h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073Z"/></svg>
-    </a>
-    <a href="https://www.fiverr.com/rhobear_ai" class="fiverr" target="_blank" rel="noopener" aria-label="RHOBEAR on Fiverr" title="Fiverr">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="#1dbf73"/><path fill="#fff" d="M13.06 8.27c0-.62.41-1.02 1.03-1.02h1.66V5.4h-1.74c-1.63 0-2.84 1.07-2.84 2.74v.56H9.3v1.74h1.87v5.66h2.02v-5.66h1.88V8.83h-1.88z"/><rect x="15.78" y="8.83" width="2.02" height="6.97" fill="#fff"/><circle cx="16.79" cy="6.43" r="1.13" fill="#fff"/></svg>
-    </a>
-  </div>
-</footer>
-
-<script>
-/* Living sky — dependency-free 3D starfield + constellation. Calm drift, teal
-   stars, a gold north star, faint links, gentle parallax. Reduced-motion aware. */
-(function(){
-  var c=document.getElementById('sky'); if(!c) return;
-  var ctx=c.getContext('2d',{alpha:true});
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-  var W=0,H=0,DPR=Math.min(window.devicePixelRatio||1,2);
-  var stars=[],near=[],mx=0,my=0,tx=0,ty=0,t=0,raf=0;
-  function resize(){ W=c.clientWidth;H=c.clientHeight;c.width=Math.floor(W*DPR);c.height=Math.floor(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);build(); }
-  function newStar(sp){ return {x:(Math.random()*2-1),y:(Math.random()*2-1),z:sp?Math.random():1,pz:0}; }
-  function build(){
-    var n=Math.min(360,Math.floor(W*H/5200)); stars=[]; for(var i=0;i<n;i++) stars.push(newStar(true));
-    var m=Math.min(34,Math.floor(W/46)); near=[];
-    for(var j=0;j<m;j++) near.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-0.5)*0.10,vy:(Math.random()-0.5)*0.10,r:Math.random()*1.4+0.8,gold:false});
-    if(near.length){ near[0].gold=true; near[0].r=2.6; }
-  }
-  function step(){
-    t+=0.016; tx+=(mx-tx)*0.06; ty+=(my-ty)*0.06; ctx.clearRect(0,0,W,H);
-    var cxp=W/2+tx*64, cyp=H/2+ty*64, speed=reduce?0:0.0016;
-    for(var i=0;i<stars.length;i++){ var s=stars[i]; s.pz=s.z; s.z-=speed; if(s.z<=0.02){stars[i]=newStar(false);continue;}
-      var k=128/s.z,k2=128/s.pz,sx=cxp+s.x*k,sy=cyp+s.y*k,px=cxp+s.x*k2,py=cyp+s.y*k2;
-      if(sx<0||sx>W||sy<0||sy>H) continue;
-      var b=Math.min(1,(1-s.z)*1.1),rad=Math.max(0.4,(1-s.z)*1.7);
-      ctx.strokeStyle='rgba(125,255,213,'+(b*0.5)+')'; ctx.lineWidth=rad; ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(sx,sy); ctx.stroke();
-      ctx.fillStyle='rgba(225,255,247,'+b+')'; ctx.beginPath(); ctx.arc(sx,sy,rad*0.7,0,6.2832); ctx.fill(); }
-    for(var a=0;a<near.length;a++){ var p=near[a];
-      if(!reduce){ p.x+=p.vx;p.y+=p.vy; if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1; }
-      var ox=p.x+tx*32,oy=p.y+ty*32;
-      for(var b2=a+1;b2<near.length;b2++){ var q=near[b2],dx=p.x-q.x,dy=p.y-q.y,d=dx*dx+dy*dy,lim=148*148;
-        if(d<lim){ var al=(1-d/lim)*0.16; ctx.strokeStyle='rgba(125,255,213,'+al+')'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(ox,oy); ctx.lineTo(q.x+tx*32,q.y+ty*32); ctx.stroke(); } }
-      var pulse=0.6+0.4*Math.sin(t*1.3+a);
-      if(p.gold){ var g=ctx.createRadialGradient(ox,oy,0,ox,oy,18); g.addColorStop(0,'rgba(255,215,106,'+(0.9*pulse)+')'); g.addColorStop(1,'rgba(255,215,106,0)'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(ox,oy,18,0,6.2832); ctx.fill(); ctx.fillStyle='rgba(255,235,170,1)'; }
-      else ctx.fillStyle='rgba(125,255,213,'+(0.55+0.35*pulse)+')';
-      ctx.beginPath(); ctx.arc(ox,oy,p.r,0,6.2832); ctx.fill(); }
-    raf=requestAnimationFrame(step);
-  }
-  function start(){ if(!raf) raf=requestAnimationFrame(step); }
-  function stop(){ cancelAnimationFrame(raf); raf=0; }
-  window.addEventListener('resize',resize,{passive:true});
-  window.addEventListener('pointermove',function(e){ mx=(e.clientX/window.innerWidth)*2-1; my=(e.clientY/window.innerHeight)*2-1; },{passive:true});
-  document.addEventListener('visibilitychange',function(){ document.hidden?stop():start(); });
-  resize(); start();
-})();
-</script>
-<script src="shell.js?v=1782980000" defer></script>
-<script>window.RHO_SELL={accent:'#ff7d1f',product:'rhobear',greet:"Hey — I'm Rho. Ask me about any RHOBEAR product, or tell me what you want built and I'll bring it to the team."};</script>
-<script src="../../assets/rho-sell.js" defer></script>
 </body>
 </html>
