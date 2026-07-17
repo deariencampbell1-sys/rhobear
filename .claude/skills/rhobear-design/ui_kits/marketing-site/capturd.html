@@ -1,314 +1,344 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>RHOBEAR Captur'd — screenshots free, AI demo videos in minutes</title>
-<meta name="description" content="Two jobs, one tool. FREE: a deterministic swarm soaks every page and state of a finished site into clean screenshots for pennies — MIT, forever. PRO $19/mo: an agent films the demo — human-like typing, tight zooms, HD voiceover — a 4-hour job in ~4 minutes. Hosted studio at capturd.rhobear.ai, installable on any device.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782940000">
+<meta name="description" content="Two jobs, one tool. FREE: a deterministic swarm soaks every page and state of a finished site into clean screenshots for pennies — MIT, forever. PRO $19/mo: an agent films the demo — human-like typing, tight zooms, HD voiceover — a 4-hour job in ~4 minutes. Hosted studio at capturd.rhobear.ai, installable on any device." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M2 28 L12 9 L19 20 L23 13 L30 28 Z' fill='%234A9EFF'/%3E%3Ccircle cx='24' cy='7' r='2.4' fill='%23D4A843'/%3E%3C/svg%3E" />
+<link rel="preload" as="image" href="../../assets/pages/capturd/hero-desktop.webp" type="image/webp" media="(min-width: 769px)" />
+<link rel="preload" as="image" href="../../assets/pages/capturd/mobile-portrait.webp" type="image/webp" media="(max-width: 768px)" />
+<link rel="stylesheet" href="https://use.typekit.net/sbv5bcv.css" />
 <style>
   :root{
-    --bg:#120c02; --bg-2:#1a1305; --bg-3:#211808; --panel:rgba(255,255,255,0.03);
-    --panel-hi:rgba(255,255,255,0.05);
-    --border:rgba(255,255,255,0.07); --border-hi:rgba(255,125,31,0.22);
-    --text:#f6efe2; --text-2:#b8a98f; --text-dim:#7d6e52;
-    --amber:#ff7d1f; --amber-hi:#ffa24d; --amber-glow:rgba(255,125,31,0.18);
-    --sun:#ffb56b; --green:#4ade80; --red:#f87171;
-    --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
-    --sans:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;
+    /* mountain base tokens (delta only — no new base values) */
+    --rb-summit-blue:#1A2435; --rb-deep-shadow:#0D1520; --rb-frost-white:#E8F0F7;
+    --rb-valley-gold:#D4A843; --rb-teal-accent:#2A8FA8;
+    --rb-card-frost:rgba(16,22,34,0.42); --rb-card-border:rgba(255,255,255,0.14);
+    --rb-card-radius:24px; --rb-pill-radius:99px; --rb-blur:12px;
+    --rb-ease:cubic-bezier(0.16,1,0.3,1);
+    /* Captur'd accent delta */
+    --accent:#4A9EFF; --accent-hi:#7ab4ff; --accent-dim:#2b6fc0;
+    --accent-glow:rgba(74,158,255,0.4); --accent-soft:rgba(74,158,255,0.10);
+    --ink:#08111f;
+    --text:#E8F0F7; --text-2:rgba(232,240,247,0.78); --text-3:rgba(232,240,247,0.55);
+    /* typekit trio */
+    --f-display:"rokkitt",Georgia,'Times New Roman',serif;
+    --f-body:"lato",-apple-system,"Segoe UI",Roboto,sans-serif;
+    --f-mono:"droid-sans-mono",ui-monospace,Menlo,monospace;
   }
-  *{box-sizing:border-box;margin:0;padding:0}
+  *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  section[id],#top{scroll-margin-top:84px}
-  a{color:inherit;text-decoration:none}
-  a:hover{color:var(--amber-hi)}
-  ::selection{background:var(--amber);color:#1a1300}
-
-  /* ═══════════ CAPTURE-FRAME BACKGROUND ═══════════ */
-  .bg-layer{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
-  .grid-bg{
-    position:absolute;inset:-100px;
-    background-image:
-      linear-gradient(rgba(255,125,31,0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,125,31,0.05) 1px, transparent 1px);
-    background-size:74px 74px;
-    mask-image:radial-gradient(ellipse 92% 72% at 50% 26%, #000 26%, transparent 80%);
-    -webkit-mask-image:radial-gradient(ellipse 92% 72% at 50% 26%, #000 26%, transparent 80%);
-    animation:gridDrift 90s linear infinite;
+  section[id],#top{scroll-margin-top:88px}
+  body{
+    background:var(--rb-summit-blue); color:var(--text);
+    font-family:var(--f-body); line-height:1.6; overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
   }
-  @keyframes gridDrift{0%{transform:translate(0,0)}100%{transform:translate(74px,74px)}}
-  .glow-orb{position:absolute;border-radius:50%;filter:blur(82px);opacity:0.5;animation:orbDrift 26s ease-in-out infinite alternate}
-  .orb-1{width:540px;height:540px;background:radial-gradient(circle, rgba(255,125,31,0.30) 0%, transparent 70%);top:-90px;right:-110px;animation-duration:32s}
-  .orb-2{width:460px;height:460px;background:radial-gradient(circle, rgba(255,181,107,0.18) 0%, transparent 70%);top:42vh;left:-130px;animation-duration:40s;animation-delay:-8s}
-  .orb-3{width:380px;height:380px;background:radial-gradient(circle, rgba(255,125,31,0.16) 0%, transparent 70%);top:122vh;right:10vw;animation-duration:48s;animation-delay:-15s}
-  @keyframes orbDrift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-30px) scale(1.08)}100%{transform:translate(-30px,40px) scale(0.94)}}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--accent);color:var(--ink)}
+
+  /* page atmosphere behind everything */
+  .bg-atmos{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+  .bg-atmos .glow{position:absolute;border-radius:50%;filter:blur(90px);opacity:0.4}
+  .bg-atmos .g1{width:520px;height:520px;background:radial-gradient(circle,rgba(74,158,255,0.28),transparent 70%);top:36vh;left:-140px}
+  .bg-atmos .g2{width:440px;height:440px;background:radial-gradient(circle,rgba(200,134,10,0.14),transparent 70%);top:120vh;right:-120px}
+  .bg-atmos .g3{width:400px;height:400px;background:radial-gradient(circle,rgba(74,158,255,0.16),transparent 70%);top:210vh;left:20vw}
+
+  /* cool dust motes */
+  .dust{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+  .mote{position:absolute;width:3px;height:3px;border-radius:50%;background:rgba(160,200,255,0.55);
+    box-shadow:0 0 6px rgba(120,180,255,0.6);opacity:0;animation:drift linear infinite}
+  @keyframes drift{0%{transform:translateY(20px);opacity:0}15%{opacity:.4}85%{opacity:.35}100%{transform:translateY(-120px);opacity:0}}
 
   /* reveal */
-  .reveal{opacity:0;transform:translateY(36px);filter:blur(6px);transition:opacity 1.0s cubic-bezier(0.16,1,0.3,1), transform 1.0s cubic-bezier(0.16,1,0.3,1), filter 1.0s ease}
-  .reveal.in{opacity:1;transform:translateY(0);filter:blur(0)}
-  .reveal-stagger > *{opacity:0;transform:translateY(28px) scale(0.98);filter:blur(4px);transition:opacity 0.8s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s ease}
-  .reveal-stagger.in > *{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
-  .reveal-stagger.in > *:nth-child(1){transition-delay:0.04s}.reveal-stagger.in > *:nth-child(2){transition-delay:0.14s}
-  .reveal-stagger.in > *:nth-child(3){transition-delay:0.24s}.reveal-stagger.in > *:nth-child(4){transition-delay:0.34s}
-  .reveal-stagger.in > *:nth-child(5){transition-delay:0.44s}.reveal-stagger.in > *:nth-child(6){transition-delay:0.54s}
-  @media (prefers-reduced-motion: reduce){.reveal,.reveal-stagger > *{opacity:1;transform:none;filter:none;transition:none}}
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s var(--rb-ease),transform .6s var(--rb-ease)}
+  .reveal.in{opacity:1;transform:none}
+  .stagger>*{opacity:0;transform:translateY(20px);transition:opacity .6s var(--rb-ease),transform .6s var(--rb-ease)}
+  .stagger.in>*{opacity:1;transform:none}
+  .stagger.in>*:nth-child(1){transition-delay:.05s}.stagger.in>*:nth-child(2){transition-delay:.13s}
+  .stagger.in>*:nth-child(3){transition-delay:.21s}.stagger.in>*:nth-child(4){transition-delay:.29s}
+  .stagger.in>*:nth-child(5){transition-delay:.37s}.stagger.in>*:nth-child(6){transition-delay:.45s}
 
-  /* topbar */
-  .top{position:sticky;top:0;z-index:50;background:rgba(18,12,2,0.7);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-  .top-inner{max-width:1240px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:24px}
-  .brand{display:flex;align-items:center;gap:12px;font-weight:600;font-size:15px;letter-spacing:0.01em}
-  .brand img{width:34px;height:34px;display:block;image-rendering:pixelated;filter:hue-rotate(205deg) saturate(1.55) drop-shadow(0 0 7px rgba(255,125,31,0.6))}
-  .brand-name{display:flex;align-items:baseline;gap:8px}
-  .brand-name b{font-weight:700;color:var(--text)}
-  .brand-name span{color:var(--text-2);font-weight:400}
-  .nav{display:flex;gap:4px;margin-left:auto;font-size:13px;font-weight:500}
-  .nav a{padding:8px 14px;border-radius:8px;color:var(--text-2);transition:all 0.15s}
-  .nav a:hover{background:var(--panel);color:var(--text)}
-  .nav a.active{color:var(--amber)}
-  .cta-pill{background:var(--amber);color:#1a1300;padding:10px 18px;border-radius:99px;font-weight:600;font-size:13px;border:1px solid var(--amber);transition:all 0.2s;display:inline-flex;align-items:center;gap:8px}
-  .cta-pill:hover{background:var(--amber-hi);color:#1a1300;transform:translateY(-1px);box-shadow:0 8px 24px -6px rgba(255,125,31,0.45)}
-  .cta-pill svg{width:14px;height:14px}
+  /* ── nav (homepage chrome) ─────────────────────────────── */
+  #nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+    padding:14px 40px;background:rgba(13,21,32,0.6);
+    -webkit-backdrop-filter:blur(16px) saturate(1.2);backdrop-filter:blur(16px) saturate(1.2);
+    border-bottom:1px solid rgba(255,255,255,0.07)}
+  #nav .brand{display:flex;align-items:center;gap:11px}
+  #nav .brand img{width:30px;height:30px;image-rendering:pixelated;filter:hue-rotate(178deg) saturate(1.35) drop-shadow(0 0 6px var(--accent-glow))}
+  #nav .wordmark{font-family:var(--f-display);font-weight:900;font-size:1.15rem;letter-spacing:0.06em}
+  #nav .links{display:flex;gap:26px;font-size:0.74rem;font-weight:700;letter-spacing:0.1em;color:var(--text-3);align-items:center}
+  #nav .links a{transition:color .2s}
+  #nav .links a:hover{color:var(--text)}
+  #nav .links a.active{color:var(--accent)}
+  #nav .nav-more{position:relative}
+  #nav .nav-more-panel{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(-6px);
+    display:flex;flex-direction:column;gap:2px;min-width:200px;padding:8px;
+    background:var(--rb-card-frost);-webkit-backdrop-filter:blur(var(--rb-blur)) saturate(1.25);backdrop-filter:blur(var(--rb-blur)) saturate(1.25);
+    border:1px solid var(--rb-card-border);border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,0.5);
+    opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s var(--rb-ease),transform .2s var(--rb-ease),visibility .2s}
+  #nav .nav-more:hover .nav-more-panel,#nav .nav-more:focus-within .nav-more-panel{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+  #nav .nav-more-panel a{padding:9px 12px;border-radius:9px;white-space:nowrap;font-size:0.76rem;letter-spacing:0.04em;font-weight:600}
+  #nav .nav-more-panel a:hover{background:rgba(255,255,255,0.07)}
+  #nav .nav-more-panel a.active{color:var(--accent)}
+  #nav .cta-pill{background:var(--accent);color:var(--ink);border:0;padding:9px 20px;border-radius:var(--rb-pill-radius);
+    font-family:var(--f-body);font-size:0.8rem;font-weight:700;box-shadow:0 0 22px var(--accent-glow);
+    transition:transform .2s var(--rb-ease),box-shadow .2s}
+  #nav .cta-pill:hover{transform:translateY(-1px);box-shadow:0 0 34px var(--accent-glow)}
 
-  /* hero */
-  .hero{max-width:1240px;margin:0 auto;padding:96px 24px 80px;position:relative}
-  .hero-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:center}
-  .live-tag{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11px;color:var(--amber);padding:6px 12px;background:rgba(255,125,31,0.08);border:1px solid rgba(255,125,31,0.22);border-radius:99px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:26px}
-  .live-dot{width:6px;height:6px;background:var(--amber);border-radius:50%;box-shadow:0 0 10px var(--amber);animation:pulse 2s ease-in-out infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.45}}
-  h1{font-size:clamp(40px,5.5vw,64px);line-height:1.06;letter-spacing:-0.025em;font-weight:700;margin-bottom:24px}
-  h1 .accent{background:linear-gradient(110deg, var(--amber) 30%, var(--amber-hi) 50%, var(--amber) 70%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 5s linear infinite}
-  @keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-  .lede{font-size:19px;color:var(--text-2);line-height:1.55;max-width:580px;margin-bottom:34px}
-  .lede strong{color:var(--text);font-weight:500}
+  /* ── hero ──────────────────────────────────────────────── */
+  .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:0;will-change:transform}
+  .hero-bg img{width:100%;height:120%;object-fit:cover;object-position:70% 50%;display:block}
+  .hero-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      linear-gradient(90deg, rgba(13,21,32,0.94) 0%, rgba(13,21,32,0.78) 30%, rgba(13,21,32,0.28) 56%, rgba(13,21,32,0) 74%),
+      linear-gradient(0deg, var(--rb-summit-blue) 1%, rgba(26,36,53,0.1) 26%, transparent 44%)}
+  .hero-inner{position:relative;z-index:2;max-width:1240px;width:100%;margin:0 auto;padding:120px 40px 90px}
+  .hero-col{max-width:640px}
+  .live-tag{display:inline-flex;align-items:center;gap:9px;font-family:var(--f-mono);font-size:0.7rem;color:var(--accent-hi);
+    padding:6px 13px;background:var(--accent-soft);border:1px solid rgba(74,158,255,0.28);border-radius:var(--rb-pill-radius);
+    text-transform:uppercase;letter-spacing:0.12em;margin-bottom:26px}
+  .live-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;box-shadow:0 0 10px var(--accent);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+  .eyebrow{display:inline-block;font-family:var(--f-mono);font-size:0.68rem;color:var(--accent);letter-spacing:0.18em;
+    text-transform:uppercase;margin-bottom:14px;padding:5px 12px;background:var(--accent-soft);border:1px solid rgba(74,158,255,0.24);border-radius:var(--rb-pill-radius)}
+  .hero h1{font-family:var(--f-display);font-weight:900;font-size:clamp(3.1rem,7vw,5.6rem);line-height:0.98;letter-spacing:-0.02em;
+    margin-bottom:22px;text-shadow:0 8px 60px rgba(0,0,0,0.55)}
+  .hero h1 .accent{color:var(--accent);text-shadow:0 0 46px var(--accent-glow)}
+  .hero .lede{font-size:1.06rem;color:var(--text);line-height:1.65;max-width:560px;margin-bottom:32px;text-shadow:0 2px 22px rgba(0,0,0,0.6)}
+  .hero .lede strong{font-weight:700}
   .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-  .btn-primary{background:var(--amber);color:#1a1300;padding:15px 28px;border-radius:99px;font-weight:600;font-size:15px;border:1px solid var(--amber);transition:all 0.2s;display:inline-flex;align-items:center;gap:10px;box-shadow:0 8px 28px -8px rgba(255,125,31,0.4)}
-  .btn-primary:hover{background:var(--amber-hi);color:#1a1300;transform:translateY(-2px);box-shadow:0 14px 38px -10px rgba(255,125,31,0.55)}
-  .btn-primary svg{width:18px;height:18px}
-  .btn-secondary{background:rgba(255,255,255,0.04);color:var(--text);padding:15px 28px;border-radius:99px;font-weight:500;font-size:15px;border:1px solid var(--border-hi);transition:all 0.2s;display:inline-flex;align-items:center;gap:10px}
-  .btn-secondary:hover{background:rgba(255,255,255,0.08);border-color:var(--text-2);transform:translateY(-2px)}
-  .hero-stamp{margin-top:22px;display:inline-flex;align-items:center;gap:10px;color:var(--text-dim);font-size:13px;font-family:var(--mono)}
-  .hero-stamp svg{width:14px;height:14px;color:var(--amber)}
+  .btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:var(--ink);
+    padding:15px 28px;border-radius:var(--rb-pill-radius);font-family:var(--f-body);font-weight:700;font-size:0.98rem;border:0;cursor:pointer;
+    box-shadow:0 0 30px var(--accent-glow);transition:transform .2s var(--rb-ease),box-shadow .2s}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 46px var(--accent-glow)}
+  .btn-primary svg{width:17px;height:17px}
+  .btn-ghost{display:inline-flex;align-items:center;gap:9px;background:rgba(16,22,34,0.5);color:var(--text);
+    padding:15px 26px;border-radius:var(--rb-pill-radius);font-family:var(--f-body);font-weight:600;font-size:0.98rem;
+    border:1px solid var(--rb-card-border);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+    transition:border-color .2s,transform .2s var(--rb-ease)}
+  .btn-ghost:hover{border-color:rgba(255,255,255,0.42);transform:translateY(-2px)}
+  .btn-ghost svg{width:17px;height:17px}
+  .hero-stamp{margin-top:22px;display:inline-flex;align-items:center;gap:10px;color:var(--text-3);font-size:0.78rem;font-family:var(--f-mono)}
+  .hero-stamp svg{width:14px;height:14px;color:var(--accent)}
 
-  /* hero capture-grid card */
-  .cap-card{background:linear-gradient(180deg,rgba(255,255,255,0.045),rgba(255,255,255,0.015));border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 24px 64px -20px rgba(0,0,0,0.6),0 0 0 1px rgba(255,125,31,0.05)}
-  .cap-bar{display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.25);font-family:var(--mono);font-size:11px;color:var(--text-2)}
-  .cap-bar .pd{width:5px;height:5px;border-radius:50%;background:var(--amber);box-shadow:0 0 8px var(--amber);animation:pulse 1.6s ease-in-out infinite}
-  .cap-grid{padding:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-  .tile{border:1px solid var(--border);border-radius:9px;overflow:hidden;background:var(--bg-2);aspect-ratio:4/3;display:flex;flex-direction:column}
-  .tile .pic{flex:1;background:
-      linear-gradient(180deg, rgba(255,125,31,0.16), rgba(255,125,31,0.02)),
-      repeating-linear-gradient(180deg, transparent 0 7px, rgba(255,255,255,0.03) 7px 8px)}
-  .tile .cap{font-family:var(--mono);font-size:9px;color:var(--text-dim);padding:5px 7px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border)}
-  .tile.done .cap{color:var(--green)}
-  .tile.live{outline:1.5px solid var(--amber);outline-offset:-1px}
-  .tile.live .pic{animation:shimmerTile 1.4s ease-in-out infinite}
-  @keyframes shimmerTile{0%,100%{opacity:1}50%{opacity:0.55}}
-  .tile.live .cap{color:var(--amber)}
-  .cap-meta{display:flex;border-top:1px solid var(--border);font-family:var(--mono)}
-  .cap-meta div{flex:1;padding:13px 16px;border-right:1px solid var(--border);font-size:11px;color:var(--text-dim)}
-  .cap-meta div:last-child{border-right:none}
-  .cap-meta b{display:block;font-size:15px;color:var(--amber);font-weight:600;margin-top:3px}
-
-  /* stat strip */
-  .strip{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:linear-gradient(180deg,var(--bg-2),var(--bg-3));position:relative;overflow:hidden}
-  .strip-inner{max-width:1240px;margin:0 auto;padding:38px 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+  /* ── stat strip ───────────────────────────────────────── */
+  .strip{border-top:1px solid rgba(255,255,255,0.07);border-bottom:1px solid rgba(255,255,255,0.07);
+    background:linear-gradient(180deg,rgba(16,22,34,0.5),rgba(13,21,32,0.5));position:relative}
+  .strip-inner{max-width:1240px;margin:0 auto;padding:40px 40px;display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
   .stat-cell{display:flex;flex-direction:column;gap:6px}
-  .stat-n{font-family:var(--mono);font-size:34px;font-weight:600;color:var(--amber);line-height:1;letter-spacing:-0.02em}
-  .stat-l{font-size:12px;color:var(--text-2);text-transform:uppercase;letter-spacing:0.09em;font-weight:500}
-  .stat-s{font-size:11px;color:var(--text-dim);font-family:var(--mono)}
+  .stat-n{font-family:var(--f-display);font-weight:900;font-size:2.4rem;color:var(--accent);line-height:1;letter-spacing:-0.02em}
+  .stat-l{font-size:0.76rem;color:var(--text-2);text-transform:uppercase;letter-spacing:0.09em;font-weight:700}
+  .stat-s{font-size:0.72rem;color:var(--text-3);font-family:var(--f-mono)}
 
-  /* section base */
+  /* ── section base ─────────────────────────────────────── */
   section{padding:120px 0;position:relative}
-  .wrap{max-width:1240px;margin:0 auto;padding:0 24px;position:relative}
-  .eyebrow{display:inline-block;font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:14px;padding:5px 12px;background:var(--amber-glow);border:1px solid rgba(255,125,31,0.22);border-radius:99px}
-  h2{font-size:clamp(32px,4vw,46px);line-height:1.1;letter-spacing:-0.02em;font-weight:700;margin-bottom:18px;max-width:780px}
-  h2 .accent{color:var(--amber)}
-  .section-lede{font-size:17px;color:var(--text-2);max-width:680px;margin-bottom:56px;line-height:1.55}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 40px;position:relative}
+  h2{font-family:var(--f-display);font-weight:800;font-size:clamp(2.1rem,4vw,3.1rem);line-height:1.06;letter-spacing:-0.015em;margin-bottom:16px;max-width:820px}
+  h2 .accent{color:var(--accent)}
+  .section-lede{font-size:1.02rem;color:var(--text-2);max-width:700px;margin-bottom:52px;line-height:1.65}
 
-  /* how it works */
+  /* glass card base */
+  .glass{background:var(--rb-card-frost);-webkit-backdrop-filter:blur(var(--rb-blur)) saturate(1.2);backdrop-filter:blur(var(--rb-blur)) saturate(1.2);
+    border:1px solid var(--rb-card-border);border-radius:var(--rb-card-radius)}
+
+  /* how-it-works steps */
   .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-  .step{background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01));border:1px solid var(--border);border-radius:16px;padding:30px 24px;position:relative;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);overflow:hidden}
-  .step::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%, rgba(255,125,31,0.08), transparent 60%);opacity:0;transition:opacity 0.3s}
-  .step:hover{border-color:var(--border-hi);transform:translateY(-4px);box-shadow:0 18px 40px -16px rgba(0,0,0,0.5)}
-  .step:hover::before{opacity:1}
-  .step-n{position:absolute;top:22px;right:24px;font-family:var(--mono);font-size:11px;color:var(--text-dim);letter-spacing:0.1em}
-  .step-icon{width:48px;height:48px;background:linear-gradient(135deg, rgba(255,125,31,0.18), rgba(255,125,31,0.06));border:1px solid rgba(255,125,31,0.28);border-radius:12px;display:grid;place-items:center;margin-bottom:22px;color:var(--amber);position:relative;z-index:1}
+  .step{padding:30px 26px;position:relative;transition:transform .3s var(--rb-ease),border-color .3s,box-shadow .3s;overflow:hidden}
+  .step:hover{transform:translateY(-4px);border-color:rgba(74,158,255,0.4);box-shadow:0 0 40px var(--accent-glow)}
+  .step-n{position:absolute;top:24px;right:26px;font-family:var(--f-mono);font-size:0.72rem;color:var(--text-3);letter-spacing:0.1em}
+  .step-icon{width:48px;height:48px;background:linear-gradient(135deg,rgba(74,158,255,0.2),rgba(74,158,255,0.05));
+    border:1px solid rgba(74,158,255,0.3);border-radius:12px;display:grid;place-items:center;margin-bottom:22px;color:var(--accent)}
   .step-icon svg{width:24px;height:24px}
-  .step h3{font-size:17px;font-weight:600;margin-bottom:8px;position:relative;z-index:1}
-  .step p{font-size:14px;color:var(--text-2);line-height:1.55;position:relative;z-index:1}
-  .step code{font-family:var(--mono);font-size:12px;background:rgba(255,125,31,0.1);color:var(--amber);padding:2px 7px;border-radius:5px}
+  .step h3{font-family:var(--f-display);font-weight:700;font-size:1.15rem;margin-bottom:8px}
+  .step p{font-size:0.9rem;color:var(--text-2);line-height:1.6}
+  .step code{font-family:var(--f-mono);font-size:0.8rem;background:var(--accent-soft);color:var(--accent-hi);padding:2px 7px;border-radius:5px}
 
-  /* signature */
-  .cb-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center}
-  .cb-steps{display:flex;flex-direction:column;gap:24px;margin-top:40px}
-  .cb-step{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:flex-start;padding:22px 26px;background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01));border:1px solid var(--border);border-radius:14px;transition:all 0.2s}
-  .cb-step:hover{border-color:var(--border-hi);transform:translateX(4px)}
-  .cb-step-tag{font-family:var(--mono);font-size:10px;font-weight:600;color:var(--amber);background:var(--amber-glow);border:1px solid rgba(255,125,31,0.22);border-radius:6px;padding:6px 10px;letter-spacing:0.1em;white-space:nowrap;align-self:flex-start;margin-top:2px}
-  .cb-step h4{font-size:16px;font-weight:600;margin-bottom:6px}
-  .cb-step p{font-size:14px;color:var(--text-2);line-height:1.55}
-  .cb-callout{margin-top:32px;padding:18px 22px;background:linear-gradient(90deg, rgba(255,125,31,0.08), transparent);border-left:3px solid var(--amber);border-radius:0 12px 12px 0;font-size:15px;font-style:italic;color:var(--text);line-height:1.5}
-  .cb-callout strong{color:var(--amber);font-style:normal;font-weight:600}
-  .code-card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.005));border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 24px 64px -24px rgba(0,0,0,0.6)}
-  .code-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.25);font-family:var(--mono);font-size:11px;color:var(--text-2)}
-  .code-head .pulse{display:inline-flex;align-items:center;gap:7px;color:var(--amber)}
-  .code-head .pulse-dot{width:5px;height:5px;background:var(--amber);border-radius:50%;box-shadow:0 0 8px var(--amber);animation:pulse 2s ease-in-out infinite}
-  .code-body{padding:20px 22px;font-family:var(--mono);font-size:12.5px;line-height:1.7;color:var(--text-2)}
-  .code-body .ln{display:block;white-space:pre}
-  .code-body .k{color:var(--sun)}.code-body .ok{color:var(--green)}.code-body .dim{color:var(--text-dim)}
-  .code-stats{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--border)}
-  .code-stat{padding:16px 20px;border-right:1px solid var(--border)}
-  .code-stat:nth-child(2n){border-right:none}.code-stat:nth-child(n+3){border-top:1px solid var(--border)}
-  .code-stat-k{font-family:var(--mono);font-size:10px;color:var(--text-2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px}
-  .code-stat-v{font-family:var(--mono);font-size:18px;color:var(--text);font-weight:600}
-  .code-stat-v.amber{color:var(--amber)}
+  /* two-col signature blocks */
+  .cb-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:60px;align-items:center}
+  .cb-steps{display:flex;flex-direction:column;gap:18px;margin-top:34px}
+  .cb-step{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:flex-start;padding:20px 24px;transition:transform .2s var(--rb-ease),border-color .2s}
+  .cb-step:hover{border-color:rgba(74,158,255,0.4);transform:translateX(4px)}
+  .cb-tag{font-family:var(--f-mono);font-size:0.62rem;font-weight:600;color:var(--accent);background:var(--accent-soft);
+    border:1px solid rgba(74,158,255,0.24);border-radius:6px;padding:6px 9px;letter-spacing:0.1em;white-space:nowrap;margin-top:2px}
+  .cb-step h4{font-family:var(--f-display);font-weight:700;font-size:1.02rem;margin-bottom:5px}
+  .cb-step p{font-size:0.88rem;color:var(--text-2);line-height:1.6}
+  .cb-step p a{color:var(--accent-hi);border-bottom:1px solid rgba(74,158,255,0.35)}
+  .cb-callout{margin-top:28px;padding:18px 22px;background:linear-gradient(90deg,var(--accent-soft),transparent);
+    border-left:3px solid var(--accent);border-radius:0 12px 12px 0;font-size:0.98rem;color:var(--text);line-height:1.5}
+  .cb-callout strong{color:var(--accent-hi);font-weight:700}
+
+  /* terminal / code card */
+  .code-card{overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,0.5)}
+  .code-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--rb-card-border);
+    background:rgba(0,0,0,0.25);font-family:var(--f-mono);font-size:0.72rem;color:var(--text-2)}
+  .code-head .pulse{display:inline-flex;align-items:center;gap:7px;color:var(--accent)}
+  .code-head .pulse-dot{width:5px;height:5px;background:var(--accent);border-radius:50%;box-shadow:0 0 8px var(--accent);animation:pulse 2s ease-in-out infinite}
+  .code-body{padding:20px 22px;font-family:var(--f-mono);font-size:0.78rem;line-height:1.75;color:var(--text-2)}
+  .code-body .ln{display:block;white-space:pre-wrap}
+  .code-body .k{color:var(--rb-valley-gold)}.code-body .ok{color:#7fe0a0}.code-body .dim{color:var(--text-3)}
+  .code-stats{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--rb-card-border)}
+  .code-stat{padding:16px 20px;border-right:1px solid var(--rb-card-border)}
+  .code-stat:nth-child(2n){border-right:none}.code-stat:nth-child(n+3){border-top:1px solid var(--rb-card-border)}
+  .code-stat-k{font-family:var(--f-mono);font-size:0.62rem;color:var(--text-2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px}
+  .code-stat-v{font-family:var(--f-mono);font-size:1.05rem;color:var(--text);font-weight:600}
+  .code-stat-v.accent{color:var(--accent)}
+
+  /* bench table */
+  .bench-wrap{overflow-x:auto;border:1px solid var(--rb-card-border);border-radius:16px;background:var(--rb-card-frost);
+    -webkit-backdrop-filter:blur(var(--rb-blur));backdrop-filter:blur(var(--rb-blur))}
+  .bench{width:100%;border-collapse:collapse;font-size:0.9rem;min-width:580px}
+  .bench th,.bench td{text-align:left;padding:15px 20px;border-bottom:1px solid var(--rb-card-border)}
+  .bench thead th{font-family:var(--f-mono);font-size:0.66rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);background:rgba(74,158,255,0.06)}
+  .bench tbody tr:last-child td{border-bottom:none}
+  .bench .rung{font-family:var(--f-display);color:var(--accent);font-weight:800;font-size:1rem}
+  .bench .num{font-family:var(--f-mono);color:var(--text)}
+  .bench-note{color:var(--text-3);font-size:0.76rem;margin-top:14px;font-family:var(--f-mono)}
 
   /* pricing */
-  .pricing{background:linear-gradient(180deg, var(--bg-2), var(--bg-3) 50%, var(--bg-2));border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-  .price-head{text-align:center;margin-bottom:56px}
-  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1100px;margin:0 auto}
-  .plan{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:38px;display:flex;flex-direction:column;position:relative;transition:all 0.3s}
-  .plan:hover{border-color:var(--border-hi);transform:translateY(-2px)}
-  .plan.featured{border-color:rgba(255,125,31,0.5);background:linear-gradient(180deg, rgba(255,125,31,0.05), var(--bg) 50%);box-shadow:0 0 0 1px rgba(255,125,31,0.15),0 24px 60px -20px rgba(255,125,31,0.18)}
-  .plan-flag{position:absolute;top:-12px;left:38px;background:var(--amber);color:#1a1300;font-size:11px;font-weight:600;padding:6px 14px;border-radius:99px;letter-spacing:0.05em;text-transform:uppercase;font-family:var(--mono);box-shadow:0 6px 18px -4px rgba(255,125,31,0.5)}
-  .plan-name{font-size:13px;color:var(--text-2);font-family:var(--mono);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:18px}
-  .plan-price{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}
-  .price-n{font-size:56px;font-weight:700;letter-spacing:-0.03em;line-height:1}
-  .price-per{font-size:15px;color:var(--text-2)}
-  .plan-sub{font-size:14px;color:var(--text-2);margin-bottom:32px;min-height:22px}
-  .plan-features{list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:36px;flex:1}
-  .plan-features li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:var(--text);line-height:1.5}
-  .check{width:18px;height:18px;flex-shrink:0;color:var(--amber);margin-top:2px}
-  .plan-cta{display:flex;align-items:center;justify-content:center;gap:8px;padding:15px;border-radius:99px;font-weight:600;font-size:15px;transition:all 0.2s}
-  .plan-cta.primary{background:var(--amber);color:#1a1300;border:1px solid var(--amber)}
-  .plan-cta.primary:hover{background:var(--amber-hi);transform:translateY(-1px);box-shadow:0 12px 32px -10px rgba(255,125,31,0.5)}
-  .plan-cta.outline{background:transparent;color:var(--text);border:1px solid var(--border-hi)}
-  .plan-cta.outline:hover{background:var(--panel);border-color:var(--text-2)}
-  .pricing-note{text-align:center;color:var(--text-dim);font-size:13px;margin-top:36px;font-family:var(--mono)}
-  .pricing-note strong{color:var(--text-2);font-weight:500}
+  .pricing{background:linear-gradient(180deg,rgba(16,22,34,0.5),rgba(13,21,32,0.6) 50%,rgba(16,22,34,0.5));border-top:1px solid rgba(255,255,255,0.07);border-bottom:1px solid rgba(255,255,255,0.07)}
+  .price-head{text-align:center;margin-bottom:52px}
+  .price-head h2{margin:0 auto 16px}
+  .price-head .section-lede{margin:0 auto}
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1120px;margin:0 auto}
+  .plan{padding:36px;display:flex;flex-direction:column;position:relative;transition:transform .3s var(--rb-ease),border-color .3s,box-shadow .3s}
+  .plan:hover{transform:translateY(-3px);border-color:rgba(74,158,255,0.35)}
+  .plan.featured{border-color:rgba(74,158,255,0.5);box-shadow:0 0 0 1px rgba(74,158,255,0.18),0 0 50px var(--accent-glow)}
+  .plan-flag{position:absolute;top:-12px;left:36px;background:var(--accent);color:var(--ink);font-family:var(--f-mono);font-size:0.66rem;font-weight:600;
+    padding:6px 14px;border-radius:var(--rb-pill-radius);letter-spacing:0.05em;text-transform:uppercase;box-shadow:0 6px 18px -4px var(--accent-glow)}
+  .plan-name{font-family:var(--f-mono);font-size:0.72rem;color:var(--text-2);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:18px}
+  .plan-price{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
+  .price-n{font-family:var(--f-mono);font-weight:400;font-size:3rem;letter-spacing:-0.02em;line-height:1;color:var(--text)}
+  .price-per{font-family:var(--f-mono);font-size:0.9rem;color:var(--text-2)}
+  .plan-sub{font-size:0.9rem;color:var(--text-2);margin-bottom:30px;min-height:22px}
+  .plan-features{list-style:none;display:flex;flex-direction:column;gap:13px;margin-bottom:34px;flex:1}
+  .plan-features li{display:flex;align-items:flex-start;gap:11px;font-size:0.9rem;color:var(--text);line-height:1.5}
+  .check{width:18px;height:18px;flex-shrink:0;color:var(--accent);margin-top:2px}
+  .plan-cta{display:flex;align-items:center;justify-content:center;gap:8px;padding:15px;border-radius:var(--rb-pill-radius);
+    font-family:var(--f-body);font-weight:700;font-size:0.95rem;transition:transform .2s var(--rb-ease),box-shadow .2s,background .2s,border-color .2s}
+  .plan-cta.primary{background:var(--accent);color:var(--ink);border:1px solid var(--accent)}
+  .plan-cta.primary:hover{transform:translateY(-1px);box-shadow:0 0 34px var(--accent-glow)}
+  .plan-cta.outline{background:transparent;color:var(--text);border:1px solid var(--rb-card-border)}
+  .plan-cta.outline:hover{border-color:rgba(74,158,255,0.5);background:var(--accent-soft)}
+  .pricing-note{text-align:center;color:var(--text-3);font-size:0.78rem;margin-top:34px;font-family:var(--f-mono)}
+  .pricing-note strong{color:var(--text-2);font-weight:600}
 
-  /* model rungs + bench */
-  .bench-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,0.025),rgba(255,255,255,0.005))}
-  .bench{width:100%;border-collapse:collapse;font-size:14.5px;min-width:560px}
-  .bench th,.bench td{text-align:left;padding:15px 20px;border-bottom:1px solid var(--border)}
-  .bench thead th{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--amber);background:rgba(255,125,31,0.05)}
-  .bench tbody tr:last-child td{border-bottom:none}
-  .bench tbody td:first-child b{font-size:15px}
-  .bench .rung{color:var(--amber);font-weight:700}
-  .bench .num{font-family:var(--mono);color:var(--text)}
-  .bench-note{color:var(--text-dim);font-size:12.5px;margin-top:14px;font-family:var(--mono)}
-
-  /* faq */
-  .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-  .faq{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));border:1px solid var(--border);border-radius:14px;padding:26px 30px;transition:all 0.2s}
-  .faq:hover{border-color:var(--border-hi)}
-  .faq h4{font-size:16px;font-weight:600;margin-bottom:10px;color:var(--text);display:flex;align-items:center;gap:10px}
-  .faq h4::before{content:'';width:5px;height:5px;background:var(--amber);border-radius:50%;flex-shrink:0;box-shadow:0 0 0 3px rgba(255,125,31,0.18)}
-  .faq p{font-size:14px;color:var(--text-2);line-height:1.6}
-  .faq p code{font-family:var(--mono);font-size:12px;background:rgba(255,125,31,0.1);color:var(--amber);padding:1px 6px;border-radius:5px}
-
-  /* final */
-  .final{padding:140px 0;text-align:center;position:relative;overflow:hidden}
-  .final::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255,125,31,0.08), transparent 70%);pointer-events:none}
-  .final h2{font-size:clamp(36px,5vw,58px);max-width:none;margin:0 auto 24px;position:relative}
-  .final p{font-size:18px;color:var(--text-2);max-width:560px;margin:0 auto 36px;position:relative}
+  /* install / final */
+  .final{padding:130px 0;text-align:center;position:relative;overflow:hidden}
+  .final::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,var(--accent-soft),transparent 70%);pointer-events:none}
+  .final h2{max-width:none;margin:0 auto 18px;position:relative}
+  .final p{font-size:1.05rem;color:var(--text-2);max-width:580px;margin:0 auto 26px;position:relative}
+  .final video{width:100%;max-width:860px;border-radius:16px;display:block;margin:6px auto 26px;background:#060b16;border:1px solid var(--rb-card-border);position:relative}
   .final-ctas{position:relative;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 
-  /* footer */
-  .rb-footer{border-top:1px solid var(--border);background:var(--bg-2);padding:56px 20px 42px}
-  .rb-footer-inner{max-width:1080px;margin:0 auto;display:grid;gap:30px}
-  .rb-foot-kicker{display:block;font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-dim);margin-bottom:11px}
-  .rb-foot-family .rb-foot-copy{font-size:15px;line-height:1.75;color:var(--text-2);max-width:70ch;margin:0}
-  .rb-footer a{color:var(--text);border-bottom:1px solid transparent;transition:color .18s, border-color .18s}
-  .rb-footer a:hover{color:var(--amber-hi);border-bottom-color:var(--amber)}
-  .rb-foot-more{color:var(--amber) !important;white-space:nowrap}
-  .rb-foot-icons{display:flex;flex-wrap:wrap;gap:18px 24px;align-items:center;font-family:var(--mono);font-size:13px}
-  .rb-foot-icons a{display:inline-flex;align-items:center;gap:8px;color:var(--text-2);border:none}
-  .rb-foot-icons a:hover{color:var(--amber-hi)}
-  .rb-foot-icons svg{width:18px;height:18px;fill:currentColor}
-  .rb-foot-base{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center;padding-top:24px;border-top:1px solid var(--border);font-size:12.5px;color:var(--text-dim);font-family:var(--mono)}
-  .rb-foot-base img{width:15px;height:15px;vertical-align:-3px;margin-right:6px;image-rendering:pixelated;filter:hue-rotate(205deg) saturate(1.4)}
-  .rb-foot-base a{color:var(--text-dim)}
+  /* handoff → reviews */
+  .handoff{position:relative;overflow:hidden;border-top:1px solid rgba(255,255,255,0.07)}
+  .handoff::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(212,168,67,0.10) 55%,rgba(212,168,67,0.16));pointer-events:none}
+  .handoff-inner{max-width:1240px;margin:0 auto;padding:66px 40px;display:flex;align-items:center;justify-content:space-between;gap:30px;position:relative;flex-wrap:wrap}
+  .handoff-lede{font-family:var(--f-mono);font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--rb-valley-gold);margin-bottom:12px}
+  .handoff h3{font-family:var(--f-display);font-weight:800;font-size:clamp(1.6rem,3vw,2.3rem);line-height:1.08;max-width:640px}
+  .handoff h3 .g{color:var(--rb-valley-gold)}
+  .handoff-cta{display:inline-flex;align-items:center;gap:10px;background:rgba(212,168,67,0.14);border:1px solid rgba(212,168,67,0.4);
+    color:var(--rb-valley-gold);padding:14px 26px;border-radius:var(--rb-pill-radius);font-family:var(--f-body);font-weight:700;font-size:0.95rem;
+    white-space:nowrap;transition:transform .2s var(--rb-ease),box-shadow .2s}
+  .handoff-cta:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(212,168,67,0.35)}
+  .handoff-cta svg{width:16px;height:16px}
+
+  /* footer (homepage chrome) */
+  #footer{position:relative;z-index:2;background:#070A10;border-top:1px solid rgba(255,255,255,0.07);padding:70px 8vw 46px}
+  #footer .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;max-width:1240px;margin:0 auto 40px}
+  #footer .wordmark{font-family:var(--f-display);font-weight:900;font-size:1.1rem;letter-spacing:0.06em;margin-bottom:12px}
+  #footer p{font-size:0.84rem;line-height:1.65;color:var(--text-3);max-width:42ch}
+  #footer h4{font-family:var(--f-mono);font-size:0.66rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,247,0.45);margin-bottom:14px}
+  #footer ul{list-style:none}
+  #footer li{font-size:0.84rem;color:var(--text-2);margin-bottom:9px}
+  #footer li small{color:rgba(232,240,247,0.4)}
+  #footer li a,#footer .fine a{transition:color .2s}
+  #footer li a:hover,#footer .fine a:hover{color:var(--accent-hi)}
+  #footer .fine{text-align:center;font-size:0.72rem;color:rgba(232,240,247,0.4);border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;max-width:1240px;margin:0 auto}
+  #footer .fine img{width:14px;height:14px;vertical-align:-3px;margin-right:6px;image-rendering:pixelated;filter:hue-rotate(178deg) saturate(1.3)}
 
   @media (max-width:1080px){.price-grid{grid-template-columns:1fr;gap:18px;max-width:520px}}
   @media (max-width:900px){
-    .hero-grid,.cb-grid,.faq-grid{grid-template-columns:1fr;gap:48px}
-    .strip-inner{grid-template-columns:repeat(2,1fr);gap:28px}
-    .steps{grid-template-columns:1fr;gap:16px}.cb-step{grid-template-columns:1fr;gap:12px}
-    .nav{display:none}.top-inner{justify-content:space-between;gap:12px}
-    section{padding:80px 0}.hero{padding:64px 24px 56px}
+    #nav{padding:12px 18px}
+    #nav .links{display:none}
+    .hero{align-items:flex-end}
+    .hero-inner{padding:0 22px calc(env(safe-area-inset-bottom) + 54px)}
+    .hero-bg img{object-position:50% 30%}
+    .hero h1{font-size:clamp(2.6rem,12vw,3.6rem)}
+    .hero-scrim{background:linear-gradient(0deg,rgba(13,21,32,0.98) 4%,rgba(13,21,32,0.82) 34%,rgba(13,21,32,0.3) 62%,rgba(13,21,32,0.08) 100%)}
+    .strip-inner{grid-template-columns:repeat(2,1fr);gap:26px;padding:34px 22px}
+    section{padding:80px 0}.wrap{padding:0 22px}
+    .steps{grid-template-columns:1fr}
+    .cb-grid,.faq-grid{grid-template-columns:1fr;gap:44px}
+    .cb-step{grid-template-columns:1fr}
+    #footer{padding:60px 22px 40px}#footer .cols{grid-template-columns:1fr;gap:30px}
+    .handoff-inner{padding:50px 22px;flex-direction:column;align-items:flex-start}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .reveal,.stagger>*{opacity:1;transform:none;transition:opacity .2s ease}
+    .mote,.live-dot,.pulse-dot{animation:none}
+    .hero-bg{transform:none!important}
+    html{scroll-behavior:auto}
   }
 </style>
 </head>
 <body>
 
-<div class="bg-layer">
-  <div class="grid-bg"></div>
-  <div class="glow-orb orb-1"></div><div class="glow-orb orb-2"></div><div class="glow-orb orb-3"></div>
-</div>
+<div class="bg-atmos"><span class="glow g1"></span><span class="glow g2"></span><span class="glow g3"></span></div>
+<div class="dust" id="dust" aria-hidden="true"></div>
 
-<!-- topbar -->
-<header class="top">
-  <div class="top-inner">
-    <a href="index.html" class="brand" aria-label="RHOBEAR — back to the Hub">
-      <img src="../../assets/rhobear-logo.png?v=1782940000" alt="">
-      <span class="brand-name"><b>RHOBEAR</b><span>RHOBEAR Captur'd</span></span>
-    </a>
-    <nav class="nav">
-      <a href="#how" data-nav>How it works</a>
-      <a href="#demos" data-nav>AI demos</a>
-      <a href="#rungs" data-nav>The models</a>
-      <a href="#pricing" data-nav>Pricing</a>
-      <a href="#faq" data-nav>FAQ</a>
-      <a href="https://github.com/rhobear-ai/rhobear-capturd">Source</a>
-    </nav>
-    <a href="https://capturd.rhobear.ai" class="cta-pill">
-      Open the studio
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-    </a>
+<!-- nav (homepage chrome) -->
+<nav id="nav">
+  <a href="index.html" class="brand" aria-label="RHOBEAR — home">
+    <img src="../../assets/rhobear-logo.png" alt="" />
+    <span class="wordmark">RHOBEAR</span>
+  </a>
+  <div class="links">
+    <a href="index.html">HOME</a><a href="app.html">HUB</a><a href="workbench.html">WORKBENCH</a><a href="plans.html">PLANS</a><a href="rho.html">RHO</a>
+    <div class="nav-more">
+      <a href="designs.html">MORE ▾</a>
+      <div class="nav-more-panel">
+        <a href="designs.html">RHOBEAR Designs</a>
+        <a href="capturd.html" class="active">RHOBEAR Captur'd</a>
+        <a href="https://reviews.rhobear.ai">RHOBEAR Reviews</a>
+        <a href="sales.html">Sales by RHOBEAR</a>
+      </div>
+    </div>
   </div>
-</header>
+  <a class="cta-pill" href="https://workbench.rhobear.ai">Try it free →</a>
+</nav>
 
 <!-- hero -->
 <section class="hero" id="top">
-  <div class="hero-grid">
-    <div class="reveal">
+  <div class="hero-bg" id="heroBg">
+    <picture>
+      <source media="(max-width:768px)" srcset="../../assets/pages/capturd/mobile-portrait.webp" />
+      <img src="../../assets/pages/capturd/hero-desktop.webp" alt="A grizzly on an autumn cliff face beside a deterministic capture shutter panel" fetchpriority="high" />
+    </picture>
+  </div>
+  <div class="hero-scrim"></div>
+  <div class="hero-inner">
+    <div class="hero-col reveal in">
       <div class="live-tag"><span class="live-dot"></span> Screenshots free · AI demo videos in ~4 min</div>
-      <h1>Your product, <span class="accent">filmed by an agent.</span></h1>
-      <p class="lede"><strong>An agent films your demo</strong> — human-like typing, tight semantic zooms, a live cursor, and <strong>HD voiceover</strong> — a four-hour job done in about four minutes. Voice-direct it in plain words: "pan in before you click Buy." And the deterministic screenshot swarm underneath it stays <strong>free forever</strong>.</p>
+      <h1>Capture it.<br><span class="accent">No AI bill.</span></h1>
+      <p class="lede"><strong>An agent films your demo</strong> — human-like typing, tight semantic zooms, a live cursor, and <strong>HD voiceover</strong> — a four-hour job done in about four minutes. And the deterministic screenshot swarm underneath it stays <strong>free forever</strong>.</p>
       <div class="hero-ctas">
         <a href="https://capturd.rhobear.ai" class="btn-primary">
           Open the studio
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
-        <a href="https://github.com/rhobear-ai/rhobear-capturd/releases/download/capturd-latest/RHOBEAR-Capturd-Setup.msix" class="btn-secondary"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10M6 9l4 4 4-4M4 17h12"/></svg>Download for Windows</a>
-        <a href="#demos" class="btn-secondary">See a walkthrough →</a>
+        <a href="https://github.com/rhobear-ai/rhobear-capturd/releases/download/capturd-latest/RHOBEAR-Capturd-Setup.msix" class="btn-ghost">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10M6 9l4 4 4-4M4 17h12"/></svg>
+          Download for Windows
+        </a>
+        <a href="#how" class="btn-ghost">See how it works →</a>
       </div>
       <div class="hero-stamp">
         <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,11 8,16 17,5"/></svg>
         Hosted studio live · installs on any device · HD house voices
-      </div>
-    </div>
-
-    <div class="reveal" style="transition-delay:0.18s">
-      <div class="cap-card">
-        <div class="cap-bar"><span class="pd"></span> RHOBEAR Captur'd · capturing · 48 pages · 3 states</div>
-        <div class="cap-grid">
-          <div class="tile done"><div class="pic"></div><div class="cap"><span>/home</span><span>✓</span></div></div>
-          <div class="tile done"><div class="pic"></div><div class="cap"><span>/pricing</span><span>✓</span></div></div>
-          <div class="tile done"><div class="pic"></div><div class="cap"><span>/pricing:hover</span><span>✓</span></div></div>
-          <div class="tile done"><div class="pic"></div><div class="cap"><span>/docs</span><span>✓</span></div></div>
-          <div class="tile live"><div class="pic"></div><div class="cap"><span>/blog</span><span>●</span></div></div>
-          <div class="tile"><div class="pic" style="opacity:.4"></div><div class="cap"><span>/about</span><span>·</span></div></div>
-        </div>
-        <div class="cap-meta">
-          <div>pages<b>48</b></div>
-          <div>frames<b>144</b></div>
-          <div>cost<b>pennies</b></div>
-        </div>
       </div>
     </div>
   </div>
@@ -316,7 +346,7 @@
 
 <!-- stat strip -->
 <div class="strip">
-  <div class="strip-inner reveal-stagger">
+  <div class="strip-inner stagger">
     <div class="stat-cell"><div class="stat-n">0</div><div class="stat-l">Models in the loop</div><div class="stat-s">Deterministic, every run</div></div>
     <div class="stat-cell"><div class="stat-n">1</div><div class="stat-l">Pass for the whole site</div><div class="stat-s">A swarm, not one at a time</div></div>
     <div class="stat-cell"><div class="stat-n">¢</div><div class="stat-l">Cost per run</div><div class="stat-s">Machine time, nothing else</div></div>
@@ -332,26 +362,26 @@
       <h2>Feed it a map. <span class="accent">Walk away.</span></h2>
       <p class="section-lede">No clicking through pages by hand, no model deciding what to shoot. You hand RHOBEAR Captur'd the routes and states you care about, and it walks every one the same way every time.</p>
     </div>
-    <div class="steps reveal-stagger">
-      <div class="step">
+    <div class="steps stagger">
+      <div class="step glass">
         <span class="step-n">01</span>
         <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3l6 2 6-2v15l-6 2-6-2-6 2V5z"/><path d="M9 3v15M15 5v15"/></svg></div>
         <h3>Hand it the map</h3>
         <p>Give it your site map and the states that matter, like <code>default</code>, <code>hover</code>, dark mode. It queues every page.</p>
       </div>
-      <div class="step">
+      <div class="step glass">
         <span class="step-n">02</span>
         <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="3"/><circle cx="17" cy="7" r="3"/><circle cx="12" cy="17" r="3"/><path d="M7 10v2a2 2 0 002 2h6a2 2 0 002-2v-2"/></svg></div>
         <h3>A swarm of captors runs</h3>
         <p>Captors work in parallel, so a big site finishes in one pass instead of one page at a time. The grid fills as they land.</p>
       </div>
-      <div class="step">
+      <div class="step glass">
         <span class="step-n">03</span>
         <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M3 17l5-4 4 3 3-3 6 5"/></svg></div>
         <h3>Clean frames rest on disk</h3>
         <p>Every page and state lands as a clean, named screenshot. Same input, same output, no flaky reruns.</p>
       </div>
-      <div class="step">
+      <div class="step glass">
         <span class="step-n">04</span>
         <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="10,8 16,12 10,16"/><rect x="3" y="4" width="18" height="16" rx="2"/></svg></div>
         <h3>Pour into Remotion</h3>
@@ -370,14 +400,14 @@
         <h2>It doesn't think. <span class="accent">It captures.</span></h2>
         <p class="section-lede" style="margin-bottom:0">RHOBEAR Captur'd is a deterministic tool, not a model. That's the whole reason it's cheap. There's no reasoning to pay for, no token meter spinning while it works. It's the picture-taker for whatever Designs just made: point it at your apps, and it soaks them in.</p>
         <div class="cb-steps">
-          <div class="cb-step"><div class="cb-step-tag">MAP-DRIVEN</div><div><h4>You hand it the route list</h4><p>No model guesses what to shoot. It captures exactly the pages and states you named, in order.</p></div></div>
-          <div class="cb-step"><div class="cb-step-tag">PARALLEL</div><div><h4>A swarm, not a single screenshot</h4><p>Captors run side by side. A site that would take an afternoon of manual grabs fills in while you start the next build.</p></div></div>
-          <div class="cb-step"><div class="cb-step-tag">REPEATABLE</div><div><h4>Same run, same frames</h4><p>Deterministic means the run you do tonight matches the run you do next month. No AI drift between captures.</p></div></div>
+          <div class="cb-step glass"><span class="cb-tag">MAP-DRIVEN</span><div><h4>You hand it the route list</h4><p>No model guesses what to shoot. It captures exactly the pages and states you named, in order.</p></div></div>
+          <div class="cb-step glass"><span class="cb-tag">PARALLEL</span><div><h4>A swarm, not a single screenshot</h4><p>Captors run side by side. A site that would take an afternoon of manual grabs fills in while you start the next build.</p></div></div>
+          <div class="cb-step glass"><span class="cb-tag">REPEATABLE</span><div><h4>Same run, same frames</h4><p>Deterministic means the run you do tonight matches the run you do next month. No AI drift between captures.</p></div></div>
         </div>
         <div class="cb-callout"><strong>No model means no model bill.</strong> Run it as often as you ship.</div>
       </div>
-      <div class="reveal" style="transition-delay:0.18s">
-        <div class="code-card">
+      <div class="reveal">
+        <div class="code-card glass">
           <div class="code-head"><span>capture.run · whole site</span><span class="pulse"><span class="pulse-dot"></span> deterministic</span></div>
           <div class="code-body">
 <span class="ln"><span class="dim"># one map in, every frame out</span></span>
@@ -391,7 +421,7 @@
             <div class="code-stat"><div class="code-stat-k">Pages</div><div class="code-stat-v">48</div></div>
             <div class="code-stat"><div class="code-stat-k">States each</div><div class="code-stat-v">3</div></div>
             <div class="code-stat"><div class="code-stat-k">Frames</div><div class="code-stat-v">144</div></div>
-            <div class="code-stat"><div class="code-stat-k">Cost</div><div class="code-stat-v amber">pennies</div></div>
+            <div class="code-stat"><div class="code-stat-k">Cost</div><div class="code-stat-v accent">pennies</div></div>
           </div>
         </div>
       </div>
@@ -408,14 +438,14 @@
         <h2>A demo video, <span class="accent">without the four hours.</span></h2>
         <p class="section-lede" style="margin-bottom:0">Screenshots are the free floor. The paid ceiling is a full walkthrough video, filmed by an agent playing director. It types like a person, zooms into what matters, moves a real cursor, and narrates in an HD house voice — then hands you an MP4. Supademo and Screen Studio charge ~$40/mo and still make you record it yourself. Here the agent records it.</p>
         <div class="cb-steps">
-          <div class="cb-step"><div class="cb-step-tag">DIRECTED</div><div><h4>Voice-direct the shot</h4><p>"Pan in on the pricing before you click Buy." The agent frames tight semantic zooms and a live cursor — no hand-editing, no timeline.</p></div></div>
-          <div class="cb-step"><div class="cb-step-tag">HD VOICE</div><div><h4>House voices, pennies a render</h4><p>Narration runs on our Vertex HD voice stack — warm, hero, trailer, butler. Original characters, never a real person's voice, word-synced to the camera.</p></div></div>
-          <div class="cb-step"><div class="cb-step-tag">ANYWHERE</div><div><h4>A studio on every device</h4><p>Run it hosted at <a href="https://capturd.rhobear.ai">capturd.rhobear.ai</a> — a purpose-built desktop, tablet, and phone studio you can install to your home screen — or fully offline in the desktop app.</p></div></div>
+          <div class="cb-step glass"><span class="cb-tag">DIRECTED</span><div><h4>Voice-direct the shot</h4><p>"Pan in on the pricing before you click Buy." The agent frames tight semantic zooms and a live cursor — no hand-editing, no timeline.</p></div></div>
+          <div class="cb-step glass"><span class="cb-tag">HD VOICE</span><div><h4>House voices, pennies a render</h4><p>Narration runs on our Vertex HD voice stack — warm, hero, trailer, butler. Original characters, never a real person's voice, word-synced to the camera.</p></div></div>
+          <div class="cb-step glass"><span class="cb-tag">ANYWHERE</span><div><h4>A studio on every device</h4><p>Run it hosted at <a href="https://capturd.rhobear.ai">capturd.rhobear.ai</a> — a purpose-built desktop, tablet, and phone studio you can install to your home screen — or fully offline in the desktop app.</p></div></div>
         </div>
         <div class="cb-callout"><strong>A four-hour job in about four minutes.</strong> Direct it — don't record it.</div>
       </div>
-      <div class="reveal" style="transition-delay:0.18s">
-        <div class="code-card">
+      <div class="reveal">
+        <div class="code-card glass">
           <div class="code-head"><span>demo.run · walkthrough</span><span class="pulse"><span class="pulse-dot"></span> filming</span></div>
           <div class="code-body">
 <span class="ln"><span class="dim"># one brief in, one MP4 out</span></span>
@@ -425,10 +455,10 @@
 <span class="ln"><span class="k">render</span> 1080p · 0:42 · <span class="ok">demo.mp4</span></span>
           </div>
           <div class="code-stats">
-            <div class="code-stat"><div class="code-stat-k">Human time</div><div class="code-stat-v amber">~0</div></div>
+            <div class="code-stat"><div class="code-stat-k">Human time</div><div class="code-stat-v accent">~0</div></div>
             <div class="code-stat"><div class="code-stat-k">Render</div><div class="code-stat-v">~4 min</div></div>
             <div class="code-stat"><div class="code-stat-k">Voice</div><div class="code-stat-v">HD house</div></div>
-            <div class="code-stat"><div class="code-stat-k">Out</div><div class="code-stat-v amber">MP4</div></div>
+            <div class="code-stat"><div class="code-stat-k">Out</div><div class="code-stat-v accent">MP4</div></div>
           </div>
         </div>
       </div>
@@ -463,11 +493,11 @@
   <div class="wrap">
     <div class="price-head reveal">
       <span class="eyebrow">Pricing</span>
-      <h2 style="margin:0 auto 18px">Screenshots free. <span class="accent">Demos when you want them.</span></h2>
-      <p class="section-lede" style="margin:0 auto">The screenshot swarm is MIT and runs on your own machine for pennies of machine time — free forever, no account. Pro adds the agent director, HD house voices, and the hosted studio for a flat <strong style="color:var(--text)">$19 a month</strong>.</p>
+      <h2>Screenshots free. <span class="accent">Demos when you want them.</span></h2>
+      <p class="section-lede">The screenshot swarm is MIT and runs on your own machine for pennies of machine time — free forever, no account. Pro adds the agent director, HD house voices, and the hosted studio for a flat <strong style="color:var(--text)">$19 a month</strong>.</p>
     </div>
-    <div class="price-grid reveal-stagger">
-      <div class="plan featured">
+    <div class="price-grid stagger">
+      <div class="plan glass featured">
         <div class="plan-flag">★ The whole thing</div>
         <div class="plan-name">Free · forever</div>
         <div class="plan-price"><span class="price-n">$0</span><span class="price-per">/ MIT</span></div>
@@ -481,7 +511,7 @@
         </ul>
         <a href="https://github.com/rhobear-ai/rhobear-capturd" class="plan-cta primary">Read the source →</a>
       </div>
-      <div class="plan">
+      <div class="plan glass">
         <div class="plan-name">Your machine time</div>
         <div class="plan-price"><span class="price-n">¢</span><span class="price-per">/ run</span></div>
         <div class="plan-sub">The only cost there is.</div>
@@ -493,16 +523,16 @@
         </ul>
         <a href="https://github.com/rhobear-ai/rhobear-capturd#run" class="plan-cta outline">How a run works →</a>
       </div>
-            <div class="plan">
+      <div class="plan glass">
         <div class="plan-name">Pro · AI walkthroughs</div>
         <div class="plan-price"><span class="price-n">$19</span><span class="price-per">/ mo</span></div>
         <div class="plan-sub">The agent films the demo for you.</div>
         <ul class="plan-features">
-          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg> Unlimited AI walkthrough demo videos</li>
-          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg> HD Vertex voiceover, voice-directed camera</li>
-          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg> Hosted studio — installable on any device</li>
-          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg> Generation history + hosted MCP endpoint</li>
-          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg> Screenshots stay free, forever</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Unlimited AI walkthrough demo videos</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>HD Vertex voiceover, voice-directed camera</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Hosted studio — installable on any device</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Generation history + hosted MCP endpoint</li>
+          <li><svg class="check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Screenshots stay free, forever</li>
         </ul>
         <a href="https://buy.stripe.com/14AbIU1Cf5wvcrxfxEg7e01" class="plan-cta primary">Get Pro — $19/mo →</a>
       </div>
@@ -511,79 +541,100 @@
   </div>
 </section>
 
-<!-- faq -->
-<section id="faq">
-  <div class="wrap">
-    <div class="reveal">
-      <span class="eyebrow">FAQ</span>
-      <h2>Honest answers to the obvious questions.</h2>
-      <p class="section-lede">Anything not here, the source is right there to read.</p>
-    </div>
-    <div class="faq-grid reveal-stagger">
-      <div class="faq"><h4>Is it AI?</h4><p>No, and that's the point. RHOBEAR Captur'd is a deterministic capture tool built on Playwright. No model, no token meter, no guessing what to shoot.</p></div>
-      <div class="faq"><h4>What does a run cost?</h4><p>Machine time, and that's it. Run it on your own box or a tiny VPS. There's no per-shot price and no model invoice behind it.</p></div>
-      <div class="faq"><h4>What can it capture?</h4><p>Every page and every state you put in the map, like <code>default</code>, <code>hover</code>, dark mode, logged-in. It walks them all in one pass.</p></div>
-      <div class="faq"><h4>Does it really feed video?</h4><p>Yes. The clean frames pour straight into <code>Remotion</code>, so one capture run can cut hundreds of product videos for next to nothing.</p></div>
-      <div class="faq"><h4>Why a swarm?</h4><p>Captors run in parallel, so a big site finishes in one pass instead of page by page. You point it and walk away.</p></div>
-      <div class="faq"><h4>Do I own it?</h4><p>It's MIT. Clone it, fork it, wire it into your own pipeline, ship it inside your own product. No account, no lock-in.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- final -->
+<!-- final / install -->
 <section id="install" class="final">
   <div class="wrap reveal">
     <h2>Point it at your site.<br><span class="accent">Soak it in.</span></h2>
     <p>Open source, deterministic, pennies a run. Hand it a map and walk away.</p>
-    <video src="../../assets/video/capturd-trailer.mp4" controls preload="metadata" style="width:100%; max-width:860px; border-radius:14px; display:block; margin:26px auto 6px; background:#060b16;"></video>
+    <video src="../../assets/video/capturd-trailer.mp4" controls preload="metadata" playsinline></video>
     <div class="final-ctas">
       <a href="https://github.com/rhobear-ai/rhobear-capturd" class="btn-primary">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
         Read the source
       </a>
-      <a href="#pricing" class="btn-secondary">See what's free →</a>
+      <a href="#pricing" class="btn-ghost">See what's free →</a>
     </div>
   </div>
 </section>
 
-<!-- footer -->
-<footer class="rb-footer">
-  <div class="rb-footer-inner">
-    <div class="rb-foot-family">
-      <span class="rb-foot-kicker">Stop 3 of the RHOBEAR family</span>
-      <p class="rb-foot-copy">
-        RHOBEAR Captur'd is the picture-taker for finished work. It rests after
-        <a href="https://rhobear.ai/designs.html">Designs</a> shapes a page, and the frames it soaks up feed your videos while
-        <a href="https://reviews.rhobear.ai/">Reviews</a> keeps every PR clean. The crew that builds the sites lives in
-        <a href="https://rhobear.ai/app.html">the Hub</a>; from there it all hands off through
-        <a href="https://rhobear.ai/plans.html">Plans</a> and <a href="https://rhobear.ai/sales.html">Sales</a>.
-        <a href="https://rhobear.ai/" class="rb-foot-more">See the whole workflow →</a>
-      </p>
+<!-- next handoff → Reviews -->
+<div class="handoff">
+  <div class="handoff-inner reveal">
+    <div>
+      <div class="handoff-lede">Next on the mountain</div>
+      <h3>All the while, every PR runs through <span class="g">Reviews</span>.</h3>
     </div>
-    <div class="rb-foot-social">
-      <span class="rb-foot-kicker">Find us elsewhere</span>
-      <div class="rb-foot-icons">
-        <a href="https://x.com/rhobearai" target="_blank" rel="noopener" aria-label="RHOBEAR on X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-6.9l-5.4-7-6.2 7H1.7l8.1-9.3L1 2h7l4.9 6.5L18.9 2Zm-1.2 18h1.9L7.4 4H5.4l12.3 16Z"/></svg>X</a>
-        <a href="https://instagram.com/rhobear.ai" target="_blank" rel="noopener" aria-label="RHOBEAR on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>Instagram</a>
-        <a href="https://github.com/rhobear-ai/rhobear-capturd" target="_blank" rel="noopener" aria-label="RHOBEAR Captur'd on GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.2.8-.5v-1.8c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.3 11.3 0 0 1 6 0C17 5 18 5.3 18 5.3c.6 1.6.2 2.9.1 3.2.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.3v3.4c0 .3.2.6.8.5A11.5 11.5 0 0 0 12 .5Z"/></svg>GitHub</a>
-      </div>
+    <a href="https://reviews.rhobear.ai" class="handoff-cta">
+      See RHOBEAR Reviews
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- footer (homepage chrome) -->
+<footer id="footer">
+  <div class="cols">
+    <div class="reveal">
+      <div class="wordmark">RHOBEAR</div>
+      <p>One workflow that hands off to itself. Build it, ship it, sell it. Own your data, bring your own AI, run it for the price of a domain.</p>
     </div>
-    <div class="rb-foot-base">
-      <span><img src="../../assets/rhobear-logo.png?v=1782940000" alt="">© 2026 RHOBEAR · a Sun Sponge LLC product · screenshots MIT · demos on our own rails.</span>
-      <span><a href="https://rhobear.ai/">The family</a> · <a href="https://github.com/deariencampbell1-sys/rhobear/blob/main/PRIVACY.md">Privacy</a></span>
+    <div class="reveal">
+      <h4>The workflow</h4>
+      <ul>
+        <li><a href="app.html">RHOBEAR Hub · build</a></li>
+        <li><a href="workbench.html">RHOBEAR Workbench · the free taste</a></li>
+        <li><a href="designs.html">RHOBEAR Designs · shape</a></li>
+        <li><a href="capturd.html">RHOBEAR Captur'd · capture</a></li>
+        <li><a href="https://reviews.rhobear.ai">RHOBEAR Reviews · keep clean</a></li>
+        <li><small>includes Verifies · dead-path maps</small></li>
+      </ul>
+    </div>
+    <div class="reveal">
+      <h4>Go to market</h4>
+      <ul>
+        <li><a href="plans.html">RHOBEAR Plans · booking &amp; billing</a></li>
+        <li><a href="sales.html">Sales by RHOBEAR · done for you</a></li>
+        <li><a href="rho.html">Rho · the family voice</a></li>
+      </ul>
     </div>
   </div>
+  <div class="fine"><img src="../../assets/rhobear-logo.png" alt="">© 2026 RHOBEAR · a Sun Sponge LLC product · screenshots MIT · demos on our own rails · <a href="story.html">the story</a> · <a href="https://github.com/deariencampbell1-sys/rhobear/blob/main/PRIVACY.md">Privacy</a></div>
 </footer>
 
 <script>
-  const io = new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -80px 0px'});
-  document.querySelectorAll('.reveal, .reveal-stagger').forEach(el=>io.observe(el));
-  const sections=['how','demos','rungs','pricing','faq'].map(id=>document.getElementById(id));
-  const navLinks=document.querySelectorAll('a[data-nav]');
-  const navIO=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){const id=e.target.id;navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));}});},{rootMargin:'-30% 0px -60% 0px'});
-  sections.forEach(s=>s&&navIO.observe(s));
+  // reveal on scroll (~20% threshold)
+  const io = new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.2,rootMargin:'0px 0px -12% 0px'});
+  document.querySelectorAll('.reveal, .stagger').forEach(el=>io.observe(el));
+
+  // active nav highlight on scroll
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // hero parallax ~0.3x
+  const heroBg = document.getElementById('heroBg');
+  if(heroBg && !reduce){
+    let ticking=false;
+    window.addEventListener('scroll',()=>{
+      if(ticking) return; ticking=true;
+      requestAnimationFrame(()=>{ heroBg.style.transform='translateY('+(window.scrollY*0.3)+'px)'; ticking=false; });
+    },{passive:true});
+  }
+
+  // cool dust motes (opacity <= 0.4)
+  if(!reduce){
+    const dust=document.getElementById('dust');
+    for(let i=0;i<26;i++){
+      const m=document.createElement('span');m.className='mote';
+      m.style.left=(Math.random()*100)+'%';
+      m.style.top=(Math.random()*100)+'%';
+      const d=9+Math.random()*12;
+      m.style.animationDuration=d+'s';
+      m.style.animationDelay=(-Math.random()*d)+'s';
+      const s=1+Math.random()*2.4;m.style.width=m.style.height=s+'px';
+      dust.appendChild(m);
+    }
+  }
 </script>
-<script>window.RHO_SELL={accent:'#ff7d1f',product:'capturd',greet:"Hey — I'm Rho. Want an AI demo filmed in ~4 minutes, or have a question about Captur'd? Ask away — or tell me what you want built."};</script>
+<script>window.RHO_SELL={accent:'#4A9EFF',product:'capturd',greet:"Hey — I'm Rho. Want an AI demo filmed in ~4 minutes, or have a question about Captur'd? Ask away — or tell me what you want built."};</script>
 <script src="../../assets/rho-sell.js" defer></script>
 </body>
 </html>
