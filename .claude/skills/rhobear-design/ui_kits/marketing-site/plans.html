@@ -195,6 +195,19 @@
   .callout .ynx{display:flex;gap:8px;margin-left:auto}
   .callout .ynx span{font-family:var(--mono);font-size:0.68rem;padding:6px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.14)}
   .callout .ynx .yes{background:var(--accent);color:#fff;border-color:var(--accent)} .callout .ynx .edit{color:var(--accent-hi);border-color:rgba(200,75,170,0.4)}
+  /* workflow flow-card */
+  .flowcard{margin-top:26px;padding:32px 34px}
+  .flowcard>.eyebrow{margin-bottom:6px}
+  .flowcard h3{font-family:var(--disp);font-size:clamp(1.3rem,2.2vw,1.75rem);font-weight:900;margin-bottom:18px} .flowcard h3 .accent{color:var(--accent-hi)}
+  .flow{list-style:none}
+  .flow li{display:grid;grid-template-columns:30px 1fr;gap:15px;align-items:start;padding:12px 0;border-top:1px solid rgba(255,255,255,0.07);font-size:0.9rem;color:var(--ink-2);line-height:1.5}
+  .flow li:first-child{border-top:0}
+  .flow li .fn{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:0.8rem;font-weight:700;color:var(--accent-hi);background:var(--accent-soft);border:1px solid rgba(200,75,170,0.3)}
+  .flow li .who{color:var(--accent-hi);font-weight:700} .flow li strong{color:var(--ink);font-weight:700}
+  .flow .yn{display:inline-flex;gap:6px;margin-left:8px;vertical-align:middle}
+  .flow .yn span{font-family:var(--mono);font-size:0.64rem;padding:4px 9px;border-radius:7px;border:1px solid rgba(255,255,255,0.14)}
+  .flow .yn .yes{background:var(--accent);color:#fff;border-color:var(--accent)} .flow .yn .edit{color:var(--accent-hi)}
+  .flow-foot{margin-top:18px;text-align:center;font-size:0.95rem;color:var(--ink)} .flow-foot b{color:var(--accent-hi);font-weight:700}
 
   /* ── pricing ── */
   .price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
@@ -213,7 +226,7 @@
   .plan ul{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:26px;flex:1}
   .plan li{display:flex;align-items:flex-start;gap:10px;font-size:0.84rem;color:var(--ink);line-height:1.42}
   .plan li.met{color:var(--ink-3)} .plan li b{color:var(--accent-hi);font-weight:700}
-  .plan li .ck{width:16px;height:16px;flex-shrink:0;color:var(--accent-hi);margin-top:2px}
+  .plan li .ci{width:16px;height:16px;flex-shrink:0;color:var(--accent-hi);margin-top:2px}
   .plan li .inf{flex-shrink:0;color:var(--accent-hi);font-weight:700;font-size:1rem;width:16px;text-align:center}
   .plan-cta{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:var(--rb-pill-radius);
     font-family:var(--sans);font-weight:700;font-size:0.9rem;transition:transform .2s,background .2s,border-color .2s}
@@ -469,6 +482,19 @@
       <span class="t"><b>Always asks first.</b> Every action that touches the outside world stops for your call — approve it, kill it, or rewrite it.</span>
       <span class="ynx"><span class="yes">Yes</span><span>No</span><span class="edit">Edit</span></span>
     </div>
+    <div class="flowcard glass reveal">
+      <span class="eyebrow">A real workflow</span>
+      <h3>One email in. <span class="accent">Six things done.</span></h3>
+      <ol class="flow">
+        <li><span class="fn">1</span><span>A customer emails: <strong>"Can you quote a re-roof at 14 Oak St?"</strong></span></li>
+        <li><span class="fn">2</span><span><span class="who">Email</span> reads it; <span class="who">Research</span> pulls the property and your price book.</span></li>
+        <li><span class="fn">3</span><span><span class="who">Calendar</span> finds a tentative inspection slot for Tuesday morning.</span></li>
+        <li><span class="fn">4</span><span>Together they draft the quote, the reply, and the invite — in your voice.</span></li>
+        <li><span class="fn">5</span><span>"Send the <strong>$8,400</strong> quote and book <strong>Tue 9:00</strong>?"<span class="yn"><span class="yes">Yes</span><span>No</span><span class="edit">Edit</span></span></span></li>
+        <li><span class="fn">6</span><span>You tap <strong>Yes</strong> → quote sent · invite out · follow-up scheduled · logged to the job.</span></li>
+      </ol>
+      <p class="flow-foot">You touched it once. <b>They did the other six.</b></p>
+    </div>
   </div>
 </section>
 
@@ -513,10 +539,10 @@
         <div class="sub">The full guided walkthrough — see every agent work. This is the trial; agents switch on when you upgrade.</div>
         <div class="fh">What you'll see</div>
         <ul>
-          <li><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>1</b> workspace to set up</li>
-          <li><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Guided tour of every agent in action</li>
-          <li><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Connect PayPal, Gmail, Calendar &amp; GitHub</li>
-          <li><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Agents <b>off</b> until you upgrade</li>
+          <li><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>1</b> workspace to set up</li>
+          <li><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Guided tour of every agent in action</li>
+          <li><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Connect PayPal, Gmail, Calendar &amp; GitHub</li>
+          <li><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg>Agents <b>off</b> until you upgrade</li>
         </ul>
         <a href="https://cloud.rhobear.ai" class="plan-cta outline">Start the walkthrough →</a>
       </div>
@@ -527,15 +553,16 @@
         <div class="sub">Everything to run one business with a real team switched on.</div>
         <div class="fh">Agents on — here's the team</div>
         <ul>
-          <li><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>1</b> workspace</li>
-          <li><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>5</b> agents on your roster</li>
-          <li><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>+1 bonus agent</b>, free for a year</li>
+          <li><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>1</b> workspace</li>
+          <li><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>5</b> agents on your roster</li>
+          <li><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>+1 bonus agent</b>, free for a year</li>
           <li><span class="inf">∞</span>Unlimited <b>chat</b> with your agent</li>
           <li><span class="inf">∞</span>Unlimited <b>read &amp; search</b> your email</li>
           <li><span class="inf">∞</span>Unlimited <b>find &amp; bring back</b> content</li>
-          <li class="met"><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>100</b> actions / day</li>
-          <li class="met"><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>5</b> website generations / day</li>
-          <li><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>Core</b> rung · everyday</li>
+          <li><span class="inf">∞</span>Unlimited <b>answers</b> — even PayPal</li>
+          <li class="met"><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>100</b> actions / day</li>
+          <li class="met"><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>5</b> website generations / day</li>
+          <li><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>Core</b> rung · everyday</li>
         </ul>
         <a href="https://cloud.rhobear.ai" class="plan-cta primary">Turn agents on →</a>
       </div>
@@ -547,16 +574,17 @@
         <div class="sub">More businesses, bigger allowances, the premium model on every agent.</div>
         <div class="fh">Everything in Starter, scaled up</div>
         <ul>
-          <li><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>3</b> workspaces</li>
-          <li><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>20</b> agents on your roster</li>
-          <li><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>+1 bonus agent</b>, free for a year</li>
+          <li><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>3</b> workspaces</li>
+          <li><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>20</b> agents on your roster</li>
+          <li><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>+1 bonus agent</b>, free for a year</li>
           <li><span class="inf">∞</span>Unlimited <b>chat</b> with your agent</li>
           <li><span class="inf">∞</span>Unlimited <b>read &amp; search</b> your email</li>
           <li><span class="inf">∞</span>Unlimited <b>find &amp; bring back</b> content</li>
-          <li class="met"><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>400</b> actions / day</li>
-          <li class="met"><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>20</b> website generations / day</li>
-          <li><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>Summit + Peak</b> rungs on every agent</li>
-          <li><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>Priority</b> support</li>
+          <li><span class="inf">∞</span>Unlimited <b>answers</b> — even PayPal</li>
+          <li class="met"><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>400</b> actions / day</li>
+          <li class="met"><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>20</b> website generations / day</li>
+          <li><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>Summit + Peak</b> rungs on every agent</li>
+          <li><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>Priority</b> support</li>
         </ul>
         <a href="https://cloud.rhobear.ai" class="plan-cta primary">Go Pro →</a>
       </div>
@@ -567,16 +595,17 @@
         <div class="sub">Run a whole portfolio with an unlimited bench and dedicated help.</div>
         <div class="fh">Everything in Pro, maxed out</div>
         <ul>
-          <li><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>10</b> workspaces</li>
-          <li><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>Unlimited</b> agents</li>
-          <li><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>+1 bonus agent</b>, free for a year</li>
+          <li><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>10</b> workspaces</li>
+          <li><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>Unlimited</b> agents</li>
+          <li><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>+1 bonus agent</b>, free for a year</li>
           <li><span class="inf">∞</span>Unlimited <b>chat</b> with your agent</li>
           <li><span class="inf">∞</span>Unlimited <b>read &amp; search</b> your email</li>
           <li><span class="inf">∞</span>Unlimited <b>find &amp; bring back</b> content</li>
-          <li class="met"><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>1,500</b> actions / day</li>
-          <li class="met"><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>60</b> website generations / day</li>
-          <li><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>Summit + Peak</b> rungs on every agent</li>
-          <li><svg class="ck" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>Dedicated</b> support</li>
+          <li><span class="inf">∞</span>Unlimited <b>answers</b> — even PayPal</li>
+          <li class="met"><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>1,500</b> actions / day</li>
+          <li class="met"><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>60</b> website generations / day</li>
+          <li><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>Summit + Peak</b> rungs on every agent</li>
+          <li><svg class="ci" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,11 9,16 17,5"/></svg><b>Dedicated</b> support</li>
         </ul>
         <a href="https://cloud.rhobear.ai" class="plan-cta outline">Get Business →</a>
       </div>
@@ -735,5 +764,7 @@
     }
   }
 </script>
+<script>window.RHO_SELL={accent:'#C84BAA',product:'plans',greet:"Hey — I'm Rho. Want the free Plans walkthrough, or a custom business setup? Tell me what you're running."};</script>
+<script src="../../assets/rho-sell.js" defer></script>
 </body>
 </html>
