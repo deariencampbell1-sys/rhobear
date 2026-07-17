@@ -153,6 +153,11 @@
   .hero-ctas{display:flex;flex-wrap:wrap;gap:11px;margin-bottom:18px}
   .hero-pills{display:flex;flex-wrap:wrap;gap:7px}
   .pill{font-size:0.68rem;font-weight:600;padding:5px 12px;border-radius:var(--rb-pill);border:1px solid var(--rb-card-border);background:rgba(255,255,255,0.05);color:rgba(232,240,247,0.9)}
+  .hero-access{margin-top:15px;font-size:0.82rem;color:var(--text-2)}
+  .hero-access a{color:var(--accent-hi);font-weight:700;border-bottom:1px solid rgba(180,204,74,0.4);padding-bottom:1px;transition:border-color .2s}
+  .hero-access a:hover{border-color:var(--accent-hi)}
+  .dash-cta{margin-top:44px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+  .dash-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);letter-spacing:.02em}
   .scroll-hint{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:2;font-family:var(--mono);font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,247,0.6);animation:hint 2.6s ease-in-out infinite}
   @keyframes hint{0%,100%{transform:translateX(-50%) translateY(0);opacity:.55}50%{transform:translateX(-50%) translateY(6px);opacity:.95}}
 
@@ -256,10 +261,15 @@
   @media (max-width:900px){
     #nav .links{display:none}
     #nav{padding:12px 20px}
-    .hero-bg{inset:-6% 0 0 0;height:112%;background-image:url("../../assets/pages/sales/hero-mobile.webp");background-position:center 30%}
-    .hero-bg::after{background:linear-gradient(180deg,rgba(10,11,6,0.15) 0%,transparent 34%,rgba(9,11,14,0.55) 62%,rgba(9,11,14,0.92) 100%)}
-    .hero-inner{padding:88px 20px 30px;justify-content:center;align-items:flex-end}
-    .hero-card{width:100%;max-width:520px;padding:26px 24px}
+    /* card drops to a band across the bottom so Rho's face stays clear above it */
+    .hero{align-items:flex-end}
+    .hero-bg{inset:-30% 0 auto 0;height:135%;background-image:url("../../assets/pages/sales/hero-mobile.webp");background-position:center top}
+    .hero-bg::after{background:linear-gradient(180deg,rgba(10,11,6,0.05) 0%,transparent 26%,rgba(9,11,14,0.42) 48%,rgba(9,11,14,0.95) 72%)}
+    .hero-inner{padding:120px 16px 24px;justify-content:center;align-items:flex-end}
+    .hero-card{width:100%;max-width:none;padding:22px 22px}
+    .hero-card .lead{font-size:0.94rem;line-height:1.55;margin-bottom:16px}
+    .hero-pills{display:none}
+    .hero-card::before{inset:-46% -20% -12% -20%}
     .strip-in{grid-template-columns:1fr 1fr;gap:24px;padding:30px 20px}
     section.band{padding:74px 0}
     .wrap{padding:0 20px}
@@ -283,6 +293,40 @@
 <meta name="twitter:description" content="Done-for-you. I hand-build and run your sales page — the white-glove version. The bot that greets your visitors runs on a tiny Qwen-3B: no rented server, no hosting bill, just a domain. It answers every lead, day and night. $47 one-time.">
 <meta name="twitter:image" content="https://rhobear.ai/assets/brand/og-image.png">
 <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png">
+<link rel="canonical" href="https://rhobear.ai/sales.html">
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "SoftwareApplication",
+"name": "Sales by RHOBEAR",
+"applicationCategory": "BusinessApplication",
+"operatingSystem": "Web",
+"description": "A done-for-you sales page with a tiny on-page chatbot that answers every lead, plus a private dashboard that tracks how your sales bot is converting.",
+"image": "https://rhobear.ai/assets/brand/og-image.png",
+"url": "https://rhobear.ai/sales.html",
+"publisher": {
+"@type": "Organization",
+"name": "RHOBEAR",
+"url": "https://rhobear.ai",
+"logo": "https://rhobear.ai/assets/brand/apple-touch-icon.png",
+"parentOrganization": {
+"@type": "Organization",
+"name": "Sun Sponge LLC"
+}
+},
+"brand": {
+"@type": "Brand",
+"name": "RHOBEAR"
+},
+"offers": {
+"@type": "Offer",
+"price": "47",
+"priceCurrency": "USD",
+"availability": "https://schema.org/InStock",
+"description": "One-time, lifetime"
+}
+}
+</script>
 </head>
 <body>
 
@@ -290,14 +334,14 @@
 
 <!-- top nav — chrome + real hrefs copied from index.html -->
 <nav id="nav">
-  <a href="index.html" class="wordmark">RHOBEAR</a>
+  <a href="index.html" class="wordmark"><svg viewBox="0 0 48 48" fill="currentColor" fill-rule="evenodd" aria-hidden="true" focusable="false" style="height:1.15em;width:auto;vertical-align:-.2em;margin-right:.45em;flex:0 0 auto"><path d="M7.5 13.2c0-4 3.2-6.1 6.4-4.2l3.9 2.3c4-1.9 8.4-1.9 12.4 0l3.9-2.3c3.2-1.9 6.4.2 6.4 4.2 0 2.9-1.7 5.2-4 6.3 1.8 2.7 2.8 5.9 2.8 9.4C39.3 37.6 33 43 24 43S8.7 37.6 8.7 28.9c0-3.5 1-6.7 2.8-9.4-2.3-1.1-4-3.4-4-6.3Zm12.1 12.5-4.6-2.7c-.5 1.4-.2 2.9.9 3.7 1.2.9 2.9.6 3.7-.6.2-.1.1-.3 0-.4Zm8.8 0c-.1.1-.2.3 0 .4.8 1.2 2.5 1.5 3.7.6 1.1-.8 1.4-2.3.9-3.7l-4.6 2.7ZM24 31.5c-1.9 0-3.2 1.1-3.2 2.3 0 1.5 1.5 2.7 3.2 2.7s3.2-1.2 3.2-2.7c0-1.2-1.3-2.3-3.2-2.3Z"/></svg>RHOBEAR</a>
   <div class="links">
     <a href="index.html">HOME</a><a href="app.html">HUB</a><a href="workbench.html">WORKBENCH</a><a href="plans.html">PLANS</a><a href="rho.html">RHO</a>
     <div class="nav-more">
       <a href="designs.html">MORE ▾</a>
       <div class="nav-more-panel">
         <a href="designs.html">RHOBEAR Designs</a>
-        <a href="capturd.html">RHOBEAR Captur'd</a>
+        <a href="capturd.html">RHOBEAR Captur'd</a><a href="lab.html">RHOBEAR Lab</a>
         <a href="https://reviews.rhobear.ai">RHOBEAR Reviews</a>
         <a href="sales.html" class="active">Sales by RHOBEAR</a>
       </div>
@@ -311,15 +355,16 @@
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-inner">
     <div class="hero-card reveal in">
-      <div class="eyebrow"><span class="live-dot"></span> Sales by RHOBEAR · done-for-you</div>
+      <div class="eyebrow"><span class="live-dot"></span> Sales by RHOBEAR · done-for-you + a dashboard</div>
       <h1>It sells<br><em>itself.</em></h1>
-      <p class="lead">You like these tools but you don't want to set them up. So I do it for you — I hand-build and run your sales page, the white-glove version. The bot that greets your visitors runs on a tiny Qwen-3B: no rented server, no hosting bill, just a domain.</p>
+      <p class="lead">You like these tools but you don't want to set them up. So I do it for you — I hand-build and run your sales page, the white-glove version. The bot that greets your visitors runs on a tiny Qwen-3B, and behind it a <em>private dashboard</em> shows you every conversation it has and every lead it turns — no rented server, no hosting bill, just a domain.</p>
       <div class="price-line"><b>$47</b> one-time <s>· the cost of a domain</s></div>
       <div class="hero-ctas">
         <a class="btn-primary" href="https://buy.stripe.com/28EeV60yb0cb1MTclsg7e03">Get my sales page
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a class="btn-ghost" href="#how">See how it works ↓</a>
+        <a class="btn-ghost" href="#dashboard">See the dashboard ↓</a>
       </div>
+      <div class="hero-access">Already have your activation key? <a href="https://sales.rhobear.ai/dashboard/">Open your dashboard →</a></div>
       <div class="hero-pills">
         <span class="pill">done-for-you</span>
         <span class="pill">no server, no hosting</span>
@@ -412,6 +457,44 @@
   </div>
 </section>
 
+<!-- DASHBOARD -->
+<section class="band" id="dashboard">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow-tag">Your dashboard</span>
+      <h2 class="title">See exactly <em>how it's selling.</em></h2>
+      <p class="sub">Sales by RHOBEAR started as my own leaderboard — the board I watched to know the bot was earning its keep. Now it's yours. Sign in with the activation key from your purchase and watch your sales bot work: every conversation, who converted, and the warm leads it dropped in your inbox — alongside the booking-form activity from RHOBEAR Plans, all on one private page.</p>
+    </div>
+    <div class="cards stagger reveal">
+      <div class="glass">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-11.5 7.2L4 20l1-4.4A8 8 0 1121 12z"/><path d="M8 12h.01M12 12h.01M16 12h.01"/></svg></div>
+        <h3>Conversations</h3>
+        <p>Every chat your greeter had — how many people it talked to, what they asked, and where each one dropped off or leaned in.</p>
+      </div>
+      <div class="glass">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
+        <h3>Converted</h3>
+        <p>Of everyone the bot met, how many turned into a real lead. "20 talked to it, 10 converted" — the number you actually care about, live.</p>
+      </div>
+      <div class="glass">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div>
+        <h3>Warm leads, to your inbox</h3>
+        <p>Name, email, what they're after — captured the moment a chat turns into intent and forwarded straight to you, so nothing slips.</p>
+      </div>
+      <div class="glass">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 3v4M16 3v4M8 12h8M8 16h5"/></svg></div>
+        <h3>Booking-form activity</h3>
+        <p>Leads from the booking forms RHOBEAR Plans gave you land here too — one board for your bot and your bookings together.</p>
+      </div>
+    </div>
+    <div class="dash-cta reveal">
+      <a class="btn-primary" href="https://sales.rhobear.ai/dashboard/">Enter your activation key → your dashboard
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <span class="dash-note">Gated — your key from the Hub purchase unlocks your own private board.</span>
+    </div>
+  </div>
+</section>
+
 <!-- PRICING -->
 <section class="band" id="pricing">
   <div class="wrap">
@@ -463,7 +546,7 @@
 <footer id="footer">
   <div class="cols">
     <div class="reveal">
-      <div class="wordmark">RHOBEAR</div>
+      <div class="wordmark"><svg viewBox="0 0 48 48" fill="currentColor" fill-rule="evenodd" aria-hidden="true" focusable="false" style="height:1.15em;width:auto;vertical-align:-.2em;margin-right:.45em;flex:0 0 auto"><path d="M7.5 13.2c0-4 3.2-6.1 6.4-4.2l3.9 2.3c4-1.9 8.4-1.9 12.4 0l3.9-2.3c3.2-1.9 6.4.2 6.4 4.2 0 2.9-1.7 5.2-4 6.3 1.8 2.7 2.8 5.9 2.8 9.4C39.3 37.6 33 43 24 43S8.7 37.6 8.7 28.9c0-3.5 1-6.7 2.8-9.4-2.3-1.1-4-3.4-4-6.3Zm12.1 12.5-4.6-2.7c-.5 1.4-.2 2.9.9 3.7 1.2.9 2.9.6 3.7-.6.2-.1.1-.3 0-.4Zm8.8 0c-.1.1-.2.3 0 .4.8 1.2 2.5 1.5 3.7.6 1.1-.8 1.4-2.3.9-3.7l-4.6 2.7ZM24 31.5c-1.9 0-3.2 1.1-3.2 2.3 0 1.5 1.5 2.7 3.2 2.7s3.2-1.2 3.2-2.7c0-1.2-1.3-2.3-3.2-2.3Z"/></svg>RHOBEAR</div>
       <p>One workflow that hands off to itself. Build it, ship it, sell it. Own your data, bring your own AI, run it for the price of a domain.</p>
     </div>
     <div class="reveal">
@@ -472,7 +555,7 @@
         <li><a href="app.html">RHOBEAR Hub · build</a></li>
         <li><a href="workbench.html">RHOBEAR Workbench · the free taste</a></li>
         <li><a href="designs.html">RHOBEAR Designs · shape</a></li>
-        <li><a href="capturd.html">RHOBEAR Captur'd · capture</a></li>
+        <li><a href="capturd.html">RHOBEAR Captur'd · capture</a></li><li><a href="lab.html">RHOBEAR Lab · benchmark any model</a></li>
         <li><a href="https://reviews.rhobear.ai">RHOBEAR Reviews · keep clean</a></li>
         <li><small>includes Verifies · dead-path maps</small></li>
       </ul>
