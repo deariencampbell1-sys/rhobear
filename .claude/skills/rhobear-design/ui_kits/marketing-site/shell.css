@@ -101,7 +101,7 @@ section.tight { padding: clamp(36px, 5vw, 64px) 0; }
   text-decoration: none; color: var(--c-ink);
   flex-shrink: 0;
 }
-.brand-lockup img { width: 30px; height: 30px; image-rendering: pixelated; }
+.brand-lockup img { width: 30px; height: 30px; image-rendering: auto; }
 .brand-lockup span {
   font-family: var(--font-display);
   font-size: 16px; letter-spacing: 0.08em;
