@@ -37,6 +37,8 @@ jobs:
           cp "$MKT"/*.html _site/
           cp "$MKT"/shell.css _site/
           cp "$MKT"/shell.js  _site/
+          # SEO: search-engine sitemap (absolute URLs — not touched by the ../../ rewrite).
+          cp "$MKT"/sitemap.xml _site/ 2>/dev/null || true
 
           # Shared design tokens + every image/font the pages reach up for.
           cp "$SRC"/colors_and_type.css _site/
