@@ -231,8 +231,8 @@
       <h2>Grab one hand.<br/>The rest are right there.</h2>
       <p class="lead">Every tool stands on its own, and hands off to the next when you're ready.</p>
       <div class="hero-ctas">
-        <button class="btn-primary" data-jump="workbench">Try the Workbench free →</button>
-        <button class="btn-ghost" data-jump="plans">Jump to market with Plans →</button>
+        <a class="btn-primary" href="https://workbench.rhobear.ai">Try the Workbench free →</a>
+        <a class="btn-ghost" href="plans.html">Jump to market with Plans →</a>
       </div>
       <div class="chain">
         <span>Build it · Hub</span><i>→</i>
@@ -321,6 +321,38 @@
     </div>
     <div class="fine">RHOBEAR — <a href="story.html">the story</a> · meet us on the mountain</div>
   </footer>
+
+  <!-- Make the descent clickable: tapping a product's scene jumps to that product's page. -->
+  <script>
+  (function () {
+    var MAP = {
+      hub: 'app.html', workbench: 'workbench.html', designs: 'designs.html',
+      capturd: 'capturd.html', reviews: 'https://reviews.rhobear.ai',
+      plans: 'plans.html', sales: 'sales.html', rho: 'rho.html'
+    };
+    function activeUrl() {
+      var c = document.querySelector('#cards .beat-card.active');
+      return c ? MAP[c.getAttribute('data-card')] : null;
+    }
+    // A real click (not a scroll-drag) on the scene navigates to the live product beat.
+    var pin = document.getElementById('pin') || document.getElementById('journey') || document.getElementById('stage');
+    if (pin) {
+      var sx = 0, sy = 0;
+      pin.addEventListener('pointerdown', function (e) { sx = e.clientX; sy = e.clientY; }, true);
+      pin.addEventListener('click', function (e) {
+        if (e.target.closest('a,button,input,textarea,label,.pill,.rho-greeter,#rail,#nav')) return;
+        if (Math.abs(e.clientX - sx) > 6 || Math.abs(e.clientY - sy) > 6) return; // was a drag
+        var u = activeUrl();
+        if (u) window.location.href = u;
+      });
+      var stage = document.getElementById('stage');
+      // Live affordance: pointer cursor whenever a product beat is the active one.
+      var hint = function () { if (stage) stage.style.cursor = activeUrl() ? 'pointer' : 'default'; };
+      window.addEventListener('scroll', function () { requestAnimationFrame(hint); }, { passive: true });
+      hint();
+    }
+  })();
+  </script>
 
 </body>
 </html>
