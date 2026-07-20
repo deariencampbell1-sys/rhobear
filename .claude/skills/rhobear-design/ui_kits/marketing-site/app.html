@@ -217,7 +217,7 @@
   .stamp .lbl{color:var(--hub-bright);display:inline-block;width:72px}
   video{width:100%;border-radius:14px;display:block;background:#04060c}
 
-  /* founder buy box — money path, PayPal hosted button lives inside */
+  /* founder buy box — money path, Stripe payment link lives inside */
   .rho-buy{max-width:340px;margin:26px 0 28px;padding:24px;border-radius:18px;
     background:var(--rb-card-frost);
     -webkit-backdrop-filter:blur(var(--rb-blur));backdrop-filter:blur(var(--rb-blur));
@@ -228,7 +228,11 @@
   .rho-buy__price{font-family:var(--font-display);font-size:44px;font-weight:900;color:#fff;letter-spacing:-1px;line-height:1}
   .rho-buy__terms{font-size:13px;color:rgba(232,240,247,.6)}
   .rho-buy__sub{margin:6px 0 18px;font-size:14px;color:rgba(232,240,247,.7)}
-  .rho-buy__pp{min-height:48px}
+  .rho-buy__cta{display:block;width:100%;box-sizing:border-box;padding:15px 20px;border-radius:12px;
+    font-family:var(--font-display);font-weight:800;font-size:17px;letter-spacing:-.2px;text-decoration:none;
+    color:#04211d;background:linear-gradient(180deg,#5ff0dc,#3bd6c3);
+    box-shadow:0 10px 26px rgba(59,214,195,.35);transition:transform .15s ease,box-shadow .15s ease}
+  .rho-buy__cta:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(59,214,195,.5)}
   .rho-buy__secure{margin-top:12px;font-size:12px;color:rgba(232,240,247,.55)}
 
   .terminal{margin-top:16px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.1)}
@@ -347,7 +351,7 @@
 },
 "offers": {
 "@type": "Offer",
-"price": "47",
+"price": "50",
 "priceCurrency": "USD",
 "availability": "https://schema.org/InStock",
 "priceValidUntil": "2027-12-31",
@@ -390,7 +394,7 @@
     <div class="cta-row">
       <a href="https://github.com/rhobear-ai/rhobear-downloads/releases/download/hub-latest/RHOBEAR-Hub-Setup.exe" class="btn btn-solid">Download the Hub for Windows →</a>
       <a href="https://workbench.rhobear.ai" class="btn btn-glass">Try it free in the cloud →</a>
-      <a href="#founder" class="btn btn-glass">$47 · own it forever</a>
+      <a href="#founder" class="btn btn-glass">$50 · own it forever</a>
     </div>
     <p class="trust-line">Self-taught. Built it on the side. Not a coder by trade, but he knows how to build a house from its foundation. That's all it took.</p>
   </div>
@@ -642,18 +646,16 @@
         <h3 class="reveal" style="font-size:1.5rem">Buy once. <em>Yours for life.</em></h3>
         <p class="lead reveal" style="font-size:.98rem">The <strong>first 1,000 hubs</strong> go out as <strong>Founder Edition</strong>: a one-time price, never a monthly bill, and free updates for life. Up to two hubs per address. Money first, up front — and the free Workbench trial is right there if you want to taste it before you buy.</p>
 
-        <!-- ===== PAYPAL HOSTED BUTTON — Founder Edition ($47 one-time) ===== -->
+        <!-- ===== STRIPE PAYMENT LINK — Founder Edition ($50 one-time) ===== -->
         <div class="rho-buy">
           <div class="rho-buy__head">
-            <span class="rho-buy__price">$47</span>
+            <span class="rho-buy__price">$50</span>
             <span class="rho-buy__terms">one-time · lifetime</span>
           </div>
           <p class="rho-buy__sub">Own RHOBEAR forever. No subscription.</p>
-          <div id="paypal-container-84AFSRNM4G24S" class="rho-buy__pp"></div>
-          <p class="rho-buy__secure">🔒 Secure checkout · PayPal &amp; Venmo</p>
+          <a href="https://buy.stripe.com/8x228kcgTcYX77d99gg7e06" class="rho-buy__cta">Get the Hub — $50 →</a>
+          <p class="rho-buy__secure">🔒 Secure checkout · card &amp; wallets via Stripe</p>
         </div>
-        <script src="https://www.paypal.com/sdk/js?client-id=BAA4VFw0oUGYGSyK1ORfsLYlh-Aj9hashfsbK6pdS8dJiN0Uki7TLS7F9jm9dbXEvVpF8xgpBf214LiaLs&components=hosted-buttons&enable-funding=venmo&currency=USD"></script>
-        <script>paypal.HostedButtons({hostedButtonId:"84AFSRNM4G24S"}).render("#paypal-container-84AFSRNM4G24S");</script>
 
         <p class="mono reveal" style="margin:8px 0 6px">Prefer to boot from source while you wait? Here's the whole thing:</p>
         <div class="terminal reveal">
