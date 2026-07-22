@@ -2368,7 +2368,7 @@ section.wrap-md > .card-paper.stitched{ margin-top:18px; }
 .chat-panel h2{margin:0;font-family:var(--font-display);font-size:clamp(1.35rem,2.4vw,1.9rem);line-height:1.15;color:var(--c-ink)}
 .chat-panel-note{margin:8px 0 0;color:var(--c-ink-2);line-height:1.5}
 .chat-panel-badge{flex:0 0 auto;border:1px solid rgba(59,214,195,.45);background:var(--c-amber-soft);color:var(--c-amber-deep);border-radius:999px;padding:7px 10px;font-family:var(--font-display);font-size:10px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
-.chat-panel-log{min-height:156px;max-height:360px;overflow:auto;padding:14px;border:1px dashed var(--c-stitch);border-radius:14px;background:rgba(255,255,255,.58);display:flex;flex-direction:column;gap:10px}
+.chat-panel-log{min-height:156px;max-height:360px;overflow:auto;padding:14px;border:1px dashed var(--c-stitch);border-radius:14px;background:rgba(8,12,18,.55);display:flex;flex-direction:column;gap:10px}
 .chat-panel-msg{max-width:82%;padding:10px 12px;border-radius:14px;font-size:.98rem;line-height:1.45;border:1px solid var(--c-line);white-space:pre-wrap;overflow-wrap:break-word}
 .chat-panel-msg.bot{align-self:flex-start;background:var(--c-surface);color:var(--c-ink-2);border-top-left-radius:4px}
 .chat-panel-msg.user{align-self:flex-end;background:var(--c-amber-soft);color:var(--c-ink);border-top-right-radius:4px}

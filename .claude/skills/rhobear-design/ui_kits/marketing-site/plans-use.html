@@ -5,9 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>RHOBEAR Plans — what your agents do for your trade</title>
 <meta name="description" content="A dive-in look at exactly what your RHOBEAR Plans agents do for your trade — the problems they solve, the daily workflows they run, and the work they do in the background. Roofing, dental, law, solar, HVAC, real estate — and your home life too.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.typekit.net/sbv5bcv.css">
 <link rel="icon" type="image/png" href="assets/rhobear-logo.png?v=1782940000">
 <style>
   :root{
@@ -16,12 +14,14 @@
     --text:#ece9f7; --text-2:#a59fc0; --text-dim:#6c6490;
     --purple:#3bd6c3; --purple-hi:#7fe7da; --purple-glow:rgba(59,214,195,0.18);
     --teal:#48d8b0; --amber:#f5a524; --green:#4ade80; --red:#f87171; --blue:#5b9dff; --rose:#fb7185;
-    --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
-    --sans:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;
+    --mono:'droid-sans-mono',ui-monospace,Menlo,monospace;
+    --sans:'lato',-apple-system,'Segoe UI',Roboto,sans-serif;
+    --disp:'rokkitt',Georgia,serif;
     --acc:var(--purple); --acc-hi:var(--purple-hi);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
+  h1,h2,h3,h4{font-family:var(--disp);font-weight:700;letter-spacing:-0.01em}
   body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   a{color:inherit;text-decoration:none}a:hover{color:var(--acc-hi)}
   ::selection{background:var(--acc);color:#fff}
@@ -753,10 +753,10 @@ const FLOW = {
 function flowDiagram(n,key){
   const acc='var('+n.accent+')', hi=n.accentHi;
   const f=FLOW[key]||FLOW.roofing;
-  const chip=(x,y,w,t)=>`<rect x="${x}" y="${y}" width="${w}" height="46" rx="10" fill="rgba(255,255,255,0.04)" stroke="${acc}" stroke-opacity="0.42"/><circle cx="${x+16}" cy="${y+23}" r="3" fill="${hi}"/><text x="${x+30}" y="${y+27}" fill="#e3def0" font-size="10.5" font-family="Inter,system-ui,sans-serif">${esc(t)}</text>`;
+  const chip=(x,y,w,t)=>`<rect x="${x}" y="${y}" width="${w}" height="46" rx="10" fill="rgba(255,255,255,0.04)" stroke="${acc}" stroke-opacity="0.42"/><circle cx="${x+16}" cy="${y+23}" r="3" fill="${hi}"/><text x="${x+30}" y="${y+27}" fill="#e3def0" font-size="10.5" font-family="lato,-apple-system,'Segoe UI',sans-serif">${esc(t)}</text>`;
   const checks=f.checks.slice(0,3).map((t,i)=>chip(228,120+i*64,192,t)).join('');
   const acts=f.act.slice(0,3).map((t,i)=>chip(900,120+i*64,196,t)).join('');
-  const opt=(y,t)=>`<rect x="688" y="${y}" width="178" height="32" rx="8" fill="${acc}" fill-opacity="0.12" stroke="${acc}" stroke-opacity="0.4"/><text x="700" y="${y+21}" fill="#efeaff" font-size="10.5" font-family="Inter,system-ui,sans-serif">&#9656; ${esc(t)}</text>`;
+  const opt=(y,t)=>`<rect x="688" y="${y}" width="178" height="32" rx="8" fill="${acc}" fill-opacity="0.12" stroke="${acc}" stroke-opacity="0.4"/><text x="700" y="${y+21}" fill="#efeaff" font-size="10.5" font-family="lato,-apple-system,'Segoe UI',sans-serif">&#9656; ${esc(t)}</text>`;
   return `<svg viewBox="0 0 1120 432" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="How your ${esc(n.tag.toLowerCase())} agent runs this workflow end to end">
     <defs>
       <marker id="fd-arr" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="context-stroke"/></marker>
@@ -764,35 +764,35 @@ function flowDiagram(n,key){
     </defs>
 
     <rect x="16" y="158" width="172" height="100" rx="14" fill="rgba(255,255,255,0.04)" stroke="${acc}" stroke-opacity="0.85" filter="url(#fd-glow)"/>
-    <text x="102" y="184" text-anchor="middle" fill="${hi}" font-size="9.5" font-family="'JetBrains Mono',ui-monospace,monospace" letter-spacing="1.2">WAKE EVENT</text>
-    <text x="102" y="214" text-anchor="middle" fill="#fff" font-size="12.5" font-weight="700" font-family="Inter,system-ui,sans-serif">${esc(f.ev[0])}</text>
-    <text x="102" y="233" text-anchor="middle" fill="#fff" font-size="12.5" font-weight="700" font-family="Inter,system-ui,sans-serif">${esc(f.ev[1])}</text>
+    <text x="102" y="184" text-anchor="middle" fill="${hi}" font-size="9.5" font-family="droid-sans-mono,ui-monospace,monospace" letter-spacing="1.2">WAKE EVENT</text>
+    <text x="102" y="214" text-anchor="middle" fill="#fff" font-size="12.5" font-weight="700" font-family="lato,-apple-system,'Segoe UI',sans-serif">${esc(f.ev[0])}</text>
+    <text x="102" y="233" text-anchor="middle" fill="#fff" font-size="12.5" font-weight="700" font-family="lato,-apple-system,'Segoe UI',sans-serif">${esc(f.ev[1])}</text>
     <line class="fd-flow" x1="188" y1="205" x2="222" y2="205" stroke="${acc}" stroke-width="1.8" marker-end="url(#fd-arr)"/>
 
     <rect x="222" y="84" width="204" height="244" rx="16" fill="rgba(59,214,195,0.015)" stroke="${acc}" stroke-opacity="0.5"/>
-    <text x="238" y="108" fill="${hi}" font-size="9.5" font-family="'JetBrains Mono',ui-monospace,monospace" letter-spacing="1">IT CHECKS &#183; heads-down</text>
+    <text x="238" y="108" fill="${hi}" font-size="9.5" font-family="droid-sans-mono,ui-monospace,monospace" letter-spacing="1">IT CHECKS &#183; heads-down</text>
     ${checks}
     <line class="fd-flow" x1="426" y1="205" x2="462" y2="205" stroke="${acc}" stroke-width="1.8" marker-end="url(#fd-arr)"/>
 
     <rect x="462" y="158" width="188" height="96" rx="14" fill="rgba(255,255,255,0.04)" stroke="${acc}" stroke-opacity="0.8" filter="url(#fd-glow)"/>
-    <text x="556" y="182" text-anchor="middle" fill="${hi}" font-size="9.5" font-family="'JetBrains Mono',ui-monospace,monospace" letter-spacing="1">IT WORKS IT OUT</text>
-    <text x="556" y="208" text-anchor="middle" fill="#fff" font-size="12" font-family="Inter,system-ui,sans-serif">${esc(f.think[0])}</text>
-    <text x="556" y="226" text-anchor="middle" fill="#fff" font-size="12" font-family="Inter,system-ui,sans-serif">${esc(f.think[1])}</text>
+    <text x="556" y="182" text-anchor="middle" fill="${hi}" font-size="9.5" font-family="droid-sans-mono,ui-monospace,monospace" letter-spacing="1">IT WORKS IT OUT</text>
+    <text x="556" y="208" text-anchor="middle" fill="#fff" font-size="12" font-family="lato,-apple-system,'Segoe UI',sans-serif">${esc(f.think[0])}</text>
+    <text x="556" y="226" text-anchor="middle" fill="#fff" font-size="12" font-family="lato,-apple-system,'Segoe UI',sans-serif">${esc(f.think[1])}</text>
     <line class="fd-flow" x1="650" y1="205" x2="694" y2="205" stroke="${acc}" stroke-width="1.8" marker-end="url(#fd-arr)"/>
 
     <polygon class="fd-gate" points="758,146 818,205 758,264 698,205" fill="${acc}" fill-opacity="0.22" stroke="${hi}" stroke-width="2.5" filter="url(#fd-glow)"/>
-    <text x="758" y="201" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" font-family="Inter,system-ui,sans-serif">YOUR YES</text>
-    <text x="758" y="219" text-anchor="middle" fill="#e7e2f5" font-size="9" font-family="'JetBrains Mono',ui-monospace,monospace">Yes / No / Edit</text>
+    <text x="758" y="201" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" font-family="lato,-apple-system,'Segoe UI',sans-serif">YOUR YES</text>
+    <text x="758" y="219" text-anchor="middle" fill="#e7e2f5" font-size="9" font-family="droid-sans-mono,ui-monospace,monospace">Yes / No / Edit</text>
     ${opt(286,f.opts[0])}${opt(322,f.opts[1])}
     <line class="fd-flow" x1="818" y1="205" x2="896" y2="205" stroke="${acc}" stroke-width="1.8" marker-end="url(#fd-arr)"/>
 
     <rect x="894" y="84" width="210" height="244" rx="16" fill="rgba(59,214,195,0.015)" stroke="${acc}" stroke-opacity="0.6"/>
-    <text x="910" y="108" fill="${hi}" font-size="9.5" font-family="'JetBrains Mono',ui-monospace,monospace" letter-spacing="1">ON YOUR YES &#183; it acts</text>
+    <text x="910" y="108" fill="${hi}" font-size="9.5" font-family="droid-sans-mono,ui-monospace,monospace" letter-spacing="1">ON YOUR YES &#183; it acts</text>
     ${acts}
 
     <rect x="16" y="380" width="1088" height="40" rx="12" fill="rgba(255,255,255,0.025)" stroke="${acc}" stroke-opacity="0.3"/>
-    <text x="34" y="405" fill="${hi}" font-size="9.5" font-family="'JetBrains Mono',ui-monospace,monospace" letter-spacing="1.2">MEMORY</text>
-    <text x="116" y="405" fill="#cdc6e0" font-size="12.5" font-family="Inter,system-ui,sans-serif">It remembers: ${esc(f.learn)} &#8212; so next time it asks you less.</text>
+    <text x="34" y="405" fill="${hi}" font-size="9.5" font-family="droid-sans-mono,ui-monospace,monospace" letter-spacing="1.2">MEMORY</text>
+    <text x="116" y="405" fill="#cdc6e0" font-size="12.5" font-family="lato,-apple-system,'Segoe UI',sans-serif">It remembers: ${esc(f.learn)} &#8212; so next time it asks you less.</text>
   </svg>`;
 }
 
