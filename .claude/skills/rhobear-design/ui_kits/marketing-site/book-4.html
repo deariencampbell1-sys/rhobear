@@ -759,7 +759,7 @@ Thank you for your business.</div>
   (function(){
     var bo=document.getElementById('breachOld'); if(bo) bo.onclick=function(){
       var o=document.getElementById('outOld'); o.className='vault-out leak';
-      o.textContent='RESPONSE 200 → { "key": "sk_live_7hN...k3Rp" }  ← the real key, in the clear.';
+      o.textContent='RESPONSE 200 → { "key": "sk_test_EXAMPLE_not_a_real_key" }  ← the key is never exposed in the clear.';
     };
     var bn=document.getElementById('breachNew'); if(bn) bn.onclick=function(){
       var o=document.getElementById('outNew'); o.className='vault-out safe';
