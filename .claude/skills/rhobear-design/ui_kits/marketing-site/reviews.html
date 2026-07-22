@@ -9,6 +9,8 @@
 <link rel="preconnect" href="https://use.typekit.net" crossorigin>
 <link rel="preconnect" href="https://p.typekit.net" crossorigin>
 <link rel="stylesheet" href="https://use.typekit.net/sbv5bcv.css">
+<link rel="preload" as="image" href="../../assets/pages/reviews/bear-reviews.webp">
+<link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png">
 <style>
   :root{
     /* base rb tokens */
@@ -95,6 +97,10 @@
   .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
   .hero-inner{position:relative;z-index:2;width:100%;max-width:1320px;margin:0 auto;padding:120px 40px 60px;display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center}
   .hero-copy .eyebrow{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:0.64rem;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent-hi);margin-bottom:20px}
+  /* real gold constellation bear mark (brand-kit file, never drawn) */
+  .hero-mark{display:flex;align-items:center;gap:15px;margin-bottom:20px}
+  .hero-mark img{width:56px;height:56px;display:block;flex-shrink:0;filter:drop-shadow(0 0 18px var(--glow))}
+  .hero-mark .eyebrow{margin-bottom:0}
   .live-dot{width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok);animation:pulse 2s ease-in-out infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
   .hero-copy h1{font-size:clamp(3rem,5.4vw,4.8rem);font-weight:900;line-height:0.98;margin-bottom:18px}
@@ -148,20 +154,14 @@
   .glass h3{font-size:1.12rem;font-weight:700;margin-bottom:9px}
   .glass p{font-size:0.9rem;color:var(--text-2);line-height:1.6}
 
-  /* dashboard preview */
-  .dash-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:36px;align-items:center}
-  .dpwin{border:1px solid var(--rb-card-border);border-radius:var(--rb-radius);overflow:hidden;background:rgba(10,13,20,0.6);box-shadow:0 30px 70px rgba(0,0,0,0.55)}
-  .dpwin-bar{display:flex;align-items:center;gap:7px;padding:12px 16px;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.24)}
-  .dpwin-bar i{width:9px;height:9px;border-radius:50%}.dpwin-bar i.r{background:#ff5f57}.dpwin-bar i.y{background:#febc2e}.dpwin-bar i.g{background:#28c840}
-  .dpwin-bar span{margin-left:8px;font-family:var(--mono);font-size:0.66rem;color:var(--text-dim)}
-  .dpwin-body{padding:18px}
-  .dpwin-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
-  .dpw{border:1px solid var(--border);border-radius:10px;padding:12px;background:rgba(19,24,32,0.7)}
-  .dpw b{display:block;font-family:var(--display);font-size:1.25rem;font-weight:900;line-height:1}
-  .dpw b.g{color:var(--accent-hi)}.dpw b.k{color:var(--text)}
-  .dpw span{font-size:0.6rem;color:var(--text-dim);font-family:var(--mono);letter-spacing:0.04em;margin-top:5px;display:block}
-  .dpw-bars{border:1px solid var(--border);border-radius:10px;background:rgba(19,24,32,0.7);padding:14px;height:96px;display:flex;align-items:flex-end;gap:5px}
-  .dpw-bars i{flex:1;background:linear-gradient(180deg,var(--accent),rgba(212,168,67,0.2));border-radius:3px 3px 0 0;opacity:.85}
+  /* real product screenshots */
+  .shot{padding:10px;overflow:hidden}
+  .shot img{width:100%;display:block;border-radius:12px;border:1px solid var(--border)}
+  .shot figcaption{font-family:var(--mono);font-size:0.74rem;color:var(--text-dim);padding:13px 6px 3px;line-height:1.6}
+  .shot figcaption b{color:var(--accent-hi);font-weight:700}
+
+  /* dashboard preview — real product screenshots */
+  .dash-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:36px;align-items:center}
 
   /* pricing */
   .price-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
@@ -202,8 +202,20 @@
   .btn-teal{display:inline-flex;align-items:center;gap:9px;white-space:nowrap;background:var(--rb-teal);color:#fff;padding:15px 28px;border-radius:var(--rb-pill);font-size:0.98rem;font-weight:700;box-shadow:0 10px 34px -8px rgba(42,143,168,0.5),0 0 30px rgba(42,143,168,0.2);transition:transform .2s var(--rb-ease),box-shadow .2s}
   .btn-teal:hover{transform:translateY(-2px);box-shadow:0 14px 44px -8px rgba(42,143,168,0.6),0 0 44px rgba(42,143,168,0.4)}
 
+  /* FAQ */
+  .faqs{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .faq{padding:26px 28px}
+  .faq h3{font-size:1rem;font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:10px}
+  .faq h3::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;box-shadow:0 0 0 3px rgba(212,168,67,0.2)}
+  .faq p{font-size:0.88rem;line-height:1.65;color:var(--text-2)}
+  .faq code{font-family:var(--mono);font-size:0.78rem;background:rgba(212,168,67,0.13);color:var(--accent-hi);padding:2px 6px;border-radius:5px}
+
   /* footer */
   #footer{position:relative;z-index:2;background:#070A10;border-top:1px solid var(--border);padding:66px 8vw 44px}
+  #footer .social{display:flex;gap:20px;align-items:center;margin-top:18px}
+  #footer .social a{display:inline-flex;align-items:center;gap:7px;font-size:0.76rem;color:var(--text-dim);font-family:var(--mono);transition:color .2s}
+  #footer .social a:hover{color:var(--accent-hi)}
+  #footer .social svg{width:16px;height:16px;fill:currentColor}
   #footer .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:46px;max-width:1240px;margin:0 auto 38px}
   #footer .wordmark{font-family:var(--display);font-size:1.1rem;font-weight:900;letter-spacing:0.12em;margin-bottom:12px}
   #footer p{font-size:0.82rem;line-height:1.65;color:var(--text-dim);max-width:42ch}
@@ -215,7 +227,7 @@
   #footer .fine{text-align:center;font-size:0.72rem;color:rgba(232,240,247,0.36);border-top:1px solid var(--border);padding-top:24px;max-width:1240px;margin:0 auto;font-family:var(--mono)}
   #footer .fine a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 
-  @media (max-width:1080px){.cards{grid-template-columns:1fr 1fr}.dash-grid,.price-wrap{grid-template-columns:1fr}}
+  @media (max-width:1080px){.cards{grid-template-columns:1fr 1fr}.dash-grid,.price-wrap,.faqs{grid-template-columns:1fr}}
   @media (max-width:900px){
     #nav .links{display:none}#nav{padding:12px 20px}
     .hero-inner{grid-template-columns:1fr;padding:104px 20px 40px;gap:36px}
@@ -233,6 +245,33 @@
 <meta property="og:image" content="https://rhobear.ai/assets/brand/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://rhobear.ai/reviews.html">
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "SoftwareApplication",
+"name": "RHOBEAR Reviews",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web, GitHub",
+"description": "An independent AI code reviewer for GitHub pull requests — a binary verdict with file:line evidence and a one-line fix in under two minutes. One free review a day, unlimited reviews on every paid tier; auto-fix builds are the metered unit.",
+"image": "https://rhobear.ai/assets/brand/og-image.png",
+"url": "https://rhobear.ai/reviews.html",
+"publisher": {
+"@type": "Organization",
+"name": "RHOBEAR",
+"url": "https://rhobear.ai",
+"logo": "https://rhobear.ai/assets/brand/apple-touch-icon.png",
+"parentOrganization": { "@type": "Organization", "name": "Sun Sponge LLC" }
+},
+"brand": { "@type": "Brand", "name": "RHOBEAR" },
+"offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD",
+"availability": "https://schema.org/InStock",
+"description": "One free review every day, forever — no card."
+}
+}
+</script>
 </head>
 <body>
 
@@ -260,7 +299,10 @@
 <header class="hero">
   <div class="hero-inner">
     <div class="hero-copy reveal in">
-      <div class="eyebrow"><span class="live-dot"></span> RHOBEAR Reviews · the gate every PR walks through</div>
+      <div class="hero-mark">
+        <img src="../../assets/pages/reviews/bear-reviews.webp" alt="RHOBEAR Reviews — the gold constellation bear" width="56" height="56">
+        <div class="eyebrow"><span class="live-dot"></span> RHOBEAR Reviews · the gate every PR walks through</div>
+      </div>
       <h1>Code review<br>that doesn't <em>sleep.</em></h1>
       <p class="lead">Senior-grade review on every pull request — a binary verdict with file:line evidence and a one-line fix, posted in under two minutes. It reads your whole codebase, not just the diff, so it catches the bug in the caller your change just broke.</p>
       <div class="price-line"><b>Free</b> — one review every day, forever <s>· no card</s></div>
@@ -357,26 +399,20 @@
       <p class="sub">The reviewer posts to your PRs — the dashboard is where it adds up: reviews run, bugs caught, median review time, and your auto-fix builds against your tier. Sign in with GitHub and it's reading your repos in seconds.</p>
     </div>
     <div class="dash-grid reveal">
-      <div>
-        <div class="dpwin">
-          <div class="dpwin-bar"><i class="r"></i><i class="y"></i><i class="g"></i><span>reviews.rhobear.ai / dashboard</span></div>
-          <div class="dpwin-body">
-            <div class="dpwin-row">
-              <div class="dpw"><b class="g">1,284</b><span>REVIEWS</span></div>
-              <div class="dpw"><b class="k">3,947</b><span>BUGS</span></div>
-              <div class="dpw"><b class="k">1m 38s</b><span>MED TIME</span></div>
-              <div class="dpw"><b class="k">1m 12s</b><span>TO VERDICT</span></div>
-            </div>
-            <div class="dpw-bars"><i style="height:42%"></i><i style="height:56%"></i><i style="height:38%"></i><i style="height:64%"></i><i style="height:52%"></i><i style="height:74%"></i><i style="height:63%"></i><i style="height:58%"></i><i style="height:85%"></i><i style="height:71%"></i><i style="height:93%"></i><i style="height:78%"></i><i style="height:97%"></i><i style="height:100%"></i></div>
-          </div>
-        </div>
-      </div>
+      <figure class="glass shot">
+        <img src="../../assets/pages/reviews/dash-overview.webp" alt="RHOBEAR Reviews dashboard — the Overview tab: reviews run, bugs caught, median review time and time to verdict across the top, a 14-day activity chart, and findings broken down by severity and category." loading="lazy" width="1440" height="900">
+        <figcaption><b>Overview</b> — reviews run, bugs caught, median time, and findings by severity, all on one screen.</figcaption>
+      </figure>
       <div>
         <p class="sub" style="margin-bottom:26px">Overview, Reviews, a code-graph Scanner, and a Bot Trainer — plus a usage tracker that shows your reviews (unlimited) and your auto-fix builds against the tier ladder. Reviews are free; builds are what you're spending.</p>
         <a class="btn-primary" href="https://reviews.rhobear.ai/dashboard/">Open the dashboard
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </div>
+    <figure class="glass shot reveal" style="margin-top:18px">
+      <img src="../../assets/pages/reviews/dash-reviews.webp" alt="RHOBEAR Reviews dashboard — the Reviews tab: the verdict legend ACCEPT / FIX-FORWARD / BOUNCE, a run-graph-scan input, and a feed of recent runs each stamped with its verdict, finding count, and time to verdict." loading="lazy" width="1440" height="900">
+      <figcaption><b>Reviews</b> — every run stamped <b>ACCEPT</b>, <b>FIX-FORWARD</b>, or <b>BOUNCE</b>, with its findings and time to verdict.</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -436,6 +472,43 @@
   </div>
 </section>
 
+<!-- FAQ -->
+<section class="band" id="faq">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow-tag">FAQ</span>
+      <h2 class="title">Honest answers to the <em>obvious questions.</em></h2>
+      <p class="sub">The stuff every team asks before they install a bot on their repos.</p>
+    </div>
+    <div class="faqs stagger reveal">
+      <div class="glass faq">
+        <h3>Is it really free?</h3>
+        <p>Yes — one full review every day, forever, no card. Install the GitHub App and mention <code>@rhobear-reviews</code> on a PR. Paid tiers unlock unlimited reviews and auto-fix builds.</p>
+      </div>
+      <div class="glass faq">
+        <h3>What do I actually pay for?</h3>
+        <p>Auto-fix <b>builds</b> — where the reviewer stops flagging and opens the patch as a PR. Reviews stay unlimited on every paid tier. You're metered on fixes, never on seats.</p>
+      </div>
+      <div class="glass faq">
+        <h3>How is it different from CodeRabbit?</h3>
+        <p>It reads your whole codebase, not just the diff, and posts one binary verdict — ACCEPT, FIX-FORWARD, or BOUNCE — instead of a wall of nitpicks. And it charges per fix, not $24 per seat every month.</p>
+      </div>
+      <div class="glass faq">
+        <h3>Does my code get trained on?</h3>
+        <p>Never. Inference-only. The diff isn't retained past the review, never trained on, never sold. It runs on our own infra, not a SaaS middleman.</p>
+      </div>
+      <div class="glass faq">
+        <h3>How fast is a review?</h3>
+        <p>A binary verdict with file:line evidence in under two minutes — about half of CodeRabbit's time to first comment. Every finding is adversarially re-checked before it posts.</p>
+      </div>
+      <div class="glass faq">
+        <h3>Where does it sit in the workflow?</h3>
+        <p>In the PR thread where your code already lives — no new dashboard to learn, no webhook to wire. The dashboard at <code>reviews.rhobear.ai</code> is where it all adds up.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- HANDOFF → Rho -->
 <section class="handoff">
   <div class="handoff-bg"></div>
@@ -456,6 +529,11 @@
     <div class="reveal">
       <div class="wordmark"><svg viewBox="0 0 48 48" fill="currentColor" fill-rule="evenodd" aria-hidden="true" focusable="false" style="height:1.15em;width:auto;vertical-align:-.2em;margin-right:.45em;flex:0 0 auto"><path d="M7.5 13.2c0-4 3.2-6.1 6.4-4.2l3.9 2.3c4-1.9 8.4-1.9 12.4 0l3.9-2.3c3.2-1.9 6.4.2 6.4 4.2 0 2.9-1.7 5.2-4 6.3 1.8 2.7 2.8 5.9 2.8 9.4C39.3 37.6 33 43 24 43S8.7 37.6 8.7 28.9c0-3.5 1-6.7 2.8-9.4-2.3-1.1-4-3.4-4-6.3Zm12.1 12.5-4.6-2.7c-.5 1.4-.2 2.9.9 3.7 1.2.9 2.9.6 3.7-.6.2-.1.1-.3 0-.4Zm8.8 0c-.1.1-.2.3 0 .4.8 1.2 2.5 1.5 3.7.6 1.1-.8 1.4-2.3.9-3.7l-4.6 2.7ZM24 31.5c-1.9 0-3.2 1.1-3.2 2.3 0 1.5 1.5 2.7 3.2 2.7s3.2-1.2 3.2-2.7c0-1.2-1.3-2.3-3.2-2.3Z"/></svg>RHOBEAR</div>
       <p>One workflow that hands off to itself. Build it, ship it, keep it clean. Own your data, bring your own AI, run it for the price of a domain.</p>
+      <div class="social">
+        <a href="https://x.com/rhobearai" target="_blank" rel="noopener" aria-label="RHOBEAR on X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-6.9l-5.4-7-6.2 7H1.7l8.1-9.3L1 2h7l4.9 6.5L18.9 2Zm-1.2 18h1.9L7.4 4H5.4l12.3 16Z"/></svg>X</a>
+        <a href="https://instagram.com/rhobear.ai" target="_blank" rel="noopener" aria-label="RHOBEAR on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>Instagram</a>
+        <a href="https://github.com/rhobear-ai" target="_blank" rel="noopener" aria-label="RHOBEAR on GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.2.8-.5v-1.8c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.3 11.3 0 0 1 6 0C17 5 18 5.3 18 5.3c.6 1.6.2 2.9.1 3.2.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.3v3.4c0 .3.2.6.8.5A11.5 11.5 0 0 0 12 .5Z"/></svg>GitHub</a>
+      </div>
     </div>
     <div class="reveal">
       <h4>The workflow</h4>
