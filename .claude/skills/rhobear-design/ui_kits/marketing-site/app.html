@@ -6,8 +6,13 @@
   <title>RHOBEAR Hub — Build it.</title>
   <meta name="description" content="RHOBEAR Hub — your AI crew on the desktop. Drop in a skill, answer one question, walk away. 24 agents, 645 vetted skills, your own AI subs, local models one click away. One-time purchase, yours for life.">
   <link rel="icon" type="image/png" href="../../assets/rhobear-logo.png?v=1782900000">
-  <link rel="stylesheet" href="https://use.typekit.net/sbv5bcv.css">
-  <style>
+  <style>/* RHOBEAR company font — self-hosted Nacelle. Typekit is dead canon (see _shared/FONTS.md, 2026-07-21). */
+@font-face{font-family:"Nacelle";src:url("../../assets/fonts/Nacelle-Light.woff2") format("woff2");font-weight:300;font-display:swap}
+@font-face{font-family:"Nacelle";src:url("../../assets/fonts/Nacelle-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Nacelle";src:url("../../assets/fonts/Nacelle-SemiBold.woff2") format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Nacelle";src:url("../../assets/fonts/Nacelle-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Nacelle";src:url("../../assets/fonts/Nacelle-Black.woff2") format("woff2");font-weight:900;font-display:swap}</style>
+<style>
   /* ── RHOBEAR mountain tokens (deltas off D:\rhobear-3d-test\tokens.css) ── */
   :root{
     --rb-summit-blue:#1A2435; --rb-teal-accent:#2A8FA8; --rb-amber-warm:#C8860A;
@@ -18,9 +23,9 @@
     /* Hub station delta — teal, winter, summit path */
     --hub-accent:#2A8FA8; --hub-bright:#3bd6c3; --hub-glow:rgba(42,143,168,0.4);
     --hub-fog:#1A2D3A; --hub-sky:#0F1C30; --hub-sun:#FFE8AA;
-    --font-display:"rokkitt",Georgia,serif;
-    --font-body:"lato",system-ui,sans-serif;
-    --font-mono:"droid-sans-mono",ui-monospace,monospace;
+    --font-display:"Nacelle",system-ui,-apple-system,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+    --font-body:"Nacelle",system-ui,-apple-system,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+    --font-mono:ui-monospace,"JetBrains Mono","Cascadia Mono",Consolas,monospace;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}

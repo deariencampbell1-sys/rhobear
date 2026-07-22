@@ -6,9 +6,12 @@
 <title>Sales by RHOBEAR — it sells itself</title>
 <meta name="description" content="Done-for-you. I hand-build and run your sales page — the white-glove version. The bot that greets your visitors runs on a tiny Qwen-3B: no rented server, no hosting bill, just a domain. It answers every lead, day and night. $47 one-time.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M2 28 L12 9 L19 20 L23 13 L30 28 Z' fill='%238FA82A'/%3E%3Ccircle cx='24' cy='7' r='2.4' fill='%23D4A843'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://use.typekit.net" crossorigin>
-<link rel="preconnect" href="https://p.typekit.net" crossorigin>
-<link rel="stylesheet" href="https://use.typekit.net/sbv5bcv.css">
+<style>/* RHOBEAR company font — self-hosted Nacelle. Typekit is dead canon (see _shared/FONTS.md, 2026-07-21). */
+@font-face{font-family:"Nacelle";src:url("../../assets/fonts/Nacelle-Light.woff2") format("woff2");font-weight:300;font-display:swap}
+@font-face{font-family:"Nacelle";src:url("../../assets/fonts/Nacelle-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Nacelle";src:url("../../assets/fonts/Nacelle-SemiBold.woff2") format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Nacelle";src:url("../../assets/fonts/Nacelle-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Nacelle";src:url("../../assets/fonts/Nacelle-Black.woff2") format("woff2");font-weight:900;font-display:swap}</style>
 <link rel="preload" href="../../assets/pages/sales/hero-desktop.webp" as="image" type="image/webp" media="(min-width:901px)">
 <link rel="preload" href="../../assets/pages/sales/hero-mobile.webp" as="image" type="image/webp" media="(max-width:900px)">
 <style>
@@ -23,10 +26,10 @@
     --accent:#8FA82A; --accent-hi:#B4CC4A; --accent-ink:#12140A;
     --glow:rgba(143,168,42,0.40); --glow-soft:rgba(143,168,42,0.16);
     --gold:#D4A843; --gold-glow:rgba(212,168,67,0.35);
-    /* type roles — owner-licensed Adobe typekit trio */
-    --display:"rokkitt",Georgia,serif;
-    --sans:"lato",-apple-system,"Segoe UI",Roboto,sans-serif;
-    --mono:"droid-sans-mono",ui-monospace,Menlo,monospace;
+    /* type roles — Nacelle (self-hosted) */
+    --display:"Nacelle",system-ui,-apple-system,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+    --sans:"Nacelle",system-ui,-apple-system,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+    --mono:ui-monospace,"JetBrains Mono","Cascadia Mono",Consolas,monospace;
     --text:var(--rb-frost); --text-2:rgba(232,240,247,0.74); --text-dim:rgba(232,240,247,0.5);
     --border:rgba(255,255,255,0.09);
   }
