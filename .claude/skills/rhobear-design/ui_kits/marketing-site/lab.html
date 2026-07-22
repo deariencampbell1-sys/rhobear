@@ -237,6 +237,8 @@
     #ambient{display:none}
     .reveal{transition:opacity .2s ease;transform:none}
   }
+  /* nav hover-bridge — span the gap so the dropdown stays clickable (fix 2026-07-22) */
+  #nav .nav-more::after{content:"";position:absolute;top:100%;left:0;right:0;height:20px}
 </style>
 
 <meta property="og:type" content="website">
@@ -304,7 +306,7 @@
       <div class="nav-more-panel">
         <a href="designs.html">RHOBEAR Designs</a>
         <a href="capturd.html">RHOBEAR Captur'd</a>
-        <a href="https://reviews.rhobear.ai">RHOBEAR Reviews</a>
+        <a href="reviews.html">RHOBEAR Reviews</a>
         <a href="sales.html">Sales by RHOBEAR</a>
         <a class="on" href="lab.html">RHOBEAR Lab</a>
       </div>
@@ -453,7 +455,7 @@
         <li><a href="workbench.html">RHOBEAR Workbench · the free taste</a></li>
         <li><a href="designs.html">RHOBEAR Designs · shape</a></li>
         <li><a href="capturd.html">RHOBEAR Captur'd · capture</a></li>
-        <li><a href="https://reviews.rhobear.ai">RHOBEAR Reviews · keep clean</a></li>
+        <li><a href="reviews.html">RHOBEAR Reviews · keep clean</a></li>
         <li><a href="lab.html">RHOBEAR Lab · benchmark</a></li>
       </ul>
     </div>
