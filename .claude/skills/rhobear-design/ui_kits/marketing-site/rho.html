@@ -236,7 +236,9 @@
       .scroll-hint{animation:none}
       .hero-rings span, #voice .ring-stage span.r{animation:none; opacity:0.2}
     }
-  </style>
+    /* nav hover-bridge — span the gap so the dropdown stays clickable (fix 2026-07-22) */
+  #nav .nav-more::after{content:"";position:absolute;top:100%;left:0;right:0;height:20px}
+</style>
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="RHOBEAR">
@@ -291,7 +293,7 @@
         <div class="nav-more-panel">
           <a href="designs.html">RHOBEAR Designs</a>
           <a href="capturd.html">RHOBEAR Captur'd</a><a href="lab.html">RHOBEAR Lab</a>
-          <a href="https://reviews.rhobear.ai">RHOBEAR Reviews</a>
+          <a href="reviews.html">RHOBEAR Reviews</a>
           <a href="sales.html">Sales by RHOBEAR</a>
         </div>
       </div>
@@ -470,7 +472,7 @@
           <li><a href="workbench.html">RHOBEAR Workbench · the free taste</a></li>
           <li><a href="designs.html">RHOBEAR Designs · shape</a></li>
           <li><a href="capturd.html">RHOBEAR Captur'd · capture</a></li><li><a href="lab.html">RHOBEAR Lab · benchmark any model</a></li>
-          <li><a href="https://reviews.rhobear.ai">RHOBEAR Reviews · keep clean</a></li>
+          <li><a href="reviews.html">RHOBEAR Reviews · keep clean</a></li>
           <li><small>includes Verifies · dead-path maps</small></li>
         </ul>
       </div>
