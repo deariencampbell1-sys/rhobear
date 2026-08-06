@@ -423,7 +423,7 @@
       <p class="hook">"Nothing you use is ever directly on the internet. Here's the actual map."</p>
     </div>
     <p class="teach rev">When you hit a RHOBEAR product, your request doesn't land straight on a server — it lands on <b>Cloudflare</b> first. Cloudflare hands it to <b>Caddy</b>, a guarded front door running on one of two real machines. Caddy is the only thing with a public face; <span class="t">everything behind it only listens on localhost.</span></p>
-    <p class="teach rev">Two hosts do the actual work: <b>plans-cloud</b> on Google Cloud runs the Plans app. <b>rhobear-vps</b> on Hetzner runs the Workbench, the model gateways, Rho, and the Langfuse tracing. Click through the map below — it's the real one.</p>
+    <p class="teach rev">Two hosts do the actual work: <b>plans-cloud</b> on Google Cloud runs the Blueprints app. <b>rhobear-vps</b> on Hetzner runs the Workbench, the model gateways, Rho, and the Langfuse tracing. Click through the map below — it's the real one.</p>
 
     <div class="look-label rev">Interactive · The real topology — click a stop</div>
     <div class="panel rev">
@@ -753,9 +753,9 @@
   var TOPO=[
     {name:'You', sub:'the browser or app', desc:'Every request starts as a normal HTTPS call from your browser or the Hub app — nothing special, nothing exposed on your end.'},
     {name:'Cloudflare', sub:'the public edge', desc:'The only address the internet actually sees. It terminates TLS, filters obvious junk, and forwards the clean request onward.'},
-    {name:'plans-cloud', sub:'Google Cloud VM', desc:'One of two real machines. This one runs the Plans app — booking, calendar, the business engine.'},
+    {name:'plans-cloud', sub:'Google Cloud VM', desc:'One of two real machines. This one runs the Blueprints app — booking, calendar, the business engine.'},
     {name:'rhobear-vps', sub:'Hetzner VM', desc:'The other machine. Runs the Workbench, the model gateways, Rho, and Langfuse tracing — all in one box.'},
-    {name:'Caddy → Plans', sub:'loopback only', desc:'Caddy on plans-cloud hands the request to the Plans app over localhost. The app itself is never reachable directly — Caddy is the only door.'},
+    {name:'Caddy → Blueprints', sub:'loopback only', desc:'Caddy on plans-cloud hands the request to the Blueprints app over localhost. The app itself is never reachable directly — Caddy is the only door.'},
     {name:'Caddy → Workbench+', sub:'loopback only', desc:'Caddy on rhobear-vps does the same job for the Workbench, the gateways, Rho, and Langfuse — all loopback services behind one guarded front door.'}
   ];
   (function(){

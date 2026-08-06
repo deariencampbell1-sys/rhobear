@@ -625,7 +625,7 @@
         '<span class="arw">→</span><a href="designs.html">Shape it · Designs</a>' +
         '<span class="arw">→</span><a href="capturd.html">Capture it · Captur\'d</a>' +
         '<span class="arw">→</span><a href="https://reviews.rhobear.ai/">Keep it clean · Reviews</a>' +
-        '<span class="arw">→</span><a href="plans.html">Take it to market · Plans</a>' +
+        '<span class="arw">→</span><a href="plans.html">Take it to market · Blueprints</a>' +
         '<span class="arw">→</span><a href="sales.html">It sells itself · Frontman</a>' +
       '</div>';
     if (foot && foot.parentNode) foot.parentNode.insertBefore(band, foot);
