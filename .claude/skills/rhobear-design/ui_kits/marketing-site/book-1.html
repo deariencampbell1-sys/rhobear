@@ -649,7 +649,7 @@
       <h2>One version, one owner.</h2>
       <p class="hook">"Two copies of billing isn't redundancy. It's a bug waiting for a Tuesday."</p>
     </div>
-    <p class="teach rev">There is exactly <b>ONE</b> copy of any piece of business logic, and it lives with the product whose name matches. Calendar, booking, payments — they live in <span class="t">Plans</span>, and only Plans. Every other app calls it. Two copies means drift, and drift is the thing that eats a whole day.</p>
+    <p class="teach rev">There is exactly <b>ONE</b> copy of any piece of business logic, and it lives with the product whose name matches. Calendar, booking, payments — they live in <span class="t">Blueprints</span>, and only Blueprints. Every other app calls it. Two copies means drift, and drift is the thing that eats a whole day.</p>
     <p class="teach rev">Below is a fake ecosystem where billing got copied into three apps by accident. Click each duplicate to collapse it into its one real owner.</p>
 
     <div class="look-label rev">Interactive · Find the duplicate — click to collapse</div>
@@ -663,11 +663,11 @@
       <div class="check-body">
         <div class="check-q">A Hub feature needs a calendar. What does it do?</div>
         <div class="opts">
-          <button class="opt" data-correct="1">Calls Plans' calendar API — never builds its own.</button>
+          <button class="opt" data-correct="1">Calls Blueprints' calendar API — never builds its own.</button>
           <button class="opt">Builds a lightweight calendar table inside the Hub.</button>
-          <button class="opt">Copies Plans' calendar code into the Hub for speed.</button>
+          <button class="opt">Copies Blueprints' calendar code into the Hub for speed.</button>
         </div>
-        <div class="verdict"><b>Exactly. One version, one owner.</b> The Hub drives Plans' calendar through the family API — it never re-implements what already has a home.</div>
+        <div class="verdict"><b>Exactly. One version, one owner.</b> The Hub drives Blueprints' calendar through the family API — it never re-implements what already has a home.</div>
       </div>
     </div>
   </section>
@@ -1066,7 +1066,7 @@ CREATE TABLE IF NOT EXISTS cloud_dev_allowlist (
     var host=document.getElementById('dupboard'); if(!host) return;
     var win=document.getElementById('dupboardWin');
     var collapsedCount=0;
-    var OWNER={an:'Plans', bl:'✓ Billing — the owner'};
+    var OWNER={an:'Blueprints', bl:'✓ Billing — the owner'};
     var DUPS=[{an:'Hub', bl:'✕ Billing (copy)'},{an:'Workbench', bl:'✕ Billing (copy)'},{an:'Frontman', bl:'✕ Billing (copy)'}];
 
     var ownerCard=document.createElement('div'); ownerCard.className='dupcard owner';
@@ -1079,7 +1079,7 @@ CREATE TABLE IF NOT EXISTS cloud_dev_allowlist (
       card.onclick=function(){
         if(card.classList.contains('collapsed')) return;
         card.classList.remove('dup'); card.classList.add('collapsed');
-        card.querySelector('.bl').textContent='→ calls Plans';
+        card.querySelector('.bl').textContent='→ calls Blueprints';
         card.querySelector('.hint').textContent='one owner, one call away';
         collapsedCount++;
         if(collapsedCount===DUPS.length) win.classList.add('show');
