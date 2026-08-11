@@ -11,14 +11,14 @@ Double-click `index.html`. Click the tabs to navigate.
 | Tab | File | Pattern |
 |---|---|---|
 | **Hub** | `index.html` | Full-bleed pixel-art scene (Starship 17-B) with perched crew sprites and floating Crew Chat panel |
-| **Agents** | `agents.html` | 3-pane workbench — agents list / active worker view (todos, thread, diff, owner-goal, actions, orchestrator) / live code viewer + terminal tabs |
+| **Agents** | `agents.html` | 3-pane Builds — agents list / active worker view (todos, thread, diff, owner-goal, actions, orchestrator) / live code viewer + terminal tabs |
 | **Board** | `board.html` | Kanban with Backlog / Staging / Review / Done columns, group dots (A/B/C/D), per-card assigned crew avatars |
 | **Catalog** | `catalog.html` | MCP servers grid with Vetted / Community / Unvetted status pills |
 
 ## Components built in `app.css`
 
 - **App chrome** — sticky brand lockup + crumb + tab bar + world picker (SPACE / WEST / NEON) + merge-mode pill + Starship label.
-- **Workbench panes** — left agent list with status avatars (`r` ring, `?` question, `!` blocked, `B/C` group), middle agent-card with todo, thread, diff, owner-goal banner and action row, right code-viewer with file tabs and bottom Terminal/Output/Problems tabs.
+- **Builds panes** — left agent list with status avatars (`r` ring, `?` question, `!` blocked, `B/C` group), middle agent-card with todo, thread, diff, owner-goal banner and action row, right code-viewer with file tabs and bottom Terminal/Output/Problems tabs.
 - **Board card** — group dot, status indicator, title, optional description, footer with assigned-crew avatar + tag pills.
 - **Catalog card** — name + Vetted/Community/Unvetted status pill, by-author, description, scope chips, install footer.
 

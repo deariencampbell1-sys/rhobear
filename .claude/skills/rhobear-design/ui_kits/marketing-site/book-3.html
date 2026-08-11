@@ -386,13 +386,13 @@
       <h2>Local vs cloud — two bodies, one brain.</h2>
       <p class="hook">"Every product has two bodies. One's a taste. One's the whole meal."</p>
     </div>
-    <p class="teach rev">The Hub has a cloud twin called the <b>Workbench</b>. Same crew, same brain — but the cloud body is metered and stripped down, built to be a free taste that hooks you. The local body is the whole meal: <span class="t">your own AI subscriptions, local models, and chain mode</span> — the full autonomy stack.</p>
+    <p class="teach rev">The Hub has a cloud twin called <b>Builds</b>. Same crew, same brain — but the cloud body is metered and stripped down, built to be a free taste that hooks you. The local body is the whole meal: <span class="t">your own AI subscriptions, local models, and chain mode</span> — the full autonomy stack.</p>
     <p class="teach rev">And it only flows one direction. Cloud decisions are built <b>from</b> what already works locally — never the other way around. Local always unlocks more, because local is where the real capability lives.</p>
 
     <div class="look-label rev">Interactive · Cloud body vs local body</div>
     <div class="panel rev">
       <div class="bodywrap">
-        <div class="bodylabel"><div class="big" id="bodyBig">Cloud body</div><div class="cap" id="bodyCap">Workbench · the free taste</div></div>
+        <div class="bodylabel"><div class="big" id="bodyBig">Cloud body</div><div class="cap" id="bodyCap">Builds · the free taste</div></div>
         <div class="toggle" role="tablist" aria-label="Product body">
           <button class="on" id="tabCloud" role="tab">CLOUD</button>
           <button id="tabLocal" role="tab">LOCAL</button>
@@ -423,7 +423,7 @@
       <p class="hook">"Nothing you use is ever directly on the internet. Here's the actual map."</p>
     </div>
     <p class="teach rev">When you hit a RHOBEAR product, your request doesn't land straight on a server — it lands on <b>Cloudflare</b> first. Cloudflare hands it to <b>Caddy</b>, a guarded front door running on one of two real machines. Caddy is the only thing with a public face; <span class="t">everything behind it only listens on localhost.</span></p>
-    <p class="teach rev">Two hosts do the actual work: <b>plans-cloud</b> on Google Cloud runs the Blueprints app. <b>rhobear-vps</b> on Hetzner runs the Workbench, the model gateways, Rho, and the Langfuse tracing. Click through the map below — it's the real one.</p>
+    <p class="teach rev">Two hosts do the actual work: <b>plans-cloud</b> on Google Cloud runs the Blueprints app. <b>rhobear-vps</b> on Hetzner runs Builds, the model gateways, Rho, and the Langfuse tracing. Click through the map below — it's the real one.</p>
 
     <div class="look-label rev">Interactive · The real topology — click a stop</div>
     <div class="panel rev">
@@ -745,7 +745,7 @@
   }
   paintUnlocks(CLOUD);
   document.getElementById('tabCloud').onclick=function(){ this.classList.add('on'); document.getElementById('tabLocal').classList.remove('on');
-    document.getElementById('bodyBig').textContent='Cloud body'; document.getElementById('bodyCap').textContent='Workbench · the free taste'; paintUnlocks(CLOUD); };
+    document.getElementById('bodyBig').textContent='Cloud body'; document.getElementById('bodyCap').textContent='Builds · the free taste'; paintUnlocks(CLOUD); };
   document.getElementById('tabLocal').onclick=function(){ this.classList.add('on'); document.getElementById('tabCloud').classList.remove('on');
     document.getElementById('bodyBig').textContent='Local body'; document.getElementById('bodyCap').textContent='The Hub, desktop · the whole meal'; paintUnlocks(LOCAL); };
 
@@ -754,9 +754,9 @@
     {name:'You', sub:'the browser or app', desc:'Every request starts as a normal HTTPS call from your browser or the Hub app — nothing special, nothing exposed on your end.'},
     {name:'Cloudflare', sub:'the public edge', desc:'The only address the internet actually sees. It terminates TLS, filters obvious junk, and forwards the clean request onward.'},
     {name:'plans-cloud', sub:'Google Cloud VM', desc:'One of two real machines. This one runs the Blueprints app — booking, calendar, the business engine.'},
-    {name:'rhobear-vps', sub:'Hetzner VM', desc:'The other machine. Runs the Workbench, the model gateways, Rho, and Langfuse tracing — all in one box.'},
+    {name:'rhobear-vps', sub:'Hetzner VM', desc:'The other machine. Runs Builds, the model gateways, Rho, and Langfuse tracing — all in one box.'},
     {name:'Caddy → Blueprints', sub:'loopback only', desc:'Caddy on plans-cloud hands the request to the Blueprints app over localhost. The app itself is never reachable directly — Caddy is the only door.'},
-    {name:'Caddy → Workbench+', sub:'loopback only', desc:'Caddy on rhobear-vps does the same job for the Workbench, the gateways, Rho, and Langfuse — all loopback services behind one guarded front door.'}
+    {name:'Caddy → Builds+', sub:'loopback only', desc:'Caddy on rhobear-vps does the same job for Builds, the gateways, Rho, and Langfuse — all loopback services behind one guarded front door.'}
   ];
   (function(){
     var map=document.getElementById('topoMap');

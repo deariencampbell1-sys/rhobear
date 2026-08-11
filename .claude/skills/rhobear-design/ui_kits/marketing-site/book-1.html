@@ -930,7 +930,7 @@ CREATE TABLE IF NOT EXISTS cloud_dev_allowlist (
     {lbl:'PRECONDITION', val:'Wave 1 done (engines route through the sidecar).', why:'Stops a builder from starting on a foundation that isn\'t there yet.'},
     {lbl:'FILES', val:'hub/ui_kits/app/js/views/compass-chat.jsx\nhub/ui_kits/app/js/state/stream-store.jsx\njs/api.jsx', why:'Absolute, dispatcher-verified paths — not guessed. This is the fix for a real bug: workers used to hit wrong files when a brief guessed paths.'},
     {lbl:'DO', val:'1. Wire compass-chat to the real engine (SSE).\n2. Wire daily-brief to real data.\n3. Mount the Rho embed.', why:'Ordered, concrete steps — "wire X to Y," never "make it better."'},
-    {lbl:'DONE =', val:'Type in the Hub chat → a real engine answer streams in with the same thinking-shimmer + tool chips as the workbench. Evidence saved.', why:'Own-eyes verifiable — "click X, see Y," never "code compiles." This is the acceptance criteria: the part that makes a brief a CONTRACT, not a wish.'},
+    {lbl:'DONE =', val:'Type in the Hub chat → a real engine answer streams in with the same thinking-shimmer + tool chips as Builds. Evidence saved.', why:'Own-eyes verifiable — "click X, see Y," never "code compiles." This is the acceptance criteria: the part that makes a brief a CONTRACT, not a wish.'},
     {lbl:'HOLD-FOR-NEO', val:'Open PR. Do not merge.', why:'The brief itself enforces the review gate — the builder can\'t skip it even if they wanted to.'}
   ];
   (function(){
@@ -1067,7 +1067,7 @@ CREATE TABLE IF NOT EXISTS cloud_dev_allowlist (
     var win=document.getElementById('dupboardWin');
     var collapsedCount=0;
     var OWNER={an:'Blueprints', bl:'✓ Billing — the owner'};
-    var DUPS=[{an:'Hub', bl:'✕ Billing (copy)'},{an:'Workbench', bl:'✕ Billing (copy)'},{an:'Frontman', bl:'✕ Billing (copy)'}];
+    var DUPS=[{an:'Hub', bl:'✕ Billing (copy)'},{an:'Builds', bl:'✕ Billing (copy)'},{an:'Frontman', bl:'✕ Billing (copy)'}];
 
     var ownerCard=document.createElement('div'); ownerCard.className='dupcard owner';
     ownerCard.innerHTML='<div class="an">'+OWNER.an+'</div><div class="bl">'+OWNER.bl+'</div>';

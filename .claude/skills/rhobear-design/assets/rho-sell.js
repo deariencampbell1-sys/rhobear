@@ -141,7 +141,7 @@
   function scrollDown() { body.scrollTop = body.scrollHeight; }
   function linkify(t) {
     var esc = t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    return esc.replace(/((https?:\/\/)?(workbench|cloud|capturd|reviews)\.rhobear\.ai[^\s,]*|rhobear-ai\.github\.io\/rhobear-designs[^\s,]*)/g,
+    return esc.replace(/((https?:\/\/)?(builds|blueprints|frontman|capturd|reviews|workbench|cloud)\.rhobear\.ai[^\s,]*|rhobear-ai\.github\.io\/rhobear-designs[^\s,]*)/g,
       function (u) { var href = u.indexOf("http") === 0 ? u : "https://" + u; return '<a href="' + href + '" target="_blank" rel="noopener">' + u + "</a>"; });
   }
 
