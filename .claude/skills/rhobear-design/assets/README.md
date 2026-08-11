@@ -199,7 +199,7 @@ Full table → `colors_and_type.css`.
 - **Sticky top nav**, ~60-72px tall, paper background w/ blur.
 - **Sticky prev/next** bar at the bottom of every marketing page.
 - Max content width: 1200px on most pages, 1320px on the homepage hero, 880px on the founder quote.
-- Three-pane layouts (the workbench) use CSS Grid: `grid-template-columns: 280px 1fr 360px` with `gap: 12px`.
+- Three-pane layouts (Builds) use CSS Grid: `grid-template-columns: 280px 1fr 360px` with `gap: 12px`.
 - Card grids use `grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))`.
 
 ### Character placement (the signature move)
@@ -224,7 +224,7 @@ There is **no icon font and no Lucide/Heroicons substitution** in this brand. Th
 1. **Hand-painted pixel-art characters** — the RHOBEAR crew (Pops, Architect, Foreman, Guardian, Spark, Wizard), the expansion crew (Builder, Designer, Reviewer), and the off-brand heroes (Archer, Armored, Tinker, Brute). Each has 3 world variants (`_ship.png`, `_western.png`, `_neon.png`) plus action poses (`-walk`, `-east`). Reference these for personality; sprite-sheet versions exist (`*-spritesheet.png`) for animation.
 2. **Real third-party SVG logos** for integrations — Claude, OpenAI, Anthropic, Ollama, GitHub, Tauri, Obsidian, Python, Rust, TypeScript, Telegram, Discord, Stripe, Pi, MCP, Aguara, CodeGraph, OpenClaw, Slack, Amazon, Notion, Figma, Linear, Jira, Dropbox, Google Drive, SQLite, React, Docker, Vercel, Cloudflare, GitLab, WhatsApp, Google Gemini, Meta. All live in `assets/<name>.svg`.
 3. **Brand mark** — `assets/rhobear-mark.png`. A 32×32 pixel-art panda/bear head in candy-colored squares. Renders pixelated. Used in the top-left of every page and as a watermark on dark surfaces.
-4. **Product screenshots** as iconography of features — `01-hub.png` (hub), `02-agents.png` (workbench), `03-board.png`, `04-learn.png`, `05-skills.png`, `06-catalog.png`, `07-vault.png` (+ `07b-vault-graph.png`, `07c-vault-note.png`), `08-cli.png`, `09-worlds.png`, `10-settings.png`, `13-voice.png`, `agents-compare.png`, `agents-mobile.png`, `agents-workbench.png`. These show up as full-width hero illustrations on their respective subject pages — they *are* the icon of that feature.
+4. **Product screenshots** as iconography of features — `01-hub.png` (hub), `02-agents.png` (Builds), `03-board.png`, `04-learn.png`, `05-skills.png`, `06-catalog.png`, `07-vault.png` (+ `07b-vault-graph.png`, `07c-vault-note.png`), `08-cli.png`, `09-worlds.png`, `10-settings.png`, `13-voice.png`, `agents-compare.png`, `agents-mobile.png`, `agents-workbench.png`. These show up as full-width hero illustrations on their respective subject pages — they *are* the icon of that feature.
 
 ### Emoji / unicode
 
@@ -311,7 +311,7 @@ RHOBEAR Design System/
 │   │   └── README.md
 │   └── app/                  ← Tauri desktop hub UI kit
 │       ├── index.html        ← Hub (entry view)
-│       ├── agents.html       ← 3-pane workbench
+│       ├── agents.html       ← 3-pane Builds
 │       ├── board.html        ← Kanban
 │       ├── catalog.html      ← MCP servers + Skills
 │       ├── worlds.html       ← Theme picker
